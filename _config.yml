@@ -11,6 +11,7 @@ pygments: true
 #
 title : 2D Game Experiments
 tagline :
+paginate: 1
 author :
   name : Cesar Leblic
   email : cesar.leblic@gmail.com
