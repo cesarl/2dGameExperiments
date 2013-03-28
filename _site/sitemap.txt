@@ -1,0 +1,9 @@
+
+http://cesarl.github.com/2dGameExperiments/atom.xml
+http://cesarl.github.com/2dGameExperiments/rss.xml
+http://cesarl.github.com/2dGameExperiments/sitemap.txt
+http://cesarl.github.com/2dGameExperiments/categories.html
+http://cesarl.github.com/2dGameExperiments/index.html
+http://cesarl.github.com/2dGameExperiments/tags.html
+http://cesarl.github.com/2dGameExperiments/archive.html
+http://cesarl.github.com/2dGameExperiments/pages.html
