@@ -14,7 +14,12 @@ SRCS		=	AScene.cpp \
 			EventManager.cpp \
 			SceneManager.cpp \
 			ImageManager.cpp \
+			FontManager.cpp \
+			IdManager.cpp \
 			SceneMenu.cpp \
+			Entity.cpp \
+			ContentComponentImage.cpp \
+			ContentComponentText.cpp \
 			main.cpp
 
 OBJS		=	$(SRCS:.cpp=.o)

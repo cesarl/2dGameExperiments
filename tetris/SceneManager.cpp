@@ -26,6 +26,7 @@ void					SceneManager::add(AScene * scene, int priority)
   else
     this->collection_.push_back(scene);
   scene->setPriority(priority);
+  scene->setManager(this);
 }
 
 AScene					*SceneManager::remove(AScene * scene)
@@ -39,6 +40,21 @@ AScene					*SceneManager::remove(AScene * scene)
       res = *i;
       this->collection_.erase(i);
       return res;
+    }
+  return NULL;
+}
+
+// search don't use algorythm and is string comparaison - that's bad
+AScene					*SceneManager::get(std::string const & name)
+{
+  t_iter				i;
+
+  i = this->collection_.begin();
+  while (i != this->collection_.end())
+    {
+      if ((*i)->getName() == name)
+	return *i;
+      ++i;
     }
   return NULL;
 }
@@ -89,13 +105,15 @@ void					SceneManager::drawEvent(ALLEGRO_EVENT *event)
 {
   t_iter				i;
 
+  al_clear_to_color(al_map_rgb(200, 200, 200));
   i = this->collection_.begin();
   while (i != this->collection_.end())
     {
       if ((*i)->getVisible())
-	(*i)->update(event);
+	(*i)->draw(event);
       ++i;
     }
+  al_flip_display();
 }
 
 void					SceneManager::inputEvent(ALLEGRO_EVENT *event)

@@ -7,6 +7,8 @@
 #include				<algorithm>
 #include				"AScene.hh"
 
+class					AScene;
+
 enum					E_PRIORITY
   {
     HIGH,
@@ -21,13 +23,13 @@ public:
   ~SceneManager();
   void					add(AScene *scene, int priority = MEDIUM);
   AScene				*remove(AScene *scene);
+  AScene				*get(std::string const & name);
   void					setVisibleAll(bool val);
   void					setActiveAll(bool val);
   void					setPriority(AScene *scene, int priority);
   void					updateEvent(ALLEGRO_EVENT *event);
   void					drawEvent(ALLEGRO_EVENT *event);
   void					inputEvent(ALLEGRO_EVENT *event);
-  void					listScene();
 private:
   std::list<AScene*>			collection_;
   typedef std::list<AScene*>::iterator	t_iter;

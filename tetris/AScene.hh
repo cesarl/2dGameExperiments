@@ -3,6 +3,15 @@
 
 #include				<string>
 #include                                <allegro5/allegro.h>
+#include				"SceneManager.hh"
+
+class					SceneManager;
+
+enum					E_MSG
+  {
+    MSG_ACTIVE,
+    MSG_VISIBLE
+  };
 
 class					AScene
 {
@@ -12,7 +21,7 @@ protected:
   bool					visible_;
   int					priority_;
   ALLEGRO_DISPLAY			*display_;
-  //SceneManager			*sceneManager_;
+  SceneManager				*sceneManager_;
 public:
   AScene(std::string const & name = "Scene", bool active = false, bool visible = false);
   virtual ~AScene();
@@ -25,6 +34,8 @@ public:
   void					setVisible(bool visible);
   void					setPriority(int priority);
   void					setDisplay(ALLEGRO_DISPLAY *display);
+  void					setManager(SceneManager *manager);
+  void					messageSceneManager(int type, bool active, std::string const & sceneTitle);
   virtual void				update(ALLEGRO_EVENT *event) = 0;
   virtual void				draw(ALLEGRO_EVENT *event) = 0;
   virtual void				input(ALLEGRO_EVENT *event) = 0;
