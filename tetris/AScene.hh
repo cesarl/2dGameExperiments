@@ -2,6 +2,7 @@
 # define				__ASCENE_HH__
 
 #include				<string>
+#include				<iostream> // pour debug - a enlever
 #include                                <allegro5/allegro.h>
 #include				"SceneManager.hh"
 
@@ -10,7 +11,8 @@ class					SceneManager;
 enum					E_MSG
   {
     MSG_ACTIVE,
-    MSG_VISIBLE
+    MSG_VISIBLE,
+    MSG_EXITAPP
   };
 
 class					AScene

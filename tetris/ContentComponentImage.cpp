@@ -19,6 +19,19 @@ ContentComponentImage::ContentComponentImage(ALLEGRO_BITMAP *image) :
 ContentComponentImage::~ContentComponentImage()
 {}
 
+void					ContentComponentImage::setBitmap(std::string const & imagePath)
+{
+  ImageManager				*imageManager;
+
+  imageManager = ImageManager::getInstance();
+  this->bitmap_ = imageManager->load(imagePath);
+}
+
+void					ContentComponentImage::setBitmap(ALLEGRO_BITMAP *image)
+{
+  this->bitmap_ = image;
+}
+
 void					ContentComponentImage::update(Entity *entity, ALLEGRO_EVENT *event)
 {
   return;

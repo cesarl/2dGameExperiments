@@ -5,6 +5,8 @@
 #include				<iostream>
 #include				"SceneManager.hh"
 
+class					SceneManager;
+
 class					EventManager
 {
 public:

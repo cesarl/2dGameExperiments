@@ -19,6 +19,8 @@ EventManager::~EventManager()
     al_destroy_event_queue(this->event_queue_);
   if (this->timer_)
     al_destroy_timer(this->timer_);
+  al_uninstall_keyboard();
+  al_uninstall_mouse();
 }
 
 void					EventManager::play()
@@ -56,4 +58,5 @@ void					EventManager::pause()
 void					EventManager::setSceneManager(SceneManager * sceneManager)
 {
   this->sceneManager_ = sceneManager;
+  sceneManager->setEventManager(this);
 }

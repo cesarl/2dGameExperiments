@@ -1,9 +1,18 @@
 #include				"Entity.hh"
 
-Entity::Entity() : content_(NULL)
+Entity::Entity() : content_(NULL),
+		   x_(0),
+		   y_(0),
+		   width_(0),
+		   height_(0),
+		   visible_(true)
 {}
 
-Entity::Entity(IContentComponent *content) : content_(content)
+Entity::Entity(IContentComponent *content) : content_(content),
+					     y_(0),
+					     width_(0),
+					     height_(0),
+					     visible_(true)
 {}
 
 Entity::~Entity()
@@ -17,7 +26,7 @@ void					Entity::update(ALLEGRO_EVENT *event)
 
 void					Entity::draw()
 {
-  if (this->content_)
+  if (this->content_ && this->visible_)
     this->content_->draw(this);
 }
 
@@ -45,6 +54,11 @@ void					Entity::setWidth(float width)
 void					Entity::setHeight(float height)
 {
   this->height_ = height;
+}
+
+void					Entity::setVisible(bool visible)
+{
+  this->visible_ = visible;
 }
 
 float					Entity::getX() const
@@ -75,6 +89,11 @@ void					Entity::setContentComponent(IContentComponent *content)
 IContentComponent			*Entity::getContentComponent() const
 {
   return this->content_;
+}
+
+bool					Entity::getVisible() const
+{
+  return this->visible_;
 }
 
 void					Entity::deleteContentComponent()

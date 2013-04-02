@@ -78,6 +78,12 @@ void					SceneMenu::input(ALLEGRO_EVENT *event)
 	case ALLEGRO_KEY_SPACE:
 	  this->messageSceneManager(MSG_ACTIVE, false, this->name_);
 	  this->messageSceneManager(MSG_VISIBLE, false, this->name_);
+	  if (this->selectedChoice_ == 2)
+	    {
+	      this->messageSceneManager(MSG_EXITAPP, false, "");
+	    }
+	  this->messageSceneManager(MSG_ACTIVE, true, "mainGame");
+	  this->messageSceneManager(MSG_VISIBLE, true, "mainGame");
 	  break;
 	}
     }

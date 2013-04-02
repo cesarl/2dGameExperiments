@@ -20,7 +20,8 @@ FontManager::~FontManager()
       al_destroy_font(it->second);
       this->collection_.erase(it);
     }
-  al_shutdown_ttf_addon();
+  // provoque segfault ...
+  // al_shutdown_ttf_addon();
   al_shutdown_font_addon();
 }
 

@@ -20,12 +20,14 @@ public:
   void					setY(float y);
   void					setWidth(float width);
   void					setHeight(float height);
+  void					setVisible(bool visible);
   float					getX() const;
   float					getY() const;
   float					getWidth() const;
   float					getHeight() const;
   void					setContentComponent(IContentComponent *content);
   IContentComponent			*getContentComponent() const;
+  bool					getVisible() const;
   void					deleteContentComponent();
 private:
   IContentComponent			*content_;
@@ -33,6 +35,7 @@ private:
   float					y_;
   float					width_;
   float					height_;
+  bool					visible_;
 };
 
 #endif					// __ENTITY_HH__

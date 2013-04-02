@@ -78,6 +78,8 @@ void					AScene::messageSceneManager(int type, bool activate, std::string const 
 	  tmp = this->sceneManager_->get(sceneName);
 	  if (tmp)
 	    tmp->setActive(activate);
+	  else
+	    std::cout << "existe pas " << sceneName << std::endl;
 	}
       break;
     case MSG_VISIBLE:
@@ -89,6 +91,9 @@ void					AScene::messageSceneManager(int type, bool activate, std::string const 
 	  if (tmp)
 	    tmp->setVisible(activate);
 	}
+      break;
+    case MSG_EXITAPP:
+      this->sceneManager_->exit();
       break;
     }
 }

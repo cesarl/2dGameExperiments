@@ -88,6 +88,11 @@ void					SceneManager::setPriority(AScene *scene, int priority)
   (void)(priority);
 }
 
+void					SceneManager::setEventManager(EventManager * eventManager)
+{
+  this->eventManager_ = eventManager;
+}
+
 void					SceneManager::updateEvent(ALLEGRO_EVENT *event)
 {
   t_iter				i;
@@ -127,4 +132,10 @@ void					SceneManager::inputEvent(ALLEGRO_EVENT *event)
 	(*i)->input(event);
       ++i;
     }
+}
+
+void					SceneManager::exit()
+{
+  if (this->eventManager_)
+    this->eventManager_->pause();
 }

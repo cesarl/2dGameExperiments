@@ -17,9 +17,12 @@ SRCS		=	AScene.cpp \
 			FontManager.cpp \
 			IdManager.cpp \
 			SceneMenu.cpp \
+			SceneMainGame.cpp \
 			Entity.cpp \
 			ContentComponentImage.cpp \
 			ContentComponentText.cpp \
+			ContentComponentSprite.cpp \
+			TetrisGrid.cpp \
 			main.cpp
 
 OBJS		=	$(SRCS:.cpp=.o)
