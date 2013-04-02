@@ -1,46 +1,57 @@
 #ifndef					__TETRIS_GRID_HH__
 # define				__TETRIS_GRID_HH__
 
+#include				<string.h>
+#include				<math.h>
+#include				<time.h>
+#include				<stdlib.h>
 #include				"Entity.hh"
 #include				"ContentComponentSprite.hh"
 
 # define				GRID_WIDTH 10
-# define				GRID_HEIGHT 24
+# define				GRID_HEIGHT 22
 # define				CELL_SIZE 50
-# define				GRID_TOP_PADDING 4
-# define				SPEED 0.5
+# define				GRID_TOP_PADDING 2
+# define				SPEED 0.15
+# define				SHAPE_NUMBER 7
 
-typedef					struct s_formTetris
+typedef					struct shape_s
 {
-  int					c1_x;
-  int					c1_y;
-  int					c2_x;
-  int					c2_y;
-  int					c3_x;
-  int					c3_y;
-  int					c4_x;
-  int					c4_y;
-}					t_formTetris;
+  int					rotation;
+  int					x;
+  int					y;
+  int					type;
+  Entity				*blocks[4];
+}					shape_t;
 
 class					TetrisGrid
 {
 public:
   TetrisGrid();
   ~TetrisGrid();
+  void					newGame();
   void					draw();
   void					update();
   void					input(int key);
 private:
   ContentComponentSprite		spriteTab_[GRID_WIDTH * GRID_HEIGHT];
-  Entity				grid_[GRID_HEIGHT][GRID_WIDTH];
-  t_formTetris				form_;
-  t_formTetris				pastForm_;
+  Entity				entityPool_[GRID_WIDTH * GRID_HEIGHT];
+  Entity				*grid_[GRID_HEIGHT][GRID_WIDTH];
+  shape_t				shape_;
+  int					shapeModel_[SHAPE_NUMBER][4];
 private: //function members
-  void					p_newForm();
-  void					p_showForm();
-  void					p_hideForm();
-  void					p_moveForm(int x, int y);
-  void					p_copyForm(t_formTetris *src, t_formTetris *dest);
+  void					p_newShape();
+  bool					p_moveShape(int x, int y);
+  void					p_drawShape();
+  void					p_updateShape();
+  void					p_registerShape();
+  bool					p_shapeCollision();
+  bool					p_invalidateCollision();
+  void					p_rotateShape();
+  void					p_dropShape();
+  void					p_checkGridState();
+  void					p_cleanLine(int line);
+  void					p_gameOver();
 };
 
 #endif					// __TETRIS_GRID_HH__

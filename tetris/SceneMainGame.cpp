@@ -31,25 +31,16 @@ void					SceneMainGame::input(ALLEGRO_EVENT *event)
 {
   if (event->type == ALLEGRO_EVENT_KEY_DOWN)
     {
-      switch (event->keyboard.keycode)
+      if (event->keyboard.keycode == ALLEGRO_KEY_ESCAPE)
 	{
-	case ALLEGRO_KEY_UP:
-	  break;
-	case ALLEGRO_KEY_DOWN:
-	  break;
-	case ALLEGRO_KEY_LEFT:
-	  this->grid_.input(ALLEGRO_KEY_LEFT);
-	  break;
-	case ALLEGRO_KEY_RIGHT:
-	  break;
-	case ALLEGRO_KEY_SPACE:
-	  break;
-	case ALLEGRO_KEY_ESCAPE:
 	  this->messageSceneManager(MSG_ACTIVE, false, this->name_);
 	  this->messageSceneManager(MSG_VISIBLE, false, this->name_);
 	  this->messageSceneManager(MSG_ACTIVE, true, "menu");
 	  this->messageSceneManager(MSG_VISIBLE, true, "menu");
+	  this->grid_.newGame();
 	}
+      else
+	this->grid_.input(event->keyboard.keycode);
     }
   (void)(event);
 }
