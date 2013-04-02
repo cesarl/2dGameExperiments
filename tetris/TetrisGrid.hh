@@ -18,6 +18,8 @@
 typedef					struct shape_s
 {
   int					rotation;
+  int					postX;
+  int					postY;
   int					x;
   int					y;
   int					type;

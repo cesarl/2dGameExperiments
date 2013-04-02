@@ -147,6 +147,8 @@ void					TetrisGrid::p_newShape()
   this->shape_.rotation = 0;
   this->shape_.x = 4;
   this->shape_.y = 0;
+  this->shape_.postX = 4;
+  this->shape_.postY = 0;
   this->shape_.type = floor(rand() % SHAPE_NUMBER);
   i = 0;
   count = 0;
@@ -163,23 +165,23 @@ void					TetrisGrid::p_newShape()
 
 bool					TetrisGrid::p_moveShape(int x, int y)
 {
-  if (this->shape_.y <= 0 && x != 0)
-    return false;
+  this->shape_.postX = this->shape_.x;
+  this->shape_.postY = this->shape_.y;
   this->shape_.x += x;
   this->shape_.y += y;
-  if (this->p_shapeCollision())
+  if (this->p_invalidateCollision())
     {
-      this->shape_.x -= x;
-      this->shape_.y -= y;
+      this->shape_.x = this->shape_.postX;
+      this->shape_.y = this->shape_.postY;
+      return false;
+    }
+  else if (this->p_shapeCollision())
+    {
+      this->shape_.x = this->shape_.postX;
+      this->shape_.y = this->shape_.postY;
       this->p_updateShape();
       this->p_registerShape();
       this->p_newShape();
-      return false;
-    }
-  if (this->p_invalidateCollision())
-    {
-      this->shape_.x -= x;
-      this->shape_.y -= y;
       return false;
     }
   return true;
@@ -261,7 +263,8 @@ bool					TetrisGrid::p_shapeCollision()
       if (this->shapeModel_[this->shape_.type][this->shape_.rotation] & bit)
 	{
 	  if (row + this->shape_.y >= GRID_HEIGHT
-	      || this->grid_[row + this->shape_.y][column + this->shape_.x])
+	      || (this->grid_[row + this->shape_.y][column + this->shape_.x]
+		  && this->shape_.postY < this->shape_.y))
 	    return true;
 	}
       if (++column == 4)
@@ -287,7 +290,9 @@ bool					TetrisGrid::p_invalidateCollision()
       if (this->shapeModel_[this->shape_.type][this->shape_.rotation] & bit)
 	{
 	  if (column + this->shape_.x < 0
-	      || column + this->shape_.x >= GRID_WIDTH)
+	      || column + this->shape_.x >= GRID_WIDTH
+	      || (this->grid_[row + this->shape_.y][column + this->shape_.x]
+		  && this->shape_.postY == this->shape_.y))
 	    return true;
 	}
       if (++column == 4)
