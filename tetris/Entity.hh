@@ -3,15 +3,17 @@
 
 #include				<allegro5/allegro.h>
 #include				<allegro5/allegro_image.h>
-#include				"IContentComponent.hh"
+#include				<list>
+#include				"AContentComponent.hh"
+#include				"ContentComponentTypes.hh"
 
-class					IContentComponent;
+class					AContentComponent;
 
 class					Entity
 {
 public:
   Entity();
-  Entity(IContentComponent *content);
+  Entity(AContentComponent *content);
   ~Entity();
   void					update(ALLEGRO_EVENT *event = NULL);
   void					draw();
@@ -25,17 +27,19 @@ public:
   float					getY() const;
   float					getWidth() const;
   float					getHeight() const;
-  void					setContentComponent(IContentComponent *content);
-  IContentComponent			*getContentComponent() const;
+  void					setContentComponent(AContentComponent *content, unsigned int priority = 0);
+  AContentComponent			*getContentComponent(e_contentComponentType type = ALL_TYPE) const;
   bool					getVisible() const;
-  void					deleteContentComponent();
+  // void					deleteContentComponent();
+  typedef std::list<AContentComponent*>::iterator t_iter;
+  typedef std::list<AContentComponent*>::const_iterator t_const_iter;
 private:
-  IContentComponent			*content_;
   float					x_;
   float					y_;
   float					width_;
   float					height_;
   bool					visible_;
+  std::list<AContentComponent*>		content_;
 };
 
 #endif					// __ENTITY_HH__

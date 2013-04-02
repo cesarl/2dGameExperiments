@@ -19,6 +19,7 @@ SRCS		=	AScene.cpp \
 			SceneMenu.cpp \
 			SceneMainGame.cpp \
 			Entity.cpp \
+			AContentComponent.cpp \
 			ContentComponentImage.cpp \
 			ContentComponentText.cpp \
 			ContentComponentSprite.cpp \

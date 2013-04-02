@@ -17,7 +17,9 @@ ContentComponentSprite::ContentComponentSprite(std::string const & imagePath,
   currentStep_(currentStep),
   speed_(speed),
   timeCounter_(-1)
-{}
+{
+  this->type_ = SPRITE_TYPE;
+}
 
 ContentComponentSprite::ContentComponentSprite(ALLEGRO_BITMAP *image,
 					       int columnNumber,
@@ -36,7 +38,9 @@ ContentComponentSprite::ContentComponentSprite(ALLEGRO_BITMAP *image,
   currentStep_(currentStep),
   speed_(speed),
   timeCounter_(-1)
-{}
+{
+  this->type_ = SPRITE_TYPE;
+}
 
 ContentComponentSprite::ContentComponentSprite() :
   ContentComponentImage(NULL),
@@ -48,7 +52,9 @@ ContentComponentSprite::ContentComponentSprite() :
   currentStep_(0),
   speed_(0),
   timeCounter_(-1)
-{}
+{
+  this->type_ = SPRITE_TYPE;
+}
 
 ContentComponentSprite::~ContentComponentSprite()
 {}

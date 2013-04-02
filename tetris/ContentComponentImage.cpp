@@ -1,20 +1,28 @@
 #include				"ContentComponentImage.hh"
 
 ContentComponentImage::ContentComponentImage() :
+  AContentComponent(),
   bitmap_(NULL)
-{}
+{
+  this->type_ = IMAGE_TYPE;
+}
 
-ContentComponentImage::ContentComponentImage(std::string const & imagePath)
+ContentComponentImage::ContentComponentImage(std::string const & imagePath) :
+  AContentComponent()
 {
   ImageManager				*imageManager;
 
   imageManager = ImageManager::getInstance();
   this->bitmap_ = imageManager->load(imagePath);
+  this->type_ = IMAGE_TYPE;
 }
 
 ContentComponentImage::ContentComponentImage(ALLEGRO_BITMAP *image) :
+  AContentComponent(),
   bitmap_(image)
-{}
+{
+  this->type_ = IMAGE_TYPE;
+}
 
 ContentComponentImage::~ContentComponentImage()
 {}

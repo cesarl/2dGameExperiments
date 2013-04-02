@@ -2,9 +2,9 @@
 # define				__CONTENT_COMPONENT_IMAGE_HH__
 
 #include				"ImageManager.hh"
-#include				"IContentComponent.hh"
+#include				"AContentComponent.hh"
 
-class					ContentComponentImage : public IContentComponent
+class					ContentComponentImage : public AContentComponent
 {
 public:
   ContentComponentImage();

@@ -1,11 +1,11 @@
 #ifndef					__CONTENT_COMPONENT_TEXT_HH__
 # define				__CONTENT_COMPONENT_TEXT_HH__
 
-#include				"IContentComponent.hh"
+#include				"AContentComponent.hh"
 #include				"FontManager.hh"
 #include				"Entity.hh"
 
-class					ContentComponentText : public IContentComponent
+class					ContentComponentText : public AContentComponent
 {
 public:
   ContentComponentText();
