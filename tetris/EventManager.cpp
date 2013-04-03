@@ -26,7 +26,6 @@ EventManager::~EventManager()
 void					EventManager::play()
 {
   bool					draw;
-  ALLEGRO_EVENT				ev;
 
   if (!this->sceneManager_)
     {
@@ -36,6 +35,7 @@ void					EventManager::play()
   this->pause_ = false;
   while (!this->pause_)
     {
+      ALLEGRO_EVENT			 ev;
       draw = false;
       al_wait_for_event(this->event_queue_, &ev);
       if (ev.type == ALLEGRO_EVENT_TIMER)

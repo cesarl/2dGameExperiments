@@ -15,6 +15,14 @@ SceneMainGame::~SceneMainGame()
 void					SceneMainGame::update(ALLEGRO_EVENT *event)
 {
   this->grid_.update();
+  if (this->grid_.getGameOver())
+    {
+      this->sendMessage(SCORE, &(this->score_), "gameOver");
+      this->sendMessage(MSG_ACTIVE, false, this->name_);
+      this->sendMessage(MSG_ACTIVE, true, "gameOver");
+      this->sendMessage(MSG_VISIBLE, true, "gameOver");
+    }
+  // std::cout << this->score_ << std::endl;
   (void)(event);
 }
 
@@ -44,7 +52,15 @@ void					SceneMainGame::input(ALLEGRO_EVENT *event)
 void					SceneMainGame::receiveMessage(e_message type, bool activate)
 {
   if (type == NEW_GAME)
-    this->grid_.newGame();
+    {
+      this->grid_.newGame(&(this->score_));
+    }
   (void)type;
   (void)activate;
+}
+
+void					SceneMainGame::receiveMessage(e_message type, void *data)
+{
+  (void)type;
+  (void)data;
 }

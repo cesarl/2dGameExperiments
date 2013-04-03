@@ -35,6 +35,7 @@ public:
   void					drawEvent(ALLEGRO_EVENT *event);
   void					inputEvent(ALLEGRO_EVENT *event);
   void					exit();
+  void					handleMessage(e_message type, void *data, std::string const & sceneName);
   void					handleMessage(e_message type, bool activate, std::string const & sceneName);
 private:
   std::list<AScene*>			collection_;

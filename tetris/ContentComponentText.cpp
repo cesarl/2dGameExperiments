@@ -33,8 +33,21 @@ ContentComponentText::~ContentComponentText()
 
 void					ContentComponentText::update(Entity *entity, ALLEGRO_EVENT *event)
 {
+
+  std::ostringstream			o;
+
+  if (event->type != ALLEGRO_EVENT_KEY_CHAR)
+    return;
+  if (event->keyboard.keycode == ALLEGRO_KEY_BACKSPACE && this->text_.length())
+    {
+      this->text_.erase(this->text_.length() - 1, 1);
+    }
+  else if (event->keyboard.keycode >= ALLEGRO_KEY_A && event->keyboard.keycode <= ALLEGRO_KEY_Z)
+    {
+      o << (char)event->keyboard.unichar;
+      this->text_ += (o.str());
+    }
   (void)entity;
-  (void)event;
 }
 
 void					ContentComponentText::draw(Entity *entity)
@@ -71,4 +84,9 @@ void					ContentComponentText::operator=(std::string const & str)
 void					ContentComponentText::operator+=(std::string const & str)
 {
   this->text_ += str;
+}
+
+const std::string			ContentComponentText::getText() const
+{
+  return this->text_;
 }

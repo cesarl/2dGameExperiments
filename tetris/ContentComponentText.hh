@@ -18,6 +18,7 @@ public:
   void					setFont(ALLEGRO_FONT * font);
   void					setAlign(int align);
   void					setColor(ALLEGRO_COLOR color);
+  const std::string			getText() const;
   void                                  operator=(std::string const & str);
   void                                  operator+=(std::string const & str);
 private:

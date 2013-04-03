@@ -18,6 +18,7 @@ public:
   virtual void				draw(ALLEGRO_EVENT *event);
   virtual void				input(ALLEGRO_EVENT *event);
   virtual void				receiveMessage(e_message type, bool activate);
+  virtual void				receiveMessage(e_message type, void *data);
 private: //member functions
   void					p_rollPause(int direction);
 private: //variables

@@ -38,14 +38,12 @@ TetrisGrid::TetrisGrid()
   this->shapeModel_[6][3] = 0x2640;
 
   srand(time(NULL));
-
-  this->newGame();
 }
 
 TetrisGrid::~TetrisGrid()
 {}
 
-void					TetrisGrid::newGame()
+void					TetrisGrid::newGame(int *score)
 {
   int					i;
 
@@ -68,6 +66,9 @@ void					TetrisGrid::newGame()
 
   memset(this->grid_, 0, sizeof(this->grid_[0][0]) * GRID_WIDTH * GRID_HEIGHT);
   this->p_newShape();
+  *score = 0;
+  this->score_ = score;
+  this->isGameOVer_ = false;
 }
 
 void					TetrisGrid::draw()
@@ -138,6 +139,12 @@ void					TetrisGrid::input(int key)
       break;
     }
 }
+
+bool					TetrisGrid::getGameOver() const
+{
+  return this->isGameOVer_;
+}
+
 
 void					TetrisGrid::p_newShape()
 {
@@ -370,6 +377,7 @@ void					TetrisGrid::p_cleanLine(int line)
 	  if (this->grid_[y][x])
 	    this->grid_[y][x]->setY(this->grid_[y][x]->getY() + CELL_SIZE);
 	  this->grid_[y + 1][x] = this->grid_[y][x];
+	  ++(*this->score_);
 	  ++x;
 	}
       --y;
@@ -378,5 +386,5 @@ void					TetrisGrid::p_cleanLine(int line)
 
 void					TetrisGrid::p_gameOver()
 {
-  std::cout << "gameover" << std::endl;
+  this->isGameOVer_ = true;
 }

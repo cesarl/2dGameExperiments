@@ -47,7 +47,6 @@ SceneMenu::~SceneMenu()
 
 void					SceneMenu::update(ALLEGRO_EVENT *event)
 {
-  // std::cout << "update" << std::endl;
   (void)(event);
 }
 
@@ -76,14 +75,16 @@ void					SceneMenu::input(ALLEGRO_EVENT *event)
 	  this->p_rollMenu(1);
 	  break;
 	case ALLEGRO_KEY_SPACE:
-	  this->sendMessage(MSG_ACTIVE, false, this->name_);
-	  this->sendMessage(MSG_VISIBLE, false, this->name_);
 	  if (this->selectedChoice_ == 2)
 	    {
+	      this->sendMessage(MSG_ACTIVE, false, this->name_);
+	      this->sendMessage(MSG_VISIBLE, false, this->name_);
 	      this->sendMessage(MSG_EXITAPP, false, "");
 	    }
 	  else if (this->selectedChoice_ == 0)
 	    {
+	      this->sendMessage(MSG_ACTIVE, false, this->name_);
+	      this->sendMessage(MSG_VISIBLE, false, this->name_);
 	      this->sendMessage(MSG_ACTIVE, true, "mainGame");
 	      this->sendMessage(MSG_VISIBLE, true, "mainGame");
 	      this->sendMessage(NEW_GAME, true, "mainGame");
@@ -98,6 +99,12 @@ void					SceneMenu::receiveMessage(e_message type, bool activate)
 {
   (void)type;
   (void)activate;
+}
+
+void					SceneMenu::receiveMessage(e_message type, void *data)
+{
+  (void)type;
+  (void)data;
 }
 
 void					SceneMenu::p_rollMenu(int direction)

@@ -140,6 +140,25 @@ void					SceneManager::exit()
     this->eventManager_->pause();
 }
 
+void					SceneManager::handleMessage(e_message type, void *data, std::string const & sceneName)
+{
+  AScene				*tmp;
+  t_iter				it;
+
+  tmp = this->get(sceneName);
+  if (tmp)
+    tmp->receiveMessage(type, data);
+  else if (sceneName.empty())
+    {
+      it = this->collection_.begin();
+      while (it != this->collection_.end())
+	{
+	  (*it)->receiveMessage(type, data);
+	  ++it;
+	}
+    }
+}
+
 void					SceneManager::handleMessage(e_message type, bool activate, std::string const & sceneName)
 {
   AScene				*tmp;

@@ -1,32 +1,35 @@
-#ifndef					__SCENE_MENU_HH__
-# define				__SCENE_MENU_HH__
+#ifndef					__SCENE_GAME_OVER_HH__
+# define				__SCENE_GAME_OVER_HH__
 
 #include				<iostream> // for debug - to clear
-#include				<string>
 #include				"AScene.hh"
 #include				"Entity.hh"
+#include				"SaveManager.hh"
 #include				"ContentComponentImage.hh"
 #include				"ContentComponentText.hh"
 
-#define					MAX_CHOICE 3
+#define					MAX_CHOICE_GO 2
 
-class					SceneMenu : public AScene
+class					SceneGameOver : public AScene
 {
 public:
-  SceneMenu();
-  ~SceneMenu();
+  SceneGameOver();
+  ~SceneGameOver();
   virtual void				update(ALLEGRO_EVENT *event);
   virtual void				draw(ALLEGRO_EVENT *event);
   virtual void				input(ALLEGRO_EVENT *event);
   virtual void				receiveMessage(e_message type, bool activate);
   virtual void				receiveMessage(e_message type, void *data);
 private: //member functions
-  void					p_rollMenu(int direction);
+  void					p_rollChoices(int direction);
+  void					p_saveScore();
 private: //variables
-  Entity				background_;
+  Entity				score_;
   Entity				title_;
+  Entity				playerNameLabel_;
+  Entity				playerName_;
   int					selectedChoice_;
-  Entity				choices_[MAX_CHOICE];
+  Entity				choices_[MAX_CHOICE_GO];
 };
 
-#endif					// __SCENE_MENU_HH__
+#endif					// __SCENE_GAME_OVER_HH__

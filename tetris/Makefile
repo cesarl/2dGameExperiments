@@ -16,9 +16,11 @@ SRCS		=	AScene.cpp \
 			ImageManager.cpp \
 			FontManager.cpp \
 			IdManager.cpp \
+			SaveManager.cpp \
 			SceneMenu.cpp \
 			SceneMainGame.cpp \
 			ScenePause.cpp \
+			SceneGameOver.cpp \
 			Entity.cpp \
 			AContentComponent.cpp \
 			ContentComponentImage.cpp \

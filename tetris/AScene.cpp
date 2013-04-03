@@ -69,3 +69,11 @@ void					AScene::sendMessage(e_message type, bool activate, std::string const & 
   if (this->sceneManager_)
     this->sceneManager_->handleMessage(type, activate, sceneName);
 }
+
+// very dirty need to use template
+
+void					AScene::sendMessage(e_message type, void *data, std::string const & sceneName)
+{
+  if (this->sceneManager_)
+    this->sceneManager_->handleMessage(type, data, sceneName);
+}

@@ -2,9 +2,11 @@
 #include				"SceneMenu.hh"
 #include				"SceneMainGame.hh"
 #include				"ScenePause.hh"
+#include				"SceneGameOver.hh"
 #include				"EventManager.hh"
 #include				"SceneManager.hh"
 #include				"ImageManager.hh"
+#include				"SaveManager.hh"
 #include				"FontManager.hh"
 
 static ALLEGRO_DISPLAY			*init(int width, int height)
@@ -22,6 +24,7 @@ int					main()
   SceneMenu				menu;
   SceneMainGame				mainGame;
   ScenePause				pause;
+  SceneGameOver				gameOver;
   SceneManager				sceneManager;
   EventManager				eventManager;
 
@@ -29,6 +32,7 @@ int					main()
   FontManager::getInstance()->load("assets/fonts//LilitaOne-Regular.ttf", 50);
   ImageManager::getInstance()->load("assets/imgs/blue_sky_background.jpg");
   ImageManager::getInstance()->load("assets/imgs/green_sky_background.jpg");
+  SaveManager::getInstance()->load("saveFile.cfg");
 
   sceneManager.add(&menu);
   menu.setActive(true);
@@ -43,6 +47,10 @@ int					main()
   sceneManager.add(&pause, HIGH);
   pause.setDisplay(display);
   pause.setName("pause");
+
+  sceneManager.add(&gameOver, HIGH);
+  gameOver.setDisplay(display);
+  gameOver.setName("gameOver");
 
   eventManager.setSceneManager(&sceneManager);
   eventManager.play();

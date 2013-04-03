@@ -31,16 +31,19 @@ class					TetrisGrid
 public:
   TetrisGrid();
   ~TetrisGrid();
-  void					newGame();
+  void					newGame(int *score);
   void					draw();
   void					update();
   void					input(int key);
+  bool					getGameOver() const;
 private:
   ContentComponentSprite		spriteTab_[GRID_WIDTH * GRID_HEIGHT];
   Entity				entityPool_[GRID_WIDTH * GRID_HEIGHT];
   Entity				*grid_[GRID_HEIGHT][GRID_WIDTH];
   shape_t				shape_;
   int					shapeModel_[SHAPE_NUMBER][4];
+  int					*score_;
+  bool					isGameOVer_;
 private: //function members
   void					p_newShape();
   bool					p_moveShape(int x, int y);
@@ -57,3 +60,18 @@ private: //function members
 };
 
 #endif					// __TETRIS_GRID_HH__
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

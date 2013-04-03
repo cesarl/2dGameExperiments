@@ -17,9 +17,11 @@ public:
   virtual void				draw(ALLEGRO_EVENT *event);
   virtual void				input(ALLEGRO_EVENT *event);
   virtual void				receiveMessage(e_message type, bool activate);
+  virtual void				receiveMessage(e_message type, void *data);
 private: //variables
   Entity				background_;
   TetrisGrid				grid_;
+  int					score_;
 };
 
 #endif					// __SCENE_MAIN_GAME_HH__

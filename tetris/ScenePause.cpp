@@ -93,6 +93,12 @@ void					ScenePause::receiveMessage(e_message type, bool activate)
   (void)activate;
 }
 
+void					ScenePause::receiveMessage(e_message type, void *data)
+{
+  (void)type;
+  (void)data;
+}
+
 void					ScenePause::p_rollPause(int direction)
 {
   AContentComponent			*contentComponent;
