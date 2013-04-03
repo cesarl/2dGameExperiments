@@ -62,7 +62,7 @@ void					ScenePause::input(ALLEGRO_EVENT *event)
 	case ALLEGRO_KEY_DOWN:
 	  this->p_rollPause(1);
 	  break;
-	case ALLEGRO_KEY_SPACE:
+	case ALLEGRO_KEY_ENTER:
 	  this->sendMessage(MSG_ACTIVE, false, this->name_);
 	  this->sendMessage(MSG_VISIBLE, false, this->name_);
 	  if (this->selectedChoice_ == 0)

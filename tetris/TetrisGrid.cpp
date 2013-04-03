@@ -50,10 +50,10 @@ void					TetrisGrid::newGame(int *score)
   i = 0;
   while (i < GRID_HEIGHT * GRID_WIDTH)
     {
-      this->spriteTab_[i].setBitmap("assets/imgs/blue_sky_background.jpg");
-      this->spriteTab_[i].setColumnNumber(4);
-      this->spriteTab_[i].setStepNumber(40);
-      this->spriteTab_[i].setSpeed(1);
+      this->spriteTab_[i].setBitmap("assets/imgs/tetris-sprite.jpg");
+      this->spriteTab_[i].setColumnNumber(8);
+      this->spriteTab_[i].setStepNumber(8);
+      this->spriteTab_[i].setSpeed(0.13);
       this->spriteTab_[i].setPartWidth(CELL_SIZE);
       this->spriteTab_[i].setPartHeight(CELL_SIZE);
       this->entityPool_[i].setContentComponent(&(this->spriteTab_[i]));
@@ -150,6 +150,7 @@ void					TetrisGrid::p_newShape()
 {
   int					i;
   int					count;
+  ContentComponentSprite		*tmp;
 
   this->shape_.rotation = 0;
   this->shape_.x = 4;
@@ -164,6 +165,8 @@ void					TetrisGrid::p_newShape()
       if (!this->entityPool_[i].getVisible())
 	{
 	  this->shape_.blocks[count] = &(this->entityPool_[i]);
+	  tmp = dynamic_cast<ContentComponentSprite*>(this->shape_.blocks[count]->getContentComponent(SPRITE_TYPE));
+	  tmp->setFrom(this->shape_.type * 8);
 	  this->shape_.blocks[count++]->setVisible(true);
 	}
       ++i;
@@ -220,7 +223,8 @@ void					TetrisGrid::p_updateShape()
 	{
 	  this->shape_.blocks[i]->setX((this->shape_.x + column) * CELL_SIZE);
 	  this->shape_.blocks[i]->setY((this->shape_.y + row) * CELL_SIZE - GRID_TOP_PADDING * CELL_SIZE);
-	  i++;
+	  this->shape_.blocks[i]->update();
+	  ++i;
 	}
       if (++column == 4)
 	{

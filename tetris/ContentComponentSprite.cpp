@@ -66,8 +66,9 @@ void					ContentComponentSprite::update(Entity *entity, ALLEGRO_EVENT *event)
   if (al_get_time() - this->timeCounter_ < this->speed_ || this->stepNumber_ == 0)
     return;
   ++this->currentStep_;
-  if (this->currentStep_ > this->stepNumber_ + this->from_)
+  if (this->currentStep_ >= this->stepNumber_ + this->from_)
     this->currentStep_ = this->from_;
+  this->timeCounter_ = al_get_time();
   (void)(entity);
   (void)(event);
 }
@@ -106,6 +107,7 @@ void					ContentComponentSprite::setPartHeight(int partHeight)
 void					ContentComponentSprite::setFrom(unsigned int from)
 {
   this->from_ = from;
+  this->currentStep_ = from;
 }
 
 void					ContentComponentSprite::setStepNumber(unsigned int stepNumber)

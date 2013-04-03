@@ -74,7 +74,7 @@ void					SceneMenu::input(ALLEGRO_EVENT *event)
 	case ALLEGRO_KEY_DOWN:
 	  this->p_rollMenu(1);
 	  break;
-	case ALLEGRO_KEY_SPACE:
+	case ALLEGRO_KEY_ENTER:
 	  if (this->selectedChoice_ == 2)
 	    {
 	      this->sendMessage(MSG_ACTIVE, false, this->name_);
