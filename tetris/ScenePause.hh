@@ -1,5 +1,5 @@
-#ifndef					__SCENE_MENU_HH__
-# define				__SCENE_MENU_HH__
+#ifndef					__SCENE_PAUSE_HH__
+# define				__SCENE_PAUSE_HH__
 
 #include				<iostream> // for debug - to clear
 #include				"AScene.hh"
@@ -9,17 +9,17 @@
 
 #define					MAX_CHOICE 3
 
-class					SceneMenu : public AScene
+class					ScenePause : public AScene
 {
 public:
-  SceneMenu();
-  ~SceneMenu();
+  ScenePause();
+  ~ScenePause();
   virtual void				update(ALLEGRO_EVENT *event);
   virtual void				draw(ALLEGRO_EVENT *event);
   virtual void				input(ALLEGRO_EVENT *event);
   virtual void				receiveMessage(e_message type, bool activate);
 private: //member functions
-  void					p_rollMenu(int direction);
+  void					p_rollPause(int direction);
 private: //variables
   Entity				background_;
   Entity				title_;
@@ -27,4 +27,4 @@ private: //variables
   Entity				choices_[MAX_CHOICE];
 };
 
-#endif					// __SCENE_MENU_HH__
+#endif					// __SCENE_PAUSE_HH__

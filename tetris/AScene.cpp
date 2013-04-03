@@ -59,41 +59,13 @@ void					AScene::setManager(SceneManager *manager)
 
 // Send a message to SceneManager
 // Examples :
-// messageSceneManager(ACTIVE, false, "");
+// sendMessage(ACTIVE, false, "");
 // --> set all scene active_ to false
-// messageSceneManager(DISPLAY, true, "CREDIT");
+// sendMessage(DISPLAY, true, "CREDIT");
 // --> set scene with title CREDIT display to true
 
-void					AScene::messageSceneManager(int type, bool activate, std::string const & sceneName)
+void					AScene::sendMessage(e_message type, bool activate, std::string const & sceneName)
 {
-  AScene				*tmp;
-
-  switch (type)
-    {
-    case MSG_ACTIVE:
-      if (sceneName.empty())
-	this->sceneManager_->setActiveAll(activate);
-      else
-	{
-	  tmp = this->sceneManager_->get(sceneName);
-	  if (tmp)
-	    tmp->setActive(activate);
-	  else
-	    std::cout << "existe pas " << sceneName << std::endl;
-	}
-      break;
-    case MSG_VISIBLE:
-      if (sceneName.empty())
-	this->sceneManager_->setVisibleAll(activate);
-      else
-	{
-	  tmp = this->sceneManager_->get(sceneName);
-	  if (tmp)
-	    tmp->setVisible(activate);
-	}
-      break;
-    case MSG_EXITAPP:
-      this->sceneManager_->exit();
-      break;
-    }
+  if (this->sceneManager_)
+    this->sceneManager_->handleMessage(type, activate, sceneName);
 }

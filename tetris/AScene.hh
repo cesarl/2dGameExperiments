@@ -5,15 +5,9 @@
 #include				<iostream> // pour debug - a enlever
 #include                                <allegro5/allegro.h>
 #include				"SceneManager.hh"
+#include				"EMessages.hh"
 
 class					SceneManager;
-
-enum					E_MSG
-  {
-    MSG_ACTIVE,
-    MSG_VISIBLE,
-    MSG_EXITAPP
-  };
 
 class					AScene
 {
@@ -37,7 +31,8 @@ public:
   void					setPriority(int priority);
   void					setDisplay(ALLEGRO_DISPLAY *display);
   void					setManager(SceneManager *manager);
-  void					messageSceneManager(int type, bool active, std::string const & sceneTitle);
+  void					sendMessage(e_message type, bool active, std::string const & sceneTitle);
+  virtual void				receiveMessage(e_message type, bool activate) = 0;
   virtual void				update(ALLEGRO_EVENT *event) = 0;
   virtual void				draw(ALLEGRO_EVENT *event) = 0;
   virtual void				input(ALLEGRO_EVENT *event) = 0;

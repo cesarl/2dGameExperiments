@@ -1,16 +1,14 @@
 #include				"ContentComponentText.hh"
 
 ContentComponentText::ContentComponentText() :
-  AContentComponent(),
+  AContentComponent(TEXT_TYPE),
   font_(NULL),
   align_(ALLEGRO_ALIGN_LEFT),
   color_(al_map_rgb(0, 0, 0))
-{
-  this->type_ = TEXT_TYPE;
-}
+{}
 
 ContentComponentText::ContentComponentText(std::string const & fontPath, int size) :
-  AContentComponent(),
+  AContentComponent(TEXT_TYPE),
   font_(NULL),
   align_(ALLEGRO_ALIGN_LEFT),
   color_(al_map_rgb(0, 0, 0))
@@ -19,11 +17,10 @@ ContentComponentText::ContentComponentText(std::string const & fontPath, int siz
 
   fontManager = FontManager::getInstance();
   this->font_ = fontManager->load(fontPath, size);
-  this->type_ = TEXT_TYPE;
 }
 
 ContentComponentText::ContentComponentText(ALLEGRO_FONT *font) :
-  AContentComponent(),
+  AContentComponent(TEXT_TYPE),
   font_(font),
   align_(ALLEGRO_ALIGN_LEFT),
   color_(al_map_rgb(0, 0, 0))

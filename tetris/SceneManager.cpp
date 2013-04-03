@@ -17,7 +17,7 @@ void					SceneManager::add(AScene * scene, int priority)
   i = this->collection_.begin();
   while (i != this->collection_.end())
     {
-      if (priority <= (*i)->getPriority())
+      if (priority >= (*i)->getPriority())
 	break;
       ++i;
     }
@@ -138,4 +138,50 @@ void					SceneManager::exit()
 {
   if (this->eventManager_)
     this->eventManager_->pause();
+}
+
+void					SceneManager::handleMessage(e_message type, bool activate, std::string const & sceneName)
+{
+  AScene				*tmp;
+  t_iter				it;
+
+  tmp = this->get(sceneName);
+  switch (type)
+    {
+    case MSG_ACTIVE:
+      if (sceneName.empty())
+	this->setActiveAll(activate);
+      else
+	{
+	  if (tmp)
+	    tmp->setActive(activate);
+	  else
+	    std::cout << "existe pas " << sceneName << std::endl;
+	}
+      break;
+    case MSG_VISIBLE:
+      if (sceneName.empty())
+	this->setVisibleAll(activate);
+      else
+	{
+	  if (tmp)
+	    tmp->setVisible(activate);
+	}
+      break;
+    case MSG_EXITAPP:
+      this->exit();
+      break;
+    default:
+      if (tmp)
+	tmp->receiveMessage(type, activate);
+      else if (sceneName.empty())
+	{
+	  it = this->collection_.begin();
+	  while (it != this->collection_.end())
+	    {
+	      (*it)->receiveMessage(type, activate);
+	      ++it;
+	    }
+	}
+    }
 }

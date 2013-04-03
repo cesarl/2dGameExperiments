@@ -1,6 +1,7 @@
 #include                                <allegro5/allegro.h>
 #include				"SceneMenu.hh"
 #include				"SceneMainGame.hh"
+#include				"ScenePause.hh"
 #include				"EventManager.hh"
 #include				"SceneManager.hh"
 #include				"ImageManager.hh"
@@ -20,6 +21,7 @@ int					main()
   ALLEGRO_DISPLAY			*display = init(50 * 20, 50 * 20);
   SceneMenu				menu;
   SceneMainGame				mainGame;
+  ScenePause				pause;
   SceneManager				sceneManager;
   EventManager				eventManager;
 
@@ -37,6 +39,10 @@ int					main()
   sceneManager.add(&mainGame);
   mainGame.setDisplay(display);
   mainGame.setName("mainGame");
+
+  sceneManager.add(&pause, HIGH);
+  pause.setDisplay(display);
+  pause.setName("pause");
 
   eventManager.setSceneManager(&sceneManager);
   eventManager.play();

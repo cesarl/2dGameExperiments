@@ -9,7 +9,7 @@ class					Entity;
 class					AContentComponent
 {
 public:
-  AContentComponent(unsigned int priority = 0);
+  AContentComponent(e_contentComponentType type);
   virtual ~AContentComponent();
   virtual void				update(Entity *entity, ALLEGRO_EVENT *event) = 0;
   virtual void				draw(Entity *entity) = 0;

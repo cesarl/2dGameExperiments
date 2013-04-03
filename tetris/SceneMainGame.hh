@@ -16,6 +16,7 @@ public:
   virtual void				update(ALLEGRO_EVENT *event);
   virtual void				draw(ALLEGRO_EVENT *event);
   virtual void				input(ALLEGRO_EVENT *event);
+  virtual void				receiveMessage(e_message type, bool activate);
 private: //variables
   Entity				background_;
   TetrisGrid				grid_;

@@ -7,6 +7,7 @@
 #include				<algorithm>
 #include				"AScene.hh"
 #include				"EventManager.hh"
+#include				"EMessages.hh"
 
 class					AScene;
 class					EventManager;
@@ -34,6 +35,7 @@ public:
   void					drawEvent(ALLEGRO_EVENT *event);
   void					inputEvent(ALLEGRO_EVENT *event);
   void					exit();
+  void					handleMessage(e_message type, bool activate, std::string const & sceneName);
 private:
   std::list<AScene*>			collection_;
   EventManager				*eventManager_;

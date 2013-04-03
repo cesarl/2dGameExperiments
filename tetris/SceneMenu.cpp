@@ -76,16 +76,17 @@ void					SceneMenu::input(ALLEGRO_EVENT *event)
 	  this->p_rollMenu(1);
 	  break;
 	case ALLEGRO_KEY_SPACE:
-	  this->messageSceneManager(MSG_ACTIVE, false, this->name_);
-	  this->messageSceneManager(MSG_VISIBLE, false, this->name_);
+	  this->sendMessage(MSG_ACTIVE, false, this->name_);
+	  this->sendMessage(MSG_VISIBLE, false, this->name_);
 	  if (this->selectedChoice_ == 2)
 	    {
-	      this->messageSceneManager(MSG_EXITAPP, false, "");
+	      this->sendMessage(MSG_EXITAPP, false, "");
 	    }
 	  else if (this->selectedChoice_ == 0)
 	    {
-	      this->messageSceneManager(MSG_ACTIVE, true, "mainGame");
-	      this->messageSceneManager(MSG_VISIBLE, true, "mainGame");
+	      this->sendMessage(MSG_ACTIVE, true, "mainGame");
+	      this->sendMessage(MSG_VISIBLE, true, "mainGame");
+	      this->sendMessage(NEW_GAME, true, "mainGame");
 	    }
 	  break;
 	}
@@ -93,17 +94,30 @@ void					SceneMenu::input(ALLEGRO_EVENT *event)
   (void)(event);
 }
 
+void					SceneMenu::receiveMessage(e_message type, bool activate)
+{
+  (void)type;
+  (void)activate;
+}
+
 void					SceneMenu::p_rollMenu(int direction)
 {
+  AContentComponent			*contentComponent;
   ContentComponentText			*textMenu;
 
-  textMenu = dynamic_cast<ContentComponentText*>(this->choices_[this->selectedChoice_].getContentComponent());
+  contentComponent = this->choices_[this->selectedChoice_].getContentComponent(TEXT_TYPE);
+  if (!contentComponent)
+    return;
+  textMenu = dynamic_cast<ContentComponentText*>(contentComponent);
   textMenu->setColor(al_map_rgb(100, 100, 100));
   this->selectedChoice_ += direction;
   if (this->selectedChoice_ >= MAX_CHOICE)
     this->selectedChoice_ = 0;
   else if (this->selectedChoice_ < 0)
     this->selectedChoice_ = MAX_CHOICE - 1;
-  textMenu = dynamic_cast<ContentComponentText*>(this->choices_[this->selectedChoice_].getContentComponent());
+  contentComponent = this->choices_[this->selectedChoice_].getContentComponent(TEXT_TYPE);
+  if (!contentComponent)
+    return;
+  textMenu = dynamic_cast<ContentComponentText*>(contentComponent);
   textMenu->setColor(al_map_rgb(30, 100, 100));
 }

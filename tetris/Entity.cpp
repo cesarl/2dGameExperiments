@@ -97,13 +97,28 @@ float					Entity::getHeight() const
   return this->height_;
 }
 
-// todo
-// manage priority
-
 void					Entity::setContentComponent(AContentComponent *content, unsigned int priority)
 {
-  this->content_.push_back(content);
-  (void)priority;
+  t_iter				it;
+
+  if (priority == 0)
+    {
+    this->content_.push_back(content);
+    content->setPriority(priority);
+    return;
+    }
+  it = this->content_.begin();
+  while (it != this->content_.end())
+    {
+      if ((*it)->getPriority() < priority)
+	break;
+      ++it;
+    }
+  if (it != this->content_.end())
+    this->content_.insert(it, content);
+  else
+    this->content_.push_back(content);
+  content->setPriority(priority);
 }
 
 AContentComponent			*Entity::getContentComponent(e_contentComponentType type) const

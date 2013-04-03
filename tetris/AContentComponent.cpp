@@ -1,8 +1,8 @@
 #include				"AContentComponent.hh"
 
-AContentComponent::AContentComponent(unsigned int priority) :
-  priority_(priority),
-  type_(ABSTRACT_TYPE)
+AContentComponent::AContentComponent(e_contentComponentType type) :
+  priority_(0),
+  type_(type)
 {}
 
 AContentComponent::~AContentComponent()
