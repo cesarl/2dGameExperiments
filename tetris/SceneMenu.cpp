@@ -8,7 +8,7 @@ SceneMenu::SceneMenu()
   ContentComponentText			*scoreText;
   ContentComponentText			*exitText;
 
-  backgroundImage = new ContentComponentImage("assets/imgs/blue_sky_background.jpg");
+  backgroundImage = new ContentComponentImage("assets/imgs/main-bg.jpg");
   this->background_.setContentComponent(backgroundImage);
   this->background_.setPos(0, 0);
 
@@ -16,7 +16,7 @@ SceneMenu::SceneMenu()
   titleText->setAlign(ALLEGRO_ALIGN_CENTER);
   *titleText = "TETRIS";
   this->title_.setContentComponent(titleText);
-  this->title_.setPos(374, 150);
+  this->title_.setPos(500, 150);
 
   this->selectedChoice_ = 0;
 
@@ -25,21 +25,21 @@ SceneMenu::SceneMenu()
   newGameText->setColor(al_map_rgb(50,100,100));
   *newGameText = "New Game";
   this->choices_[0].setContentComponent(newGameText);
-  this->choices_[0].setPos(374, 300);
+  this->choices_[0].setPos(500, 300);
 
   scoreText = new ContentComponentText("assets/fonts/LilitaOne-Regular.ttf", 50);
   scoreText->setAlign(ALLEGRO_ALIGN_CENTER);
   scoreText->setColor(al_map_rgb(100,100,100));
   *scoreText = "Scores";
   this->choices_[1].setContentComponent(scoreText);
-  this->choices_[1].setPos(374, 450);
+  this->choices_[1].setPos(500, 450);
 
   exitText = new ContentComponentText("assets/fonts/LilitaOne-Regular.ttf", 50);
   exitText->setAlign(ALLEGRO_ALIGN_CENTER);
   exitText->setColor(al_map_rgb(100,100,100));
   *exitText = "Exit";
   this->choices_[2].setContentComponent(exitText);
-  this->choices_[2].setPos(374, 600);
+  this->choices_[2].setPos(500, 600);
 }
 
 SceneMenu::~SceneMenu()

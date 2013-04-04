@@ -3,6 +3,11 @@
 SceneMainGame::SceneMainGame()
 {
   ContentComponentImage			*backgroundImage;
+  ContentComponentImage			*bigBackgroundImage;
+
+  bigBackgroundImage = new ContentComponentImage("assets/imgs/main-bg.jpg");
+  this->background_.setContentComponent(bigBackgroundImage);
+  this->background_.setPos(0, 0);
 
   backgroundImage = new ContentComponentImage("assets/imgs/green_sky_background.jpg");
   this->background_.setContentComponent(backgroundImage);

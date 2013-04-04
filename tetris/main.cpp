@@ -30,7 +30,7 @@ int					main()
 
   FontManager::getInstance()->load("assets/fonts//LilitaOne-Regular.ttf", 80);
   FontManager::getInstance()->load("assets/fonts//LilitaOne-Regular.ttf", 50);
-  ImageManager::getInstance()->load("assets/imgs/blue_sky_background.jpg");
+  ImageManager::getInstance()->load("assets/imgs/main-bg.jpg");
   ImageManager::getInstance()->load("assets/imgs/green_sky_background.jpg");
   SaveManager::getInstance()->load("saveFile.cfg");
 
