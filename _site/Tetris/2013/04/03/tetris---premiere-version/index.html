@@ -3,8 +3,8 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Tetris - Premiere version | V1</title>
-    <meta name="description" content="Retour d'experience sur la premiere version du Tetris">
+    <title>Tetris - Première version | V1</title>
+    <meta name="description" content="Retour d'expérience sur la première version du Tetris">
     <meta name="author" content="Cesar Leblic">
 
     <!-- Enable responsive viewport -->
@@ -112,7 +112,7 @@
       <div class="content">
         
 <div class="page-header">
-  <h1>Tetris - Premiere version | V1 </h1>
+  <h1>Tetris - Première version | V1 </h1>
 </div>
 
 <div class="row-fluid post-full">
@@ -121,35 +121,59 @@
       <span>03 April 2013</strong>
     </div>
     <div class="content">
-      <p>La premiere version du Tetris n&#8217;est pas encore complement terminee, reste :</p>
+      <p>On ne peut pas pour le moment parler de première version du Tetris car ce dernier n&#8217;est pas encore complètement terminé, reste :</p>
 
 <ul>
 <li>Musique et sons</li>
 
-<li>Enregistrement de score (actuellement buggy)</li>
+<li>Enregistrement des scores (actuellement buggy)</li>
 
 <li>Affichage des scores</li>
 
 <li>Design - basique :)</li>
 </ul>
 
-<p>Beaucoup de choses y ont ete implementees, je vais tenter de ne pas en oublier</p>
+<p>Cependant beaucoup de choses y ont été implémentées, et je préfère arrêter ma V1 ici avant d&#8217;aller plus loin.</p>
+
+<p>Je vais tenter de survoler les principaux développements et problèmes rencontrés. Cependant le code est simple et parle de lui mémé. C&#8217;est pourquoi je ne m&#8217;étale pas en explications techniques.</p>
+
+<h3 id='bibliographie_'>Bibliographie :</h3>
+
+<h4 id='singleton_pattern_'>Singleton pattern :</h4>
+
+<ul>
+<li><a href='http://en.wikipedia.org/wiki/Singleton_pattern'>Wikipedia</a></li>
+
+<li><em>Advanced 2D game development</em>, de Jonathan S. Harbour</li>
+</ul>
+
+<h4 id='component_based_architecture'>Component based architecture</h4>
+
+<ul>
+<li><a href='http://cowboyprogramming.com/2007/01/05/evolve-your-heirachy/'>Evolve your hierarchy</a></li>
+
+<li><a href='http://stackoverflow.com/questions/1901251/component-based-game-engine-design'>Stack overflow</a></li>
+
+<li>Avant tout Google est votre ami</li>
+
+<li>J&#8217;explique plus bas que l&#8217;implementation que j&#8217;en ai faite dans cette première version est entièrement mauvaise.</li>
+</ul>
 
 <h3 id='les_assets_managers'>Les assets managers</h3>
 
-<p>J&#8217;ai cree plusieurs type d&#8217;asset manager :</p>
+<p>J&#8217;ai crée plusieurs type d&#8217;asset manager :</p>
 
 <ul>
 <li>Pour les images (ImageManager)</li>
 
 <li>pour les polices (FontManager)</li>
 
-<li>pour les sauvegardes (SaveManager) // pas entierement fonctionnel</li>
+<li>pour les sauvegardes (SaveManager) // pas entièrement fonctionnel</li>
 </ul>
 
-<p>Il est prevu d&#8217;en creer un pour gerer les sons.</p>
+<p>Il est prévu d&#8217;en créer un pour gérer les sons.</p>
 
-<p>Ces managers ont pour fonction de charger les assets desires et de les renvoyer lorsque cela leur est demande.</p>
+<p>Ces managers ont pour fonction de charger les assets désirés et de les renvoyer lorsque cela leur est demandé.</p>
 
 <p>Ils stockent ces derniers dans une std::map avec pour clef le path - <code>path-fontsize</code> pour le FontManager.</p>
 
@@ -159,23 +183,23 @@
 <p><em>Points faibles et critiques</em></p>
 
 <ul>
-<li>pas de chargement asynchrone (ne permet pas d&#8217;implementer une barre de chargement par exemple)</li>
+<li>pas de chargement asynchrone (ne permet pas d&#8217;implémenter une barre de chargement par exemple)</li>
 
-<li>pourraient etre reunni dans un seul AssetManager</li>
+<li>pourraient être réunis dans un seul AssetManager</li>
 </ul>
 </blockquote>
 
-<h3 id='larchitecture_generale'>L&#8217;architecture generale</h3>
+<h3 id='larchitecture_gnrale'>L&#8217;architecture générale</h3>
 
-<p>Le code a priori parle de lui meme pour ce qui de l&#8217;achi generale.</p>
+<p>Le code <em>a priori</em> parle de lui même.</p>
 
-<p>L&#8217;architecture a ete (mal) pensee sur une base &#8220;horizontale&#8221;, cad :</p>
+<p>L&#8217;architecture à été (mal) pensée sur une base &#8220;horizontale&#8221;, CAD :</p>
 
-<p>Un event manager</p>
+<p><strong>Un event manager</strong></p>
 
 <ul>
 <li>
-<p>qui se charge de collecter les differents events :</p>
+<p>qui se charge de collecter les différents events :</p>
 
 <ul>
 <li>Inputs</li>
@@ -185,29 +209,29 @@
 </li>
 
 <li>
-<p>auquel va etre lie une instance de SceneManager</p>
+<p>auquel va être lié une instance de SceneManager</p>
 </li>
 </ul>
 
-<p>Scene manager</p>
+<p><strong>Scene manager</strong></p>
 
 <ul>
-<li>se charge de la gestion de differentes scenes (menu, sous menu, jeux)</li>
+<li>se charge de la gestion de différentes scènes (menu, sous menu, jeux)</li>
 
-<li>decide de quel scene afficher / mettre a jour</li>
+<li>décide de quelle scène afficher / mettre à jour</li>
 
-<li>en fonction de l&#8217;etat de scenes (visibles, activent) il leur passera ou non les events (inputs, refresh timer&#8230;)</li>
+<li>en fonction de l&#8217;état des scènes (visibles, actives) il leur passera ou non les events (inputs, refresh timer&#8230;)</li>
 </ul>
 
-<p>Les scenes</p>
+<p><strong>Les scènes</strong></p>
 
 <ul>
-<li>toutes des classes heritieres de l&#8217;abstract class AScene</li>
+<li>sont toutes des classes héritières de l&#8217;abstract class AScene</li>
 
-<li>se chargent de la gestion des Entites / des inputs / de l&#8217;affichage</li>
+<li>se chargent de la gestion des Entités / des inputs / de l&#8217;affichage</li>
 </ul>
 
-<p>Les entites</p>
+<p><strong>Les entités</strong></p>
 
 <ul>
 <li>
@@ -218,14 +242,14 @@
 <p>Elles contiennent</p>
 
 <ul>
-<li>un jeu de coordonnees et dimensions</li>
+<li>coordonnées et dimensions</li>
 
 <li>une liste de composantes</li>
 </ul>
 </li>
 
 <li>
-<p>A l&#8217;update elles appellent la methode <code>update</code> de chacune de leur composante</p>
+<p>A l&#8217;update elles appellent la méthode <code>update</code> de chacune de leur composante</p>
 </li>
 
 <li>
@@ -233,19 +257,19 @@
 </li>
 
 <li>
-<p>Les differentes composantes sont : images, sprite et texte</p>
+<p>Les différentes composantes sont : images, sprite et texte</p>
 </li>
 </ul>
 
 <h4 id='explication_des_choix'>Explication des choix</h4>
 
 <blockquote>
-<p><strong>Q: Qu&#8217;est ce que ce systeme d&#8217;entity et de composante ?</strong></p>
+<p><strong>Q: Qu&#8217;est ce que ce système d&#8217;entité et de composante ?</strong></p>
 </blockquote>
 
-<p><strong>A: J&#8217;ai prefere essayer d&#8217;implementer un syteme base sur les composants par souci d&#8217;evolutivite</strong></p>
+<p><strong>A: J&#8217;ai préféré essayer d&#8217;implémenter un système basé sur les composants par souci d&#8217;évolutivité</strong></p>
 
-<p>En effet, j&#8217;aurais pu, beacoup plus simplement faire de l&#8217;heritage classique du type :</p>
+<p>En effet, j&#8217;aurais pu, beaucoup plus simplement faire de l&#8217;héritage classique du type :</p>
 
 <ul>
 <li>Entity</li>
@@ -255,7 +279,7 @@
 <li>EntityImage + EntitySprite</li>
 </ul>
 
-<p>Cepedant, si je rajoute a terme, des particlues, des explosions, des roations, des zoom, je devrais prodeder de la sorte:</p>
+<p>Cependant, si je veux pouvoir à terme, ajouter des particules, des explosions, des rotations, des zooms, je devrais procéder de la sorte:</p>
 
 <ul>
 <li>
@@ -270,28 +294,32 @@
 
 <li>EntityTextRotable</li>
 
-<li>EntityTextExplosion +&#8230; Ca n&#8217;aurais pas ete maintenable - j&#8217;ai deja trop souvent fait cette erreur</li>
+<li>EntityTextExplosion +&#8230; Ça n&#8217;aurais pas été maintenable - j&#8217;ai déjà trop souvent fait cette erreur</li>
 </ul>
 </li>
 </ul>
 
-<p>C&#8217;est pourquoi j&#8217;ai essayer d&#8217;implementer pour la premiere fois dans ma vie palpitante de petit developpeur, une architecture de type component based ! Et pour le moment on peut toujours parler d&#8217;erreur car nous sommes loin de la solution flexible et evolutive ! Pas grave, on est la pour ca ^^</p>
+<p>C&#8217;est pourquoi j&#8217;ai essayé d&#8217;implémenter pour la première fois dans ma vie palpitante de petit développeur, une architecture de type component based ! Et pour le moment on peut toujours parler d&#8217;erreur car nous sommes loin de la solution flexible et évolutive ! Pas grave, on est la pour ça ^^</p>
 
 <blockquote>
 <p><strong>Q: Pourquoi dis tu que ton implementation du component based design est foireuse ?</strong></p>
 </blockquote>
 
-<p><strong>A: Il n&#8217;y a qu&#8217;a regarder le code du TetriGrid.cpp hehe - c&#8217;est la ou se passe la quasi totalite du jeu.</strong> Dans la fonction p_newShape() on voit je cree une nouvelle forme a faire tomber dans le tetris.</p>
+<p><strong>A: Il n&#8217;y a qu&#8217;à regarder le code du <code>TetrisGrid.cpp</code> hehe - c&#8217;est là où se passe la quasi totalité du jeu.</strong></p>
 
-<p>Pour ca je commence par aller chercher les Entites deja cree et inutilises. Jusque la pas de probleme. Tant que l&#8217;oon modifie l&#8217;Entity tout se passe bien (width, height, position, visibility &#8230;). Cependant, des que l&#8217;on veut communiquer avec se composantes ca se complique.</p>
+<p>Dans la fonction <code>p_newShape()</code>, on voit que je créé une nouvelle forme à faire tomber dans le Tetris.</p>
 
-<p>Je rappelle l&#8217;architecture de mon component based design (CBD) : Les composantes sont des classes heritieres de l&#8217;abstract class <code>AContentComponent</code>.n Les <code>Entity</code> contiennent une <code>std::list&lt;AContentComponent*&gt;</code> (content_) de composantes. Classee en fonction de priorite (voir methode setContentComponent()).</p>
+<p>Pour ça je commence par aller chercher les Entités déjà créées et inutilisées. Jusque là pas de problèmes. Tant que l&#8217;on modifie l&#8217;Entity tout se passe bien (width, height, position, visibility &#8230;). Cependant, dès que l&#8217;on veut communiquer avec ses composantes ça se complique.</p>
 
-<p>Chaque composante implemente une methode update et draw - pures dans AContentComponent</p>
+<p>Je rappelle l&#8217;architecture de mon component based design (CBD) :</p>
 
-<p>D&#8217;autre methodes peuvent etre ajoute propres a chaque composante, par exemple la composante Texte aura la methode getText() pour en recuperer la valeur sous la forme d&#8217;un string.</p>
+<p>Les composantes sont des classes héritières de l&#8217;abstract class <code>AContentComponent</code>. Les <code>Entity</code> contiennent une <code>std::list&lt;AContentComponent*&gt;</code> (content_) de composantes. Classées selon un ordre de priorité (voir méthode <code>setContentComponent()</code>).</p>
 
-<p>Mais imaginons que l&#8217;on ai ajoute une composante de type texte a l&#8217;entity <code>myEntity</code> a laquelle on ajoute une composante texte :</p>
+<p>Chaque composante implémente une méthode <code>update</code> et <code>draw</code> - pures dans <code>AContentComponent</code>.</p>
+
+<p>D&#8217;autre méthodes spécifique peuvent être ajoutées a chaque composante, par exemple la composante Texte aura la méthode <code>getText()</code> qui servira a en récupérer la valeur sous la forme d&#8217;un string.</p>
+
+<p>Mais imaginons que l&#8217;on veuille ajouter une composante de type texte à l&#8217;entity <code>myEntity</code> :</p>
 <div class='highlight'><pre><code class='c++'><span class='kt'>int</span>                                 <span class='n'>main</span><span class='p'>()</span>
 <span class='p'>{</span>
   <span class='n'>ContentComponentText</span>              <span class='o'>*</span><span class='n'>myComponent</span><span class='p'>;</span>
@@ -307,7 +335,7 @@
   <span class='k'>return</span> <span class='p'>(</span><span class='mi'>0</span><span class='p'>);</span>
 <span class='p'>}</span>
 </code></pre></div>
-<p>Si l&#8217;on veut que la fonction <code>tellMeTheTruth()</code> ajoute a la composante texte un string, comment allons nous faire ?</p>
+<p>Si l&#8217;on veut que la fonction <code>tellMeTheTruth()</code> concat le string contenu dans la composante avec un nouveau string, comment allons nous faire ?</p>
 <div class='highlight'><pre><code class='c++'><span class='kt'>void</span>					<span class='n'>tellMeTheTruth</span><span class='p'>(</span><span class='n'>Entity</span> <span class='o'>*</span><span class='n'>entity</span><span class='p'>)</span>
 <span class='p'>{</span>
   <span class='n'>AContentComponent</span>			<span class='o'>*</span><span class='n'>abstractComponent</span><span class='p'>;</span>
@@ -317,48 +345,74 @@
   <span class='k'>if</span> <span class='p'>(</span><span class='o'>!</span><span class='n'>abstractComponent</span><span class='p'>)</span>
     <span class='p'>{</span>
       <span class='n'>std</span><span class='o'>::</span><span class='n'>cerr</span> <span class='o'>&lt;&lt;</span> <span class='s'>&quot;Il y a un probleme mon capitaine, l&#39;entite ne contient aucune composante de type Text&quot;</span> <span class='o'>&lt;&lt;</span> <span class='n'>std</span><span class='o'>::</span><span class='n'>endl</span><span class='p'>;</span>
-	<span class='c1'>//a priori, si on fait un minimum attention ca ne peut pas arriver</span>
+	<span class='c1'>//a priori, si on fait un minimum attention ça ne peut pas arriver</span>
     <span class='p'>}</span>
   <span class='n'>textComponent</span> <span class='o'>=</span> <span class='k'>dynamic_cast</span><span class='o'>&lt;</span><span class='n'>ContentComponentText</span><span class='o'>*&gt;</span><span class='p'>(</span><span class='n'>abstractComponent</span><span class='p'>);</span>
   <span class='n'>textComponent</span> <span class='o'>+=</span> <span class='s'>&quot;sucks !!!!&quot;</span><span class='p'>;</span>
   <span class='n'>entity</span><span class='o'>-&gt;</span><span class='n'>draw</span><span class='p'>();</span>
 <span class='p'>}</span>
 </code></pre></div>
-<p>Ca en fait du texte pour afficher &#8221;&#8221;My component based architecture sucks&#8221; !!!</p>
+<p>Ça en fait du texte pour afficher &#8220;My component based architecture sucks&#8221; !!!</p>
 
-<p>De plus on va rencontrer d&#8217;autre problemes, tel que la communication entre les differentes composantes.</p>
+<p>De plus on va rencontrer d&#8217;autre problèmes, tel que la communication entre les différentes composantes. En effet, comment les faire communiquer entre elles ?</p>
 
-<p>Bref, j&#8217;imagine que ca repond asse bien a la question. Tout ca pour dire, l&#8217;implementation component based que j&#8217;ai pondu est clairement bancale ^^</p>
-
-<p><strong>Q: Tu n&#8217;as vraiment pas l&#8217;air tres content de ton travail, mais rassure moi, au moins j&#8217;imagine que tu es satisfait de ton architecture globale ?</strong></p>
-
-<p>Hahahahha ! Mais je suis toujours content - je te repete que je suis la pour apprendre de mes erreurs !</p>
-
-<p>Je ne peux pas me dire satisfait de l&#8217;archi globale, cette horizontalite m&#8217;a blocke a plusieurs reprise, et j&#8217;ai ete oblige de trouver des solutions - pas si betes a mon sens mais pour le moment mal implementees.</p>
-
-<p>Nous sommes d&#8217;accord que tout se passe dans les Scenes. Certaine vont proposer un menu, d&#8217;autre des phases de jeux. Par exemple ici nous avons une scene pour le menu principale, une pour le jeu en lui meme, une autre qui s&#8217;affiche lorsque l&#8217;on met le tetris en pause, et enfin une derniere au moment du game over et de l&#8217;enregistrment de scores. Toutes ces scenes sont des classes a part entiere, heritiere de l&#8217;abstract class <code>AScene</code>. Quand on en quitte une, une autre s&#8217;affiche. Mais alors il faut bien qu&#8217;elle comuniquent entre elles ! Ce a quoi je n&#8217;avais pas pense au depart (<a href='http://www.sinn-frei.com/media/2012/16469_017.gif'>je sais, je sais &#8230;</a>).</p>
-
-<p>Pour remedier a ce probleme, j&#8217;ai implementer - un peu a l&#8217;arrache - un systeme de communication entre le differentes scenes. Dans un premier temps elles pouvaient envoyer au sceneMamager des messages (int flag, bool onOff, std::string sceneName). Ca fonctionnait bien ; quand des scenes se desactivaient elles demandaient poliement a d&#8217;autre de les remplacer.</p>
-
-<p>Puis arriva le probleme de la communication de donnee entre les differentes scenes ! Autre affaire ! En effet, par exemple, la scene de jeu, une fois termine va s&#8217;eteindre pour etre replace par la scene de game over. Cependant c&#8217;est la scene de jeu qui calcul le score, et a priori, celle de game over n&#8217;a aucune idee du score que vous venez de realiser. J&#8217;ai donc surcharge la fonction d&#8217;envoi de message en lui permettant de transporter des donnes (des void* :/).</p>
-
-<p>Si vous trouvez toujours ce genre de communication inteligente, allez jeter un coup d&#8217;oeil au code de SceneGameOver.cpp, vous verrez&#8230; Si vous n&#8217;etes toujours pas convaincu, laissez moi vous expliquer pourquoi c&#8217;est mal :</p>
+<p>On pourrait aussi relever plusieurs incohérences telles que :</p>
 
 <ul>
-<li>Les scenes sont appelee a l&#8217;aide de string ! Ca tient le coup pour passer des scene en scene une fois toutes les 2 minutes, mais imaginons deux scenes actives en meme temps et echangeant beaucoup de donnee tres frequemment. Ca devient lourd ! Comme diraient les geeks &#8220;ze pas trez zopti tout za&#8221;.</li>
+<li>Pourquoi mettre les coordonnées et dimensions dans l&#8217;entité et ne pas plutôt en faire une composante ?</li>
 
-<li>Tu as un super moyen de transferer les infos du haut de l&#8217;echelle (EventManager) jusqu&#8217;en bas (Entity et ses composante) mais tu es oblige de trickser avec des enums et des void* pour remonter le cours du flux d&#8217;information, ca tesemble vraiment logique ??? !</li>
-
-<li>La on te parle de communication entre scene, imagine ce que ca serait d&#8217;essayer de faire communiquer des scenes avec l&#8217;event manager ?</li>
-
-<li>et je n&#8217;ose pas mentionner l&#8217;utilisation de void* a la place de template etc etc&#8230;</li>
+<li>Pourquoi la composante Sprite hérite elle de la composante Image ? Ne devrait elle pas plutôt la compléter au sein de l&#8217;entité ? - &#8230;</li>
 </ul>
 
-<p>Et puis il n&#8217;y a pas que ca qui peche dans ce systeme.</p>
+<p><strong>Pour résumer</strong></p>
 
-<p>Imaginons demain j&#8217;arrive a brancher un(e) super game designer - on peut toujours rever, j&#8217;ai deja du mal a brancher des etudiants en informatiques - qui touchote au code et qui a vraiment trop envie de mettre en place des scenes.</p>
+<p>Aujourd&#8217;hui la tentative d&#8217;implementation d&#8217;un CBD que j&#8217;ai faite ne permet pas : - La communication entre les différentes composantes d&#8217;une même entité. - Message - Données</p>
 
-<p>Je lui explique : &#8220;Alors la, si tu veux ajouter un menu bah tu cree une class SceneNomDuMenu qui herite de AScene. Ensuite si tu veux mettre du texte tu cree des variables membres de la classe, et tu leur ajoute un ou des composants de ton choix &#8230;&#8230;&#8230;&#8230;&#8230;.&#8221;. Bref, vous avez compris, que chaque menu soit un heritage de classe, c&#8217;est pas tip top - sauf si on aime mesurer sa productivite a la longueur de son code ; 1 nouveau menu = 400 nouvelles lignes ^^.</p>
+<ul>
+<li>La communication entre les différentes composantes d&#8217;entités séparées.</li>
+
+<li>D&#8217;appeler simplement certaines méthodes des composantes (exemple de <code>getText()</code>). - &#8230;</li>
+</ul>
+
+<p><strong>Cependant :</strong></p>
+
+<ul>
+<li>Le coeur y était ^^</li>
+
+<li>Je me suis mieux documenté depuis, et je travaille déjà sur une refonte</li>
+</ul>
+
+<p><strong>Q: Tu n&#8217;as vraiment pas l&#8217;air très content de ton travail, mais rassure moi, au moins j&#8217;imagine que tu es satisfait de ton architecture globale ?</strong></p>
+
+<p>Hahahahha ! Mais je suis toujours content - je te répète que je suis la pour apprendre de mes erreurs !</p>
+
+<p>Je ne peux pas me dire satisfait de l&#8217;archi globale, cette horizontalité m&#8217;a bloqué à plusieurs reprises, et j&#8217;ai été obligé de trouver des solutions - pas si bêtes à mon sens mais pour le moment très mal implémentées.</p>
+
+<p>Nous sommes d&#8217;accord que tout se passe dans les Scenes. Certaine vont proposer un menu, d&#8217;autre des phases de jeux. Par exemple ici nous avons une scène pour le menu principale, une pour le jeu en lui même, une autre qui s&#8217;affiche lorsque l&#8217;on met le tetris en pause, et enfin une dernière, au moment du game over et de l&#8217;enregistrement des scores.</p>
+
+<p>Toutes ces scènes sont des classes à part entière, héritières de l&#8217;abstract class <code>AScene</code>. Quand on en quitte une, une autre s&#8217;affiche. Mais alors il faut bien qu&#8217;elle communiquent entre elles ! Ce à quoi je n&#8217;avais pas pensé au départ (<a href='http://25.media.tumblr.com/tumblr_lyl2qa5RQH1qcfbz9o1_250.gif'>je sais, je sais &#8230;</a>).</p>
+
+<p>Pour remédier à ce problème, j&#8217;ai implémenté - un peu à l&#8217;arrache - un système de communication entre le différentes scènes. Dans un premier temps elles pouvaient envoyer au sceneMamager des messages (<code>int flag, bool onOff, std::string sceneName</code>). Ça fonctionnait bien ; quand des scènes se désactivaient elles demandaient poliment à d&#8217;autre de les remplacer.</p>
+
+<p>Puis arriva le problème de la communication de données entre les différentes scènes ! Autre affaire ! En effet, par exemple, la scène de jeu, une fois terminée va s&#8217;éteindre pour être replacé par la scène de game over. Cependant c&#8217;est la scène de jeu qui calcul le score, et à priori, celle de game over n&#8217;a aucune idée du score que vous venez de réaliser. J&#8217;ai donc surchargé la fonction d&#8217;envoi de message en lui permettant de transporter des donnes (des void* :/).</p>
+
+<p>Si vous trouvez toujours ce genre de communication intelligente, allez jeter un coup d&#8217;oeil au code de SceneGameOver.cpp, vous verrez&#8230;</p>
+
+<p>Si vous n&#8217;êtes toujours pas convaincu, laissez moi vous expliquer pourquoi c&#8217;est mal :</p>
+
+<ul>
+<li>Les scènes sont appelées a l&#8217;aide de string ! Ça tient le coup pour passer de scène en scène une fois toutes les 2 minutes, mais imaginons deux scènes actives en même temps et échangeant beaucoup de donnée très fréquemment. Ça devient lourd ! Comme diraient les geeks &#8220;ze pas trez zopti tout za&#8221;.</li>
+
+<li>Tu as un super moyen de transférer les Inmos du haut de l&#8217;échelle (EventManager) jusqu&#8217;en bas (Entity et ses composante) mais tu es obligé de trickser avec des <code>enum</code> et des void* pour remonter le cours du flux d&#8217;information !</li>
+
+<li>La on te parle de communication entre scène, imagine ce que ça serait d&#8217;essayer de faire communiquer des scènes avec l&#8217;event manager ?</li>
+
+<li>Et je n&#8217;ose pas mentionner l&#8217;utilisation de void* à la place de template etc etc&#8230;</li>
+</ul>
+
+<p>Et puis il n&#8217;y a pas que ça qui pèche dans ce système. Je vais tenter d&#8217;en faire une liste la plus complète possible : - Chaque scène est une classe a part entière ! Pour ajouter un simple menu, il faut donc définir une nouvelle classe ! - &#8230;</p>
+
+<p>Bon cet article est un peu chaotique ^^, j&#8217;essaierais de faire mieux la prochaine fois !</p>
     </div>
 
   
