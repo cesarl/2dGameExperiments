@@ -14,6 +14,7 @@ SRCS		=	IdManager.cpp \
 			Entity.cpp \
 			System.cpp \
 			Position.cpp \
+			Move.cpp \
 			main.cpp
 
 OBJS		=	$(SRCS:.cpp=.o)

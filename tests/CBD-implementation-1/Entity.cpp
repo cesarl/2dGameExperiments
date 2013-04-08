@@ -29,7 +29,7 @@ DataComponent				*Entity::getComponent(int type) const
 void					Entity::addComponent(DataComponent *component)
 {
   component->entity = this;
-  this->list_.insert(t_pair(component->type, component));
+  this->list_.insert(t_pair(component->typeId, component));
   // Component				*component;
 
   // component = System::getInstance()->createComponent(type);

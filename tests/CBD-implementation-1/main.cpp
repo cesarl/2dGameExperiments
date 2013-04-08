@@ -1,7 +1,6 @@
 #include				"Entity.hh"
 #include				"Component.hh"
 #include				"System.hh"
-#include				"Position.hh"
 #include				"ComponentTypes.hh"
 
 int					main()
@@ -9,9 +8,9 @@ int					main()
   Entity				*entity;
 
   entity = System::getInstance()->createEntity();
-  POSITION(entity);
-  POSITION(entity);
-  while (POSITION()->getX(entity) < 100000)
+  MOVE(entity);
+  entity->update();
+  while (POSITION()->getX(entity) < 100)
     entity->update();
   return 0;
 }

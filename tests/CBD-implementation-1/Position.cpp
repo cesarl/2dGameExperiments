@@ -18,17 +18,15 @@ Position				*Position::getInstance()
 
 void					Position::init(Entity *entity)
 {
-  entity->getComponent<DataPosition>(this->typeId_)->x = 10;
-  entity->getComponent<DataPosition>(this->typeId_)->y = 10;
+  entity->getComponent<DataPosition>(POSITION()->getTypeId())->x = 10;
+  entity->getComponent<DataPosition>(POSITION()->getTypeId())->y = 10;
 }
 
 void					Position::update(Entity *entity)
 {
   DataPosition				*data;
 
-  data = entity->getComponent<DataPosition>(this->typeId_);
-
-  ++data->x;
+  data = entity->getComponent<DataPosition>(POSITION()->getTypeId());
   std::cout << "x : " << data->x << std::endl;
 }
 
@@ -38,9 +36,9 @@ Position				*Position::operator()(Entity *entity)
 
   if (!entity->getComponent(this->typeId_))
     {
-      entity->addComponent(data);
       data->component = this;
-      data->typeId = this->typeId_;
+      data->typeId = POSITION()->getTypeId();
+      entity->addComponent(data);
       this->init(entity);
     }
   return this;
@@ -53,5 +51,5 @@ Position				*Position::operator()()
 
 int					Position::getX(Entity *entity) const
 {
-  return entity->getComponent<DataPosition>(this->typeId_)->x;
+  return entity->getComponent<DataPosition>(POSITION()->getTypeId())->x;
 }

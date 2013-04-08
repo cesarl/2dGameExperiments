@@ -2,15 +2,15 @@
 # define				__POSITION_HH__
 
 #include				"Component.hh"
-#include				"System.hh"
 #include				"Entity.hh"
+#include				"ComponentTypes.hh"
 
 namespace				ComponentType
 {
   struct				DataPosition : public DataComponent
   {
-    int					x;
-    int					y;
+    double				x;
+    double				y;
   };
 
   class					Position : public AComponent

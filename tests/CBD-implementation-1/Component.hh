@@ -25,6 +25,10 @@ public:
   // template				<typename T>
   // virtual T				*operator()(Entity *entity) = 0;
   virtual ~AComponent(){};
+  int					getTypeId() const
+  {
+    return this->typeId_;
+  }
 protected:
   AComponent()
   {
