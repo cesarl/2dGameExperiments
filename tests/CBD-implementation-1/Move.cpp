@@ -4,6 +4,11 @@
 
 using namespace				ComponentType;
 
+
+DataMove::DataMove(int typeId, AComponent *component) :
+  DataComponent(typeId, component)
+{}
+
 Move::Move() : AComponent()
 {
 }
@@ -31,12 +36,16 @@ void					Move::init(Entity *entity)
   move->gravityY = 0;
 }
 
-void					Move::update(Entity *entity)
+void					Move::update(Entity *entity, double time)
 {
   DataPosition				*position;
   DataMove				*move;
 
   move = entity->getComponent<DataMove>(MOVE()->getTypeId());
+
+  if (move->updateTimestamp == time)
+    return;
+  move->updateTimestamp = time;
   position = entity->getComponent<DataPosition>(POSITION()->getTypeId());
   move->vx -= move->frictionX;
   move->vy -= move->frictionY;
@@ -44,17 +53,17 @@ void					Move::update(Entity *entity)
   move->vy += move->gravityY;
   position->x += move->vx;
   position->y += move->vy;
-(void)entity;
+  (void)entity;
+  (void)time;
 }
 
 Move				*Move::operator()(Entity *entity)
 {
-  DataMove				*data = new DataMove;
+  DataMove			*data;
 
   if (!entity->getComponent(MOVE()->getTypeId()))
     {
-      data->component = this;
-      data->typeId = MOVE()->getTypeId();
+      data = new DataMove(MOVE()->getTypeId(), this);
       entity->addComponent(data);
       this->init(entity);
     }

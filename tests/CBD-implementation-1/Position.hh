@@ -11,6 +11,7 @@ namespace				ComponentType
   {
     double				x;
     double				y;
+    DataPosition(int typeId, AComponent *component);
   };
 
   class					Position : public AComponent
@@ -20,7 +21,7 @@ namespace				ComponentType
     virtual ~Position();
     static Position			*getInstance();
     virtual void			init(Entity *entity );
-    virtual void			update(Entity *entity);
+    virtual void			update(Entity *entity, double time = 0);
     Position				*operator()(Entity *entity);
     Position				*operator()();
     int					getX(Entity *entity) const;

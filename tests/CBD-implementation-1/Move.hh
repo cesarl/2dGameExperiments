@@ -15,6 +15,7 @@ namespace				ComponentType
     double				gravityY;
     double				frictionX;
     double				frictionY;
+    DataMove(int typeId, AComponent *component);
   };
 
   class					Move : public AComponent
@@ -24,7 +25,7 @@ namespace				ComponentType
     virtual ~Move();
     static Move				*getInstance();
     virtual void			init(Entity *entity );
-    virtual void			update(Entity *entity);
+    virtual void			update(Entity *entity, double time = 0);
     Move				*operator()(Entity *entity);
     Move				*operator()();
   private:

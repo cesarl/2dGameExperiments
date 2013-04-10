@@ -4,6 +4,11 @@
 
 using namespace				ComponentType;
 
+DataPosition::DataPosition(int typeId, AComponent *component) :
+  DataComponent(typeId, component)
+{}
+
+
 Position::Position() : AComponent()
 {}
 
@@ -22,22 +27,25 @@ void					Position::init(Entity *entity)
   entity->getComponent<DataPosition>(POSITION()->getTypeId())->y = 10;
 }
 
-void					Position::update(Entity *entity)
+void					Position::update(Entity *entity, double time)
 {
   DataPosition				*data;
-
+ 
   data = entity->getComponent<DataPosition>(POSITION()->getTypeId());
+  if (data->updateTimestamp == time)
+    return;
+  data->updateTimestamp = time;
   std::cout << "x : " << data->x << std::endl;
+  (void)time;
 }
 
 Position				*Position::operator()(Entity *entity)
 {
-  DataPosition				*data = new DataPosition;
+  DataPosition				*data;
 
   if (!entity->getComponent(this->typeId_))
     {
-      data->component = this;
-      data->typeId = POSITION()->getTypeId();
+      data = new DataPosition(POSITION()->getTypeId(), this);
       entity->addComponent(data);
       this->init(entity);
     }

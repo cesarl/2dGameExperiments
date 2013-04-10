@@ -9,21 +9,23 @@ class					AComponent;
 
 struct					DataComponent
 {
-  int					type;
-  int					priority;
+  int					updatePriority;
+  int					drawPriority;
   Entity				*entity;
   AComponent				*component;
   int					entityId;
   int					typeId;
+  double				updateTimestamp;
+
+  DataComponent(int typeId, AComponent *component);
+  virtual ~DataComponent();
 };
 
 class					AComponent
 {
 public:
   virtual void				init(Entity *entity) = 0;
-  virtual void				update(Entity *entity) = 0;
-  // template				<typename T>
-  // virtual T				*operator()(Entity *entity) = 0;
+  virtual void				update(Entity *entity, double time = 0) = 0;
   virtual ~AComponent(){};
   int					getTypeId() const
   {

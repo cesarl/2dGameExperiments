@@ -2,6 +2,8 @@
 # define				__ENTITY_HH__
 
 #include				<map>
+#include				<list>
+#include				<allegro5/allegro.h>
 #include				"Component.hh"
 
 struct					DataComponent;
@@ -20,11 +22,14 @@ public:
 private:
   int					id_;
   std::map<int, DataComponent*>		list_;
+  std::list< std::pair<int, DataComponent*> > updatePriorityList_;
 
   typedef std::map<int, DataComponent*>::iterator	t_iter;
   typedef std::map<int, DataComponent*>::const_iterator t_const_iter;
   typedef std::pair<int, DataComponent*>		t_pair;
 
+  typedef std::list< std::pair<int, DataComponent*> >::iterator		t_prio_iter;
+  typedef std::list< std::pair<int, DataComponent*> >::const_iterator	t_prio_const_iter;
 public:
 
   //

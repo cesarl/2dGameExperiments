@@ -11,11 +11,15 @@ LDFLAGS		=	-L/usr/lib -lallegro -lallegro_dialog -lallegro_primitives -lallegro_
 INC		=	-I. -I/usr/include/allegro5
 
 SRCS		=	IdManager.cpp \
+			ImageManager.cpp \
 			Entity.cpp \
-			System.cpp \
 			Component.cpp \
 			Position.cpp \
 			Move.cpp \
+			Image.cpp \
+			Sprite.cpp \
+			Visibility.cpp \
+			Rotation.cpp \
 			main.cpp
 
 OBJS		=	$(SRCS:.cpp=.o)
