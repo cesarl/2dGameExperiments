@@ -21,12 +21,18 @@ SRCS		=	AScene.cpp \
 			SceneMainGame.cpp \
 			ScenePause.cpp \
 			SceneGameOver.cpp \
-			Entity.cpp \
-			AContentComponent.cpp \
-			ContentComponentImage.cpp \
-			ContentComponentText.cpp \
-			ContentComponentSprite.cpp \
 			TetrisGrid.cpp \
+			Component.cpp \
+			Entity.cpp \
+			Image.cpp \
+			Move.cpp \
+			Position.cpp \
+			Rotation.cpp \
+			Sprite.cpp \
+			Text.cpp \
+			Visibility.cpp \
+			RotationForce.cpp \
+			ParticuleEmitter.cpp \
 			main.cpp
 
 OBJS		=	$(SRCS:.cpp=.o)

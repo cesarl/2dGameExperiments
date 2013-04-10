@@ -4,8 +4,6 @@
 #include				<iostream> // for debug - to clear
 #include				"AScene.hh"
 #include				"Entity.hh"
-#include				"ContentComponentImage.hh"
-#include				"ContentComponentText.hh"
 #include				"TetrisGrid.hh"
 
 class					SceneMainGame : public AScene
@@ -20,6 +18,7 @@ public:
   virtual void				receiveMessage(e_message type, void *data);
 private: //variables
   Entity				background_;
+  Entity				mainBackground_;
   TetrisGrid				grid_;
   int					score_;
 };

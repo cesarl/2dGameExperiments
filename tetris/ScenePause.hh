@@ -4,8 +4,6 @@
 #include				<iostream> // for debug - to clear
 #include				"AScene.hh"
 #include				"Entity.hh"
-#include				"ContentComponentImage.hh"
-#include				"ContentComponentText.hh"
 
 #define					MAX_CHOICE 3
 

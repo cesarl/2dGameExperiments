@@ -2,44 +2,47 @@
 
 SceneMenu::SceneMenu()
 {
-  ContentComponentImage			*backgroundImage;
-  ContentComponentText			*titleText;
-  ContentComponentText			*newGameText;
-  ContentComponentText			*scoreText;
-  ContentComponentText			*exitText;
-
-  backgroundImage = new ContentComponentImage("assets/imgs/main-bg.jpg");
-  this->background_.setContentComponent(backgroundImage);
-  this->background_.setPos(0, 0);
-
-  titleText = new ContentComponentText("assets/fonts/LilitaOne-Regular.ttf", 80);
-  titleText->setAlign(ALLEGRO_ALIGN_CENTER);
-  *titleText = "TETRIS";
-  this->title_.setContentComponent(titleText);
-  this->title_.setPos(500, 150);
-
   this->selectedChoice_ = 0;
 
-  newGameText = new ContentComponentText("assets/fonts/LilitaOne-Regular.ttf", 50);
-  newGameText->setAlign(ALLEGRO_ALIGN_CENTER);
-  newGameText->setColor(al_map_rgb(50,100,100));
-  *newGameText = "New Game";
-  this->choices_[0].setContentComponent(newGameText);
-  this->choices_[0].setPos(500, 300);
+  IMAGE(&(this->background_))->setBitmap("assets/imgs/main-bg.jpg");
+  POSITION(&(this->background_))->setPos(0, 0);
 
-  scoreText = new ContentComponentText("assets/fonts/LilitaOne-Regular.ttf", 50);
-  scoreText->setAlign(ALLEGRO_ALIGN_CENTER);
-  scoreText->setColor(al_map_rgb(100,100,100));
-  *scoreText = "Scores";
-  this->choices_[1].setContentComponent(scoreText);
-  this->choices_[1].setPos(500, 450);
+  TEXT(&(this->title_))->setFont("assets/fonts/LilitaOne-Regular.ttf", 80);
+  TEXT(&(this->title_))->align = ALLEGRO_ALIGN_CENTER;
+  *TEXT(&(this->title_)) = "TETRIS";
+  POSITION(&(this->title_))->setPos(500, 150);
 
-  exitText = new ContentComponentText("assets/fonts/LilitaOne-Regular.ttf", 50);
-  exitText->setAlign(ALLEGRO_ALIGN_CENTER);
-  exitText->setColor(al_map_rgb(100,100,100));
-  *exitText = "Exit";
-  this->choices_[2].setContentComponent(exitText);
-  this->choices_[2].setPos(500, 600);
+  TEXT(&(this->choices_[0]))->setFont("assets/fonts/LilitaOne-Regular.ttf", 50);
+  TEXT(&(this->choices_[0]))->align = ALLEGRO_ALIGN_CENTER;
+  TEXT(&(this->choices_[0]))->color = al_map_rgb(50,100,100);
+  *TEXT(&(this->choices_[0])) = "New Game";
+  POSITION(&(this->choices_[0]))->setPos(500, 300);
+
+  TEXT(&(this->choices_[1]))->setFont("assets/fonts/LilitaOne-Regular.ttf", 50);
+  TEXT(&(this->choices_[1]))->align = ALLEGRO_ALIGN_CENTER;
+  TEXT(&(this->choices_[1]))->color = al_map_rgb(100,100,100);
+  *TEXT(&(this->choices_[1])) = "Scores";
+  POSITION(&(this->choices_[1]))->setPos(500, 450);
+
+  TEXT(&(this->choices_[2]))->setFont("assets/fonts/LilitaOne-Regular.ttf", 50);
+  TEXT(&(this->choices_[2]))->align = ALLEGRO_ALIGN_CENTER;
+  TEXT(&(this->choices_[2]))->color = al_map_rgb(100,100,100);
+  *TEXT(&(this->choices_[2])) = "Exit";
+  POSITION(&(this->choices_[2]))->setPos(500, 600);
+
+  POSITION(&(this->particules_))->setPos(250, 320);
+  PARTICULE_EMITTER(&(this->particules_))->config(
+						  "assets/imgs/stars.png",
+						  10,
+						  10,
+						  10,
+						  5,
+						  10,
+						  0.05,
+						  250,
+						  500,
+						  50
+						  );
 }
 
 SceneMenu::~SceneMenu()
@@ -47,6 +50,7 @@ SceneMenu::~SceneMenu()
 
 void					SceneMenu::update(ALLEGRO_EVENT *event)
 {
+  this->particules_.update();
   (void)(event);
 }
 
@@ -55,6 +59,7 @@ void					SceneMenu::draw(ALLEGRO_EVENT *event)
   int					i;
 
   this->background_.draw();
+  this->particules_.draw();
   this->title_.draw();
   i = 0;
   while (i < MAX_CHOICE)
@@ -109,22 +114,12 @@ void					SceneMenu::receiveMessage(e_message type, void *data)
 
 void					SceneMenu::p_rollMenu(int direction)
 {
-  AContentComponent			*contentComponent;
-  ContentComponentText			*textMenu;
-
-  contentComponent = this->choices_[this->selectedChoice_].getContentComponent(TEXT_TYPE);
-  if (!contentComponent)
-    return;
-  textMenu = dynamic_cast<ContentComponentText*>(contentComponent);
-  textMenu->setColor(al_map_rgb(100, 100, 100));
+  TEXT(&(this->choices_[this->selectedChoice_]))->color = al_map_rgb(100, 100, 100);
   this->selectedChoice_ += direction;
   if (this->selectedChoice_ >= MAX_CHOICE)
     this->selectedChoice_ = 0;
   else if (this->selectedChoice_ < 0)
     this->selectedChoice_ = MAX_CHOICE - 1;
-  contentComponent = this->choices_[this->selectedChoice_].getContentComponent(TEXT_TYPE);
-  if (!contentComponent)
-    return;
-  textMenu = dynamic_cast<ContentComponentText*>(contentComponent);
-  textMenu->setColor(al_map_rgb(30, 100, 100));
+  TEXT(&(this->choices_[this->selectedChoice_]))->color = al_map_rgb(30, 100, 100);
+  POSITION(&(this->particules_))->setPos(250, POSITION( &(this->choices_[this->selectedChoice_]))->y + 20);
 }

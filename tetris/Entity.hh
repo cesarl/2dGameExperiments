@@ -1,45 +1,56 @@
 #ifndef					__ENTITY_HH__
 # define				__ENTITY_HH__
 
-#include				<allegro5/allegro.h>
-#include				<allegro5/allegro_image.h>
+#include				<map>
 #include				<list>
-#include				"AContentComponent.hh"
-#include				"ContentComponentTypes.hh"
+#include				<allegro5/allegro.h>
+#include				"Component.hh"
 
-class					AContentComponent;
+class					AComponent;
 
 class					Entity
 {
 public:
   Entity();
-  Entity(AContentComponent *content);
   ~Entity();
-  void					update(ALLEGRO_EVENT *event = NULL);
+  int					getId() const;
+  void					setId(int id);
+  AComponent				*getComponent(int type) const;
+  void					addComponent(AComponent *component);
+  void					removeComponent(int type);
+  void					update();
   void					draw();
-  void					setPos(float x, float y);
-  void					setX(float x);
-  void					setY(float y);
-  void					setWidth(float width);
-  void					setHeight(float height);
-  void					setVisible(bool visible);
-  float					getX() const;
-  float					getY() const;
-  float					getWidth() const;
-  float					getHeight() const;
-  void					setContentComponent(AContentComponent *content, unsigned int priority = 0);
-  AContentComponent			*getContentComponent(e_contentComponentType type = ALL_TYPE) const;
-  bool					getVisible() const;
-  // void					deleteContentComponent();
-  typedef std::list<AContentComponent*>::iterator t_iter;
-  typedef std::list<AContentComponent*>::const_iterator t_const_iter;
 private:
-  float					x_;
-  float					y_;
-  float					width_;
-  float					height_;
-  bool					visible_;
-  std::list<AContentComponent*>		content_;
+  int					id_;
+  std::map<int, AComponent*>		list_;
+  std::list< std::pair<int, AComponent*> > updatePriorityList_;
+  AComponent				*drawable_;
+
+  typedef std::map<int, AComponent*>::iterator	t_iter;
+  typedef std::map<int, AComponent*>::const_iterator t_const_iter;
+  typedef std::pair<int, AComponent*>		t_pair;
+
+  typedef std::list< std::pair<int, AComponent*> >::iterator		t_prio_iter;
+  typedef std::list< std::pair<int, AComponent*> >::const_iterator	t_prio_const_iter;
+public:
+
+  //
+  // templated member functions
+  //
+
+  template				<typename T>
+  T					*getComponent(int type)
+  {
+    t_const_iter			it;
+    T					*tmp;
+
+    it = this->list_.find(type);
+    if (it != this->list_.end())
+      return static_cast<T*>(it->second);
+    tmp = new T(this);
+    this->addComponent(tmp);
+    return tmp;
+  }
 };
 
 #endif					// __ENTITY_HH__

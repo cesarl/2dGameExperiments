@@ -6,7 +6,7 @@
 #include				<time.h>
 #include				<stdlib.h>
 #include				"Entity.hh"
-#include				"ContentComponentSprite.hh"
+#include				"ComponentTypes.hh"
 
 # define				GRID_WIDTH 10
 # define				GRID_HEIGHT 22
@@ -37,7 +37,6 @@ public:
   void					input(int key);
   bool					getGameOver() const;
 private:
-  ContentComponentSprite		spriteTab_[GRID_WIDTH * GRID_HEIGHT];
   Entity				entityPool_[GRID_WIDTH * GRID_HEIGHT];
   Entity				*grid_[GRID_HEIGHT][GRID_WIDTH];
   shape_t				shape_;

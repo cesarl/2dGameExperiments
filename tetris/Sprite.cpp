@@ -39,8 +39,6 @@ void					Sprite::draw()
   unsigned char				opacity = VISIBILITY(this->entity)->opacity;
   float					angle = ROTATION(this->entity)->angle;
 
-  if (!VISIBILITY(this->entity)->visible)
-    return;
   position = POSITION(this->entity);
   image = IMAGE(this->entity);
   if (image->bitmap)

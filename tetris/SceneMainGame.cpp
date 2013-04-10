@@ -2,16 +2,11 @@
 
 SceneMainGame::SceneMainGame()
 {
-  ContentComponentImage			*backgroundImage;
-  ContentComponentImage			*bigBackgroundImage;
+  IMAGE(&(this->mainBackground_))->setBitmap("assets/imgs/main-bg.jpg");
+  POSITION(&(this->mainBackground_))->setPos(0, 0);
 
-  bigBackgroundImage = new ContentComponentImage("assets/imgs/main-bg.jpg");
-  this->background_.setContentComponent(bigBackgroundImage);
-  this->background_.setPos(0, 0);
-
-  backgroundImage = new ContentComponentImage("assets/imgs/green_sky_background.jpg");
-  this->background_.setContentComponent(backgroundImage);
-  this->background_.setPos(0, 0);
+  IMAGE(&(this->background_))->setBitmap("assets/imgs/green_sky_background.jpg");
+  POSITION(&(this->background_))->setPos(0, 0);
 }
 
 SceneMainGame::~SceneMainGame()
@@ -33,6 +28,7 @@ void					SceneMainGame::update(ALLEGRO_EVENT *event)
 
 void					SceneMainGame::draw(ALLEGRO_EVENT *event)
 {
+  this->mainBackground_.draw();
   this->background_.draw();
   this->grid_.draw();
   (void)(event);

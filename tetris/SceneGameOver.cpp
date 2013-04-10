@@ -2,56 +2,43 @@
 
 SceneGameOver::SceneGameOver()
 {
-  ContentComponentText			*titleText;
-  ContentComponentText			*playerNameText;
-  ContentComponentText			*playerNameLabelText;
-  ContentComponentText			*scoreText;
-  ContentComponentText			*newTryText;
-  ContentComponentText			*backToMenuText;
-
   this->selectedChoice_ = 0;
 
-  titleText = new ContentComponentText("assets/fonts/LilitaOne-Regular.ttf", 80);
-  titleText->setAlign(ALLEGRO_ALIGN_CENTER);
-  titleText->setColor(al_map_rgb(255,100,100));
-  *titleText = "GAME OVER";
-  this->title_.setContentComponent(titleText);
-  this->title_.setPos(500, 100);
+  TEXT(&(this->title_))->setFont("assets/fonts/LilitaOne-Regular.ttf", 80);
+  TEXT(&(this->title_))->align = ALLEGRO_ALIGN_CENTER;
+  TEXT(&(this->title_))->color = al_map_rgb(255,100,100);
+  *TEXT(&(this->title_)) = "GAME OVER";
+  POSITION(&(this->title_))->setPos(500, 150);
 
-  scoreText = new ContentComponentText("assets/fonts/LilitaOne-Regular.ttf", 50);
-  scoreText->setAlign(ALLEGRO_ALIGN_CENTER);
-  scoreText->setColor(al_map_rgb(40,200,100));
-  *scoreText = "0";
-  this->score_.setContentComponent(scoreText);
-  this->score_.setPos(500, 200);
+  TEXT(&(this->score_))->setFont("assets/fonts/LilitaOne-Regular.ttf", 50);
+  TEXT(&(this->score_))->align = ALLEGRO_ALIGN_CENTER;
+  TEXT(&(this->score_))->color = al_map_rgb(40,200,100);
+  *TEXT(&(this->score_)) = "0";
+  POSITION(&(this->score_))->setPos(500, 200);
 
-  playerNameLabelText = new ContentComponentText("assets/fonts/LilitaOne-Regular.ttf", 50);
-  playerNameLabelText->setAlign(ALLEGRO_ALIGN_CENTER);
-  playerNameLabelText->setColor(al_map_rgb(100,100,100));
-  *playerNameLabelText = "Type your name";
-  this->playerNameLabel_.setContentComponent(playerNameLabelText);
-  this->playerNameLabel_.setPos(500, 300);
+  TEXT(&(this->playerNameLabel_))->setFont("assets/fonts/LilitaOne-Regular.ttf", 50);
+  TEXT(&(this->playerNameLabel_))->align = ALLEGRO_ALIGN_CENTER;
+  TEXT(&(this->playerNameLabel_))->color = al_map_rgb(100, 100, 100);
+  *TEXT(&(this->playerNameLabel_)) = "Type your name";
+  POSITION(&(this->playerNameLabel_))->setPos(500, 300);
 
-  playerNameText = new ContentComponentText("assets/fonts/LilitaOne-Regular.ttf", 50);
-  playerNameText->setAlign(ALLEGRO_ALIGN_CENTER);
-  playerNameText->setColor(al_map_rgb(15,200,250));
-  *playerNameText = "";
-  this->playerName_.setContentComponent(playerNameText);
-  this->playerName_.setPos(500, 350);
+  TEXT(&(this->playerName_))->setFont("assets/fonts/LilitaOne-Regular.ttf", 50);
+  TEXT(&(this->playerName_))->align = ALLEGRO_ALIGN_CENTER;
+  TEXT(&(this->playerName_))->color = al_map_rgb(15, 200, 250);
+  *TEXT(&(this->playerName_)) = "";
+  POSITION(&(this->playerName_))->setPos(500, 350);
 
-  newTryText = new ContentComponentText("assets/fonts/LilitaOne-Regular.ttf", 50);
-  newTryText->setAlign(ALLEGRO_ALIGN_CENTER);
-  newTryText->setColor(al_map_rgb(50,100,100));
-  *newTryText = "New Game";
-  this->choices_[0].setContentComponent(newTryText);
-  this->choices_[0].setPos(500, 450);
+  TEXT(&(this->choices_[0]))->setFont("assets/fonts/LilitaOne-Regular.ttf", 50);
+  TEXT(&(this->choices_[0]))->align = ALLEGRO_ALIGN_CENTER;
+  TEXT(&(this->choices_[0]))->color = al_map_rgb(50,100,100);
+  *TEXT(&(this->choices_[0])) = "New Game";
+  POSITION(&(this->choices_[0]))->setPos(500, 450);
 
-  backToMenuText = new ContentComponentText("assets/fonts/LilitaOne-Regular.ttf", 50);
-  backToMenuText->setAlign(ALLEGRO_ALIGN_CENTER);
-  backToMenuText->setColor(al_map_rgb(100,100,100));
-  *backToMenuText = "Exit to menu";
-  this->choices_[1].setContentComponent(backToMenuText);
-  this->choices_[1].setPos(500, 600);
+  TEXT(&(this->choices_[1]))->setFont("assets/fonts/LilitaOne-Regular.ttf", 50);
+  TEXT(&(this->choices_[1]))->align = ALLEGRO_ALIGN_CENTER;
+  TEXT(&(this->choices_[1]))->color = al_map_rgb(100,100,100);
+  *TEXT(&(this->choices_[1])) = "Exit to menu";
+  POSITION(&(this->choices_[1]))->setPos(500, 600);
 }
 
 SceneGameOver::~SceneGameOver()
@@ -107,7 +94,7 @@ void					SceneGameOver::input(ALLEGRO_EVENT *event)
 	  break;
 	}
     }
-  this->playerName_.getContentComponent(TEXT_TYPE)->update(&(this->playerName_), event);
+  // this->playerName_.getContentComponent(TEXT_TYPE)->update(&(this->playerName_), event);
 }
 
 void					SceneGameOver::receiveMessage(e_message type, bool activate)
@@ -123,43 +110,26 @@ void					SceneGameOver::receiveMessage(e_message type, void *data)
 {
   std::ostringstream			o;
   int					*score;
-  AContentComponent			*contentComponent;
-  ContentComponentText			*text;
 
   if (type != SCORE)
     return;
-  contentComponent = this->score_.getContentComponent(TEXT_TYPE);
-  if (!contentComponent)
-    return;
-  text = dynamic_cast<ContentComponentText*>(contentComponent);
   score = (int*)(data);
   std::cout << *score << std::endl;
   o << *score;
-  *text = o.str();
+  *TEXT(&(this->score_)) = o.str();
   (void)type;
   (void)data;
 }
 
 void					SceneGameOver::p_rollChoices(int direction)
 {
-  AContentComponent			*contentComponent;
-  ContentComponentText			*textGameOver;
-
-  contentComponent = this->choices_[this->selectedChoice_].getContentComponent(TEXT_TYPE);
-  if (!contentComponent)
-    return;
-  textGameOver = dynamic_cast<ContentComponentText*>(contentComponent);
-  textGameOver->setColor(al_map_rgb(100, 100, 100));
+  TEXT(&(this->choices_[this->selectedChoice_]))->color = al_map_rgb(100, 100, 100);
   this->selectedChoice_ += direction;
   if (this->selectedChoice_ >= MAX_CHOICE_GO)
     this->selectedChoice_ = 0;
   else if (this->selectedChoice_ < 0)
     this->selectedChoice_ = MAX_CHOICE_GO - 1;
-  contentComponent = this->choices_[this->selectedChoice_].getContentComponent(TEXT_TYPE);
-  if (!contentComponent)
-    return;
-  textGameOver = dynamic_cast<ContentComponentText*>(contentComponent);
-  textGameOver->setColor(al_map_rgb(30, 100, 100));
+  TEXT(&(this->choices_[this->selectedChoice_]))->color = al_map_rgb(30, 100, 100);
 }
 
 void					SceneGameOver::p_saveScore()
@@ -167,10 +137,7 @@ void					SceneGameOver::p_saveScore()
   int					score;
   std::stringstream			tmp;
 
-  tmp << dynamic_cast<ContentComponentText*>(this->score_.getContentComponent(TEXT_TYPE))->getText();
+  tmp << TEXT(&(this->score_))->text;
   tmp >> score;
-  SaveManager::getInstance()->
-    save(
-	 dynamic_cast<ContentComponentText*>(this->playerName_.getContentComponent(TEXT_TYPE))->getText(),
-	 score);
+  SaveManager::getInstance()->save(TEXT(&(this->score_))->text, score);
 }

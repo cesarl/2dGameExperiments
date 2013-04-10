@@ -5,8 +5,8 @@
 #include				<string>
 #include				"AScene.hh"
 #include				"Entity.hh"
-#include				"ContentComponentImage.hh"
-#include				"ContentComponentText.hh"
+#include				"Image.hh"
+#include				"Text.hh"
 
 #define					MAX_CHOICE 3
 
@@ -27,6 +27,7 @@ private: //variables
   Entity				title_;
   int					selectedChoice_;
   Entity				choices_[MAX_CHOICE];
+  Entity				particules_;
 };
 
 #endif					// __SCENE_MENU_HH__

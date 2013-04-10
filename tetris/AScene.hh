@@ -6,6 +6,7 @@
 #include                                <allegro5/allegro.h>
 #include				"SceneManager.hh"
 #include				"EMessages.hh"
+#include				"ComponentTypes.hh"
 
 class					SceneManager;
 

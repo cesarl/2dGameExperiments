@@ -5,8 +5,6 @@
 #include				"AScene.hh"
 #include				"Entity.hh"
 #include				"SaveManager.hh"
-#include				"ContentComponentImage.hh"
-#include				"ContentComponentText.hh"
 
 #define					MAX_CHOICE_GO 2
 

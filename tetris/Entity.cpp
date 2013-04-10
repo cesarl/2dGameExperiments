@@ -1,153 +1,114 @@
 #include				"Entity.hh"
 
-Entity::Entity() : x_(0),
-		   y_(0),
-		   width_(0),
-		   height_(0),
-		   visible_(true)
-{}
-
-Entity::Entity(AContentComponent *content) : x_(0),
-					     y_(0),
-					     width_(0),
-					     height_(0),
-					     visible_(true)
+Entity::Entity()
 {
-  if (content)
-    this->setContentComponent(content);
+  this->drawable_ = NULL;
 }
 
 Entity::~Entity()
-{}
-
-void					Entity::update(ALLEGRO_EVENT *event)
 {
   t_iter				it;
 
-  it = this->content_.begin();
-  while (it != this->content_.end())
+  it = this->list_.begin();
+  while (it != this->list_.end())
     {
-      (*it)->update(this, event);
+      delete it->second;
+      ++it;
+    }
+  this->list_.clear();
+  this->updatePriorityList_.clear();
+}
+
+int					Entity::getId() const
+{
+  return this->id_;
+}
+
+void					Entity::setId(int id)
+{
+  this->id_ = id;
+}
+
+AComponent				*Entity::getComponent(int type) const
+{
+  t_const_iter				it;
+
+  it = this->list_.find(type);
+  if (it != this->list_.end())
+    return 0;
+  return it->second;
+}
+
+void					Entity::addComponent(AComponent *component)
+{
+  t_prio_iter				it;
+
+  this->id_ = IdManager::getInstance()->newId();
+  this->list_.insert(t_pair(component->typeId, component));
+
+  if (component->updatePriority > 0)
+    {
+      it = this->updatePriorityList_.begin();
+      while (it != this->updatePriorityList_.end())
+	{
+	  if (it->second->updatePriority <= component->updatePriority)
+	    break;
+	  ++it;
+	}
+      if (it != this->updatePriorityList_.end())
+	{
+	  this->updatePriorityList_.insert(it, t_pair(component->updatePriority, component));
+	}
+      else
+	this->updatePriorityList_.push_back(t_pair(component->updatePriority, component));
+    }
+  if (component->drawPriority > 0)
+    {
+      if (!this->drawable_)
+	this->drawable_ = component;
+      else if (this->drawable_->drawPriority < component->drawPriority)
+	this->drawable_ = component;
+    }
+}
+
+void					Entity::removeComponent(int type)
+{
+  t_iter				it;
+  t_prio_iter				prio_it;
+
+  it = this->list_.find(type);
+  if (it == this->list_.end())
+    return;
+  if (this->drawable_ == it->second)
+    this->drawable_ = NULL;
+  prio_it = this->updatePriorityList_.begin();
+  while (prio_it != this->updatePriorityList_.end())
+    {
+      if (prio_it->second == it->second)
+	break;
+      ++prio_it;
+    }
+  if (prio_it != this->updatePriorityList_.end())
+    this->updatePriorityList_.erase(prio_it);
+  delete it->second;
+  this->list_.erase(it);
+}
+
+void					Entity::update()
+{
+  t_prio_iter				it;
+  double				time = al_get_time();
+
+  it = this->updatePriorityList_.begin();
+  while (it != this->updatePriorityList_.end())
+    {
+      it->second->update(time);
       ++it;
     }
 }
 
 void					Entity::draw()
 {
-  t_iter				it;
-
-  if (!this->visible_)
-    return;
-  it = this->content_.begin();
-  while (it != this->content_.end())
-    {
-      (*it)->draw(this);
-      ++it;
-    }
+  if (this->drawable_)
+    this->drawable_->draw();
 }
-
-void					Entity::setPos(float x, float y)
-{
-  this->x_ = x;
-  this->y_ = y;
-}
-
-void					Entity::setX(float x)
-{
-  this->x_ = x;
-}
-
-void					Entity::setY(float y)
-{
-  this->y_ = y;
-}
-
-void					Entity::setWidth(float width)
-{
-  this->width_ = width;
-}
-
-void					Entity::setHeight(float height)
-{
-  this->height_ = height;
-}
-
-void					Entity::setVisible(bool visible)
-{
-  this->visible_ = visible;
-}
-
-float					Entity::getX() const
-{
-  return this->x_;
-}
-
-float					Entity::getY() const
-{
-  return this->y_;
-}
-
-float					Entity::getWidth() const
-{
-  return this->width_;
-}
-
-float					Entity::getHeight() const
-{
-  return this->height_;
-}
-
-void					Entity::setContentComponent(AContentComponent *content, unsigned int priority)
-{
-  t_iter				it;
-
-  if (priority == 0)
-    {
-    this->content_.push_back(content);
-    content->setPriority(priority);
-    return;
-    }
-  it = this->content_.begin();
-  while (it != this->content_.end())
-    {
-      if ((*it)->getPriority() < priority)
-	break;
-      ++it;
-    }
-  if (it != this->content_.end())
-    this->content_.insert(it, content);
-  else
-    this->content_.push_back(content);
-  content->setPriority(priority);
-}
-
-AContentComponent			*Entity::getContentComponent(e_contentComponentType type) const
-{
-  t_const_iter				it;
-
-  it = this->content_.begin();
-  if (type == -1)
-    return *it;
-  while (it != this->content_.end())
-    {
-      if ((*it)->getType() == type)
-	return *it;
-      ++it;
-    }
-  return NULL;
-}
-
-bool					Entity::getVisible() const
-{
-  return this->visible_;
-}
-
-// todo
-// delete &| remove component
-
-// void					Entity::deleteContentComponent()
-// {
-//   if (this->content_)
-//     delete this->content_;
-//   this->content_ = NULL;
-// }

@@ -50,17 +50,10 @@ void					TetrisGrid::newGame(int *score)
   i = 0;
   while (i < GRID_HEIGHT * GRID_WIDTH)
     {
-      this->spriteTab_[i].setBitmap("assets/imgs/tetris-sprite.jpg");
-      this->spriteTab_[i].setColumnNumber(8);
-      this->spriteTab_[i].setStepNumber(8);
-      this->spriteTab_[i].setSpeed(0.13);
-      this->spriteTab_[i].setPartWidth(CELL_SIZE);
-      this->spriteTab_[i].setPartHeight(CELL_SIZE);
-      this->entityPool_[i].setContentComponent(&(this->spriteTab_[i]));
-      this->entityPool_[i].setVisible(false);
-      this->entityPool_[i].setWidth(CELL_SIZE);
-      this->entityPool_[i].setHeight(CELL_SIZE);
-      this->entityPool_[i].setX(- CELL_SIZE);
+      IMAGE(&(this->entityPool_[i]))->setBitmap("assets/imgs/tetris-sprite.jpg");
+      SPRITE(&(this->entityPool_[i]))->config(8, CELL_SIZE, CELL_SIZE, 0, 8, 0, 0.13);
+      VISIBILITY(&(this->entityPool_[i]))->setVisible(false);
+      POSITION(&(this->entityPool_[i]))->setPos(- CELL_SIZE, - CELL_SIZE);
       ++i;
     }
 
@@ -73,49 +66,77 @@ void					TetrisGrid::newGame(int *score)
 
 void					TetrisGrid::draw()
 {
-  int					i;
-  int					j;
+  // int					i;
+  // int					j;
+
+  // i = 0;
+  // while (i < GRID_HEIGHT)
+  //   {
+  //     j = 0;
+  //     while (j < GRID_WIDTH)
+  // 	{
+  // 	  if (this->grid_[i][j])
+  // 	    this->grid_[i][j]->draw();
+  // 	  ++j;
+  // 	}
+  //     ++i;
+  //   }
+  int						i;
 
   i = 0;
-  while (i < GRID_HEIGHT)
+  while (i < GRID_WIDTH * GRID_HEIGHT)
     {
-      j = 0;
-      while (j < GRID_WIDTH)
-  	{
-  	  if (this->grid_[i][j])
-  	    this->grid_[i][j]->draw();
-  	  ++j;
-  	}
+      this->entityPool_[i].draw();
       ++i;
     }
-  this->p_drawShape();
+  // this->p_drawShape();
 }
 
 void					TetrisGrid::update()
 {
-  int					i;
-  int					j;
-  static double				time = al_get_time();
+  int						i;
+  static double					time = al_get_time();
+  double					ctime = al_get_time();
 
-  i = 0;
   p_updateShape();
-  while (i < GRID_HEIGHT)
+  i = 0;
+  while (i < GRID_WIDTH * GRID_HEIGHT)
     {
-      j = 0;
-      while (j < GRID_WIDTH)
-  	{
-	  if (this->grid_[i][j])
-	    this->grid_[i][j]->update();
-  	  ++j;
-  	}
+      if (VISIBILITY(&(this->entityPool_[i]))->visible)
+	this->entityPool_[i].update();
       ++i;
     }
-  if (al_get_time() - time >= SPEED)
+  if (ctime - time >= SPEED)
     {
       this->p_checkGridState();
       this->p_moveShape(0, 1);
-      time = al_get_time();
+      time = ctime;
     }
+
+
+  // int					i;
+  // int					j;
+  // static double				time = al_get_time();
+
+  // i = 0;
+  // p_updateShape();
+  // while (i < GRID_HEIGHT)
+  //   {
+  //     j = 0;
+  //     while (j < GRID_WIDTH)
+  // 	{
+  // 	  if (this->grid_[i][j])
+  // 	    this->grid_[i][j]->update();
+  // 	  ++j;
+  // 	}
+  //     ++i;
+  //   }
+  // if (al_get_time() - time >= SPEED)
+  //   {
+  //     this->p_checkGridState();
+  //     this->p_moveShape(0, 1);
+  //     time = al_get_time();
+  //   }
 }
 
 void					TetrisGrid::input(int key)
@@ -135,9 +156,10 @@ void					TetrisGrid::input(int key)
       this->p_moveShape(1, 0);
       break;
     case ALLEGRO_KEY_SPACE:
-      p_rotateShape();
+      p_dropShape();
       break;
     }
+  (void)key;
 }
 
 bool					TetrisGrid::getGameOver() const
@@ -150,7 +172,6 @@ void					TetrisGrid::p_newShape()
 {
   int					i;
   int					count;
-  ContentComponentSprite		*tmp;
 
   this->shape_.rotation = 0;
   this->shape_.x = 4;
@@ -162,13 +183,19 @@ void					TetrisGrid::p_newShape()
   count = 0;
   while (count < 4 && i < GRID_WIDTH * GRID_HEIGHT)
     {
-      if (!this->entityPool_[i].getVisible())
-	{
-	  this->shape_.blocks[count] = &(this->entityPool_[i]);
-	  tmp = dynamic_cast<ContentComponentSprite*>(this->shape_.blocks[count]->getContentComponent(SPRITE_TYPE));
-	  tmp->setFrom(this->shape_.type * 8);
-	  this->shape_.blocks[count++]->setVisible(true);
-	}
+      if (!VISIBILITY(&(this->entityPool_[i]))->visible)
+  	{
+  	  this->shape_.blocks[count] = &(this->entityPool_[i]);
+	  POSITION(&(this->entityPool_[i]))->setPos(-CELL_SIZE, -CELL_SIZE);
+  	  SPRITE(&(this->entityPool_[i]))->from = this->shape_.type * 8;
+  	  SPRITE(&(this->entityPool_[i]))->currentStep = this->shape_.type * 8;
+  	  VISIBILITY(&(this->entityPool_[i]))->setVisible(true);
+  	  VISIBILITY(&(this->entityPool_[i]))->opacity = 255;
+  	  ROTATION_FORCE(&(this->entityPool_[i]))->stop();
+  	  ROTATION(&(this->entityPool_[i]))->angle = 0;
+	  this->entityPool_[i].removeComponent(T_MOVE);
+	  ++count;
+  	}
       ++i;
     }
 }
@@ -220,17 +247,17 @@ void					TetrisGrid::p_updateShape()
   for (; bit > 0; bit = bit >> 1)
     {
       if (this->shapeModel_[this->shape_.type][this->shape_.rotation] & bit)
-	{
-	  this->shape_.blocks[i]->setX((this->shape_.x + column) * CELL_SIZE);
-	  this->shape_.blocks[i]->setY((this->shape_.y + row) * CELL_SIZE - GRID_TOP_PADDING * CELL_SIZE);
-	  this->shape_.blocks[i]->update();
-	  ++i;
-	}
+  	{
+  	  POSITION(this->shape_.blocks[i])->x = (this->shape_.x + column) * CELL_SIZE;
+  	  POSITION(this->shape_.blocks[i])->y = (this->shape_.y + row) * CELL_SIZE - GRID_TOP_PADDING * CELL_SIZE;
+  	  this->shape_.blocks[i]->update();
+  	  ++i;
+  	}
       if (++column == 4)
-	{
-	  column = 0;
-	  ++row;
-	}
+  	{
+  	  column = 0;
+  	  ++row;
+  	}
     }
 }
 
@@ -248,15 +275,15 @@ void					TetrisGrid::p_registerShape()
   for (; bit > 0; bit = bit >> 1)
     {
       if (this->shapeModel_[this->shape_.type][this->shape_.rotation] & bit)
-	{
-	  this->grid_[row + this->shape_.y][column + this->shape_.x] = this->shape_.blocks[i];
-	  i++;
-	}
+  	{
+  	  this->grid_[row + this->shape_.y][column + this->shape_.x] = this->shape_.blocks[i];
+  	  i++;
+  	}
       if (++column == 4)
-	{
-	  column = 0;
-	  ++row;
-	}
+  	{
+  	  column = 0;
+  	  ++row;
+  	}
     }
 }
 
@@ -272,17 +299,17 @@ bool					TetrisGrid::p_shapeCollision()
   for (; bit > 0; bit = bit >> 1)
     {
       if (this->shapeModel_[this->shape_.type][this->shape_.rotation] & bit)
-	{
-	  if (row + this->shape_.y >= GRID_HEIGHT
-	      || (this->grid_[row + this->shape_.y][column + this->shape_.x]
-		  && this->shape_.postY < this->shape_.y))
-	    return true;
-	}
+  	{
+  	  if (row + this->shape_.y >= GRID_HEIGHT
+  	      || (this->grid_[row + this->shape_.y][column + this->shape_.x]
+  		  && this->shape_.postY < this->shape_.y))
+  	    return true;
+  	}
       if (++column == 4)
-	{
-	  column = 0;
-	  ++row;
-	}
+  	{
+  	  column = 0;
+  	  ++row;
+  	}
     }
   return false;
 }
@@ -299,18 +326,18 @@ bool					TetrisGrid::p_invalidateCollision()
   for (; bit > 0; bit = bit >> 1)
     {
       if (this->shapeModel_[this->shape_.type][this->shape_.rotation] & bit)
-	{
-	  if (column + this->shape_.x < 0
-	      || column + this->shape_.x >= GRID_WIDTH
-	      || (this->grid_[row + this->shape_.y][column + this->shape_.x]
-		  && this->shape_.postY == this->shape_.y))
-	    return true;
-	}
+  	{
+  	  if (column + this->shape_.x < 0
+  	      || column + this->shape_.x >= GRID_WIDTH
+  	      || (this->grid_[row + this->shape_.y][column + this->shape_.x]
+  		  && this->shape_.postY == this->shape_.y))
+  	    return true;
+  	}
       if (++column == 4)
-	{
-	  column = 0;
-	  ++row;
-	}
+  	{
+  	  column = 0;
+  	  ++row;
+  	}
     }
   return false;
 }
@@ -367,8 +394,11 @@ void					TetrisGrid::p_cleanLine(int line)
   x = 0;
   while (x < GRID_WIDTH)
     {
-      this->grid_[line][x]->setVisible(false);
-      this->grid_[line][x]->setX(- CELL_SIZE);
+      VISIBILITY(this->grid_[line][x])->fadeOut(0.12, 10);
+      MOVE(this->grid_[line][x])->vx = rand() % 6 - 3;
+      MOVE(this->grid_[line][x])->vy = rand() % 6 - 12;
+      MOVE(this->grid_[line][x])->gravityY = 0.1;
+      ROTATION_FORCE(this->grid_[line][x])->launch((float)rand()/RAND_MAX/2 - 0.5, 0.005);
       this->grid_[line][x] = NULL;
       ++x;
     }
@@ -379,7 +409,7 @@ void					TetrisGrid::p_cleanLine(int line)
       while (x < GRID_WIDTH)
 	{
 	  if (this->grid_[y][x])
-	    this->grid_[y][x]->setY(this->grid_[y][x]->getY() + CELL_SIZE);
+	    POSITION(this->grid_[y][x])->y = POSITION(this->grid_[y][x])->y + CELL_SIZE;
 	  this->grid_[y + 1][x] = this->grid_[y][x];
 	  ++(*this->score_);
 	  ++x;
