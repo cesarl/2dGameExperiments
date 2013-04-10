@@ -6,7 +6,18 @@ Entity::Entity()
 }
 
 Entity::~Entity()
-{}
+{
+  t_iter				it;
+
+  it = this->list_.begin();
+  while (it != this->list_.end())
+    {
+      delete it->second;
+      ++it;
+    }
+  this->list_.clear();
+  this->updatePriorityList_.clear();
+}
 
 int					Entity::getId() const
 {
