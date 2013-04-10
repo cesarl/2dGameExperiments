@@ -12,6 +12,7 @@ INC		=	-I. -I/usr/include/allegro5
 
 SRCS		=	IdManager.cpp \
 			ImageManager.cpp \
+			FontManager.cpp \
 			Entity.cpp \
 			Component.cpp \
 			Position.cpp \
@@ -20,6 +21,7 @@ SRCS		=	IdManager.cpp \
 			Sprite.cpp \
 			Visibility.cpp \
 			Rotation.cpp \
+			Text.cpp \
 			main.cpp
 
 OBJS		=	$(SRCS:.cpp=.o)

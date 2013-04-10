@@ -15,6 +15,7 @@ static ALLEGRO_DISPLAY			*init(int width, int height)
 int					main()
 {
   Entity				entity[100];
+  Entity				text;
   ALLEGRO_DISPLAY			*display = init(50 * 20, 50 * 20);
   int					count;
   int					from;
@@ -34,8 +35,14 @@ int					main()
       ++i;
     }
 
+  *TEXT(&text) = "Yeah";
+  TEXT(&text)->align = ALLEGRO_ALIGN_CENTER;
+  TEXT(&text)->color = al_map_rgb(255, 0, 255);
+  TEXT(&text)->setFont("LilitaOne-Regular.ttf", 80);
+  POSITION(&text)->setPos(500, 300);
+
   count = 0;
-  while (count < 300)
+  while (count < 220)
     {
       i = 0;
       al_clear_to_color(al_map_rgb(0,0,0));
@@ -46,6 +53,9 @@ int					main()
 	  ROTATION(&entity[i])->angle += 0.1;
 	  ++i;
 	}
+      if (count == 30)
+	*TEXT(&text) += " mon pote";
+      text.draw();
       al_flip_display();
       al_rest(0.02);
       ++count;

@@ -7,6 +7,7 @@
 #include				"Sprite.hh"
 #include				"Visibility.hh"
 #include				"Rotation.hh"
+#include				"Text.hh"
 
 typedef enum				EType
   {
@@ -15,7 +16,8 @@ typedef enum				EType
     T_IMAGE,
     T_SPRITE,
     T_VISIBILITY,
-    T_ROTATION
+    T_ROTATION,
+    T_TEXT
   }					EType;
 
 inline
@@ -52,6 +54,12 @@ inline
 Rotation				*ROTATION(Entity *entity)
 {
   return entity->getComponent<Rotation>(T_ROTATION);
+}
+
+inline
+Text				*TEXT(Entity *entity)
+{
+  return entity->getComponent<Text>(T_TEXT);
 }
 
 #endif					// __COMPONENT_TYPE_HH__
