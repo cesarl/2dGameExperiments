@@ -141,5 +141,5 @@ void					SceneGameOver::p_saveScore()
 
   tmp << TEXT(&(this->score_))->text;
   tmp >> score;
-  SaveManager::getInstance()->save(TEXT(&(this->score_))->text, score);
+  SaveManager::getInstance()->save(TEXT(&(this->playerName_))->text, score);
 }
