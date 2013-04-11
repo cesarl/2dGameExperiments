@@ -6,33 +6,36 @@ RM		=	rm -f
 
 CPPFLAGS	=	-W -Wextra -Wall -Werror
 
+CPPFLAGS	+=	-Icomponents -Iscenes -Imanagers -Iheaders
+
 LDFLAGS		=	-L/usr/lib -lallegro -lallegro_dialog -lallegro_primitives -lallegro_ttf -lallegro_font -lallegro_image
 
 INC		=	-I. -I/usr/include/allegro5
 
-SRCS		=	AScene.cpp \
-			EventManager.cpp \
-			SceneManager.cpp \
-			ImageManager.cpp \
-			FontManager.cpp \
-			IdManager.cpp \
-			SaveManager.cpp \
-			SceneMenu.cpp \
-			SceneMainGame.cpp \
-			ScenePause.cpp \
-			SceneGameOver.cpp \
+SRCS		=	managers/EventManager.cpp \
+			managers/SceneManager.cpp \
+			managers/ImageManager.cpp \
+			managers/FontManager.cpp \
+			managers/IdManager.cpp \
+			managers/SaveManager.cpp \
+			scenes/AScene.cpp \
+			scenes/SceneMenu.cpp \
+			scenes/SceneMainGame.cpp \
+			scenes/ScenePause.cpp \
+			scenes/SceneGameOver.cpp \
+			components/Component.cpp \
+			components/Image.cpp \
+			components/Move.cpp \
+			components/Position.cpp \
+			components/Rotation.cpp \
+			components/Sprite.cpp \
+			components/Text.cpp \
+			components/Visibility.cpp \
+			components/RotationForce.cpp \
+			components/ParticuleEmitter.cpp \
+			components/TextInput.cpp \
 			TetrisGrid.cpp \
-			Component.cpp \
 			Entity.cpp \
-			Image.cpp \
-			Move.cpp \
-			Position.cpp \
-			Rotation.cpp \
-			Sprite.cpp \
-			Text.cpp \
-			Visibility.cpp \
-			RotationForce.cpp \
-			ParticuleEmitter.cpp \
 			main.cpp
 
 OBJS		=	$(SRCS:.cpp=.o)

@@ -10,6 +10,7 @@
 #include				"Text.hh"
 #include				"RotationForce.hh"
 #include				"ParticuleEmitter.hh"
+#include				"TextInput.hh"
 
 typedef enum				EType
   {
@@ -21,7 +22,8 @@ typedef enum				EType
     T_ROTATION,
     T_TEXT,
     T_ROTATION_FORCE,
-    T_PARTICULE_EMITTER
+    T_PARTICULE_EMITTER,
+    T_TEXT_INPUT
   }					EType;
 
 inline
@@ -73,9 +75,15 @@ RotationForce				*ROTATION_FORCE(Entity *entity)
 }
 
 inline
-ParticuleEmitter				*PARTICULE_EMITTER(Entity *entity)
+ParticuleEmitter			*PARTICULE_EMITTER(Entity *entity)
 {
   return entity->getComponent<ParticuleEmitter>(T_PARTICULE_EMITTER);
+}
+
+inline
+TextInput				*TEXT_INPUT(Entity *entity)
+{
+  return entity->getComponent<TextInput>(T_TEXT_INPUT);
 }
 
 #endif					// __COMPONENT_TYPE_HH__

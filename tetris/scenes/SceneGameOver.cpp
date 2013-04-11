@@ -27,6 +27,7 @@ SceneGameOver::SceneGameOver()
   TEXT(&(this->playerName_))->color = al_map_rgb(15, 200, 250);
   *TEXT(&(this->playerName_)) = "";
   POSITION(&(this->playerName_))->setPos(500, 350);
+  TEXT_INPUT(&(this->playerName_));
 
   TEXT(&(this->choices_[0]))->setFont("assets/fonts/LilitaOne-Regular.ttf", 50);
   TEXT(&(this->choices_[0]))->align = ALLEGRO_ALIGN_CENTER;
@@ -94,6 +95,7 @@ void					SceneGameOver::input(ALLEGRO_EVENT *event)
 	  break;
 	}
     }
+  TEXT_INPUT(&(this->playerName_))->input(event);
   // this->playerName_.getContentComponent(TEXT_TYPE)->update(&(this->playerName_), event);
 }
 
