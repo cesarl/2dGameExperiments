@@ -31,8 +31,8 @@ void				PnjMap<T>::generate(int seed)
       IMAGE(tmp)->setBitmap("assets/imgs/mummy.png");
       FORCE_RESISTANCE(tmp)->setResistance(7);
       MOVE(tmp)->setFriction(0.07, 0.07);
-      BOUNDING_BOX(tmp)->setWidth(64);
-      BOUNDING_BOX(tmp)->setHeight(64);
+      BOUNDING_BOX(tmp)->setDimension(30, 30);
+      BOUNDING_BOX(tmp)->setMargin(17, 17);
       this->go_.push_back(tmp);
       ++i;
     }

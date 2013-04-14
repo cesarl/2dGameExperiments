@@ -14,9 +14,6 @@ SceneMenu::SceneMenu()
     }
   HEROS(&this->heros_);
   POSITION(&this->heros_)->setPos(64 * 20 / 2 - 32, 64 * 10 / 2 - 32);
-  SPRITE(&this->heros_)->config(8, 64, 64, 8, 8, 8, 0.12);
-  IMAGE(&this->heros_)->setBitmap("assets/imgs/heros.png");
-  FORCE_RESISTANCE(&this->heros_)->setResistance(3);
 }
 
 SceneMenu::~SceneMenu()
@@ -33,8 +30,8 @@ void					SceneMenu::update(ALLEGRO_EVENT *event)
 
   boundlist = this->pnjmap_.getSelection(&this->heros_);
   it = boundlist->begin();
-  // if (!boundlist->empty())
-  //   POSITION(&this->heros_)->reversePos();
+  if (!boundlist->empty())
+    POSITION(&this->heros_)->reversePos();
   while (it != boundlist->end())
     {
       FORCE_RESISTANCE(&this->heros_)->applyForce(*it);

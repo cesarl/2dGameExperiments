@@ -5,12 +5,13 @@
 
 Heros::Heros(Entity *entity) : AComponent(entity, T_HEROS, 1)
 {
-  SPRITE(entity);
-  MOVE(entity);
   MOVE(entity)->setFriction(0.04, 0.04);
   INPUT(entity)->listen(true);
-  BOUNDING_BOX(entity)->setWidth(64);
-  BOUNDING_BOX(entity)->setHeight(64);
+  BOUNDING_BOX(entity)->setDimension(30, 30);
+  BOUNDING_BOX(entity)->setMargin(17, 17);
+  SPRITE(entity)->config(8, 64, 64, 8, 8, 8, 0.12);
+  IMAGE(entity)->setBitmap("assets/imgs/heros.png");
+  FORCE_RESISTANCE(entity)->setResistance(3);
 }
 
 Heros::~Heros()

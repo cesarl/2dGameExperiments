@@ -7,7 +7,9 @@ BoundingBox::BoundingBox(Entity *entity) :
   AComponent(entity, T_BOUNDING_BOX),
   width_(0),
   height_(0),
-  collidable_(true)
+  collidable_(true),
+  marginX_(0),
+  marginY_(0)
 {
   POSITION(entity);
 }
@@ -47,22 +49,18 @@ int					BoundingBox::getHeight() const
 
 bool					BoundingBox::collide(Entity *o) const
 {
-  Position				*p1;
-  Position				*p2;
   const BoundingBox			*bb1;
   BoundingBox				*bb2;
 
   if (!this->collidable_ || !BOUNDING_BOX(o)->isCollidable())
     return false;
-  p1 = POSITION(this->entity);
-  p2 = POSITION(o);
   bb1 = this;
   bb2 = BOUNDING_BOX(o);
 
-  if (p1->x > p2->x + bb2->getWidth() ||
-      p1->x + bb1->getWidth() < p2->x ||
-      p1->y > p2->y + bb2->getHeight() ||
-      p1->y + bb1->getHeight() < p2->y)
+  if (bb1->getX() > bb2->getXX() ||
+      bb1->getXX() < bb2->getX() ||
+      bb1->getY() > bb2->getYY() ||
+      bb1->getYY() < bb2->getY())
     return false;
   return true;
 }
@@ -81,4 +79,40 @@ bool					BoundingBox::isCollidable() const
 void					BoundingBox::setCollidable(bool val)
 {
   this->collidable_ = val;
+}
+
+void					BoundingBox::setMargin(int x, int y)
+{
+  this->marginX_ = x;
+  this->marginY_ = y;
+}
+
+void					BoundingBox::setMarginX(int x)
+{
+  this->marginX_ = x;
+}
+
+void					BoundingBox::setMarginY(int y)
+{
+  this->marginY_ = y;
+}
+
+int					BoundingBox::getX() const
+{
+  return POSITION(this->entity)->x + this->marginX_;
+}
+
+int					BoundingBox::getXX() const
+{
+  return POSITION(this->entity)->x + this->marginX_ + this->width_;
+}
+
+int					BoundingBox::getY() const
+{
+  return POSITION(this->entity)->y + this->marginY_;
+}
+
+int					BoundingBox::getYY() const
+{
+  return POSITION(this->entity)->y + this->marginY_ + this->height_;
 }

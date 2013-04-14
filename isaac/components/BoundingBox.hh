@@ -19,10 +19,19 @@ public:
   void					setDimension(int width, int height);
   bool					isCollidable() const;
   void					setCollidable(bool val);
+  void					setMargin(int x, int y);
+  void					setMarginX(int x);
+  void					setMarginY(int y);
+  int					getX() const;
+  int					getY() const;
+  int					getXX() const;
+  int					getYY() const;
 private:
   int					width_;
   int					height_;
   bool					collidable_;
+  int					marginX_;
+  int					marginY_;
 };
 
 #endif					// __BOUNDING_BOX_HH__
