@@ -32,8 +32,10 @@ SRCS		=	managers/EventManager.cpp \
 			components/TextInput.cpp \
 			components/Input.cpp \
 			components/Heros.cpp \
+			components/BoundingBox.cpp \
+			components/ForceResistance.cpp \
 			Entity.cpp \
-			Room.cpp \
+			Decor.cpp \
 			main.cpp
 
 OBJS		=	$(SRCS:.cpp=.o)

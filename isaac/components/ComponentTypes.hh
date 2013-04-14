@@ -13,6 +13,8 @@
 #include				"TextInput.hh"
 #include				"Input.hh"
 #include				"Heros.hh"
+#include				"BoundingBox.hh"
+#include				"ForceResistance.hh"
 
 typedef enum				EType
   {
@@ -27,7 +29,9 @@ typedef enum				EType
     T_PARTICULE_EMITTER,
     T_TEXT_INPUT,
     T_INPUT,
-    T_HEROS
+    T_HEROS,
+    T_BOUNDING_BOX,
+    T_FORCE_RESISTANCE
   }					EType;
 
 inline
@@ -100,6 +104,18 @@ inline
 Heros					*HEROS(Entity *entity)
 {
   return entity->getComponent<Heros>(T_HEROS);
+}
+
+inline
+BoundingBox				*BOUNDING_BOX(Entity *entity)
+{
+  return entity->getComponent<BoundingBox>(T_BOUNDING_BOX);
+}
+
+inline
+ForceResistance				*FORCE_RESISTANCE(Entity *entity)
+{
+  return entity->getComponent<ForceResistance>(T_FORCE_RESISTANCE);
 }
 
 #endif					// __COMPONENT_TYPE_HH__

@@ -1,8 +1,11 @@
 #include				"Entity.hh"
+#include				"ComponentTypes.hh"
 
 Entity::Entity()
 {
   this->drawable_ = NULL;
+  srand(time(0) + rand());
+  this->seed_ = rand();
 }
 
 Entity::~Entity()
@@ -111,4 +114,49 @@ void					Entity::draw()
 {
   if (this->drawable_)
     this->drawable_->draw();
+}
+
+void					Entity::serialize(std::ofstream *file)
+{
+  int					x;
+  int					y;
+  int					r;
+  Position				*position;
+  Rotation				*rotation;
+
+  position = POSITION(this);
+  rotation = ROTATION(this);
+
+  x = (int)(position->x);
+  y = (int)(position->y);
+  r = (int)(rotation->angle * 180 / M_PI);
+
+  std::cout << "nc : " << position->x << " c : " << x << std::endl;
+
+  file->write(reinterpret_cast<const char *>(&this->seed_), sizeof(this->seed_));
+  file->write(reinterpret_cast<const char *>(&x), sizeof(x));
+  file->write(reinterpret_cast<const char *>(&y), sizeof(y));
+  file->write(reinterpret_cast<const char *>(&r), sizeof(r));
+}
+
+void					Entity::unserialize(std::ifstream *file)
+{
+  int				posx;
+  int				posy;
+  int				rot;
+  int				seed;
+
+  file->read(reinterpret_cast<char*>(&seed), sizeof(int));
+  file->read(reinterpret_cast<char*>(&posx), sizeof(int));
+  file->read(reinterpret_cast<char*>(&posy), sizeof(int));
+  file->read(reinterpret_cast<char*>(&rot), sizeof(int));
+  this->generate(seed);
+  POSITION(this)->setPos(posx, posy);
+  ROTATION(this)->angle = rot * M_PI / 180;
+}
+
+
+void					Entity::generate(int seed)
+{
+  this->seed_ = seed;
 }

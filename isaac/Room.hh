@@ -1,31 +1,22 @@
 #ifndef				__ROOM_HH__
 # define			__ROOM_HH__
 
-#include			<vector>
-#include			<string>
-#include			"Entity.hh"
-#include			"ComponentTypes.hh"
+#include			"Collection.tcc"
+#include			"Decor.hh"
 
 #define				CELL_SIZE 64
 
-
-class				Room
+template			<typename T>
+class				Room : public Collection<T>
 {
 public:
   Room();
-  ~Room();
-  bool				save(std::string const & path, std::string const & name, int x, int y);
-  bool				load(std::string const & path, std::string const & name, int x, int y);
-  void				generate();
-  void				clear();
-  void				update(ALLEGRO_EVENT *event);
-  void				draw(ALLEGRO_EVENT *event);
+  virtual ~Room();
+  virtual void			generate(int seed = 0);
 private:
-  Entity			heros_;
-  Entity			map_[10][20];	// map tile objets
+  Entity*			map_[10][20];	// map tile objets
   int				width_;		// nb of tiles hor
   int				height_;	// nb of tiles ver
-  std::vector<Entity*>		go_;		// game object : heros, pnj, weapons, objects
 };
 
 #endif				// __ROOM_HH__

@@ -3,6 +3,7 @@
 
 #include				<map>
 #include				<list>
+#include				<fstream>
 #include				<allegro5/allegro.h>
 #include				"Component.hh"
 
@@ -12,7 +13,7 @@ class					Entity
 {
 public:
   Entity();
-  ~Entity();
+  virtual ~Entity();
   int					getId() const;
   void					setId(int id);
   AComponent				*getComponent(int type) const;
@@ -20,11 +21,15 @@ public:
   void					removeComponent(int type);
   void					update();
   void					draw();
-private:
+  virtual void				serialize(std::ofstream *file);
+  virtual void				unserialize(std::ifstream *file);
+  virtual void				generate(int seed = 0);
+protected:
   int					id_;
   std::map<int, AComponent*>		list_;
   std::list< std::pair<int, AComponent*> > updatePriorityList_;
   AComponent				*drawable_;
+  int					seed_;
 
   typedef std::map<int, AComponent*>::iterator	t_iter;
   typedef std::map<int, AComponent*>::const_iterator t_const_iter;

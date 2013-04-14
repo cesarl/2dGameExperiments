@@ -13,9 +13,13 @@ public:
   virtual void				draw();
   int					getX() const;
   void					setPos(double x, double y);
+  void					reversePos();
 public:
   double				x;
   double				y;
+private:
+  double				postx_;
+  double				posty_;
 };
 
 #endif					// __POSITION_HH__

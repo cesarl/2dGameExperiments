@@ -83,3 +83,32 @@ void					Move::setFriction(double x, double y)
   this->frictionX = fabs(x);
   this->frictionY = fabs(y);
 }
+
+double					Move::getDirectionX() const
+{
+  return this->vx * this->dirX_;
+}
+
+double					Move::getDirectionY() const
+{
+  return this->vy * this->dirY_;
+}
+
+double					Move::getDirection() const
+{
+  return atan2(this->vy * this->dirY_, this->vx * this->dirX_);
+}
+
+void					Move::reverseOneAxe(int x, int y, double multiply)
+{
+  if (x > y)
+    {
+      this->dirX_ *= -1;
+      this->vx *= multiply;
+    }
+  else
+    {
+      this->dirY_ *= -1;
+      this->vy *= multiply;
+    }
+}

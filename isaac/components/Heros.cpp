@@ -7,8 +7,10 @@ Heros::Heros(Entity *entity) : AComponent(entity, T_HEROS, 1)
 {
   SPRITE(entity);
   MOVE(entity);
-  MOVE(entity)->setFriction(0.07, 0.07);
+  MOVE(entity)->setFriction(0.04, 0.04);
   INPUT(entity)->listen(true);
+  BOUNDING_BOX(entity)->setWidth(64);
+  BOUNDING_BOX(entity)->setHeight(64);
 }
 
 Heros::~Heros()
@@ -28,19 +30,19 @@ void					Heros::update(double time)
 
   if (input->up)
     {
-      move->setDirectionY(-2);
+      move->setDirectionY(-4);
     }
   if (input->down)
     {
-      move->setDirectionY(2);
+      move->setDirectionY(4);
     }
   if (input->left)
     {
-      move->setDirectionX(-2);
+      move->setDirectionX(-4);
     }
   if (input->right)
     {
-      move->setDirectionX(2);
+      move->setDirectionX(4);
     }
 }
 

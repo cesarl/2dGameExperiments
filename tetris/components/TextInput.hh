@@ -12,9 +12,6 @@ public:
   virtual void				update(double time = 0);
   virtual void				draw();
   void					input(ALLEGRO_EVENT *event);
-public:
-  double				x;
-  double				y;
 };
 
 #endif					// __TEXT_INPUT_HH__

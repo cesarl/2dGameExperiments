@@ -16,7 +16,10 @@ public:
   void					setDirectionX(double x);
   void					setDirectionY(double y);
   void					setFriction(double x, double y);
-
+  double				getDirectionX() const;
+  double				getDirectionY() const;
+  double				getDirection() const;
+  void					reverseOneAxe(int x, int y, double multiply = 1);
 public:
   double				vx;
   double				vy;

@@ -5,11 +5,10 @@
 #include				<string>
 #include				"AScene.hh"
 #include				"Entity.hh"
-#include				"Image.hh"
-#include				"Text.hh"
 #include				"Room.hh"
-
-#define					MAX_CHOICE 3
+#include				"PnjMap.tcc"
+#include				"Room.tcc"
+#include				"Decor.hh"
 
 class					SceneMenu : public AScene
 {
@@ -22,7 +21,9 @@ public:
   virtual void				receiveMessage(e_message type, bool activate);
   virtual void				receiveMessage(e_message type, void *data);
 private: //variables
-  Room					room_;
+  Room<Decor>				room_;
+  PnjMap<Entity>			pnjmap_;
+  Entity				heros_;
 };
 
 #endif					// __SCENE_MENU_HH__
