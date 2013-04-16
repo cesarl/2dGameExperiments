@@ -13,6 +13,7 @@ Move::Move(Entity *entity) : AComponent(entity, T_MOVE, 1)
   this->frictionY = 0;
   this->gravityX = 0;
   this->gravityY = 0;
+  this->maxSpeed_ = 10;
 }
 
 Move::~Move()
@@ -37,6 +38,10 @@ void					Move::update(double time)
   this->vy += this->gravityY;
   position->x += this->vx * this->dirX_;
   position->y += this->vy * this->dirY_;
+  if (this->vx > this->maxSpeed_)
+    this->vx = this->maxSpeed_;
+  if (this->vy > this->maxSpeed_)
+    this->vy = this->maxSpeed_;
 }
 
 void					Move::draw()
@@ -78,6 +83,36 @@ void					Move::setDirectionY(double y)
   this->vy = fabs(y);
 }
 
+void					Move::incDirectionX(double x)
+{
+  this->vx *= this->dirX_;
+  this->vx += x;
+  if (this->vx > 0)
+    this->dirX_ = 1;
+  else if (this->vx < 0)
+    {
+      this->dirX_ = -1;
+      this->vx = fabs(this->vx);
+    }
+  else
+    this->dirX_ = 0;
+}
+
+void					Move::incDirectionY(double y)
+{
+  this->vy *= this->dirY_;
+  this->vy += y;
+  if (this->vy > 0)
+    this->dirY_ = 1;
+  else if (this->vy < 0)
+    {
+      this->dirY_ = -1;
+      this->vy = fabs(this->vy);
+    }
+  else
+    this->dirY_ = 0;
+}
+
 void					Move::setFriction(double x, double y)
 {
   this->frictionX = fabs(x);
@@ -111,4 +146,9 @@ void					Move::reverseOneAxe(int x, int y, double multiply)
       this->dirY_ *= -1;
       this->vy *= multiply;
     }
+}
+
+void					Move::setMaxSpeed(double val)
+{
+  this->maxSpeed_ = val;
 }

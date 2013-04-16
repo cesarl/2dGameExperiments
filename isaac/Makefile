@@ -34,6 +34,8 @@ SRCS		=	managers/EventManager.cpp \
 			components/Heros.cpp \
 			components/BoundingBox.cpp \
 			components/ForceResistance.cpp \
+			components/Pistol.cpp \
+			Grid.cpp \
 			Entity.cpp \
 			Decor.cpp \
 			main.cpp

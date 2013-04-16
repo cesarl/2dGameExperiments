@@ -13,7 +13,11 @@ SceneMenu::SceneMenu()
       // this->pnjmap_.save("saves/", "pnjmap", 0, 0);
     }
   HEROS(&this->heros_);
+  PISTOL(&this->heros_)->attachGrid(&this->grid_);
+  MOVE(&this->heros_)->setMaxSpeed(4);
   POSITION(&this->heros_)->setPos(64 * 20 / 2 - 32, 64 * 10 / 2 - 32);
+  this->room_.attachGrid(&this->grid_);
+  this->pnjmap_.attachGrid(&this->grid_);
 }
 
 SceneMenu::~SceneMenu()
@@ -21,32 +25,38 @@ SceneMenu::~SceneMenu()
 
 void					SceneMenu::update(ALLEGRO_EVENT *event)
 {
-  std::vector<Entity*>			*boundlist;
-  std::vector<Entity*>::iterator	it;
 
   this->room_.update(event);
   this->pnjmap_.update(event);
   this->heros_.update();
 
-  boundlist = this->pnjmap_.getSelection(&this->heros_);
-  it = boundlist->begin();
-  if (!boundlist->empty())
-    POSITION(&this->heros_)->reversePos();
-  while (it != boundlist->end())
-    {
-      FORCE_RESISTANCE(&this->heros_)->applyForce(*it);
-      ++it;
-    }
+  this->grid_.add(&this->heros_);
+  this->room_.fillGrid();
+  this->pnjmap_.fillGrid();
+  this->grid_.update();
+  this->grid_.clear();
 
-  boundlist = this->room_.getSelection(&this->heros_);
-  it = boundlist->begin();
-  if (!boundlist->empty())
-    POSITION(&this->heros_)->reversePos();
-  while (it != boundlist->end())
-    {
-      FORCE_RESISTANCE(&this->heros_)->applyForce(*it);
-      ++it;
-    }
+  // std::vector<Entity*>			*boundlist;
+  // std::vector<Entity*>::iterator	it;
+  // boundlist = this->pnjmap_.getSelection(&this->heros_);
+  // it = boundlist->begin();
+  // // if (!boundlist->empty())
+  // //   POSITION(&this->heros_)->reversePos();
+  // while (it != boundlist->end())
+  //   {
+  //     FORCE_RESISTANCE(&this->heros_)->applyForce(*it);
+  //     ++it;
+  //   }
+
+  // boundlist = this->room_.getSelection(&this->heros_);
+  // it = boundlist->begin();
+  // if (!boundlist->empty())
+  //   POSITION(&this->heros_)->reversePos();
+  // while (it != boundlist->end())
+  //   {
+  //     FORCE_RESISTANCE(&this->heros_)->applyForce(*it);
+  //     ++it;
+  //   }
   (void)(event);
 }
 
@@ -55,6 +65,7 @@ void					SceneMenu::draw(ALLEGRO_EVENT *event)
   this->room_.draw(event);
   this->pnjmap_.draw(event);
   this->heros_.draw();
+  PISTOL(&this->heros_)->draw();
   (void)(event);
 }
 

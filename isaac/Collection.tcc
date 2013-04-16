@@ -1,7 +1,8 @@
 #include			"Collection.hh"
 
 template <typename T>
-Collection<T>::Collection()
+Collection<T>::Collection() :
+  grid_(NULL)
 {
 }
 
@@ -126,4 +127,25 @@ std::vector<Entity*>		*Collection<T>::getSelection(Entity *entity)
       ++it;
     }
   return &(this->selection_);
+}
+
+template <typename T>
+void			Collection<T>::attachGrid(Grid *grid)
+{
+  this->grid_ = grid;
+}
+
+template <typename T>
+void			Collection<T>::fillGrid()
+{
+  typename std::vector<T*>::iterator it;
+
+  if (!this->grid_)
+    return;
+  it = this->go_.begin();
+  while (it != this->go_.end())
+    {
+      this->grid_->add(*it);
+      ++it;
+    }
 }

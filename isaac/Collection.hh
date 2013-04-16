@@ -7,6 +7,7 @@
 #include			<ios>
 #include			"Entity.hh"
 #include			"ComponentTypes.hh"
+#include			"Grid.hh"
 
 template			<typename T>
 class				Collection
@@ -22,7 +23,10 @@ public:
   void				draw(ALLEGRO_EVENT *event);
   std::vector<Entity*>		*getSelection(int x, int y, int w = 0, int h = 0);
   std::vector<Entity*>		*getSelection(Entity *entity);
+  void				attachGrid(Grid *grid);
+  void				fillGrid();
 protected:
+  Grid				*grid_;
   std::vector<T*>		go_;		// game object : pnj, weapons, objects
   std::vector<Entity*>		selection_;
 };

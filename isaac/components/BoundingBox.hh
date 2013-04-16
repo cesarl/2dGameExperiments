@@ -15,6 +15,8 @@ public:
   int					getWidth() const;
   void					setHeight(int height);
   int					getHeight() const;
+  int					getMarginX() const;
+  int					getMarginY() const;
   bool					collide(Entity *o) const;
   void					setDimension(int width, int height);
   bool					isCollidable() const;
@@ -26,6 +28,8 @@ public:
   int					getY() const;
   int					getXX() const;
   int					getYY() const;
+  int					getCenterX() const;
+  int					getCenterY() const;
 private:
   int					width_;
   int					height_;

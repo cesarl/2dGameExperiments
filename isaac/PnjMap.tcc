@@ -21,7 +21,7 @@ void				PnjMap<T>::generate(int seed)
     srand(seed);
   else
     srand(time(0));
-  nb = rand() % 5 + 1;
+  nb = rand() % 50 + 1;
   i = 0;
   while (i < nb)
     {
@@ -29,7 +29,7 @@ void				PnjMap<T>::generate(int seed)
       POSITION(tmp)->setPos(rand() % 1000, rand() % 600);
       SPRITE(tmp)->config(8, 64, 64, 8, 8, 8, 0.12);
       IMAGE(tmp)->setBitmap("assets/imgs/mummy.png");
-      FORCE_RESISTANCE(tmp)->setResistance(7);
+      FORCE_RESISTANCE(tmp)->setResistance(1);
       MOVE(tmp)->setFriction(0.07, 0.07);
       BOUNDING_BOX(tmp)->setDimension(30, 30);
       BOUNDING_BOX(tmp)->setMargin(17, 17);

@@ -15,6 +15,7 @@
 #include				"Heros.hh"
 #include				"BoundingBox.hh"
 #include				"ForceResistance.hh"
+#include				"Pistol.hh"
 
 typedef enum				EType
   {
@@ -31,7 +32,8 @@ typedef enum				EType
     T_INPUT,
     T_HEROS,
     T_BOUNDING_BOX,
-    T_FORCE_RESISTANCE
+    T_FORCE_RESISTANCE,
+    T_PISTOL
   }					EType;
 
 inline
@@ -116,6 +118,12 @@ inline
 ForceResistance				*FORCE_RESISTANCE(Entity *entity)
 {
   return entity->getComponent<ForceResistance>(T_FORCE_RESISTANCE);
+}
+
+inline
+Pistol				*PISTOL(Entity *entity)
+{
+  return entity->getComponent<Pistol>(T_PISTOL);
 }
 
 #endif					// __COMPONENT_TYPE_HH__

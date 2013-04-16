@@ -39,26 +39,39 @@ void					ForceResistance::applyForce(Entity *o)
   Move					*move2;
   double				force1;
   double				force2;
-  Position				*pos1;
-  Position				*pos2;
+  BoundingBox				*pos1;
+  BoundingBox				*pos2;
 
   move1 = MOVE(this->entity);
   move2 = MOVE(o);
   force1 = this->resistance_;
   force2 = FORCE_RESISTANCE(o)->getResistance();
-  pos1 = POSITION(this->entity);
-  pos2 = POSITION(o);
-
+  pos1 = BOUNDING_BOX(this->entity);
+  pos2 = BOUNDING_BOX(o);
 
   if (force1 < 0 || force2 < 0)
     {
       if (force1 < 0)
-	move2->reverseOneAxe(abs(pos2->x - pos1->x), abs(pos2->y - pos1->y), 0.3);
+  	{
+	  POSITION(o)->reversePos();
+  	  move2->reverseOneAxe(abs(pos2->getCenterX() - pos1->getCenterX()), abs(pos2->getCenterY() - pos1->getCenterY()), 0.3);
+  	}
       else
-	move1->reverseOneAxe(abs(pos2->x - pos1->x), abs(pos2->y - pos1->y), 0.3);
+  	{
+	  POSITION(this->entity)->reversePos();
+  	  move1->reverseOneAxe(abs(pos2->getCenterX() - pos1->getCenterX()), abs(pos2->getCenterY() - pos1->getCenterY()), 0.3);
+  	}
       return;
     }
 
+  // if (force1 >= force2)
+  //   {
+  //     move2->setDirection(move1->getDirectionX(), move1->getDirectionY());
+  //   }
+  // else
+  //   {
+  //     move1->setDirection(move2->getDirectionX(), move2->getDirectionY());
+  //   }
   double				dx;
   double				dy;
   double				angle;
@@ -79,8 +92,8 @@ void					ForceResistance::applyForce(Entity *o)
   double				nvy1;
   double				nvy2;
 
-  dx = pos1->x - pos2->x;
-  dy = pos1->y - pos2->y;
+  dx = pos1->getCenterX() - pos2->getCenterX();
+  dy = pos1->getCenterY() - pos2->getCenterY();
   angle = atan2(dy, dx) / M_PI * 180;
   dir1 = move1->getDirection();
   dir2 = move2->getDirection();
@@ -98,8 +111,8 @@ void					ForceResistance::applyForce(Entity *o)
   vy2 = isnan(vy2) ? 0 : vy2;
   fvx1 = ((force1 - force2) * vx1 + (force2 + force2) * vx2) / (force1 + force2);
   fvx2 = ((force1 + force1) * vx1 + (force2 - force1) * vx2) / (force1 + force2);
-  fvy1 = vy1;
-  fvy2 = vy2;
+  fvy1 = vy1;//((force1 - force2) * vy1 + (force2 + force2) * vy2) / (force1 + force2); //vy1;
+  fvy2 = vy2;//((force1 + force1) * vy1 + (force2 - force1) * vy2) / (force1 + force2); //vy2;
   nvx1 = cos(angle) * fvx1 + cos(angle + M_PI / 2) * fvy1;
   nvx1 = isnan(nvx1) ? 0 : nvx1;
   nvy1 = sin(angle) * fvx1 + sin(angle + M_PI / 2) * fvy1;
@@ -110,12 +123,4 @@ void					ForceResistance::applyForce(Entity *o)
   nvy2 = isnan(nvy2) ? 0 : nvy2;
   move1->setDirection(nvx1, nvy1);
   move2->setDirection(nvx2, nvy2);
-  // move1->vx = nvx1;
-  // move1->vy = nvy1;
-  // move2->vx = nvx2;
-  // move2->vy = nvy2;
-  // move1->vx = move1->vx + move2->vx / force2;
-  // move1->vy = move1->vy + move2->vy / force2;
-  // move2->vx = move2->vx + move1->vx / force1;
-  // move2->vy = move2->vy + move1->vy / force1;
 }

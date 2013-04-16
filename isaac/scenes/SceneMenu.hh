@@ -9,6 +9,7 @@
 #include				"PnjMap.tcc"
 #include				"Room.tcc"
 #include				"Decor.hh"
+#include				"Grid.hh"
 
 class					SceneMenu : public AScene
 {
@@ -24,6 +25,7 @@ private: //variables
   Room<Decor>				room_;
   PnjMap<Entity>			pnjmap_;
   Entity				heros_;
+  Grid					grid_;
 };
 
 #endif					// __SCENE_MENU_HH__

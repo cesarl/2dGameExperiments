@@ -97,6 +97,16 @@ void					BoundingBox::setMarginY(int y)
   this->marginY_ = y;
 }
 
+int					BoundingBox::getMarginX() const
+{
+  return this->marginX_;
+}
+
+int					BoundingBox::getMarginY() const
+{
+  return this->marginY_;
+}
+
 int					BoundingBox::getX() const
 {
   return POSITION(this->entity)->x + this->marginX_;
@@ -115,4 +125,14 @@ int					BoundingBox::getY() const
 int					BoundingBox::getYY() const
 {
   return POSITION(this->entity)->y + this->marginY_ + this->height_;
+}
+
+int					BoundingBox::getCenterX() const
+{
+  return (this->width_ / 2) + this->marginX_ + POSITION(this->entity)->x;
+}
+
+int					BoundingBox::getCenterY() const
+{
+  return (this->height_ / 2) + this->marginY_ + POSITION(this->entity)->y;
 }
