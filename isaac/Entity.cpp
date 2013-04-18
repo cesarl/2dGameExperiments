@@ -6,6 +6,7 @@ Entity::Entity()
   this->drawable_ = NULL;
   srand(time(0) + rand());
   this->seed_ = rand();
+  this->enable_ = true;
 }
 
 Entity::~Entity()
@@ -97,6 +98,16 @@ void					Entity::removeComponent(int type)
   this->list_.erase(it);
 }
 
+bool					Entity::hasComponent(int type) const
+{
+  t_const_iter				it;
+
+  it = this->list_.find(type);
+  if (it != this->list_.end())
+    return true;
+  return false;
+}
+
 void					Entity::update()
 {
   t_prio_iter				it;
@@ -159,4 +170,19 @@ void					Entity::unserialize(std::ifstream *file)
 void					Entity::generate(int seed)
 {
   this->seed_ = seed;
+}
+
+void					Entity::enable()
+{
+  this->enable_ = true;
+}
+
+void					Entity::disable()
+{
+  this->enable_ = false;
+}
+
+bool					Entity::isEnable()
+{
+  return this->enable_;
 }

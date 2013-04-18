@@ -13,11 +13,14 @@ SceneMenu::SceneMenu()
       // this->pnjmap_.save("saves/", "pnjmap", 0, 0);
     }
   HEROS(&this->heros_);
-  PISTOL(&this->heros_)->attachGrid(&this->grid_);
+  PISTOL(&this->heros_)->attachGridCollision(&this->grid_);
+  PISTOL(&this->heros_)->attachDrawCollection(&this->drawCollection_);
   MOVE(&this->heros_)->setMaxSpeed(4);
   POSITION(&this->heros_)->setPos(64 * 20 / 2 - 32, 64 * 10 / 2 - 32);
   this->room_.attachGrid(&this->grid_);
   this->pnjmap_.attachGrid(&this->grid_);
+  this->room_.attachDrawCollection(&this->drawCollection_);
+  this->pnjmap_.attachDrawCollection(&this->drawCollection_);
 }
 
 SceneMenu::~SceneMenu()
@@ -64,13 +67,16 @@ void					SceneMenu::draw(ALLEGRO_EVENT *event)
 {
   this->room_.draw(event);
   this->pnjmap_.draw(event);
-  this->heros_.draw();
-  PISTOL(&this->heros_)->draw();
+  // this->heros_.draw();
+  this->drawCollection_.add(&this->heros_, 1);
+  this->drawCollection_.draw();
   (void)(event);
 }
 
 void					SceneMenu::input(ALLEGRO_EVENT *event)
 {
+  if (event->type == ALLEGRO_EVENT_KEY_DOWN && event->keyboard.keycode == ALLEGRO_KEY_P)
+    this->pnjmap_.save("saves/", "pnjmap", 0, 0);
   (void)(event);
 }
 

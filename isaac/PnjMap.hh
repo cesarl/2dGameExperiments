@@ -2,6 +2,7 @@
 # define			__PNJ_MAP_HH__
 
 #include			"Collection.hh"
+#include			"Pnj.hh"
 
 template			<typename T>
 class				PnjMap : public Collection<T>

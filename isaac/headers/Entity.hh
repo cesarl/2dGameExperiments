@@ -19,17 +19,22 @@ public:
   AComponent				*getComponent(int type) const;
   void					addComponent(AComponent *component);
   void					removeComponent(int type);
+  bool					hasComponent(int type) const;
   void					update();
   void					draw();
   virtual void				serialize(std::ofstream *file);
   virtual void				unserialize(std::ifstream *file);
   virtual void				generate(int seed = 0);
+  void					disable();
+  void					enable();
+  bool					isEnable();
 protected:
   int					id_;
   std::map<int, AComponent*>		list_;
   std::list< std::pair<int, AComponent*> > updatePriorityList_;
   AComponent				*drawable_;
   int					seed_;
+  bool					enable_;
 
   typedef std::map<int, AComponent*>::iterator	t_iter;
   typedef std::map<int, AComponent*>::const_iterator t_const_iter;
@@ -38,7 +43,6 @@ protected:
   typedef std::list< std::pair<int, AComponent*> >::iterator		t_prio_iter;
   typedef std::list< std::pair<int, AComponent*> >::const_iterator	t_prio_const_iter;
 public:
-
   //
   // templated member functions
   //

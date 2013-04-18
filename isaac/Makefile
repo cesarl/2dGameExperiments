@@ -17,6 +17,7 @@ SRCS		=	managers/EventManager.cpp \
 			managers/ImageManager.cpp \
 			managers/FontManager.cpp \
 			managers/IdManager.cpp \
+			managers/CollisionManager.cpp \
 			scenes/AScene.cpp \
 			scenes/SceneMenu.cpp \
 			components/Component.cpp \
@@ -35,9 +36,17 @@ SRCS		=	managers/EventManager.cpp \
 			components/BoundingBox.cpp \
 			components/ForceResistance.cpp \
 			components/Pistol.cpp \
+			components/CollisionType.cpp \
+			components/DangerType.cpp \
+			components/Damage.cpp \
+			components/Health.cpp \
+			components/Death.cpp \
+			components/PnjDeath.cpp \
+			DrawCollection.cpp \
 			Grid.cpp \
 			Entity.cpp \
 			Decor.cpp \
+			Pnj.cpp \
 			main.cpp
 
 OBJS		=	$(SRCS:.cpp=.o)

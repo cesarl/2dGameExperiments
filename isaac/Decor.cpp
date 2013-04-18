@@ -56,10 +56,15 @@ void					Decor::generate(int seed)
     {
       SPRITE(this)->config(4, 64, 64, 9, 0, 9, 0);
       BOUNDING_BOX(this)->setCollidable(false);
+      *TEXT(this) = "ground";
     }
   else
-    SPRITE(this)->config(4, 64, 64, 4, 0, 4, 0);
+    {
+      SPRITE(this)->config(4, 64, 64, 4, 0, 4, 0);
+      COLLISION_TYPE(this)->setType(FIX_GO);
+      *TEXT(this) = "wall";
+    }
   BOUNDING_BOX(this)->setDimension(64, 64);
   FORCE_RESISTANCE(this)->setResistance(-1);
-  (void)seed;
+  COLLISION_TYPE(this)->setType(FIX_GO);
 }

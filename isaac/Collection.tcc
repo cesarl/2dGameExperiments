@@ -1,8 +1,10 @@
 #include			"Collection.hh"
 
 template <typename T>
-Collection<T>::Collection() :
-  grid_(NULL)
+Collection<T>::Collection(int zindex) :
+  grid_(NULL),
+  drawCollection_(NULL),
+  zindex_(zindex)
 {
 }
 
@@ -78,6 +80,7 @@ void				Collection<T>::update(ALLEGRO_EVENT *event)
   it = this->go_.begin();
   while (it != this->go_.end())
     {
+      // if ((*it)->hasComponent(T_DEATH) && !DEATH(*it)->isDead())
       (*it)->update();
       ++it;
     }
@@ -92,11 +95,20 @@ void				Collection<T>::draw(ALLEGRO_EVENT *event)
   it = this->go_.begin();
   while (it != this->go_.end())
     {
-      (*it)->draw();
+      if (this->drawCollection_)
+	this->drawCollection_->add(*it, this->zindex_);
+      // (*it)->draw();
       ++it;
     }
   (void)event;
 }
+
+template <typename T>
+void				Collection<T>::setZIndex(int index)
+{
+  this->zindex_ = index;
+}
+
 
 template <typename T>
 std::vector<Entity*>		*Collection<T>::getSelection(int x, int y, int w, int h)
@@ -136,6 +148,12 @@ void			Collection<T>::attachGrid(Grid *grid)
 }
 
 template <typename T>
+void			Collection<T>::attachDrawCollection(DrawCollection *drawCollection)
+{
+  this->drawCollection_ = drawCollection;
+}
+
+template <typename T>
 void			Collection<T>::fillGrid()
 {
   typename std::vector<T*>::iterator it;
@@ -145,7 +163,13 @@ void			Collection<T>::fillGrid()
   it = this->go_.begin();
   while (it != this->go_.end())
     {
-      this->grid_->add(*it);
+      if ((*it)->hasComponent(T_DEATH))
+	{
+	  if (!DEATH(*it)->isDead())
+	    this->grid_->add(*it);
+	}
+      else
+	this->grid_->add(*it);
       ++it;
     }
 }

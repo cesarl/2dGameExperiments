@@ -8,6 +8,7 @@
 // le vector est provisoir - a terme les pistols seront relies a des entity pools et a des components pools
 
 class					Grid;
+class					DrawCollection;
 
 class					Pistol : public AComponent
 {
@@ -17,14 +18,16 @@ public:
   virtual void				update(double time = 0);
   virtual void				draw();
   bool					fire(float vx, float vy);
-  void					attachGrid(Grid *grid);
+  void					attachGridCollision(Grid *grid);
+  void					attachDrawCollection(DrawCollection *drawCollection);
 private:
   double				fireRate_;
   double				friction_;
   double				speedBullet_;
   double				bulletLifeTime_;
   double				shootTime_;
-  Grid					*grid_;
+  Grid					*gridCollision_;
+  DrawCollection			*drawCollection_;
   std::vector<Entity*>			list_;
 };
 

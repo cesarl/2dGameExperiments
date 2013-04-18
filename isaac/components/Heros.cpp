@@ -13,6 +13,10 @@ Heros::Heros(Entity *entity) : AComponent(entity, T_HEROS, 1)
   IMAGE(entity)->setBitmap("assets/imgs/heros.png");
   FORCE_RESISTANCE(entity)->setResistance(3);
   PISTOL(entity);
+  HEALTH(entity)->setHealth(10);
+  COLLISION_TYPE(entity)->setType(ACTOR);
+  DANGER_TYPE(entity)->setType(GOOD);
+  *TEXT(entity) = "heros";
 }
 
 Heros::~Heros()

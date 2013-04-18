@@ -1,4 +1,5 @@
 #include			"Grid.hh"
+#include			"CollisionManager.hh"
 
 Grid::Grid(int cellSize) :
   cellSize_(cellSize),
@@ -32,7 +33,8 @@ void				Grid::update()
 	      // (*cit)->update();
 	      if (cit != citend && BOUNDING_BOX(*cit)->collide(*citend))
 		{
-		  FORCE_RESISTANCE(*citend)->applyForce(*cit);
+		  CollisionManager::getInstance()->resolveCollision(*cit, *citend);
+		  // FORCE_RESISTANCE(*citend)->applyForce(*cit);
 		  // POSITION(*cit)->reversePos();
 		  // POSITION(*citend)->reversePos();
 		}

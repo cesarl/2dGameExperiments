@@ -1,6 +1,7 @@
 #include				"Pistol.hh"
 #include				"ComponentTypes.hh"
 #include				"Grid.hh"
+#include				"DrawCollection.hh"
 
 #include				<iostream> //pour le debug - a virer
 
@@ -11,7 +12,8 @@ Pistol::Pistol(Entity *entity) :
   speedBullet_(10),
   bulletLifeTime_(3),
   shootTime_(al_get_time()),
-  grid_(NULL)
+  gridCollision_(NULL),
+  drawCollection_(NULL)
 {
 }
 
@@ -32,25 +34,40 @@ void					Pistol::update(double time)
   while (it != this->list_.end())
     {
       (*it)->update();
-      if (!VISIBILITY(*it)->visible)
+      if (!VISIBILITY(this->entity)->visible)
 	{
-	  if (this->grid_)
-	    this->grid_->remove(*it);
+	  if (this->gridCollision_)
+	    {
+	      this->gridCollision_->remove(*it);
+	    }
+	  if (this->drawCollection_)
+	    {
+	      this->drawCollection_->remove(*it);
+	    }
 	  delete *it;
 	  it = this->list_.erase(it);
 	}
       else
 	{
-	  if (this->grid_)
-	    this->grid_->add(*it);
+	  if (this->gridCollision_)
+	    {
+	      this->gridCollision_->add(*it);
+	    }
+	  if (this->drawCollection_)
+	    this->drawCollection_->add(*it, 2);
 	  ++it;
 	}
     }
 }
 
-void					Pistol::attachGrid(Grid *grid)
+void					Pistol::attachGridCollision(Grid *grid)
 {
-  this->grid_ = grid;
+  this->gridCollision_ = grid;
+}
+
+void					Pistol::attachDrawCollection(DrawCollection *drawCollection)
+{
+  this->drawCollection_ = drawCollection;
 }
 
 void					Pistol::draw()
@@ -73,16 +90,19 @@ bool					Pistol::fire(float vx, float vy)
   Entity				*tmp;
 
   tmp = new Entity;
-  POSITION(tmp)->setPos(POSITION(this->entity)->x, POSITION(this->entity)->y);
+  POSITION(tmp)->setPos(BOUNDING_BOX(this->entity)->getCenterX() - 15, BOUNDING_BOX(this->entity)->getCenterY() - 15);
   MOVE(tmp)->setDirection(vx * this->speedBullet_, vy * this->speedBullet_);
   MOVE(tmp)->setFriction(this->friction_, this->friction_);
   VISIBILITY(tmp)->fadeOut(0.3, 10);
-  SPRITE(tmp)->config(8, 64, 64, 8, 8, 8, 0.12);
-  IMAGE(tmp)->setBitmap("assets/imgs/mummy.png");
-  ROTATION_FORCE(tmp)->launch((float)rand()/RAND_MAX/2 - 0.5, 0.005);
+  IMAGE(tmp)->setBitmap("assets/imgs/bullet.png");
+  ROTATION_FORCE(tmp)->launch(0.5, 0.005);
   FORCE_RESISTANCE(tmp)->setResistance(1);
-  BOUNDING_BOX(tmp)->setDimension(30, 30);
-  BOUNDING_BOX(tmp)->setMargin(17, 17);
+  BOUNDING_BOX(tmp)->setDimension(24, 24);
+  BOUNDING_BOX(tmp)->setMargin(3, 3);
+  DAMAGE(tmp)->setMagnitude(5);
+  DANGER_TYPE(tmp)->setType(GOOD);
+  COLLISION_TYPE(tmp)->setType(BULLET);
+  *TEXT(tmp) = "bullet";
 
   this->shootTime_ = al_get_time();
   this->list_.push_back(tmp);

@@ -7,13 +7,14 @@
 #include			<ios>
 #include			"Entity.hh"
 #include			"ComponentTypes.hh"
+#include			"DrawCollection.hh"
 #include			"Grid.hh"
 
 template			<typename T>
 class				Collection
 {
 public:
-  Collection();
+  Collection(int zindex = 0);
   virtual ~Collection();
   bool				save(std::string const & path, std::string const & name, int x, int y);
   bool				load(std::string const & path, std::string const & name, int x, int y);
@@ -24,9 +25,13 @@ public:
   std::vector<Entity*>		*getSelection(int x, int y, int w = 0, int h = 0);
   std::vector<Entity*>		*getSelection(Entity *entity);
   void				attachGrid(Grid *grid);
+  void				attachDrawCollection(DrawCollection *drawCollection);
+  void				setZIndex(int index);
   void				fillGrid();
 protected:
   Grid				*grid_;
+  DrawCollection		*drawCollection_;
+  int				zindex_;
   std::vector<T*>		go_;		// game object : pnj, weapons, objects
   std::vector<Entity*>		selection_;
 };

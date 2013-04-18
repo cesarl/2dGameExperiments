@@ -16,6 +16,12 @@
 #include				"BoundingBox.hh"
 #include				"ForceResistance.hh"
 #include				"Pistol.hh"
+#include				"CollisionType.hh"
+#include				"DangerType.hh"
+#include				"Damage.hh"
+#include				"Health.hh"
+#include				"Death.hh"
+#include				"PnjDeath.hh"
 
 typedef enum				EType
   {
@@ -33,7 +39,13 @@ typedef enum				EType
     T_HEROS,
     T_BOUNDING_BOX,
     T_FORCE_RESISTANCE,
-    T_PISTOL
+    T_PISTOL,
+    T_COLLISION_TYPE,
+    T_DANGER_TYPE,
+    T_DAMAGE,
+    T_HEALTH,
+    T_DEATH,
+    T_PNJ_DEATH
   }					EType;
 
 inline
@@ -121,9 +133,45 @@ ForceResistance				*FORCE_RESISTANCE(Entity *entity)
 }
 
 inline
-Pistol				*PISTOL(Entity *entity)
+Pistol					*PISTOL(Entity *entity)
 {
   return entity->getComponent<Pistol>(T_PISTOL);
+}
+
+inline
+CollisionType				*COLLISION_TYPE(Entity *entity)
+{
+  return entity->getComponent<CollisionType>(T_COLLISION_TYPE);
+}
+
+inline
+DangerType				*DANGER_TYPE(Entity *entity)
+{
+  return entity->getComponent<DangerType>(T_DANGER_TYPE);
+}
+
+inline
+Damage					*DAMAGE(Entity *entity)
+{
+  return entity->getComponent<Damage>(T_DAMAGE);
+}
+
+inline
+Health					*HEALTH(Entity *entity)
+{
+  return entity->getComponent<Health>(T_HEALTH);
+}
+
+inline
+Death					*DEATH(Entity *entity)
+{
+  return entity->getComponent<Death>(T_DEATH);
+}
+
+inline
+PnjDeath				*PNJ_DEATH(Entity *entity)
+{
+  return entity->getComponent<PnjDeath>(T_DEATH);
 }
 
 #endif					// __COMPONENT_TYPE_HH__
