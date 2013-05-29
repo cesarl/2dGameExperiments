@@ -3,9 +3,10 @@
 EventManager::EventManager() :
   event_queue_(NULL),
   timer_(NULL),
-  sceneManager_(NULL),
-  pause_(true)
+  sceneManager_(NULL)
 {
+  OptionManager::getInstance()->setOption<bool>("run", true);
+  this->run_ = OptionManager::getInstance()->getOption<bool>("run");
 }
 
 EventManager::~EventManager()
@@ -56,8 +57,8 @@ void					EventManager::play()
       std::cerr << "Error : Event Manager - SceneManager has not been linked" << std::endl;
       return;
     }
-  this->pause_ = false;
-  while (!this->pause_)
+  this->run_->setValue(true);
+  while (this->run_->getValue())
     {
       ALLEGRO_EVENT			 ev;
       draw = false;
@@ -83,12 +84,16 @@ void					EventManager::play()
 	      ++it;
 	    }
 	}
+      if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
+	{
+	  this->stop();
+	}
     }
 }
 
-void					EventManager::pause()
+void					EventManager::stop()
 {
-  this->pause_ = true;
+  this->run_->setValue(false);
 }
 
 EventManager				*EventManager::getInstance()
