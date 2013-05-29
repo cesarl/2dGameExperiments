@@ -4,14 +4,23 @@
 
 FontManager::FontManager()
 {
-  al_init_font_addon();
-  if (!al_init_ttf_addon())
-    std::cerr << "Error - FontManager : init font addon error" << std::endl;
 }
 
 //dtor
 
 FontManager::~FontManager()
+{}
+
+
+bool					FontManager::initialize()
+{
+  al_init_font_addon();
+  if (!al_init_ttf_addon())
+    return false;
+  return true;
+}
+
+void					FontManager::uninitialize()
 {
   t_iter				it;
 
@@ -20,12 +29,11 @@ FontManager::~FontManager()
       al_destroy_font(it->second);
       this->collection_.erase(it);
     }
-  // provoque segfault ...
+  // /!\ provoque segfault ...
   // al_shutdown_ttf_addon();
   al_shutdown_font_addon();
 }
 
-// return the singleton FontManager
 
 FontManager				*FontManager::getInstance()
 {

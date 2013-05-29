@@ -2,12 +2,42 @@
 
 SceneManager::SceneManager()
 {
-
 }
 
 SceneManager::~SceneManager()
 {
+}
 
+bool					SceneManager::initialize()
+{
+  t_iter				it;
+
+  it = this->collection_.begin();
+  while (it != this->collection_.end())
+    {
+      if (!(*it)->initialize())
+	return false;
+      ++it;
+    }
+  return true;
+}
+
+void					SceneManager::uninitialize()
+{
+  t_iter				it;
+
+  it = this->collection_.begin();
+  while (it != this->collection_.end())
+    {
+      (*it)->uninitialize();
+      ++it;
+    }
+}
+
+SceneManager				*SceneManager::getInstance()
+{
+  static SceneManager			that;
+  return &that;
 }
 
 void					SceneManager::add(AScene * scene, int priority)
@@ -44,7 +74,7 @@ AScene					*SceneManager::remove(AScene * scene)
   return NULL;
 }
 
-// search don't use algorythm and is string comparaison - that's bad
+// /!\ search don't use algorythm and is string comparaison - that's bad
 AScene					*SceneManager::get(std::string const & name)
 {
   t_iter				i;
@@ -88,11 +118,6 @@ void					SceneManager::setPriority(AScene *scene, int priority)
   (void)(priority);
 }
 
-void					SceneManager::setEventManager(EventManager * eventManager)
-{
-  this->eventManager_ = eventManager;
-}
-
 void					SceneManager::updateEvent(ALLEGRO_EVENT *event)
 {
   t_iter				i;
@@ -132,31 +157,6 @@ void					SceneManager::inputEvent(ALLEGRO_EVENT *event)
     }
 }
 
-void					SceneManager::exit()
-{
-  if (this->eventManager_)
-    this->eventManager_->pause();
-}
-
-void					SceneManager::handleMessage(e_message type, void *data, std::string const & sceneName)
-{
-  AScene				*tmp;
-  t_iter				it;
-
-  tmp = this->get(sceneName);
-  if (tmp)
-    tmp->receiveMessage(type, data);
-  else if (sceneName.empty())
-    {
-      it = this->collection_.begin();
-      while (it != this->collection_.end())
-	{
-	  (*it)->receiveMessage(type, data);
-	  ++it;
-	}
-    }
-}
-
 void					SceneManager::handleMessage(e_message type, bool activate, std::string const & sceneName)
 {
   AScene				*tmp;
@@ -184,9 +184,6 @@ void					SceneManager::handleMessage(e_message type, bool activate, std::string 
 	  if (tmp)
 	    tmp->setVisible(activate);
 	}
-      break;
-    case MSG_EXITAPP:
-      this->exit();
       break;
     default:
       if (tmp)

@@ -14,12 +14,14 @@ class					FontManager
 {
 public:
   ~FontManager();
+  bool					initialize();
+  void					uninitialize();
   static FontManager			*getInstance();
   ALLEGRO_FONT				*load(std::string const & path, int size);
   void					erase(std::string const & path, int size);
   ALLEGRO_FONT				*get(std::string const & path, int size);
 private:
-  FontManager();			// private ctor because of singleton pattern
+  FontManager();
   std::map<std::string, ALLEGRO_FONT*> collection_;
   typedef std::map<std::string, ALLEGRO_FONT*>::iterator t_iter;
   typedef std::pair<std::string, ALLEGRO_FONT*> t_pair;

@@ -17,6 +17,8 @@ class					EventManager
 public:
   ~EventManager();
   static EventManager			*getInstance();
+  bool					initialize();
+  void					uninitialize();
   void					play();
   void					pause();
   void					setSceneManager(SceneManager * sceneManager);

@@ -2,35 +2,28 @@
 #include				"SceneMenu.hh"
 #include				"EventManager.hh"
 #include				"SceneManager.hh"
-#include				"ImageManager.hh"
-#include				"FontManager.hh"
-
-static ALLEGRO_DISPLAY			*init(int width, int height)
-{
-  ALLEGRO_DISPLAY			*display;
-
-  assert(al_init());
-  assert(display = al_create_display(width, height));
-  return display;
-}
+#include				"MainManager.hh"
 
 int					main()
 {
-  ALLEGRO_DISPLAY			*display = init(64 * 20, 64 * 10);
+  if (!MainManager::getInstance()->initialize(64 * 20, 64 * 10))
+    return -1;
+
   SceneMenu				menu;
-  SceneManager				sceneManager;
+  SceneManager				*sceneManager;
   EventManager				*eventManager;
 
   eventManager = EventManager::getInstance();
+  sceneManager = SceneManager::getInstance();
 
-  sceneManager.add(&menu);
+  sceneManager->add(&menu);
   menu.setActive(true);
   menu.setVisible(true);
-  menu.setDisplay(display);
   menu.setName("menu");
 
-  eventManager->setSceneManager(&sceneManager);
+  sceneManager->initialize();
   eventManager->play();
-  al_destroy_display(display);
+
+  MainManager::getInstance()->deInitialize();
   return (1);
 }

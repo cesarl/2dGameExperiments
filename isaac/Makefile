@@ -19,6 +19,7 @@ SRCS		=	managers/EventManager.cpp \
 			managers/IdManager.cpp \
 			managers/CollisionManager.cpp \
 			managers/DrawManager.cpp \
+			managers/MainManager.cpp \
 			scenes/AScene.cpp \
 			scenes/SceneMenu.cpp \
 			components/Component.cpp \

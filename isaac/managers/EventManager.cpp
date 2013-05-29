@@ -1,19 +1,41 @@
 #include				"EventManager.hh"
 
-EventManager::EventManager()
+EventManager::EventManager() :
+  event_queue_(NULL),
+  timer_(NULL),
+  sceneManager_(NULL),
+  pause_(true)
 {
-  assert(al_install_keyboard());
-  assert(al_install_mouse());
-  assert(this->event_queue_ = al_create_event_queue());
-  assert(this->timer_ = al_create_timer(1.0 / 60));
-  al_register_event_source(this->event_queue_, al_get_keyboard_event_source());
-  al_register_event_source(this->event_queue_, al_get_mouse_event_source());
-  al_register_event_source(this->event_queue_, al_get_timer_event_source(this->timer_));
-  al_start_timer(this->timer_);
-  this->pause_ = true;
 }
 
 EventManager::~EventManager()
+{
+}
+
+bool					EventManager::initialize()
+{
+  if (!al_install_keyboard())
+    return false;
+  if (!al_install_mouse())
+    return false;
+  this->event_queue_ = al_create_event_queue();
+  if (!this->event_queue_)
+    return false;
+  this->timer_ = al_create_timer(1.0 / 60);
+  if (!this->timer_)
+    return false;
+
+  al_register_event_source(this->event_queue_, al_get_keyboard_event_source());
+  al_register_event_source(this->event_queue_, al_get_mouse_event_source());
+  al_register_event_source(this->event_queue_, al_get_display_event_source(al_get_current_display()));
+  al_register_event_source(this->event_queue_, al_get_timer_event_source(this->timer_));
+  al_start_timer(this->timer_);
+
+  this->sceneManager_ = SceneManager::getInstance();
+  return true;
+}
+
+void					EventManager::uninitialize()
 {
   if (this->event_queue_)
     al_destroy_event_queue(this->event_queue_);
@@ -22,6 +44,7 @@ EventManager::~EventManager()
   al_uninstall_keyboard();
   al_uninstall_mouse();
 }
+
 
 void					EventManager::play()
 {
@@ -66,12 +89,6 @@ void					EventManager::play()
 void					EventManager::pause()
 {
   this->pause_ = true;
-}
-
-void					EventManager::setSceneManager(SceneManager * sceneManager)
-{
-  this->sceneManager_ = sceneManager;
-  sceneManager->setEventManager(this);
 }
 
 EventManager				*EventManager::getInstance()

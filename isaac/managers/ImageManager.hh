@@ -12,6 +12,8 @@ class					ImageManager
 {
 public:
   ~ImageManager();
+  bool					initialize();
+  void					uninitialize();
   static ImageManager			*getInstance();
   ALLEGRO_BITMAP			*load(std::string const & path);
   void					erase(std::string const & path);

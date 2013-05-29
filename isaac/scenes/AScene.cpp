@@ -1,7 +1,7 @@
 #include				"AScene.hh"
 
 AScene::AScene(std::string const & name, bool active, bool visible) :
-  name_(name), active_(active), visible_(visible), display_(NULL), sceneManager_(NULL)
+  name_(name), active_(active), visible_(visible), sceneManager_(NULL)
 {}
 
 AScene::~AScene()
@@ -47,11 +47,6 @@ void					AScene::setPriority(int priority)
   this->priority_ = priority;
 }
 
-void					AScene::setDisplay(ALLEGRO_DISPLAY *display)
-{
-  this->display_ = display;
-}
-
 void					AScene::setManager(SceneManager *manager)
 {
   this->sceneManager_ = manager;
@@ -77,3 +72,14 @@ void					AScene::sendMessage(e_message type, void *data, std::string const & sce
   if (this->sceneManager_)
     this->sceneManager_->handleMessage(type, data, sceneName);
 }
+
+
+// /!\ a mettre en pure
+bool					AScene::initialize()
+{
+  return true;
+}
+
+// /!\ a mettre en pure
+void					AScene::uninitialize()
+{}
