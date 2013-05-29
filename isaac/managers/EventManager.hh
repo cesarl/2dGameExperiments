@@ -6,6 +6,7 @@
 #include				<list>
 #include				<algorithm>
 #include				"SceneManager.hh"
+#include				"DrawManager.hh"
 #include				"Input.hh"
 
 class					SceneManager;

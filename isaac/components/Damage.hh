@@ -13,12 +13,16 @@ public:
   virtual void				draw();
   void					setMagnitude(int magnitude);
   void					setDamageNb(int damageNb);
+  void					setDelay(double delay);
   int					getMagnitude() const;
   int					getDamageNb() const;
-  void					applied();
+  bool					canDamage() const;
+  virtual void				applied();
 private:
   int					magnitude_;
   int					damageNb_;
+  double				delay_;
+  double				delayCounter_;
 };
 
 #endif					// __DAMAGE_HH__

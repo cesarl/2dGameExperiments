@@ -19,7 +19,7 @@ void					Pnj::generate(int seed)
   BOUNDING_BOX(this)->setMargin(17, 17);
   DAMAGE(this)->setMagnitude(3);
   DAMAGE(this)->setDamageNb(-1);
-  HEALTH(this)->setHealth(10);
+  PNJ_HEALTH(this)->setHealth(10);
   DANGER_TYPE(this)->setType(BAD);
   COLLISION_TYPE(this)->setType(ACTOR);
   PNJ_DEATH(this);

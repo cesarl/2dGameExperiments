@@ -47,7 +47,10 @@ void					EventManager::play()
       else
 	this->sceneManager_->inputEvent(&ev);
       if (draw && al_is_event_queue_empty(this->event_queue_))
-	this->sceneManager_->drawEvent(&ev);
+	{
+	  this->sceneManager_->drawEvent(&ev);
+	  DrawManager::getInstance()->draw();
+	}
       if (ev.type == ALLEGRO_EVENT_KEY_DOWN || ev.type == ALLEGRO_EVENT_KEY_UP)
 	{
 	  it = this->inputSubscribeList_.begin();

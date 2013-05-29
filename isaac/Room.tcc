@@ -27,7 +27,6 @@ void				Room<T>::generate(int seed)
 	{
 	  tmp = new Decor;
 	  tmp->generate(seed);
-	  this->map_[y][x] = tmp;
 	  this->go_.push_back(tmp);
 	  POSITION(tmp)->setPos(x * CELL_SIZE, y * CELL_SIZE);
 	  ++x;

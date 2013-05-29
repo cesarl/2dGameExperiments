@@ -3,7 +3,6 @@
 template <typename T>
 Collection<T>::Collection(int zindex) :
   grid_(NULL),
-  drawCollection_(NULL),
   zindex_(zindex)
 {
 }
@@ -19,7 +18,7 @@ bool				Collection<T>::save(std::string const & path, std::string const & name, 
 {
   std::ostringstream		fileName;
   std::ofstream			myFile;
-  typename std::vector<T*>::iterator it;
+  typename std::list<T*>::iterator it;
 
   fileName << path << name << x << "-" << y  << ".bin";
   myFile.open(fileName.str().c_str(), std::ios::out | std::ios::binary);
@@ -38,7 +37,7 @@ bool				Collection<T>::load(std::string const & path, std::string const & name, 
 {
   std::ostringstream		fileName;
   std::ifstream			myFile;
-  typename std::vector<T*>::iterator it;
+  typename std::list<T*>::iterator it;
   T				*tmp;
 
   fileName << path << name << x << "-" << y  << ".bin";
@@ -61,7 +60,7 @@ bool				Collection<T>::load(std::string const & path, std::string const & name, 
 template <typename T>
 void				Collection<T>::clear()
 {
-  typename std::vector<T*>::iterator it;
+  typename std::list<T*>::iterator it;
 
   it = this->go_.begin();
   while (it != this->go_.end())
@@ -75,7 +74,7 @@ void				Collection<T>::clear()
 template <typename T>
 void				Collection<T>::update(ALLEGRO_EVENT *event)
 {
-  typename std::vector<T*>::iterator it;
+  typename std::list<T*>::iterator it;
 
   it = this->go_.begin();
   while (it != this->go_.end())
@@ -90,14 +89,12 @@ void				Collection<T>::update(ALLEGRO_EVENT *event)
 template <typename T>
 void				Collection<T>::draw(ALLEGRO_EVENT *event)
 {
-  typename std::vector<T*>::iterator it;
+  typename std::list<T*>::iterator it;
 
   it = this->go_.begin();
   while (it != this->go_.end())
     {
-      if (this->drawCollection_)
-	this->drawCollection_->add(*it, this->zindex_);
-      // (*it)->draw();
+      DrawManager::getInstance()->add(*it, this->zindex_);
       ++it;
     }
   (void)event;
@@ -111,9 +108,9 @@ void				Collection<T>::setZIndex(int index)
 
 
 template <typename T>
-std::vector<Entity*>		*Collection<T>::getSelection(int x, int y, int w, int h)
+std::list<Entity*>		*Collection<T>::getSelection(int x, int y, int w, int h)
 {
-  typename std::vector<T*>::iterator it;
+  typename std::list<T*>::iterator it;
 
   it = this->go_.begin();
   while (it != this->go_.end())
@@ -126,9 +123,9 @@ std::vector<Entity*>		*Collection<T>::getSelection(int x, int y, int w, int h)
 }
 
 template <typename T>
-std::vector<Entity*>		*Collection<T>::getSelection(Entity *entity)
+std::list<Entity*>		*Collection<T>::getSelection(Entity *entity)
 {
-  typename std::vector<T*>::iterator it;
+  typename std::list<T*>::iterator it;
 
   it = this->go_.begin();
   this->selection_.clear();
@@ -148,15 +145,9 @@ void			Collection<T>::attachGrid(Grid *grid)
 }
 
 template <typename T>
-void			Collection<T>::attachDrawCollection(DrawCollection *drawCollection)
-{
-  this->drawCollection_ = drawCollection;
-}
-
-template <typename T>
 void			Collection<T>::fillGrid()
 {
-  typename std::vector<T*>::iterator it;
+  typename std::list<T*>::iterator it;
 
   if (!this->grid_)
     return;
@@ -172,4 +163,16 @@ void			Collection<T>::fillGrid()
 	this->grid_->add(*it);
       ++it;
     }
+}
+
+template <typename T>
+void			Collection<T>::remove(Entity* entity)
+{
+  this->go_.remove(entity);
+}
+
+template <typename T>
+void			Collection<T>::add(Entity* entity)
+{
+  this->go_.push_back(entity);
 }

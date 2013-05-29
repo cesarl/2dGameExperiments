@@ -52,7 +52,7 @@ void					Decor::generate(int seed)
     this->seed_ = seed;
   srand(this->seed_);
   IMAGE(this)->setBitmap("assets/imgs/decor.png");
-  if (rand() % 6 != 0)
+  if (this->seed_ != -1 && rand() % 6 != 0)
     {
       SPRITE(this)->config(4, 64, 64, 9, 0, 9, 0);
       BOUNDING_BOX(this)->setCollidable(false);

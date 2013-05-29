@@ -11,7 +11,6 @@
 #include				"Decor.hh"
 #include				"Pnj.hh"
 #include				"Grid.hh"
-#include				"DrawCollection.hh"
 
 class					SceneMenu : public AScene
 {
@@ -28,7 +27,6 @@ private: //variables
   PnjMap<Pnj>				pnjmap_;
   Entity				heros_;
   Grid					grid_;
-  DrawCollection			drawCollection_;
 };
 
 #endif					// __SCENE_MENU_HH__

@@ -14,7 +14,6 @@ public:
   virtual ~Room();
   virtual void			generate(int seed = 0);
 private:
-  Entity*			map_[10][20];	// map tile objets
   int				width_;		// nb of tiles hor
   int				height_;	// nb of tiles ver
 };

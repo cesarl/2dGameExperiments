@@ -1,19 +1,18 @@
 #include				"Pistol.hh"
 #include				"ComponentTypes.hh"
 #include				"Grid.hh"
-#include				"DrawCollection.hh"
+#include				"DrawManager.hh"
 
 #include				<iostream> //pour le debug - a virer
 
 Pistol::Pistol(Entity *entity) :
   AComponent(entity, T_PISTOL, 1),
-  fireRate_(0.8),
+  fireRate_(0.1),
   friction_(0.3),
   speedBullet_(10),
   bulletLifeTime_(3),
   shootTime_(al_get_time()),
-  gridCollision_(NULL),
-  drawCollection_(NULL)
+  gridCollision_(NULL)
 {
 }
 
@@ -34,15 +33,11 @@ void					Pistol::update(double time)
   while (it != this->list_.end())
     {
       (*it)->update();
-      if (!VISIBILITY(this->entity)->visible)
+      if (!VISIBILITY(*it)->visible)
 	{
 	  if (this->gridCollision_)
 	    {
 	      this->gridCollision_->remove(*it);
-	    }
-	  if (this->drawCollection_)
-	    {
-	      this->drawCollection_->remove(*it);
 	    }
 	  delete *it;
 	  it = this->list_.erase(it);
@@ -53,8 +48,6 @@ void					Pistol::update(double time)
 	    {
 	      this->gridCollision_->add(*it);
 	    }
-	  if (this->drawCollection_)
-	    this->drawCollection_->add(*it, 2);
 	  ++it;
 	}
     }
@@ -65,11 +58,6 @@ void					Pistol::attachGridCollision(Grid *grid)
   this->gridCollision_ = grid;
 }
 
-void					Pistol::attachDrawCollection(DrawCollection *drawCollection)
-{
-  this->drawCollection_ = drawCollection;
-}
-
 void					Pistol::draw()
 {
   std::vector<Entity*>::iterator	it;
@@ -77,7 +65,7 @@ void					Pistol::draw()
   it = this->list_.begin();
   while (it != this->list_.end())
     {
-      (*it)->draw();
+      DrawManager::getInstance()->add(*it, 2);
       ++it;
     }
 }
@@ -100,6 +88,7 @@ bool					Pistol::fire(float vx, float vy)
   BOUNDING_BOX(tmp)->setDimension(24, 24);
   BOUNDING_BOX(tmp)->setMargin(3, 3);
   DAMAGE(tmp)->setMagnitude(5);
+  DAMAGE(tmp)->setDamageNb(1);
   DANGER_TYPE(tmp)->setType(GOOD);
   COLLISION_TYPE(tmp)->setType(BULLET);
   *TEXT(tmp) = "bullet";

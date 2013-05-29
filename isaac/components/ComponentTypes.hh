@@ -20,12 +20,13 @@
 #include				"DangerType.hh"
 #include				"Damage.hh"
 #include				"Health.hh"
+#include				"PnjHealth.hh"
 #include				"Death.hh"
 #include				"PnjDeath.hh"
 
 typedef enum				EType
   {
-    T_POSITION,
+    T_POSITION = 0,
     T_MOVE,
     T_IMAGE,
     T_SPRITE,
@@ -44,6 +45,7 @@ typedef enum				EType
     T_DANGER_TYPE,
     T_DAMAGE,
     T_HEALTH,
+    T_PNJ_HEALTH,
     T_DEATH,
     T_PNJ_DEATH
   }					EType;
@@ -160,6 +162,12 @@ inline
 Health					*HEALTH(Entity *entity)
 {
   return entity->getComponent<Health>(T_HEALTH);
+}
+
+inline
+PnjHealth				*PNJ_HEALTH(Entity *entity)
+{
+  return entity->getComponent<PnjHealth>(T_HEALTH);
 }
 
 inline

@@ -110,7 +110,6 @@ void					SceneManager::drawEvent(ALLEGRO_EVENT *event)
 {
   t_iter				i;
 
-  al_clear_to_color(al_map_rgb(200, 200, 200));
   i = this->collection_.begin();
   while (i != this->collection_.end())
     {
@@ -118,7 +117,6 @@ void					SceneManager::drawEvent(ALLEGRO_EVENT *event)
 	(*i)->draw(event);
       ++i;
     }
-  al_flip_display();
 }
 
 void					SceneManager::inputEvent(ALLEGRO_EVENT *event)

@@ -18,6 +18,7 @@ SRCS		=	managers/EventManager.cpp \
 			managers/FontManager.cpp \
 			managers/IdManager.cpp \
 			managers/CollisionManager.cpp \
+			managers/DrawManager.cpp \
 			scenes/AScene.cpp \
 			scenes/SceneMenu.cpp \
 			components/Component.cpp \
@@ -40,9 +41,9 @@ SRCS		=	managers/EventManager.cpp \
 			components/DangerType.cpp \
 			components/Damage.cpp \
 			components/Health.cpp \
+			components/PnjHealth.cpp \
 			components/Death.cpp \
 			components/PnjDeath.cpp \
-			DrawCollection.cpp \
 			Grid.cpp \
 			Entity.cpp \
 			Decor.cpp \

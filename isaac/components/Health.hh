@@ -13,9 +13,12 @@ public:
   virtual void				draw();
   void					setHealth(int health);
   int					getHealth() const;
-  void					impactDamage(Entity *e);
-private:
+  virtual void				impactDamage(Entity *e);
+  void					setDelay(double delay);
+protected:
   int					health_;
+  double				delay_;
+  double				delayCounter_;
 };
 
 #endif					// __HEALTH_HH__

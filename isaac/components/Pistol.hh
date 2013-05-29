@@ -19,7 +19,6 @@ public:
   virtual void				draw();
   bool					fire(float vx, float vy);
   void					attachGridCollision(Grid *grid);
-  void					attachDrawCollection(DrawCollection *drawCollection);
 private:
   double				fireRate_;
   double				friction_;
@@ -27,7 +26,6 @@ private:
   double				bulletLifeTime_;
   double				shootTime_;
   Grid					*gridCollision_;
-  DrawCollection			*drawCollection_;
   std::vector<Entity*>			list_;
 };
 

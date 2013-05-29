@@ -34,7 +34,7 @@ void					CollisionManager::resolveCollision(Entity *e1, Entity *e2)
   // apply damages to health
   if (e1->hasComponent(T_DAMAGE))
     {
-      if (e2->hasComponent(T_HEALTH))
+      if (DAMAGE(e1)->canDamage() && e2->hasComponent(T_HEALTH))
       	{
 	  // std::cout << "-"<< TEXT(e1)->text << " put damage on " << TEXT(e2)->text << " : " << d1 << " " << d2<<std::endl;
       	  HEALTH(e2)->impactDamage(e1);
@@ -43,7 +43,7 @@ void					CollisionManager::resolveCollision(Entity *e1, Entity *e2)
     }
   if (e2->hasComponent(T_DAMAGE))
     {
-      if (e1->hasComponent(T_HEALTH))
+      if (DAMAGE(e2)->canDamage() && e1->hasComponent(T_HEALTH))
       	{
 	  // std::cout << "+" << TEXT(e2)->text << " put damage on " << TEXT(e1)->text << " : " << d2 << " " << d1<<std::endl;
       	  HEALTH(e1)->impactDamage(e2);
