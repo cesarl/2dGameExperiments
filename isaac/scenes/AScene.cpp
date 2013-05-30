@@ -72,14 +72,3 @@ void					AScene::sendMessage(e_message type, void *data, std::string const & sce
   if (this->sceneManager_)
     this->sceneManager_->handleMessage(type, data, sceneName);
 }
-
-
-// /!\ a mettre en pure
-bool					AScene::initialize()
-{
-  return true;
-}
-
-// /!\ a mettre en pure
-void					AScene::uninitialize()
-{}

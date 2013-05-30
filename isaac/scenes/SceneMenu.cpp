@@ -6,6 +6,12 @@ int	g_x = 0;
 int	g_y = 0;
 
 SceneMenu::SceneMenu()
+{}
+
+SceneMenu::~SceneMenu()
+{}
+
+bool					SceneMenu::initialize()
 {
   if (!this->room_.load("saves/", "chunk", g_x, g_y))
     {
@@ -23,10 +29,12 @@ SceneMenu::SceneMenu()
   POSITION(&this->heros_)->setPos(64 * 20 / 2 - 32, 64 * 10 / 2 - 32);
   this->room_.attachGrid(&this->grid_);
   this->pnjmap_.attachGrid(&this->grid_);
+  return true;
 }
 
-SceneMenu::~SceneMenu()
+void					SceneMenu::uninitialize()
 {}
+
 
 void					SceneMenu::update(ALLEGRO_EVENT *event)
 {
@@ -139,10 +147,4 @@ void					SceneMenu::receiveMessage(e_message type, bool activate)
 {
   (void)type;
   (void)activate;
-}
-
-void					SceneMenu::receiveMessage(e_message type, void *data)
-{
-  (void)type;
-  (void)data;
 }

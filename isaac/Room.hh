@@ -1,7 +1,7 @@
 #ifndef				__ROOM_HH__
 # define			__ROOM_HH__
 
-#include			"Collection.tcc"
+#include			"Collection.hpp"
 #include			"Decor.hh"
 
 #define				CELL_SIZE 64

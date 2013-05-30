@@ -36,8 +36,8 @@ public:
   virtual void				update(ALLEGRO_EVENT *event) = 0;
   virtual void				draw(ALLEGRO_EVENT *event) = 0;
   virtual void				input(ALLEGRO_EVENT *event) = 0;
-  virtual bool				initialize();
-  virtual void				uninitialize();
+  virtual bool				initialize() = 0;
+  virtual void				uninitialize() = 0;
 };
 
 #endif					// __ASCENE_HH__

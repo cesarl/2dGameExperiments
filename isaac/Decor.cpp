@@ -22,8 +22,6 @@ void					Decor::serialize(std::ofstream *file)
   y = (int)(position->y);
   r = (int)(rotation->angle * 180 / M_PI);
 
-  std::cout << "nc : " << position->x << " c : " << x << std::endl;
-
   file->write(reinterpret_cast<const char *>(&this->seed_), sizeof(this->seed_));
   file->write(reinterpret_cast<const char *>(&x), sizeof(x));
   file->write(reinterpret_cast<const char *>(&y), sizeof(y));
