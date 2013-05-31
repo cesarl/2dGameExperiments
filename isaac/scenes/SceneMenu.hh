@@ -5,12 +5,8 @@
 #include				<string>
 #include				"AScene.hh"
 #include				"Entity.hh"
-#include				"Room.hh"
-#include				"PnjMap.hpp"
-#include				"Room.hpp"
-#include				"Decor.hh"
-#include				"Pnj.hh"
-#include				"Grid.hh"
+#include				"GenerationRules.hh"
+#include				"EntityManager.hh"
 
 class					SceneMenu : public AScene
 {
@@ -24,10 +20,10 @@ public:
   virtual void				input(ALLEGRO_EVENT *event);
   virtual void				receiveMessage(e_message type, bool activate);
 private: //variables
-  Room<Decor>				room_;
-  PnjMap<Pnj>				pnjmap_;
-  Entity				heros_;
-  Grid					grid_;
+  // Room<Decor>				room_;
+  // PnjMap<Pnj>				pnjmap_;
+  // Entity				heros_;
+  // Grid					grid_;
 };
 
 #endif					// __SCENE_MENU_HH__
