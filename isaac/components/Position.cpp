@@ -54,5 +54,11 @@ void					Position::serialize(std::ofstream *file)
   file->write(reinterpret_cast<const char *>(&this->x), sizeof(this->x));
   file->write(reinterpret_cast<const char *>(&this->y), sizeof(this->y));
   file->write(reinterpret_cast<const char *>(&this->z), sizeof(this->z));
-  file->write("\n", 1);
+}
+
+void					Position::unserialize(std::ifstream *file)
+{
+  file->read(reinterpret_cast<char *>(&this->x), sizeof(this->x));
+  file->read(reinterpret_cast<char *>(&this->y), sizeof(this->y));
+  file->read(reinterpret_cast<char *>(&this->z), sizeof(this->z));
 }

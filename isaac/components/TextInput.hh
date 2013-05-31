@@ -8,6 +8,7 @@ class					TextInput : public AComponent
 {
 public:
   TextInput(Entity *entity);
+  // todo serialization !!! /!\ //
   virtual ~TextInput();
   virtual void				update(double time = 0);
   virtual void				draw();

@@ -10,6 +10,7 @@ public:
   virtual ~PnjDeath();
   virtual void				update(double time = 0);
   virtual void				draw();
+  // virtual void				serialize(std::ofstream *file);
   bool					isDead() const;
   void					setDead(bool dead);
   virtual void				kill();

@@ -36,5 +36,9 @@ void					CollisionType::serialize(std::ofstream *file)
 
   file->write(reinterpret_cast<const char *>(&type), sizeof(type));
   file->write(reinterpret_cast<const char *>(&coltype), sizeof(coltype));
-  file->write("\n", 1);
+}
+
+void					CollisionType::unserialize(std::ifstream *file)
+{
+  file->read(reinterpret_cast<char*>(&(this->type_)), sizeof(t_collisionType));
 }

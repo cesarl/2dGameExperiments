@@ -50,3 +50,18 @@ void					Health::setDelay(double delay)
 {
   this->delay_ = delay;
 }
+
+void					Health::serialize(std::ofstream *file)
+{
+  int					type = T_HEALTH;
+
+  file->write(reinterpret_cast<const char *>(&type), sizeof(type));
+  file->write(reinterpret_cast<const char *>(&this->health_), sizeof(int));
+  file->write(reinterpret_cast<const char *>(&this->delay_), sizeof(double));
+}
+
+void					Health::unserialize(std::ifstream *file)
+{
+  file->read(reinterpret_cast<char *>(&this->health_), sizeof(int));
+  file->read(reinterpret_cast<char *>(&this->delay_), sizeof(double));
+}

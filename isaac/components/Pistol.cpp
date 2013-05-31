@@ -88,3 +88,24 @@ bool					Pistol::fire(float vx, float vy)
   this->list_.push_back(tmp);
   return true;
 }
+
+void					Pistol::serialize(std::ofstream *file)
+{
+  int					type = T_PISTOL;
+
+  file->write(reinterpret_cast<const char *>(&type), sizeof(type));
+  file->write(reinterpret_cast<const char *>(&this->fireRate_), sizeof(double));
+  file->write(reinterpret_cast<const char *>(&this->friction_), sizeof(double));
+  file->write(reinterpret_cast<const char *>(&this->speedBullet_), sizeof(double));
+  file->write(reinterpret_cast<const char *>(&this->bulletLifeTime_), sizeof(double));
+  file->write(reinterpret_cast<const char *>(&this->shootTime_), sizeof(double));
+}
+
+void					Pistol::unserialize(std::ifstream *file)
+{
+  file->read(reinterpret_cast<char *>(&this->fireRate_), sizeof(double));
+  file->read(reinterpret_cast<char *>(&this->friction_), sizeof(double));
+  file->read(reinterpret_cast<char *>(&this->speedBullet_), sizeof(double));
+  file->read(reinterpret_cast<char *>(&this->bulletLifeTime_), sizeof(double));
+  file->read(reinterpret_cast<char *>(&this->shootTime_), sizeof(double));
+}

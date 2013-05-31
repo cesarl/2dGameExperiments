@@ -110,3 +110,10 @@ void					Input::listen(bool value)
       this->sright = false;
     }
 }
+
+void					Input::serialize(std::ofstream *file)
+{
+  int					type = T_INPUT;
+
+  file->write(reinterpret_cast<const char *>(&type), sizeof(type));
+}

@@ -25,3 +25,10 @@ void					PnjHealth::impactDamage(Entity *e)
   else
     VISIBILITY(this->entity)->blink(30, 0.2);
 }
+
+// void					PnjHealth::serialize(std::ofstream *file)
+// {
+//   int					type = T_PNJ_HEALTH;
+
+//   file->write(reinterpret_cast<const char *>(&type), sizeof(type));
+// }

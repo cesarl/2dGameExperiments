@@ -1,6 +1,7 @@
 #ifndef					__COMPONENT_TYPE_HH__
 # define				__COMPONENT_TYPE_HH__
 
+#include				<fstream>
 #include				"Position.hh"
 #include				"Move.hh"
 #include				"Image.hh"
@@ -26,28 +27,28 @@
 
 typedef enum				EType
   {
-    T_POSITION = 0,
-    T_MOVE,
-    T_IMAGE,
-    T_SPRITE,
-    T_VISIBILITY,
-    T_ROTATION,
-    T_TEXT,
-    T_ROTATION_FORCE,
-    T_PARTICULE_EMITTER,
-    T_TEXT_INPUT,
-    T_INPUT,
-    T_HEROS,
-    T_BOUNDING_BOX,
-    T_FORCE_RESISTANCE,
-    T_PISTOL,
-    T_COLLISION_TYPE,
-    T_DANGER_TYPE,
-    T_DAMAGE,
-    T_HEALTH,
-    T_PNJ_HEALTH,
-    T_DEATH,
-    T_PNJ_DEATH
+    T_POSITION = 1,
+    T_MOVE = 2,
+    T_IMAGE = 3,
+    T_SPRITE = 4,
+    T_VISIBILITY = 5,
+    T_ROTATION = 6,
+    T_TEXT = 7,
+    T_ROTATION_FORCE = 8,
+    T_PARTICULE_EMITTER = 9,
+    T_TEXT_INPUT = 10,
+    T_INPUT = 11,
+    T_HEROS = 12,
+    T_BOUNDING_BOX = 13,
+    T_FORCE_RESISTANCE = 14,
+    T_PISTOL = 15,
+    T_COLLISION_TYPE = 16,
+    T_DANGER_TYPE = 17,
+    T_DAMAGE = 18,
+    T_HEALTH = 19,
+    T_PNJ_HEALTH = 20,
+    T_DEATH = 21,
+    T_PNJ_DEATH = 22
   }					EType;
 
 inline
@@ -180,6 +181,83 @@ inline
 PnjDeath				*PNJ_DEATH(Entity *entity)
 {
   return entity->getComponent<PnjDeath>(T_DEATH);
+}
+
+inline
+void					unserializeComponent(int type, Entity *entity, std::ifstream *f)
+{
+  AComponent				*c = NULL;
+  switch(type)
+    {
+    case T_POSITION:
+      c = POSITION(entity);
+      break;
+    case T_MOVE:
+      c = MOVE(entity);
+      break;
+    case T_IMAGE:
+      c = IMAGE(entity);
+      break;
+    case T_SPRITE:
+      c = SPRITE(entity);
+      break;
+    case T_VISIBILITY:
+      c = VISIBILITY(entity);
+      break;
+    case T_ROTATION:
+      c = ROTATION(entity);
+      break;
+    case T_TEXT:
+      c = TEXT(entity);
+      break;
+    case T_ROTATION_FORCE:
+      c = ROTATION_FORCE(entity);
+      break;
+    case T_PARTICULE_EMITTER:
+      c = PARTICULE_EMITTER(entity);
+      break;
+    case T_TEXT_INPUT:
+      c = TEXT_INPUT(entity);
+      break;
+    case T_INPUT:
+      c = INPUT(entity);
+      break;
+    case T_HEROS:
+      c = HEROS(entity);
+      break;
+    case T_BOUNDING_BOX:
+      c = BOUNDING_BOX(entity);
+      break;
+    case T_PISTOL:
+      c = PISTOL(entity);
+      break;
+    case T_COLLISION_TYPE:
+      c = COLLISION_TYPE(entity);
+      break;
+    case T_DANGER_TYPE:
+      c = DANGER_TYPE(entity);
+      break;
+    case T_DAMAGE:
+      c = DAMAGE(entity);
+      break;
+    case T_HEALTH:
+      c = HEALTH(entity);
+      break;
+    case T_PNJ_HEALTH:
+      c = PNJ_HEALTH(entity);
+      break;
+    case T_DEATH:
+      c = DEATH(entity);
+      break;
+    case T_PNJ_DEATH:
+      c = PNJ_DEATH(entity);
+      break;
+    default:
+      c = NULL;
+      break;
+    }
+  if (c)
+  c->unserialize(f);
 }
 
 #endif					// __COMPONENT_TYPE_HH__

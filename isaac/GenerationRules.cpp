@@ -80,7 +80,6 @@ bool				gnHeros(EntityManager *mgr, int)
   if (!e)
     return false;
   HEROS(e);
-  PISTOL(e);
   MOVE(e)->setMaxSpeed(4);
   POSITION(e)->setPos(64 * 20 / 2 - 32, 64 * 10 / 2 - 32, 2);
   return true;

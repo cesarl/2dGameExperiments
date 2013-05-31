@@ -36,3 +36,10 @@ void					PnjDeath::kill()
   ROTATION_FORCE(this->entity)->launch(0.3, 0.05);
   this->dead_ = true;
 }
+
+// void					PnjDeath::serialize(std::ofstream *file)
+// {
+//   int					type = T_PNJ_DEATH;
+
+//   file->write(reinterpret_cast<const char *>(&type), sizeof(type));
+// }

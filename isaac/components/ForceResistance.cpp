@@ -124,3 +124,16 @@ void					ForceResistance::applyForce(Entity *o)
   move1->setDirection(nvx1, nvy1);
   move2->setDirection(nvx2, nvy2);
 }
+
+void					ForceResistance::serialize(std::ofstream *file)
+{
+  int					type = T_FORCE_RESISTANCE;
+
+  file->write(reinterpret_cast<const char *>(&type), sizeof(type));
+  file->write(reinterpret_cast<const char *>(&this->resistance_), sizeof(double));
+}
+
+void					ForceResistance::unserialize(std::ifstream *file)
+{
+  file->read(reinterpret_cast<char *>(&this->resistance_), sizeof(double));
+}

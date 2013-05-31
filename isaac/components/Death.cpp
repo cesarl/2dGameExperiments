@@ -36,3 +36,16 @@ void					Death::kill()
 {
   this->dead_ = true;
 }
+
+void					Death::serialize(std::ofstream *file)
+{
+  int					type = T_DEATH;
+
+  file->write(reinterpret_cast<const char *>(&type), sizeof(type));
+  file->write(reinterpret_cast<const char *>(&this->dead_), sizeof(bool));
+}
+
+void					Death::unserialize(std::ifstream *file)
+{
+  file->read(reinterpret_cast<char *>(&this->dead_), sizeof(bool));
+}

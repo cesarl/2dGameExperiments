@@ -60,10 +60,18 @@ void					Heros::update(double time)
     pistol->fire(1, 0);
   if (input->sleft)
     pistol->fire(-1, 0);
+  (void)time;
 }
 
 void					Heros::draw()
 {
   PISTOL(this->entity)->draw();
   SPRITE(this->entity)->draw();
+}
+
+void					Heros::serialize(std::ofstream *file)
+{
+  int					type = T_HEROS;
+
+  file->write(reinterpret_cast<const char *>(&type), sizeof(type));
 }

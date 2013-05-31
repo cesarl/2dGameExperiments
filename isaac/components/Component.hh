@@ -13,7 +13,8 @@ class					AComponent
 public:
   virtual void				update(double time = 0) = 0;
   virtual void				draw() = 0;
-virtual void				serialize(std::ofstream *){};
+  virtual void				serialize(std::ofstream *){};
+  virtual void				unserialize(std::ifstream *){};
   virtual ~AComponent();
   AComponent(Entity *entity, int typeId, int updatePriority = 0, int drawPriority = 0);
 public:

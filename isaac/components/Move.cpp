@@ -152,3 +152,32 @@ void					Move::setMaxSpeed(double val)
 {
   this->maxSpeed_ = val;
 }
+
+void					Move::serialize(std::ofstream *file)
+{
+  int					type = T_MOVE;
+
+  file->write(reinterpret_cast<const char *>(&type), sizeof(type));
+  file->write(reinterpret_cast<const char *>(&this->vx), sizeof(double));
+  file->write(reinterpret_cast<const char *>(&this->vy), sizeof(double));
+  file->write(reinterpret_cast<const char *>(&this->gravityX), sizeof(double));
+  file->write(reinterpret_cast<const char *>(&this->gravityY), sizeof(double));
+  file->write(reinterpret_cast<const char *>(&this->frictionX), sizeof(double));
+  file->write(reinterpret_cast<const char *>(&this->frictionY), sizeof(double));
+  file->write(reinterpret_cast<const char *>(&this->dirX_), sizeof(int));
+  file->write(reinterpret_cast<const char *>(&this->dirY_), sizeof(int));
+  file->write(reinterpret_cast<const char *>(&this->maxSpeed_), sizeof(double));
+}
+
+void					Move::unserialize(std::ifstream *file)
+{
+  file->read(reinterpret_cast<char *>(&this->vx), sizeof(double));
+  file->read(reinterpret_cast<char *>(&this->vy), sizeof(double));
+  file->read(reinterpret_cast<char *>(&this->gravityX), sizeof(double));
+  file->read(reinterpret_cast<char *>(&this->gravityY), sizeof(double));
+  file->read(reinterpret_cast<char *>(&this->frictionX), sizeof(double));
+  file->read(reinterpret_cast<char *>(&this->frictionY), sizeof(double));
+  file->read(reinterpret_cast<char *>(&this->dirX_), sizeof(int));
+  file->read(reinterpret_cast<char *>(&this->dirY_), sizeof(int));
+  file->read(reinterpret_cast<char *>(&this->maxSpeed_), sizeof(double));
+}

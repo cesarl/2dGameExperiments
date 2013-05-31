@@ -35,6 +35,12 @@ void					DangerType::serialize(std::ofstream *file)
   int					coltype = this->type_;
 
   file->write(reinterpret_cast<const char *>(&type), sizeof(type));
-  file->write(reinterpret_cast<const char *>(&coltype), sizeof(coltype));
-  file->write("\n", 1);
+  file->write(reinterpret_cast<const char *>(&coltype), sizeof(int));
+}
+
+void					DangerType::unserialize(std::ifstream *file)
+{
+  int t;
+  file->read(reinterpret_cast<char *>(&t), sizeof(int));
+  this->type_ = (t_dangerType)t;
 }

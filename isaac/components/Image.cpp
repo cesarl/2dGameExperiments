@@ -47,7 +47,25 @@ void					Image::setBitmap(std::string const & imagePath)
 void					Image::serialize(std::ofstream *file)
 {
   int					type = T_IMAGE;
+  int					s = this->path.size();
 
   file->write(reinterpret_cast<const char *>(&type), sizeof(type));
+  file->write(reinterpret_cast<const char *>(&s), sizeof(int));
   file->write(this->path.c_str(), this->path.size());
+}
+
+void					Image::unserialize(std::ifstream *file)
+{
+  int					s;
+  char					p[1024];
+
+  memset(p, 0, 1024);
+  file->read(reinterpret_cast<char *>(&s), sizeof(int));
+  if (s > 0)
+    {
+      file->read(p, s);
+      this->path = std::string(p);
+      std::cout << p << " " << s << std::endl;
+      this->bitmap = ImageManager::getInstance()->load(this->path);
+    }
 }

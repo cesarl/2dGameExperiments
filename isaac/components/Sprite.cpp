@@ -80,12 +80,23 @@ void					Sprite::serialize(std::ofstream *file)
   int					type = T_SPRITE;
 
   file->write(reinterpret_cast<const char *>(&type), sizeof(type));
-  file->write(reinterpret_cast<const char *>(&this->columnNumber), sizeof(this->columnNumber));
-  file->write(reinterpret_cast<const char *>(&this->partWidth), sizeof(this->partWidth));
-  file->write(reinterpret_cast<const char *>(&this->partHeight), sizeof(this->partHeight));
-  file->write(reinterpret_cast<const char *>(&this->from), sizeof(this->from));
-  file->write(reinterpret_cast<const char *>(&this->stepNumber), sizeof(this->stepNumber));
-  file->write(reinterpret_cast<const char *>(&this->currentStep), sizeof(this->currentStep));
-  file->write(reinterpret_cast<const char *>(&this->speed), sizeof(this->speed));
-  file->write("\n", 1);
+  file->write(reinterpret_cast<const char *>(&this->columnNumber), sizeof(int));
+  file->write(reinterpret_cast<const char *>(&this->partWidth), sizeof(int));
+  file->write(reinterpret_cast<const char *>(&this->partHeight), sizeof(int));
+  file->write(reinterpret_cast<const char *>(&this->from), sizeof(unsigned int));
+  file->write(reinterpret_cast<const char *>(&this->stepNumber), sizeof(unsigned int));
+  file->write(reinterpret_cast<const char *>(&this->currentStep), sizeof(unsigned int));
+  file->write(reinterpret_cast<const char *>(&this->speed), sizeof(double));
+}
+
+void					Sprite::unserialize(std::ifstream *file)
+{
+  file->read(reinterpret_cast<char *>(&this->columnNumber), sizeof(int));
+  file->read(reinterpret_cast<char *>(&this->partWidth), sizeof(int));
+  file->read(reinterpret_cast<char *>(&this->partHeight), sizeof(int));
+  file->read(reinterpret_cast<char *>(&this->from), sizeof(unsigned int));
+  file->read(reinterpret_cast<char *>(&this->stepNumber), sizeof(unsigned int));
+  file->read(reinterpret_cast<char *>(&this->currentStep), sizeof(unsigned int));
+  file->read(reinterpret_cast<char *>(&this->speed), sizeof(double));
+
 }

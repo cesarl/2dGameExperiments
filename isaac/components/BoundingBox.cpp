@@ -137,6 +137,15 @@ int					BoundingBox::getCenterY() const
   return (this->height_ / 2) + this->marginY_ + POSITION(this->entity)->y;
 }
 
+void					BoundingBox::unserialize(std::ifstream *file)
+{
+  file->read(reinterpret_cast<char*>(&(this->width_)), sizeof(int));
+  file->read(reinterpret_cast<char*>(&(this->height_)), sizeof(int));
+  file->read(reinterpret_cast<char*>(&(this->collidable_)), sizeof(bool));
+  file->read(reinterpret_cast<char*>(&(this->marginX_)), sizeof(int));
+  file->read(reinterpret_cast<char*>(&(this->marginY_)), sizeof(int));
+}
+
 void					BoundingBox::serialize(std::ofstream *file)
 {
   int					type = T_BOUNDING_BOX;
@@ -147,5 +156,4 @@ void					BoundingBox::serialize(std::ofstream *file)
   file->write(reinterpret_cast<const char *>(&this->collidable_), sizeof(this->collidable_));
   file->write(reinterpret_cast<const char *>(&this->marginX_), sizeof(this->marginX_));
   file->write(reinterpret_cast<const char *>(&this->marginY_), sizeof(this->marginY_));
-  file->write("\n", 1);
 }

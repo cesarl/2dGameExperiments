@@ -18,3 +18,17 @@ void					Rotation::update(double time)
 
 void					Rotation::draw()
 {}
+
+void					Rotation::serialize(std::ofstream *file)
+{
+  int					type = T_ROTATION;
+
+  file->write(reinterpret_cast<const char *>(&type), sizeof(type));
+  file->write(reinterpret_cast<const char *>(&this->angle), sizeof(float)
+);
+}
+
+void					Rotation::unserialize(std::ifstream *file)
+{
+  file->read(reinterpret_cast<char *>(&this->angle), sizeof(float));
+}

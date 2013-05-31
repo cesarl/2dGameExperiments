@@ -42,6 +42,8 @@ void				DrawManager::add(Entity *entity, int layer)
 {
   long				id;
 
+  if (!entity->hasComponent(T_POSITION))
+    return;
   if (!layer)
     id = POSITION(entity)->z * 1000000000000;
   else

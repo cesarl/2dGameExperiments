@@ -40,3 +40,20 @@ void					RotationForce::stop()
   this->friction_ = 0;
   this->direction_ = 0;
 }
+
+void					RotationForce::serialize(std::ofstream *file)
+{
+  int					type = T_ROTATION_FORCE;
+
+  file->write(reinterpret_cast<const char *>(&type), sizeof(type));
+  file->write(reinterpret_cast<const char *>(&this->force_), sizeof(double));
+  file->write(reinterpret_cast<const char *>(&this->friction_), sizeof(double));
+  file->write(reinterpret_cast<const char *>(&this->direction_), sizeof(int));
+}
+
+void					RotationForce::unserialize(std::ifstream *file)
+{
+  file->read(reinterpret_cast<char *>(&this->force_), sizeof(double));
+  file->read(reinterpret_cast<char *>(&this->friction_), sizeof(double));
+  file->read(reinterpret_cast<char *>(&this->direction_), sizeof(int));
+}

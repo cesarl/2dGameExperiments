@@ -11,6 +11,8 @@ public:
   virtual ~Rotation();
   virtual void				update(double time = 0);
   virtual void				draw();
+  virtual void				serialize(std::ofstream *file);
+  virtual void				unserialize(std::ifstream *file);
 public:
   float					angle;
 };

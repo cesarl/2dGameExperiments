@@ -55,6 +55,11 @@ void					CollisionManager::update()
 
 void					CollisionManager::add(Entity *entity)
 {
+  if (!entity->hasComponent(T_BOUNDING_BOX))
+    {
+      std::cout << "lol" << std::endl;
+      return;
+    }
   BoundingBox				*bb = BOUNDING_BOX(entity);
   int					minX;
   int					maxX;

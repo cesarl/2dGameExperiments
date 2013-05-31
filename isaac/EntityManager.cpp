@@ -46,11 +46,6 @@ void				EntityManager::pushGenerationRule(generationRule fn)
   this->generationRules_.push(fn);
 }
 
-bool				EntityManager::unserialize()
-{
-  return true;
-}
-
 void				EntityManager::update()
 {
   std::list<Entity*>::iterator	it;
@@ -102,6 +97,31 @@ bool				EntityManager::serialize(std::string const & path, std::string const & n
       (*it)->serialize(&myFile);
       ++it;
     }
+  myFile.close();
+  return true;
+}
+
+bool				EntityManager::unserialize(std::string const & path, std::string const & name)
+{
+  std::ostringstream		fileName;
+  std::ifstream			myFile;
+  typename std::list<Entity*>::iterator it;
+  Entity			*tmp;
+
+  fileName << path << name << ".bin";
+  if (!al_filename_exists(fileName.str().c_str()))
+    return false;
+
+  myFile.open(fileName.str().c_str(), std::ios::out | std::ios::binary);
+
+  while (!myFile.eof())
+    {
+      tmp = this->create();
+      if (!tmp)
+	return false;
+      tmp->unserialize(&myFile);
+    }
+
   myFile.close();
   return true;
 }

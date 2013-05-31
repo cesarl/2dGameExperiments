@@ -8,6 +8,8 @@ SceneMenu::~SceneMenu()
 
 bool					SceneMenu::initialize()
 {
+  if (EntityManager::getInstance()->unserialize("./", "lol"))
+    return true;
   EntityManager::getInstance()->pushGenerationRule(gnRoom);
   EntityManager::getInstance()->pushGenerationRule(gnPnj);
   EntityManager::getInstance()->pushGenerationRule(gnHeros);

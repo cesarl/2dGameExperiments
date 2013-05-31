@@ -87,3 +87,28 @@ void					Visibility::blink(int nb, double speed)
   this->blinkSpeed_ = speed;
   this->blinkTimeCounter_ = 0;
 }
+
+void					Visibility::serialize(std::ofstream *file)
+{
+  int					type = T_VISIBILITY;
+
+  file->write(reinterpret_cast<const char *>(&type), sizeof(type));
+  file->write(reinterpret_cast<const char *>(&this->timeCounter_), sizeof(double));
+  file->write(reinterpret_cast<const char *>(&this->fade_), sizeof(int));
+  file->write(reinterpret_cast<const char *>(&this->speed_), sizeof(double));
+  file->write(reinterpret_cast<const char *>(&this->blinkSpeed_), sizeof(double));
+ file->write(reinterpret_cast<const char *>(&this->blinkNb_), sizeof(int));
+ file->write(reinterpret_cast<const char *>(&this->blinkCounter_), sizeof(int));
+ file->write(reinterpret_cast<const char *>(&this->blinkTimeCounter_), sizeof(int));
+}
+
+void					Visibility::unserialize(std::ifstream *file)
+{
+  file->read(reinterpret_cast<char *>(&this->timeCounter_), sizeof(double));
+  file->read(reinterpret_cast<char *>(&this->fade_), sizeof(int));
+  file->read(reinterpret_cast<char *>(&this->speed_), sizeof(double));
+  file->read(reinterpret_cast<char *>(&this->blinkSpeed_), sizeof(double));
+ file->read(reinterpret_cast<char *>(&this->blinkNb_), sizeof(int));
+ file->read(reinterpret_cast<char *>(&this->blinkCounter_), sizeof(int));
+ file->read(reinterpret_cast<char *>(&this->blinkTimeCounter_), sizeof(int));
+}

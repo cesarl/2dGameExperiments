@@ -81,5 +81,12 @@ void					Damage::serialize(std::ofstream *file)
   file->write(reinterpret_cast<const char *>(&this->damageNb_), sizeof(this->damageNb_));
   file->write(reinterpret_cast<const char *>(&this->delay_), sizeof(this->delay_));
   file->write(reinterpret_cast<const char *>(&this->delayCounter_), sizeof(this->delayCounter_));
-  file->write("\n", 1);
+}
+
+void					Damage::unserialize(std::ifstream *file)
+{
+  file->read(reinterpret_cast<char *>(&this->magnitude_), sizeof(this->magnitude_));
+  file->read(reinterpret_cast<char *>(&this->damageNb_), sizeof(this->damageNb_));
+  file->read(reinterpret_cast<char *>(&this->delay_), sizeof(this->delay_));
+  file->read(reinterpret_cast<char *>(&this->delayCounter_), sizeof(this->delayCounter_));
 }

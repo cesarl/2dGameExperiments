@@ -9,6 +9,7 @@ public:
   PnjHealth(Entity *entity);
   virtual ~PnjHealth();
   virtual void				impactDamage(Entity *e);
+  // virtual void				serialize(std::ofstream *file);
 };
 
 #endif					// __PNJ_HEALTH_HH__

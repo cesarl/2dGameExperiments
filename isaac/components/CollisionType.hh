@@ -21,6 +21,7 @@ public:
   virtual void				update(double time = 0);
   virtual void				draw();
   virtual void				serialize(std::ofstream *file);
+  virtual void				unserialize(std::ifstream *file);
   t_collisionType			getType() const;
   void					setType(t_collisionType type);
 private:
