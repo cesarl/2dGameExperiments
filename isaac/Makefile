@@ -46,12 +46,10 @@ SRCS		=	managers/EventManager.cpp \
 			components/PnjHealth.cpp \
 			components/Death.cpp \
 			components/PnjDeath.cpp \
+			components/Pistol.cpp \
+			components/Heros.cpp\
 			GenerationRules.cpp \
 			main.cpp
-
-			# components/Pistol.cpp \
-			# components/Heros.cpp\
-
 
 OBJS		=	$(SRCS:.cpp=.o)
 

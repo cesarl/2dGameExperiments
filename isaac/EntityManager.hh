@@ -5,6 +5,7 @@
 #include			<list>
 #include			"Entity.hh"
 #include			"DrawManager.hh"
+#include			"CollisionManager.hh"
 
 class				EntityManager;
 

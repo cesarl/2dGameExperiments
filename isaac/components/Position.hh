@@ -12,11 +12,12 @@ public:
   virtual void				update(double time = 0);
   virtual void				draw();
   int					getX() const;
-  void					setPos(double x, double y);
+  void					setPos(double x, double y, double z = 0.0f);
   void					reversePos();
 public:
   double				x;
   double				y;
+  double				z;
 private:
   double				postx_;
   double				posty_;

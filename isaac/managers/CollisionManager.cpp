@@ -2,16 +2,117 @@
 
 #include				<iostream> // pour debug - a virer
 
-CollisionManager::CollisionManager()
+CollisionManager::CollisionManager() :
+  cellSize_(100),
+  height_(0),
+  width_(0),
+  maxWidth_(10000)
 {}
 
 CollisionManager::~CollisionManager()
-{}
+{
+  this->clear();
+}
 
 CollisionManager			*CollisionManager::getInstance()
 {
   static CollisionManager		that;
   return &that;
+}
+
+void					CollisionManager::update()
+{
+  t_cell_iter				it;
+  t_iter				cit;
+  t_iter				citend;
+
+  it = this->list_.begin();
+  while (it != this->list_.end())
+    {
+      if (it->second.empty())
+	continue;
+      cit = it->second.begin();
+      while (cit != it->second.end())
+	{
+	  citend = --(it->second.end());
+	  while (citend != cit)
+	    {
+	      if (cit != citend && BOUNDING_BOX(*cit)->collide(*citend))
+		{
+		  this->resolveCollision(*cit, *citend);
+		  // FORCE_RESISTANCE(*citend)->applyForce(*cit);
+		  // POSITION(*cit)->reversePos();
+		  // POSITION(*citend)->reversePos();
+		}
+	      --citend;
+	    }
+	  ++cit;
+	}
+      ++it;
+    }
+  this->clear();
+}
+
+void					CollisionManager::add(Entity *entity)
+{
+  BoundingBox				*bb = BOUNDING_BOX(entity);
+  int					minX;
+  int					maxX;
+  int					minY;
+  int					maxY;
+  int					key;
+  t_cell_iter				it;
+  std::list<Entity*>			newList;
+
+  minX = bb->getX() / this->cellSize_;
+  maxX = bb->getXX() / this->cellSize_;
+  maxY = bb->getYY() / this->cellSize_ * this->maxWidth_;
+  while (minX <= maxX)
+    {
+      minY = bb->getY() / this->cellSize_ * this->maxWidth_;
+      while (minY <= maxY)
+	{
+	  key = minX + minY;
+	  it = this->list_.find(key);
+	  if (it != this->list_.end())
+	    {
+	      it->second.push_back(entity);
+	    }
+	  else
+	    {
+	      newList.push_back(entity);
+	      this->list_.insert(std::pair<int, std::list<Entity*> >(key, newList));
+	    }
+	  minY += this->maxWidth_;
+	}
+      ++minX;
+    }
+}
+
+void					CollisionManager::remove(Entity *entity)
+{
+  Position				*pos = POSITION(entity);
+  int					key = pos->x * this->maxWidth_ + pos->y;
+  t_cell_iter				it;
+
+  it = this->list_.find(key);
+  if (it != this->list_.end())
+    {
+      it->second.remove(entity);
+    }
+}
+
+void					CollisionManager::clear()
+{
+  t_cell_iter				it;
+
+  it = this->list_.begin();
+  while (it != this->list_.end())
+    {
+      it->second.clear();
+      ++it;
+    }
+  this->list_.clear();
 }
 
 void					CollisionManager::resolveCollision(Entity *e1, Entity *e2)
@@ -61,4 +162,3 @@ void					CollisionManager::resolveCollision(Entity *e1, Entity *e2)
       MOVE(e1)->reverseOneAxe(abs(b2->getCenterX() - b1->getCenterX()), abs(b2->getCenterY() - b1->getCenterY()), 0.3);
     }
 }
-

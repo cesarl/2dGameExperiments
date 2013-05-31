@@ -1,4 +1,4 @@
-#include			<iostream> // for debug /!\ // 
+#include			<iostream> // for debug /!\ //
 #include			"EntityManager.hh"
 
 EntityManager::EntityManager()
@@ -64,9 +64,10 @@ void				EntityManager::update()
   while (it != this->list_.end())
     {
       (*it)->update();
+      CollisionManager::getInstance()->add(*it);
       ++it;
     }
-  std::cout << this->list_.size() << std::endl;
+  CollisionManager::getInstance()->update();
 }
 
 void				EntityManager::draw()

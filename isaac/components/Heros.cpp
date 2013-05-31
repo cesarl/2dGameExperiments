@@ -3,7 +3,7 @@
 
 #include				<iostream> //pour le debug - a virer
 
-Heros::Heros(Entity *entity) : AComponent(entity, T_HEROS, 1)
+Heros::Heros(Entity *entity) : AComponent(entity, T_HEROS, 1, 5)
 {
   MOVE(entity)->setFriction(0.08, 0.08);
   INPUT(entity)->listen(true);
@@ -63,4 +63,7 @@ void					Heros::update(double time)
 }
 
 void					Heros::draw()
-{}
+{
+  PISTOL(this->entity)->draw();
+  SPRITE(this->entity)->draw();
+}

@@ -1,9 +1,9 @@
 #include				"Pistol.hh"
 #include				"ComponentTypes.hh"
-#include				"Grid.hh"
 #include				"DrawManager.hh"
+#include				"CollisionManager.hh"
 
-#include				<iostream> //pour le debug - a virer
+#include				<iostream> //pour le debug - a virer /!\//
 
 Pistol::Pistol(Entity *entity) :
   AComponent(entity, T_PISTOL, 1),
@@ -11,14 +11,13 @@ Pistol::Pistol(Entity *entity) :
   friction_(0.3),
   speedBullet_(10),
   bulletLifeTime_(3),
-  shootTime_(al_get_time()),
-  gridCollision_(NULL)
+  shootTime_(al_get_time())
 {
 }
 
 Pistol::~Pistol()
 {
-  // todo clear la pool provisoire - ca leak ^^
+  // todo clear la pool provisoire - ca leak ^^ /!\ //
 }
 
 void					Pistol::update(double time)
@@ -35,27 +34,16 @@ void					Pistol::update(double time)
       (*it)->update();
       if (!VISIBILITY(*it)->visible)
 	{
-	  if (this->gridCollision_)
-	    {
-	      this->gridCollision_->remove(*it);
-	    }
+	  CollisionManager::getInstance()->remove(*it);
 	  delete *it;
 	  it = this->list_.erase(it);
 	}
       else
 	{
-	  if (this->gridCollision_)
-	    {
-	      this->gridCollision_->add(*it);
-	    }
+	  CollisionManager::getInstance()->add(*it);
 	  ++it;
 	}
     }
-}
-
-void					Pistol::attachGridCollision(Grid *grid)
-{
-  this->gridCollision_ = grid;
 }
 
 void					Pistol::draw()
@@ -65,7 +53,7 @@ void					Pistol::draw()
   it = this->list_.begin();
   while (it != this->list_.end())
     {
-      DrawManager::getInstance()->add(*it, 2);
+      DrawManager::getInstance()->add(*it);
       ++it;
     }
 }
@@ -77,8 +65,11 @@ bool					Pistol::fire(float vx, float vy)
 
   Entity				*tmp;
 
+  // todo /!\ le relier a l entity manager //
   tmp = new Entity;
-  POSITION(tmp)->setPos(BOUNDING_BOX(this->entity)->getCenterX() - 15, BOUNDING_BOX(this->entity)->getCenterY() - 15);
+  if (!tmp)
+    return false;
+  POSITION(tmp)->setPos(BOUNDING_BOX(this->entity)->getCenterX() - 15, BOUNDING_BOX(this->entity)->getCenterY() - 15, 3);
   MOVE(tmp)->setDirection(vx * this->speedBullet_, vy * this->speedBullet_);
   MOVE(tmp)->setFriction(this->friction_, this->friction_);
   VISIBILITY(tmp)->fadeOut(0.3, 10);

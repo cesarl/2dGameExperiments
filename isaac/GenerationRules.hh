@@ -7,5 +7,7 @@
 # define			CELL_SIZE (64)
 
 bool				gnRoom(EntityManager *mgr, int seed);
+bool				gnPnj(EntityManager *mgr, int seed);
+bool				gnHeros(EntityManager *mgr, int seed);
 
 #endif				// __GENERATION_RULES_HH__

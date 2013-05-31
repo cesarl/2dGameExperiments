@@ -42,7 +42,10 @@ void				DrawManager::add(Entity *entity, int layer)
 {
   long				id;
 
-  id = layer * 1000000000000;
+  if (!layer)
+    id = POSITION(entity)->z * 1000000000000;
+  else
+    id = layer * 1000000000000;
   id += POSITION(entity)->y * 1000000;
   id += POSITION(entity)->x;
   this->go_.insert(std::pair<unsigned long, Entity*>(id, entity));
