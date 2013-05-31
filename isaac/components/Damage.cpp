@@ -71,3 +71,15 @@ void					Damage::applied()
   if (this->damageNb_ <= 0)
     VISIBILITY(this->entity)->fadeOut(0.05, 30);
 }
+
+void					Damage::serialize(std::ofstream *file)
+{
+  int					type = T_DAMAGE;
+
+  file->write(reinterpret_cast<const char *>(&type), sizeof(type));
+  file->write(reinterpret_cast<const char *>(&this->magnitude_), sizeof(this->magnitude_));
+  file->write(reinterpret_cast<const char *>(&this->damageNb_), sizeof(this->damageNb_));
+  file->write(reinterpret_cast<const char *>(&this->delay_), sizeof(this->delay_));
+  file->write(reinterpret_cast<const char *>(&this->delayCounter_), sizeof(this->delayCounter_));
+  file->write("\n", 1);
+}

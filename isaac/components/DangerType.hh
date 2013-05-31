@@ -19,6 +19,7 @@ public:
   virtual ~DangerType();
   virtual void				update(double time = 0);
   virtual void				draw();
+  virtual void				serialize(std::ofstream *file);
   t_dangerType				getType() const;
   void					setType(t_dangerType type);
 private:

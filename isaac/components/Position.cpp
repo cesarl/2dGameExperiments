@@ -44,3 +44,15 @@ void					Position::reversePos()
   this->x = this->postx_;
   this->y = this->posty_;
 }
+
+
+void					Position::serialize(std::ofstream *file)
+{
+  int					type = T_POSITION;
+
+  file->write(reinterpret_cast<const char *>(&type), sizeof(type));
+  file->write(reinterpret_cast<const char *>(&this->x), sizeof(this->x));
+  file->write(reinterpret_cast<const char *>(&this->y), sizeof(this->y));
+  file->write(reinterpret_cast<const char *>(&this->z), sizeof(this->z));
+  file->write("\n", 1);
+}

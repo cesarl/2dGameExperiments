@@ -41,9 +41,13 @@ void					Image::setBitmap(std::string const & imagePath)
 
   imageManager = ImageManager::getInstance();
   this->bitmap = imageManager->load(imagePath);
+  this->path = imagePath;
 }
 
-void					Image::setBitmap(ALLEGRO_BITMAP *image)
+void					Image::serialize(std::ofstream *file)
 {
-  this->bitmap = image;
+  int					type = T_IMAGE;
+
+  file->write(reinterpret_cast<const char *>(&type), sizeof(type));
+  file->write(this->path.c_str(), this->path.size());
 }

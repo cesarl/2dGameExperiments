@@ -85,3 +85,17 @@ bool				gnHeros(EntityManager *mgr, int)
   POSITION(e)->setPos(64 * 20 / 2 - 32, 64 * 10 / 2 - 32, 2);
   return true;
 }
+
+bool				gnTest(EntityManager *mgr, int)
+{
+  Entity			*e;
+
+  e = mgr->create();
+  if (!e)
+    return false;
+  IMAGE(e)->setBitmap("assets/imgs/mummy.png");
+  SPRITE(e)->config(8, 64, 64, 8, 8, 8, 0.12);
+  POSITION(e)->setPos(64 * 20 / 2 - 32, 64 * 10 / 2 - 32, 2);
+  *TEXT(e) = "moi j'te dis lol";
+  return true;
+}

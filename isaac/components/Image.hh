@@ -13,10 +13,11 @@ public:
   virtual ~Image();
   virtual void				update(double time = 0);
   virtual void				draw();
+  virtual void				serialize(std::ofstream *file);
   void					setBitmap(std::string const & imagePath);
-  void					setBitmap(ALLEGRO_BITMAP *image);
 public:
   ALLEGRO_BITMAP			*bitmap;
+  std::string				path;
 };
 
 #endif					// __IMAGE_HH__

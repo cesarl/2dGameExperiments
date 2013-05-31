@@ -11,6 +11,7 @@ public:
   virtual ~BoundingBox();
   virtual void				update(double time = 0);
   virtual void				draw();
+  virtual void				serialize(std::ofstream *file);
   void					setWidth(int width);
   int					getWidth() const;
   void					setHeight(int height);

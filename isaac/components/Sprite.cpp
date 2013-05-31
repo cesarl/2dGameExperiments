@@ -74,3 +74,18 @@ void					Sprite::config(int columnNumber,
   this->currentStep = currentStep;
   this->speed = speed;
 }
+
+void					Sprite::serialize(std::ofstream *file)
+{
+  int					type = T_SPRITE;
+
+  file->write(reinterpret_cast<const char *>(&type), sizeof(type));
+  file->write(reinterpret_cast<const char *>(&this->columnNumber), sizeof(this->columnNumber));
+  file->write(reinterpret_cast<const char *>(&this->partWidth), sizeof(this->partWidth));
+  file->write(reinterpret_cast<const char *>(&this->partHeight), sizeof(this->partHeight));
+  file->write(reinterpret_cast<const char *>(&this->from), sizeof(this->from));
+  file->write(reinterpret_cast<const char *>(&this->stepNumber), sizeof(this->stepNumber));
+  file->write(reinterpret_cast<const char *>(&this->currentStep), sizeof(this->currentStep));
+  file->write(reinterpret_cast<const char *>(&this->speed), sizeof(this->speed));
+  file->write("\n", 1);
+}

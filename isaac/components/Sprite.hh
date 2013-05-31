@@ -11,6 +11,7 @@ public:
   virtual ~Sprite();
   virtual void				update(double time = 0);
   virtual void				draw();
+  virtual void				serialize(std::ofstream *file);
   void					config(int columnNumber,
 					       int partWidth,
 					       int partHeight,

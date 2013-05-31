@@ -129,40 +129,59 @@ void					Entity::draw()
 
 void					Entity::serialize(std::ofstream *file)
 {
-  int					x;
-  int					y;
-  int					r;
-  Position				*position;
-  Rotation				*rotation;
+  t_iter				it;
 
-  position = POSITION(this);
-  rotation = ROTATION(this);
+  it = this->list_.begin();
+  while (it != this->list_.end())
+    {
+      it->second->serialize(file);
+      ++it;
+    }
+  // int					x;
+  // int					y;
+  // int					r;
+  // Position				*position;
+  // Rotation				*rotation;
 
-  x = (int)(position->x);
-  y = (int)(position->y);
-  r = (int)(rotation->angle * 180 / M_PI);
+  // position = POSITION(this);
+  // rotation = ROTATION(this);
+
+  // x = (int)(position->x);
+  // y = (int)(position->y);
+  // r = (int)(rotation->angle * 180 / M_PI);
 
 
-  file->write(reinterpret_cast<const char *>(&this->seed_), sizeof(this->seed_));
-  file->write(reinterpret_cast<const char *>(&x), sizeof(x));
-  file->write(reinterpret_cast<const char *>(&y), sizeof(y));
-  file->write(reinterpret_cast<const char *>(&r), sizeof(r));
+  // file->write(reinterpret_cast<const char *>(&this->seed_), sizeof(this->seed_));
+  // file->write(reinterpret_cast<const char *>(&x), sizeof(x));
+  // file->write(reinterpret_cast<const char *>(&y), sizeof(y));
+  // file->write(reinterpret_cast<const char *>(&r), sizeof(r));
 }
 
 void					Entity::unserialize(std::ifstream *file)
 {
-  int				posx;
-  int				posy;
-  int				rot;
-  int				seed;
+  // t_iter				it;
 
-  file->read(reinterpret_cast<char*>(&seed), sizeof(int));
-  file->read(reinterpret_cast<char*>(&posx), sizeof(int));
-  file->read(reinterpret_cast<char*>(&posy), sizeof(int));
-  file->read(reinterpret_cast<char*>(&rot), sizeof(int));
-  this->generate(seed);
-  POSITION(this)->setPos(posx, posy);
-  ROTATION(this)->angle = rot * M_PI / 180;
+  // it = this->list_.begin();
+  // while (it != this->list_.end())
+  //   {
+  //     it->second->unserialize(file);
+  //     ++it;
+  //   }
+
+  (void)file;
+  ///
+  // int				posx;
+  // int				posy;
+  // int				rot;
+  // int				seed;
+
+  // file->read(reinterpret_cast<char*>(&seed), sizeof(int));
+  // file->read(reinterpret_cast<char*>(&posx), sizeof(int));
+  // file->read(reinterpret_cast<char*>(&posy), sizeof(int));
+  // file->read(reinterpret_cast<char*>(&rot), sizeof(int));
+  // this->generate(seed);
+  // POSITION(this)->setPos(posx, posy);
+  // ROTATION(this)->angle = rot * M_PI / 180;
 }
 
 

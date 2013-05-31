@@ -20,6 +20,7 @@ public:
   virtual ~CollisionType();
   virtual void				update(double time = 0);
   virtual void				draw();
+  virtual void				serialize(std::ofstream *file);
   t_collisionType			getType() const;
   void					setType(t_collisionType type);
 private:

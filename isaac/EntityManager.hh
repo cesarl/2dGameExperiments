@@ -19,11 +19,11 @@ public:
   bool				generate(int seed);
   void				clear();
   void				pushGenerationRule(generationRule fn);
-  bool				serialize();
   bool				unserialize();
   void				update();
   void				draw();
   Entity			*create();
+  bool				serialize(std::string const & path, std::string const & name);
 private:
   EntityManager();
   std::queue<generationRule>	generationRules_;

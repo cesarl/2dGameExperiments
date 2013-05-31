@@ -17,7 +17,9 @@ bool					SceneMenu::initialize()
 }
 
 void					SceneMenu::uninitialize()
-{}
+{
+  EntityManager::getInstance()->serialize("./", "lol");
+}
 
 
 void					SceneMenu::update(ALLEGRO_EVENT *event)

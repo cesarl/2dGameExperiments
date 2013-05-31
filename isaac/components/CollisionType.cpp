@@ -28,3 +28,13 @@ void					CollisionType::update(double time)
 
 void					CollisionType::draw()
 {}
+
+void					CollisionType::serialize(std::ofstream *file)
+{
+  int					type = T_COLLISION_TYPE;
+  int					coltype = this->type_;
+
+  file->write(reinterpret_cast<const char *>(&type), sizeof(type));
+  file->write(reinterpret_cast<const char *>(&coltype), sizeof(coltype));
+  file->write("\n", 1);
+}
