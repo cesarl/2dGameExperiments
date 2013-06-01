@@ -13,6 +13,7 @@ bool					SceneMenu::initialize()
   EntityManager::getInstance()->pushGenerationRule(gnRoom);
   EntityManager::getInstance()->pushGenerationRule(gnPnj);
   EntityManager::getInstance()->pushGenerationRule(gnHeros);
+  // EntityManager::getInstance()->pushGenerationRule(gnTest);
   if (!EntityManager::getInstance()->generate(-1))
     return false;
   return true;

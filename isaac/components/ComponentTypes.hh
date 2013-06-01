@@ -228,6 +228,9 @@ void					unserializeComponent(int type, Entity *entity, std::ifstream *f)
     case T_BOUNDING_BOX:
       c = BOUNDING_BOX(entity);
       break;
+    case T_FORCE_RESISTANCE:
+      c = FORCE_RESISTANCE(entity);
+      break;
     case T_PISTOL:
       c = PISTOL(entity);
       break;

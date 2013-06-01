@@ -55,12 +55,7 @@ void					CollisionManager::update()
 
 void					CollisionManager::add(Entity *entity)
 {
-  if (!entity->hasComponent(T_BOUNDING_BOX))
-    {
-      std::cout << "lol" << std::endl;
-      return;
-    }
-  BoundingBox				*bb = BOUNDING_BOX(entity);
+  BoundingBox				*bb;
   int					minX;
   int					maxX;
   int					minY;
@@ -69,6 +64,11 @@ void					CollisionManager::add(Entity *entity)
   t_cell_iter				it;
   std::list<Entity*>			newList;
 
+  if (!entity->hasComponent(T_BOUNDING_BOX))
+    {
+      return;
+    }
+  bb = BOUNDING_BOX(entity);
   minX = bb->getX() / this->cellSize_;
   maxX = bb->getXX() / this->cellSize_;
   maxY = bb->getYY() / this->cellSize_ * this->maxWidth_;

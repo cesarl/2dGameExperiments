@@ -36,11 +36,8 @@ void					Text::setFont(std::string const & fontPath, int size)
 
   fontManager = FontManager::getInstance();
   this->font = fontManager->load(fontPath, size);
-}
-
-void					Text::setFont(ALLEGRO_FONT *font)
-{
-  this->font = font;
+  if (this->font)
+    this->fontPath = fontPath;
 }
 
 void					Text::operator=(std::string const & str)
@@ -51,4 +48,41 @@ void					Text::operator=(std::string const & str)
 void					Text::operator+=(std::string const & str)
 {
   this->text += str;
+}
+
+void					Text::serialize(std::ofstream *file)
+{
+  int					type = T_TEXT;
+  int					s = this->fontPath.size();
+  int					st = this->text.size();
+
+  file->write(reinterpret_cast<const char *>(&type), sizeof(type));
+  file->write(reinterpret_cast<const char *>(&s), sizeof(int));
+  file->write(this->fontPath.c_str(), this->fontPath.size());
+
+  file->write(reinterpret_cast<const char *>(&st), sizeof(int));
+  file->write(this->text.c_str(), this->text.size());
+}
+
+void					Text::unserialize(std::ifstream *file)
+{
+  int					s;
+  char					p[1024];
+
+  file->read(reinterpret_cast<char *>(&s), sizeof(int));
+  if (s > 0)
+    {
+      memset(p, 0, 1024);
+      file->read(p, s);
+      this->text = std::string(p);
+      // todo /!\ loader la font //
+    }
+
+  file->read(reinterpret_cast<char *>(&s), sizeof(int));
+  if (s > 0)
+    {
+      memset(p, 0, 1024);
+      file->read(p, s);
+      this->text = std::string(p);
+    }
 }

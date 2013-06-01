@@ -134,7 +134,6 @@ void					Entity::serialize(std::ofstream *file)
   it = this->list_.begin();
   while (it != this->list_.end())
     {
-      // std::cout << it->second->typeId << std::endl;
       it->second->serialize(file);
       ++it;
     }
@@ -150,7 +149,6 @@ void					Entity::unserialize(std::ifstream *file)
   do
     {
       file->read(reinterpret_cast<char*>(&type), sizeof(int));
-      // std::cout << type << std::endl;
       if (type == 0)
 	return;
       unserializeComponent(type, this, file);

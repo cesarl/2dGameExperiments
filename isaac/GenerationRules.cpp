@@ -92,9 +92,18 @@ bool				gnTest(EntityManager *mgr, int)
   e = mgr->create();
   if (!e)
     return false;
-  IMAGE(e)->setBitmap("assets/imgs/mummy.png");
-  SPRITE(e)->config(8, 64, 64, 8, 8, 8, 0.12);
-  POSITION(e)->setPos(64 * 20 / 2 - 32, 64 * 10 / 2 - 32, 2);
-  *TEXT(e) = "moi j'te dis lol";
+  // POSITION(e);
+  // MOVE(e);
+  // IMAGE(e)->setBitmap("assets/imgs/mummy.png");
+  // SPRITE(e)->config(8, 64, 64, 8, 8, 8, 0.12);
+  // VISIBILITY(e);
+  // ROTATION(e);
+  // *TEXT(e) = "moi j'te dis lol";
+  // ROTATION_FORCE(e);
+  // PARTICULE_EMITTER(e);
+  // TEXT_INPUT(e)
+  // INPUT(e);
+  // BOUNDING_BOX(e);
+  HEROS(e);
   return true;
 }
