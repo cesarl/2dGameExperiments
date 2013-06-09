@@ -72,21 +72,21 @@ void					Damage::applied()
     VISIBILITY(this->entity)->fadeOut(0.05, 30);
 }
 
-void					Damage::serialize(std::ofstream *file)
+void					Damage::serialize(std::ofstream &file)
 {
   int					type = T_DAMAGE;
 
-  file->write(reinterpret_cast<const char *>(&type), sizeof(type));
-  file->write(reinterpret_cast<const char *>(&this->magnitude_), sizeof(this->magnitude_));
-  file->write(reinterpret_cast<const char *>(&this->damageNb_), sizeof(this->damageNb_));
-  file->write(reinterpret_cast<const char *>(&this->delay_), sizeof(this->delay_));
-  file->write(reinterpret_cast<const char *>(&this->delayCounter_), sizeof(this->delayCounter_));
+  Archive::serialize(file, type);
+  Archive::serialize(file, this->magnitude_);
+  Archive::serialize(file, this->damageNb_);
+  Archive::serialize(file, this->delay_);
+  Archive::serialize(file, this->delayCounter_);
 }
 
-void					Damage::unserialize(std::ifstream *file)
+void					Damage::unserialize(std::ifstream &file)
 {
-  file->read(reinterpret_cast<char *>(&this->magnitude_), sizeof(this->magnitude_));
-  file->read(reinterpret_cast<char *>(&this->damageNb_), sizeof(this->damageNb_));
-  file->read(reinterpret_cast<char *>(&this->delay_), sizeof(this->delay_));
-  file->read(reinterpret_cast<char *>(&this->delayCounter_), sizeof(this->delayCounter_));
+  Archive::unserialize(file, this->magnitude_);
+  Archive::unserialize(file, this->damageNb_);
+  Archive::unserialize(file, this->delay_);
+  Archive::unserialize(file, this->delayCounter_);
 }

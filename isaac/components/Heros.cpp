@@ -69,9 +69,9 @@ void					Heros::draw()
   SPRITE(this->entity)->draw();
 }
 
-void					Heros::serialize(std::ofstream *file)
+void					Heros::serialize(std::ofstream &file)
 {
   int					type = T_HEROS;
 
-  file->write(reinterpret_cast<const char *>(&type), sizeof(type));
+  Archive::serialize(file, type);
 }

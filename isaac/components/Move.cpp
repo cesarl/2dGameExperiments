@@ -153,31 +153,31 @@ void					Move::setMaxSpeed(double val)
   this->maxSpeed_ = val;
 }
 
-void					Move::serialize(std::ofstream *file)
+void					Move::serialize(std::ofstream &file)
 {
   int					type = T_MOVE;
 
-  file->write(reinterpret_cast<const char *>(&type), sizeof(type));
-  file->write(reinterpret_cast<const char *>(&this->vx), sizeof(double));
-  file->write(reinterpret_cast<const char *>(&this->vy), sizeof(double));
-  file->write(reinterpret_cast<const char *>(&this->gravityX), sizeof(double));
-  file->write(reinterpret_cast<const char *>(&this->gravityY), sizeof(double));
-  file->write(reinterpret_cast<const char *>(&this->frictionX), sizeof(double));
-  file->write(reinterpret_cast<const char *>(&this->frictionY), sizeof(double));
-  file->write(reinterpret_cast<const char *>(&this->dirX_), sizeof(int));
-  file->write(reinterpret_cast<const char *>(&this->dirY_), sizeof(int));
-  file->write(reinterpret_cast<const char *>(&this->maxSpeed_), sizeof(double));
+  Archive::serialize(file, type);
+  Archive::serialize(file, this->vx);
+  Archive::serialize(file, this->vy);
+  Archive::serialize(file, this->gravityX);
+  Archive::serialize(file, this->gravityY);
+  Archive::serialize(file, this->frictionX);
+  Archive::serialize(file, this->frictionY);
+  Archive::serialize(file, this->dirX_);
+  Archive::serialize(file, this->dirY_);
+  Archive::serialize(file, this->maxSpeed_);
 }
 
-void					Move::unserialize(std::ifstream *file)
+void					Move::unserialize(std::ifstream &file)
 {
-  file->read(reinterpret_cast<char *>(&this->vx), sizeof(double));
-  file->read(reinterpret_cast<char *>(&this->vy), sizeof(double));
-  file->read(reinterpret_cast<char *>(&this->gravityX), sizeof(double));
-  file->read(reinterpret_cast<char *>(&this->gravityY), sizeof(double));
-  file->read(reinterpret_cast<char *>(&this->frictionX), sizeof(double));
-  file->read(reinterpret_cast<char *>(&this->frictionY), sizeof(double));
-  file->read(reinterpret_cast<char *>(&this->dirX_), sizeof(int));
-  file->read(reinterpret_cast<char *>(&this->dirY_), sizeof(int));
-  file->read(reinterpret_cast<char *>(&this->maxSpeed_), sizeof(double));
+  Archive::unserialize(file, this->vx);
+  Archive::unserialize(file, this->vy);
+  Archive::unserialize(file, this->gravityX);
+  Archive::unserialize(file, this->gravityY);
+  Archive::unserialize(file, this->frictionX);
+  Archive::unserialize(file, this->frictionY);
+  Archive::unserialize(file, this->dirX_);
+  Archive::unserialize(file, this->dirY_);
+  Archive::unserialize(file, this->maxSpeed_);
 }

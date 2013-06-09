@@ -111,9 +111,9 @@ void					Input::listen(bool value)
     }
 }
 
-void					Input::serialize(std::ofstream *file)
+void					Input::serialize(std::ofstream &file)
 {
   int					type = T_INPUT;
 
-  file->write(reinterpret_cast<const char *>(&type), sizeof(type));
+  Archive::serialize(file, type);
 }

@@ -12,8 +12,8 @@ public:
   virtual ~ForceResistance();
   virtual void				update(double time = 0);
   virtual void				draw();
-  virtual void				serialize(std::ofstream *file);
-  virtual void				unserialize(std::ifstream *file);
+  virtual void				serialize(std::ofstream &file);
+  virtual void				unserialize(std::ifstream &file);
   void					setResistance(double resistance);
   double				getResistance() const;
   void					applyForce(Entity *o);

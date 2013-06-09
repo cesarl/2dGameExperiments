@@ -88,27 +88,27 @@ void					Visibility::blink(int nb, double speed)
   this->blinkTimeCounter_ = 0;
 }
 
-void					Visibility::serialize(std::ofstream *file)
+void					Visibility::serialize(std::ofstream &file)
 {
   int					type = T_VISIBILITY;
 
-  file->write(reinterpret_cast<const char *>(&type), sizeof(type));
-  file->write(reinterpret_cast<const char *>(&this->timeCounter_), sizeof(double));
-  file->write(reinterpret_cast<const char *>(&this->fade_), sizeof(int));
-  file->write(reinterpret_cast<const char *>(&this->speed_), sizeof(double));
-  file->write(reinterpret_cast<const char *>(&this->blinkSpeed_), sizeof(double));
- file->write(reinterpret_cast<const char *>(&this->blinkNb_), sizeof(int));
- file->write(reinterpret_cast<const char *>(&this->blinkCounter_), sizeof(int));
- file->write(reinterpret_cast<const char *>(&this->blinkTimeCounter_), sizeof(int));
+  Archive::serialize(file, type);
+  Archive::serialize(file, this->timeCounter_);
+  Archive::serialize(file, this->fade_);
+  Archive::serialize(file, this->speed_);
+  Archive::serialize(file, this->blinkSpeed_);
+  Archive::serialize(file, this->blinkNb_);
+  Archive::serialize(file, this->blinkCounter_);
+  Archive::serialize(file, this->blinkTimeCounter_);
 }
 
-void					Visibility::unserialize(std::ifstream *file)
+void					Visibility::unserialize(std::ifstream &file)
 {
-  file->read(reinterpret_cast<char *>(&this->timeCounter_), sizeof(double));
-  file->read(reinterpret_cast<char *>(&this->fade_), sizeof(int));
-  file->read(reinterpret_cast<char *>(&this->speed_), sizeof(double));
-  file->read(reinterpret_cast<char *>(&this->blinkSpeed_), sizeof(double));
- file->read(reinterpret_cast<char *>(&this->blinkNb_), sizeof(int));
- file->read(reinterpret_cast<char *>(&this->blinkCounter_), sizeof(int));
- file->read(reinterpret_cast<char *>(&this->blinkTimeCounter_), sizeof(int));
+  Archive::unserialize(file, this->timeCounter_);
+  Archive::unserialize(file, this->fade_);
+  Archive::unserialize(file, this->speed_);
+  Archive::unserialize(file, this->blinkSpeed_);
+  Archive::unserialize(file, this->blinkNb_);
+  Archive::unserialize(file, this->blinkCounter_);
+  Archive::unserialize(file, this->blinkTimeCounter_);
 }

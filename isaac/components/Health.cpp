@@ -51,17 +51,17 @@ void					Health::setDelay(double delay)
   this->delay_ = delay;
 }
 
-void					Health::serialize(std::ofstream *file)
+void					Health::serialize(std::ofstream &file)
 {
   int					type = T_HEALTH;
 
-  file->write(reinterpret_cast<const char *>(&type), sizeof(type));
-  file->write(reinterpret_cast<const char *>(&this->health_), sizeof(int));
-  file->write(reinterpret_cast<const char *>(&this->delay_), sizeof(double));
+  Archive::serialize(file, type);
+  Archive::serialize(file, this->health_);
+  Archive::serialize(file, this->delay_);
 }
 
-void					Health::unserialize(std::ifstream *file)
+void					Health::unserialize(std::ifstream &file)
 {
-  file->read(reinterpret_cast<char *>(&this->health_), sizeof(int));
-  file->read(reinterpret_cast<char *>(&this->delay_), sizeof(double));
+  Archive::unserialize(file, this->health_);
+  Archive::unserialize(file, this->delay_);
 }

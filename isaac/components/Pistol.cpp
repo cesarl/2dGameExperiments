@@ -89,21 +89,21 @@ bool					Pistol::fire(float vx, float vy)
   return true;
 }
 
-void					Pistol::serialize(std::ofstream *file)
+void					Pistol::serialize(std::ofstream &file)
 {
   int					type = T_PISTOL;
 
-  file->write(reinterpret_cast<const char *>(&type), sizeof(type));
-  file->write(reinterpret_cast<const char *>(&this->fireRate_), sizeof(double));
-  file->write(reinterpret_cast<const char *>(&this->friction_), sizeof(double));
-  file->write(reinterpret_cast<const char *>(&this->speedBullet_), sizeof(double));
-  file->write(reinterpret_cast<const char *>(&this->bulletLifeTime_), sizeof(double));
+  Archive::serialize(file, type);
+  Archive::serialize(file, this->fireRate_);
+  Archive::serialize(file, this->friction_);
+  Archive::serialize(file, this->speedBullet_);
+  Archive::serialize(file, this->bulletLifeTime_);
 }
 
-void					Pistol::unserialize(std::ifstream *file)
+void					Pistol::unserialize(std::ifstream &file)
 {
-  file->read(reinterpret_cast<char *>(&this->fireRate_), sizeof(double));
-  file->read(reinterpret_cast<char *>(&this->friction_), sizeof(double));
-  file->read(reinterpret_cast<char *>(&this->speedBullet_), sizeof(double));
-  file->read(reinterpret_cast<char *>(&this->bulletLifeTime_), sizeof(double));
+  Archive::unserialize(file, this->fireRate_);
+  Archive::unserialize(file, this->friction_);
+  Archive::unserialize(file, this->speedBullet_);
+  Archive::unserialize(file, this->bulletLifeTime_);
 }

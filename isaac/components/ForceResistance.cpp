@@ -125,15 +125,15 @@ void					ForceResistance::applyForce(Entity *o)
   move2->setDirection(nvx2, nvy2);
 }
 
-void					ForceResistance::serialize(std::ofstream *file)
+void					ForceResistance::serialize(std::ofstream &file)
 {
   int					type = T_FORCE_RESISTANCE;
 
-  file->write(reinterpret_cast<const char *>(&type), sizeof(type));
-  file->write(reinterpret_cast<const char *>(&this->resistance_), sizeof(double));
+  Archive::serialize(file, type);
+  Archive::serialize(file, this->resistance_);
 }
 
-void					ForceResistance::unserialize(std::ifstream *file)
+void					ForceResistance::unserialize(std::ifstream &file)
 {
-  file->read(reinterpret_cast<char *>(&this->resistance_), sizeof(double));
+  Archive::unserialize(file, this->resistance_);
 }

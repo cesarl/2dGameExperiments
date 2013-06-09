@@ -22,8 +22,8 @@ public:
   bool					hasComponent(int type) const;
   void					update();
   void					draw();
-  virtual void				serialize(std::ofstream *file);
-  virtual void				unserialize(std::ifstream *file);
+  virtual void				serialize(std::ofstream &file);
+  virtual void				unserialize(std::ifstream &file);
   virtual void				generate(int seed = 0);
   void					disable();
   void					enable();

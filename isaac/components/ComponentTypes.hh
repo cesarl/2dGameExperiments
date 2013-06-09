@@ -184,7 +184,7 @@ PnjDeath				*PNJ_DEATH(Entity *entity)
 }
 
 inline
-void					unserializeComponent(int type, Entity *entity, std::ifstream *f)
+void					unserializeComponent(int type, Entity *entity, std::ifstream &f)
 {
   AComponent				*c = NULL;
   switch(type)

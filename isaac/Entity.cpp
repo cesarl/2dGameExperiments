@@ -127,7 +127,7 @@ void					Entity::draw()
     this->drawable_->draw();
 }
 
-void					Entity::serialize(std::ofstream *file)
+void					Entity::serialize(std::ofstream &file)
 {
   t_iter				it;
 
@@ -139,16 +139,16 @@ void					Entity::serialize(std::ofstream *file)
     }
   int zero = 0;
 
-  file->write(reinterpret_cast<const char *>(&zero), sizeof(0));
+  Archive::serialize(file, zero);
 }
 
-void					Entity::unserialize(std::ifstream *file)
+void					Entity::unserialize(std::ifstream &file)
 {
   int					type;
 
   do
     {
-      file->read(reinterpret_cast<char*>(&type), sizeof(int));
+      Archive::unserialize(file, type);
       if (type == 0)
 	return;
       unserializeComponent(type, this, file);

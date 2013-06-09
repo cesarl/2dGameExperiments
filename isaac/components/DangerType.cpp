@@ -29,18 +29,20 @@ void					DangerType::update(double time)
 void					DangerType::draw()
 {}
 
-void					DangerType::serialize(std::ofstream *file)
+void					DangerType::serialize(std::ofstream &file)
 {
   int					type = T_DANGER_TYPE;
   int					coltype = this->type_;
 
-  file->write(reinterpret_cast<const char *>(&type), sizeof(type));
-  file->write(reinterpret_cast<const char *>(&coltype), sizeof(int));
+  Archive::serialize(file, type);
+  Archive::serialize(file, coltype);
 }
 
-void					DangerType::unserialize(std::ifstream *file)
+void					DangerType::unserialize(std::ifstream &file)
 {
   int t;
-  file->read(reinterpret_cast<char *>(&t), sizeof(int));
+
+  Archive::unserialize(file, t);
+
   this->type_ = (t_dangerType)t;
 }

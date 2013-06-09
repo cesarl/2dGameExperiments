@@ -146,19 +146,19 @@ void					ParticuleEmitter::setHeight(int height)
 // }
 
 
-void					ParticuleEmitter::serialize(std::ofstream *file)
+void					ParticuleEmitter::serialize(std::ofstream &file)
 {
   int					type = T_PARTICULE_EMITTER;
 
-  file->write(reinterpret_cast<const char *>(&type), sizeof(type));
-  file->write(reinterpret_cast<const char *>(&this->width_), sizeof(int));
-  file->write(reinterpret_cast<const char *>(&this->height_), sizeof(int));
-  file->write(reinterpret_cast<const char *>(&this->flow_), sizeof(int));
+  Archive::serialize(file, type);
+  Archive::serialize(file, this->width_);
+  Archive::serialize(file, this->height_);
+  Archive::serialize(file, this->flow_);
 }
 
-void					ParticuleEmitter::unserialize(std::ifstream *file)
+void					ParticuleEmitter::unserialize(std::ifstream &file)
 {
-  file->read(reinterpret_cast<char *>(&this->width_), sizeof(int));
-  file->read(reinterpret_cast<char *>(&this->height_), sizeof(int));
-  file->read(reinterpret_cast<char *>(&this->flow_), sizeof(int));
+  Archive::unserialize(file, this->width_);
+  Archive::unserialize(file, this->height_);
+  Archive::unserialize(file, this->flow_);
 }

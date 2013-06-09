@@ -75,28 +75,27 @@ void					Sprite::config(int columnNumber,
   this->speed = speed;
 }
 
-void					Sprite::serialize(std::ofstream *file)
+void					Sprite::serialize(std::ofstream &file)
 {
   int					type = T_SPRITE;
 
-  file->write(reinterpret_cast<const char *>(&type), sizeof(type));
-  file->write(reinterpret_cast<const char *>(&this->columnNumber), sizeof(int));
-  file->write(reinterpret_cast<const char *>(&this->partWidth), sizeof(int));
-  file->write(reinterpret_cast<const char *>(&this->partHeight), sizeof(int));
-  file->write(reinterpret_cast<const char *>(&this->from), sizeof(unsigned int));
-  file->write(reinterpret_cast<const char *>(&this->stepNumber), sizeof(unsigned int));
-  file->write(reinterpret_cast<const char *>(&this->currentStep), sizeof(unsigned int));
-  file->write(reinterpret_cast<const char *>(&this->speed), sizeof(double));
+  Archive::serialize(file, type);
+  Archive::serialize(file, this->columnNumber);
+  Archive::serialize(file, this->partWidth);
+  Archive::serialize(file, this->partHeight);
+  Archive::serialize(file, this->from);
+  Archive::serialize(file, this->stepNumber);
+  Archive::serialize(file, this->currentStep);
+  Archive::serialize(file, this->speed);
 }
 
-void					Sprite::unserialize(std::ifstream *file)
+void					Sprite::unserialize(std::ifstream &file)
 {
-  file->read(reinterpret_cast<char *>(&this->columnNumber), sizeof(int));
-  file->read(reinterpret_cast<char *>(&this->partWidth), sizeof(int));
-  file->read(reinterpret_cast<char *>(&this->partHeight), sizeof(int));
-  file->read(reinterpret_cast<char *>(&this->from), sizeof(unsigned int));
-  file->read(reinterpret_cast<char *>(&this->stepNumber), sizeof(unsigned int));
-  file->read(reinterpret_cast<char *>(&this->currentStep), sizeof(unsigned int));
-  file->read(reinterpret_cast<char *>(&this->speed), sizeof(double));
-
+  Archive::unserialize(file, this->columnNumber);
+  Archive::unserialize(file, this->partWidth);
+  Archive::unserialize(file, this->partHeight);
+  Archive::unserialize(file, this->from);
+  Archive::unserialize(file, this->stepNumber);
+  Archive::unserialize(file, this->currentStep);
+  Archive::unserialize(file, this->speed);
 }

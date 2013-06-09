@@ -137,23 +137,23 @@ int					BoundingBox::getCenterY() const
   return (this->height_ / 2) + this->marginY_ + POSITION(this->entity)->y;
 }
 
-void					BoundingBox::unserialize(std::ifstream *file)
+void					BoundingBox::unserialize(std::ifstream &file)
 {
-  file->read(reinterpret_cast<char*>(&(this->width_)), sizeof(int));
-  file->read(reinterpret_cast<char*>(&(this->height_)), sizeof(int));
-  file->read(reinterpret_cast<char*>(&(this->collidable_)), sizeof(bool));
-  file->read(reinterpret_cast<char*>(&(this->marginX_)), sizeof(int));
-  file->read(reinterpret_cast<char*>(&(this->marginY_)), sizeof(int));
+  Archive::unserialize(file, this->width_);
+  Archive::unserialize(file, this->height_);
+  Archive::unserialize(file, this->collidable_);
+  Archive::unserialize(file, this->marginX_);
+  Archive::unserialize(file, this->marginY_);
 }
 
-void					BoundingBox::serialize(std::ofstream *file)
+void					BoundingBox::serialize(std::ofstream &file)
 {
   int					type = T_BOUNDING_BOX;
 
-  file->write(reinterpret_cast<const char *>(&type), sizeof(type));
-  file->write(reinterpret_cast<const char *>(&this->width_), sizeof(this->width_));
-  file->write(reinterpret_cast<const char *>(&this->height_), sizeof(this->height_));
-  file->write(reinterpret_cast<const char *>(&this->collidable_), sizeof(this->collidable_));
-  file->write(reinterpret_cast<const char *>(&this->marginX_), sizeof(this->marginX_));
-  file->write(reinterpret_cast<const char *>(&this->marginY_), sizeof(this->marginY_));
+  Archive::serialize(file, type);
+  Archive::serialize(file, this->width_);
+  Archive::serialize(file, this->height_);
+  Archive::serialize(file, this->collidable_);
+  Archive::serialize(file, this->marginX_);
+  Archive::serialize(file, this->marginY_);
 }

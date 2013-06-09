@@ -11,8 +11,8 @@ public:
   virtual ~Health();
   virtual void				update(double time = 0);
   virtual void				draw();
-  virtual void				serialize(std::ofstream *file);
-  virtual void				unserialize(std::ifstream *file);
+  virtual void				serialize(std::ofstream &file);
+  virtual void				unserialize(std::ifstream &file);
   void					setHealth(int health);
   int					getHealth() const;
   virtual void				impactDamage(Entity *e);

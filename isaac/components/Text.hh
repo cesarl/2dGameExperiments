@@ -13,8 +13,8 @@ public:
   virtual ~Text();
   virtual void				update(double time = 0);
   virtual void				draw();
-  virtual void				serialize(std::ofstream *file);
-  virtual void				unserialize(std::ifstream *file);
+  virtual void				serialize(std::ofstream &file);
+  virtual void				unserialize(std::ifstream &file);
   void					setFont(std::string const & imagePath, int size);
   void                                  operator=(std::string const & str);
   void                                  operator+=(std::string const & str);

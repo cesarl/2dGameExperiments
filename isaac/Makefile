@@ -6,7 +6,7 @@ RM		=	rm -f
 
 CPPFLAGS	=	-W -Wextra -Wall -Werror
 
-CPPFLAGS	+=	-Icomponents -Iscenes -Imanagers -Iheaders -I.
+CPPFLAGS	+=	-Icomponents -Iscenes -Imanagers -Iheaders -Ivendors/archive -I.
 
 LDFLAGS		=	-L/usr/lib -lallegro -lallegro_dialog -lallegro_primitives -lallegro_ttf -lallegro_font -lallegro_image
 

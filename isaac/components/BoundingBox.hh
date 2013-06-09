@@ -11,8 +11,8 @@ public:
   virtual ~BoundingBox();
   virtual void				update(double time = 0);
   virtual void				draw();
-  virtual void				serialize(std::ofstream *file);
-  virtual void				unserialize(std::ifstream *file);
+  virtual void				serialize(std::ofstream &file);
+  virtual void				unserialize(std::ifstream &file);
   void					setWidth(int width);
   int					getWidth() const;
   void					setHeight(int height);

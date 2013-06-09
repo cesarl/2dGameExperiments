@@ -90,11 +90,14 @@ bool				EntityManager::serialize(std::string const & path, std::string const & n
   std::list<Entity*>::iterator	it;
 
   fileName << path << name << ".bin";
-  myFile.open(fileName.str().c_str(), std::ios::out | std::ios::binary);
+
+  if (!Archive::open(myFile, fileName.str()))
+    return false;
+
   it = this->list_.begin();
   while (it != this->list_.end())
     {
-      (*it)->serialize(&myFile);
+      (*it)->serialize(myFile);
       ++it;
     }
   myFile.close();
@@ -112,14 +115,15 @@ bool				EntityManager::unserialize(std::string const & path, std::string const &
   if (!al_filename_exists(fileName.str().c_str()))
     return false;
 
-  myFile.open(fileName.str().c_str(), std::ios::out | std::ios::binary);
+  if (!Archive::open(myFile, fileName.str()))
+    return false;
 
   while (!myFile.eof())
     {
       tmp = this->create();
       if (!tmp)
 	return false;
-      tmp->unserialize(&myFile);
+      tmp->unserialize(myFile);
     }
 
   myFile.close();

@@ -11,8 +11,8 @@ public:
   virtual ~Damage();
   virtual void				update(double time = 0);
   virtual void				draw();
-  virtual void				serialize(std::ofstream *file);
-  virtual void				unserialize(std::ifstream *file);
+  virtual void				serialize(std::ofstream &file);
+  virtual void				unserialize(std::ifstream &file);
   void					setMagnitude(int magnitude);
   void					setDamageNb(int damageNb);
   void					setDelay(double delay);

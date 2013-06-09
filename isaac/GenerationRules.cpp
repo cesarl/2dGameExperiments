@@ -15,17 +15,23 @@ bool				gnRoom(EntityManager *mgr, int seed)
 	  if (!e)
 	    return false;
 	  IMAGE(e)->setBitmap("assets/imgs/decor.png");
-	  if (rand() % 6 != 0)
+	  if (((j == 0 || j == 19) && i != 5) || ((i == 9) && j != 10))
 	    {
-	      SPRITE(e)->config(4, 64, 64, 9, 0, 9, 0);
-	      BOUNDING_BOX(e)->setCollidable(false);
-	      *TEXT(e) = "ground";
+	      SPRITE(e)->config(4, 64, 64, 8, 0, 8, 0);
+	      COLLISION_TYPE(e)->setType(FIX_GO);
+	      *TEXT(e) = "wall";
 	    }
-	  else
+	  else if ((i == 0) && j != 10)
 	    {
 	      SPRITE(e)->config(4, 64, 64, 4, 0, 4, 0);
 	      COLLISION_TYPE(e)->setType(FIX_GO);
 	      *TEXT(e) = "wall";
+	    }
+	  else
+	    {
+	      SPRITE(e)->config(4, 64, 64, 1, 0, 1, 0);
+	      BOUNDING_BOX(e)->setCollidable(false);
+	      *TEXT(e) = "ground";
 	    }
 	  BOUNDING_BOX(e)->setDimension(64, 64);
 	  FORCE_RESISTANCE(e)->setResistance(-1);

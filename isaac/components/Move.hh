@@ -12,8 +12,8 @@ public:
   virtual ~Move();
   virtual void				update(double time = 0);
   virtual void				draw();
-  virtual void				serialize(std::ofstream *file);
-  virtual void				unserialize(std::ifstream *file);
+  virtual void				serialize(std::ofstream &file);
+  virtual void				unserialize(std::ifstream &file);
   void					setDirection(double x, double y);
   void					setDirectionX(double x);
   void					setDirectionY(double y);

@@ -11,8 +11,8 @@ public:
   virtual ~Visibility();
   virtual void				update(double time = 0);
   virtual void				draw();
-  virtual void				serialize(std::ofstream *file);
-  virtual void				unserialize(std::ifstream *file);
+  virtual void				serialize(std::ofstream &file);
+  virtual void				unserialize(std::ifstream &file);
   void					fadeOut(double speed, unsigned int ratio = 3);
   void					fadeIn(double speed, unsigned int ratio = 3);
   void					setVisible(bool value);

@@ -46,19 +46,19 @@ void					Position::reversePos()
 }
 
 
-void					Position::serialize(std::ofstream *file)
+void					Position::serialize(std::ofstream &file)
 {
   int					type = T_POSITION;
 
-  file->write(reinterpret_cast<const char *>(&type), sizeof(type));
-  file->write(reinterpret_cast<const char *>(&this->x), sizeof(this->x));
-  file->write(reinterpret_cast<const char *>(&this->y), sizeof(this->y));
-  file->write(reinterpret_cast<const char *>(&this->z), sizeof(this->z));
+  Archive::serialize(file, type);
+  Archive::serialize(file, this->x);
+  Archive::serialize(file, this->y);
+  Archive::serialize(file, this->z);
 }
 
-void					Position::unserialize(std::ifstream *file)
+void					Position::unserialize(std::ifstream &file)
 {
-  file->read(reinterpret_cast<char *>(&this->x), sizeof(this->x));
-  file->read(reinterpret_cast<char *>(&this->y), sizeof(this->y));
-  file->read(reinterpret_cast<char *>(&this->z), sizeof(this->z));
+  Archive::unserialize(file, this->x);
+  Archive::unserialize(file, this->y);
+  Archive::unserialize(file, this->z);
 }

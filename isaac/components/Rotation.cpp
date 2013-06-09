@@ -19,16 +19,15 @@ void					Rotation::update(double time)
 void					Rotation::draw()
 {}
 
-void					Rotation::serialize(std::ofstream *file)
+void					Rotation::serialize(std::ofstream &file)
 {
   int					type = T_ROTATION;
 
-  file->write(reinterpret_cast<const char *>(&type), sizeof(type));
-  file->write(reinterpret_cast<const char *>(&this->angle), sizeof(float)
-);
+  Archive::serialize(file, type);
+  Archive::serialize(file, this->angle);
 }
 
-void					Rotation::unserialize(std::ifstream *file)
+void					Rotation::unserialize(std::ifstream &file)
 {
-  file->read(reinterpret_cast<char *>(&this->angle), sizeof(float));
+  Archive::unserialize(file, this->angle);
 }

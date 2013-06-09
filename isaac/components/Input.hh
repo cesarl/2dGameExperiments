@@ -13,7 +13,7 @@ public:
   virtual ~Input();
   virtual void				update(double time = 0);
   virtual void				draw();
-  virtual void				serialize(std::ofstream *file);
+  virtual void				serialize(std::ofstream &file);
   void					inputEvent(ALLEGRO_EVENT * event);
   void					listen(bool value);
 public:

@@ -41,19 +41,19 @@ void					RotationForce::stop()
   this->direction_ = 0;
 }
 
-void					RotationForce::serialize(std::ofstream *file)
+void					RotationForce::serialize(std::ofstream &file)
 {
   int					type = T_ROTATION_FORCE;
 
-  file->write(reinterpret_cast<const char *>(&type), sizeof(type));
-  file->write(reinterpret_cast<const char *>(&this->force_), sizeof(double));
-  file->write(reinterpret_cast<const char *>(&this->friction_), sizeof(double));
-  file->write(reinterpret_cast<const char *>(&this->direction_), sizeof(int));
+  Archive::serialize(file, type);
+  Archive::serialize(file, this->force_);
+  Archive::serialize(file, this->friction_);
+  Archive::serialize(file, this->direction_);
 }
 
-void					RotationForce::unserialize(std::ifstream *file)
+void					RotationForce::unserialize(std::ifstream &file)
 {
-  file->read(reinterpret_cast<char *>(&this->force_), sizeof(double));
-  file->read(reinterpret_cast<char *>(&this->friction_), sizeof(double));
-  file->read(reinterpret_cast<char *>(&this->direction_), sizeof(int));
+  Archive::unserialize(file, this->force_);
+  Archive::unserialize(file, this->friction_);
+  Archive::unserialize(file, this->direction_);
 }

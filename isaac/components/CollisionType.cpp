@@ -29,16 +29,16 @@ void					CollisionType::update(double time)
 void					CollisionType::draw()
 {}
 
-void					CollisionType::serialize(std::ofstream *file)
+void					CollisionType::serialize(std::ofstream &file)
 {
   int					type = T_COLLISION_TYPE;
   int					coltype = this->type_;
 
-  file->write(reinterpret_cast<const char *>(&type), sizeof(type));
-  file->write(reinterpret_cast<const char *>(&coltype), sizeof(coltype));
+  Archive::serialize(file, type);
+  Archive::serialize(file, coltype);
 }
 
-void					CollisionType::unserialize(std::ifstream *file)
+void					CollisionType::unserialize(std::ifstream &file)
 {
-  file->read(reinterpret_cast<char*>(&(this->type_)), sizeof(t_collisionType));
+  Archive::unserialize(file, this->type_);
 }
