@@ -21,13 +21,16 @@ public:
   void				pushGenerationRule(generationRule fn);
   void				update();
   void				draw();
+  void				erase(Entity *entity);
   Entity			*create();
   bool				serialize(std::string const & path, std::string const & name);
   bool				unserialize(std::string const & path, std::string const & name);
+  void				emptyTrash();
 private:
   EntityManager();
   std::queue<generationRule>	generationRules_;
   std::list<Entity*>		list_;
+  std::queue<Entity*>		trash_;
 };
 
 #endif				// __ENTITY_MANAGER_HH__

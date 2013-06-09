@@ -17,6 +17,7 @@ public:
   void					fadeIn(double speed, unsigned int ratio = 3);
   void					setVisible(bool value);
   void					blink(int nb, double speed);
+  void					invisibleKill(bool val);
 public:
   bool					visible;
   int					opacity;
@@ -28,6 +29,7 @@ private:
   int					blinkNb_;
   int					blinkCounter_;
   int					blinkTimeCounter_;
+  bool					invisibleKill_;
 };
 
 #endif					// __VISIBILITY_HH__

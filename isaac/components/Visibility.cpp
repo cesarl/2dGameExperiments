@@ -1,5 +1,6 @@
 #include				"Visibility.hh"
 #include				"ComponentTypes.hh"
+#include				"EntityManager.hh"
 
 #include				<iostream> //pour le debug - a virer
 
@@ -11,6 +12,7 @@ Visibility::Visibility(Entity *entity) : AComponent(entity, T_VISIBILITY, 1)
   this->fade_ = 0;
   this->speed_ = 0;
   this->blinkNb_ = 0;
+  this->invisibleKill_ = false;
 }
 
 Visibility::~Visibility()
@@ -57,6 +59,11 @@ void					Visibility::update(double time)
 	  this->opacity = 255;
 	}
     }
+  if (!this->visible && this->invisibleKill_)
+    {
+      EntityManager::getInstance()->erase(this->entity);
+      return;
+    }
   this->timeCounter_ = time;
 }
 
@@ -93,13 +100,16 @@ void					Visibility::serialize(std::ofstream &file)
   int					type = T_VISIBILITY;
 
   Archive::serialize(file, type);
-  Archive::serialize(file, this->timeCounter_);
+  Archive::serialize(file, -1); // timecounter
   Archive::serialize(file, this->fade_);
   Archive::serialize(file, this->speed_);
   Archive::serialize(file, this->blinkSpeed_);
   Archive::serialize(file, this->blinkNb_);
   Archive::serialize(file, this->blinkCounter_);
   Archive::serialize(file, this->blinkTimeCounter_);
+  Archive::serialize(file, this->invisibleKill_);
+  Archive::serialize(file, this->visible);
+  Archive::serialize(file, this->opacity);
 }
 
 void					Visibility::unserialize(std::ifstream &file)
@@ -111,4 +121,12 @@ void					Visibility::unserialize(std::ifstream &file)
   Archive::unserialize(file, this->blinkNb_);
   Archive::unserialize(file, this->blinkCounter_);
   Archive::unserialize(file, this->blinkTimeCounter_);
+  Archive::unserialize(file, this->invisibleKill_);
+  Archive::unserialize(file, this->visible);
+  Archive::unserialize(file, this->opacity);
+}
+
+void					Visibility::invisibleKill(bool val)
+{
+  this->invisibleKill_ = val;
 }

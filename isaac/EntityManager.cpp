@@ -58,6 +58,7 @@ void				EntityManager::update()
       ++it;
     }
   CollisionManager::getInstance()->update();
+  this->emptyTrash();
 }
 
 void				EntityManager::draw()
@@ -81,6 +82,11 @@ Entity				*EntityManager::create()
     return NULL;
   this->list_.push_back(tmp);
   return tmp;
+}
+
+void				EntityManager::erase(Entity *entity)
+{
+   this->trash_.push(entity);
 }
 
 bool				EntityManager::serialize(std::string const & path, std::string const & name)
@@ -128,4 +134,17 @@ bool				EntityManager::unserialize(std::string const & path, std::string const &
 
   myFile.close();
   return true;
+}
+
+void				EntityManager::emptyTrash()
+{
+  Entity			*r;
+
+  while(!this->trash_.empty())
+    {
+      r = this->trash_.front();
+      this->list_.remove(r);
+      delete r;
+    this->trash_.pop();
+  }
 }

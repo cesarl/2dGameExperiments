@@ -1,13 +1,10 @@
 #ifndef					__PISTOL_HH__
 # define				__PISTOL_HH__
 
-#include				<vector>
 #include				"Component.hh"
-#include				"Entity.hh"
 
 // le vector est provisoir - a terme les pistols seront relies a des entity pools et a des components pools
 
-class					DrawCollection;
 
 class					Pistol : public AComponent
 {
@@ -25,7 +22,6 @@ private:
   double				speedBullet_;
   double				bulletLifeTime_;
   double				shootTime_;
-  std::vector<Entity*>			list_;
 };
 
 #endif					// __PISTOL_HH__

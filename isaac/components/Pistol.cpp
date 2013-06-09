@@ -1,7 +1,6 @@
 #include				"Pistol.hh"
 #include				"ComponentTypes.hh"
-#include				"DrawManager.hh"
-#include				"CollisionManager.hh"
+#include				"EntityManager.hh"
 
 #include				<iostream> //pour le debug - a virer /!\//
 
@@ -25,37 +24,10 @@ void					Pistol::update(double time)
   if (this->updateTimestamp == time)
     return;
   this->updateTimestamp = time;
-
-  std::vector<Entity*>::iterator	it;
-
-  it = this->list_.begin();
-  while (it != this->list_.end())
-    {
-      (*it)->update();
-      if (!VISIBILITY(*it)->visible)
-	{
-	  CollisionManager::getInstance()->remove(*it);
-	  delete *it;
-	  it = this->list_.erase(it);
-	}
-      else
-	{
-	  CollisionManager::getInstance()->add(*it);
-	  ++it;
-	}
-    }
 }
 
 void					Pistol::draw()
 {
-  std::vector<Entity*>::iterator	it;
-
-  it = this->list_.begin();
-  while (it != this->list_.end())
-    {
-      DrawManager::getInstance()->add(*it);
-      ++it;
-    }
 }
 
 bool					Pistol::fire(float vx, float vy)
@@ -65,14 +37,14 @@ bool					Pistol::fire(float vx, float vy)
 
   Entity				*tmp;
 
-  // todo /!\ le relier a l entity manager //
-  tmp = new Entity;
+  tmp = EntityManager::getInstance()->create();
   if (!tmp)
     return false;
   POSITION(tmp)->setPos(BOUNDING_BOX(this->entity)->getCenterX() - 15, BOUNDING_BOX(this->entity)->getCenterY() - 15, 3);
   MOVE(tmp)->setDirection(vx * this->speedBullet_, vy * this->speedBullet_);
   MOVE(tmp)->setFriction(this->friction_, this->friction_);
   VISIBILITY(tmp)->fadeOut(0.3, 10);
+  VISIBILITY(tmp)->invisibleKill(true);
   IMAGE(tmp)->setBitmap("assets/imgs/bullet.png");
   ROTATION_FORCE(tmp)->launch(0.5, 0.005);
   FORCE_RESISTANCE(tmp)->setResistance(1);
@@ -85,7 +57,6 @@ bool					Pistol::fire(float vx, float vy)
   *TEXT(tmp) = "bullet";
 
   this->shootTime_ = al_get_time();
-  this->list_.push_back(tmp);
   return true;
 }
 
