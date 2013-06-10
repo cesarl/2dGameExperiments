@@ -15,7 +15,7 @@ On ne peut pas pour le moment parler de première version du Tetris car ce derni
 
 Cependant beaucoup de choses y ont été implémentées, et je préfère arrêter ma V1 ici avant d'aller plus loin.
 
-Je vais tenter de survoler les principaux développements et problèmes rencontrés. Cependant le code est simple et parle de lui mémé. C'est pourquoi je ne m'étale pas en explications techniques.
+Je vais tenter de survoler les principaux développements et problèmes rencontrés. Cependant le code est simple et parle de lui même. C'est pourquoi je ne m'étale pas en explications techniques.
 
 ### Bibliographie :
 
@@ -31,7 +31,7 @@ Je vais tenter de survoler les principaux développements et problèmes rencontr
 
 ### Les assets managers
 
-J'ai crée plusieurs type d'asset manager :
+J'ai créé plusieurs types d'assets managers :
 - Pour les images (ImageManager)
 - pour les polices (FontManager)
 - pour les sauvegardes (SaveManager) // pas entièrement fonctionnel
@@ -52,7 +52,7 @@ Ils utilisent tous le [singleton pattern](http://en.wikipedia.org/wiki/Singleton
 
 Le code _a priori_ parle de lui même.
 
-L'architecture à été (mal) pensée sur une base "horizontale", CAD :
+L'architecture a été (mal) pensée sur une base "horizontale", CAD :
 
 **Un event manager**
 
@@ -121,7 +121,7 @@ Les ``Entity`` contiennent une ``std::list<AContentComponent*>`` (content_) de c
 
 Chaque composante implémente une méthode ``update`` et ``draw`` - pures dans ``AContentComponent``.
 
-D'autre méthodes spécifique peuvent être ajoutées a chaque composante, par exemple la composante Texte aura la méthode ``getText()`` qui servira a en récupérer la valeur sous la forme d'un string.
+D'autre méthodes spécifiques peuvent être ajoutées à chaque composante, par exemple la composante Texte aura la méthode ``getText()`` qui servira à en récupérer la valeur sous la forme d'un string.
 
 Mais imaginons que l'on veuille ajouter une composante de type texte à l'entity ``myEntity`` :
 
@@ -194,7 +194,7 @@ Je ne peux pas me dire satisfait de l'archi globale, cette horizontalité m'a bl
 
 Nous sommes d'accord que tout se passe dans les Scenes. Certaine vont proposer un menu, d'autre des phases de jeux. Par exemple ici nous avons une scène pour le menu principale, une pour le jeu en lui même, une autre qui s'affiche lorsque l'on met le tetris en pause, et enfin une dernière, au moment du game over et de l'enregistrement des scores.
 
-Toutes ces scènes sont des classes à part entière, héritières de l'abstract class ``AScene``. Quand on en quitte une, une autre s'affiche. Mais alors il faut bien qu'elle communiquent entre elles !
+Toutes ces scènes sont des classes à part entière, héritières de l'abstract class ``AScene``. Quand on en quitte une, une autre s'affiche. Mais alors il faut bien qu'elles communiquent entre elles !
 Ce à quoi je n'avais pas pensé au départ ([je sais, je sais ...](http://25.media.tumblr.com/tumblr_lyl2qa5RQH1qcfbz9o1_250.gif)).
 
 Pour remédier à ce problème, j'ai implémenté - un peu à l'arrache - un système de communication entre le différentes scènes.
@@ -209,7 +209,7 @@ Si vous trouvez toujours ce genre de communication intelligente, allez jeter un 
 Si vous n'êtes toujours pas convaincu, laissez moi vous expliquer pourquoi c'est mal :
 
 - Les scènes sont appelées a l'aide de string ! Ça tient le coup pour passer de scène en scène une fois toutes les 2 minutes, mais imaginons deux scènes actives en même temps et échangeant beaucoup de donnée très fréquemment. Ça devient lourd ! Comme diraient les geeks "ze pas trez zopti tout za".
-- Tu as un super moyen de transférer les Inmos du haut de l'échelle (EventManager) jusqu'en bas (Entity et ses composante) mais tu es obligé de trickser avec des ``enum`` et des void* pour remonter le cours du flux d'information !
+- Tu as un super moyen de transférer les infos du haut de l'échelle (EventManager) jusqu'en bas (Entity et ses composante) mais tu es obligé de trickser avec des ``enum`` et des void* pour remonter le cours du flux d'information !
 - La on te parle de communication entre scène, imagine ce que ça serait d'essayer de faire communiquer des scènes avec l'event manager ?
 - Et je n'ose pas mentionner l'utilisation de void* à la place de template etc etc...
 
