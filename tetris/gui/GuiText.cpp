@@ -37,7 +37,7 @@ void					GuiText::draw(Vector3d *position)
     vec += *position;
   if (!this->font_)
     return;
-  al_draw_text(this->font_ , this->color_, vec.getX(), vec.getY(), 0, this->val_.c_str());
+  al_draw_text(this->font_ , this->color_, vec.getX(), vec.getY(), ALLEGRO_ALIGN_CENTRE, this->val_.c_str());
 }
 
 void					GuiText::saveOptionValue()

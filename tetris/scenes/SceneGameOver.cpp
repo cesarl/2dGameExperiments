@@ -9,6 +9,7 @@ SceneGameOver::SceneGameOver()
   TEXT(&(this->title_))->color = al_map_rgb(255,100,100);
   *TEXT(&(this->title_)) = "GAME OVER";
   POSITION(&(this->title_))->setPos(500, 150);
+  ROTATION_FORCE(&(this->title_))->launch(2, 0.2);
 
   TEXT(&(this->score_))->setFont("assets/fonts/LilitaOne-Regular.ttf", 50);
   TEXT(&(this->score_))->align = ALLEGRO_ALIGN_CENTER;
@@ -47,6 +48,7 @@ SceneGameOver::~SceneGameOver()
 
 void					SceneGameOver::update(ALLEGRO_EVENT *event)
 {
+  this->title_.update();
   (void)(event);
 }
 

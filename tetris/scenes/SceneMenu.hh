@@ -6,9 +6,8 @@
 #include				"AScene.hh"
 #include				"Entity.hh"
 #include				"Image.hh"
-#include				"Text.hh"
-
-#define					MAX_CHOICE 3
+#include				"GuiSelectableGroup.hh"
+#include				"GuiSelectableText.hh"
 
 class					SceneMenu : public AScene
 {
@@ -21,14 +20,20 @@ public:
   virtual void				receiveMessage(e_message type, bool activate);
   virtual bool				initialize();
   virtual void				uninitialize();
-private: //member functions
-  void					p_rollMenu(int direction);
 private: //variables
-  Entity				background_;
   Entity				title_;
-  int					selectedChoice_;
-  Entity				choices_[MAX_CHOICE];
-  Entity				particules_;
+  Entity				background_;
+  GuiSelectableGroup			gui_;
 };
+
+namespace				MenuGui
+{
+  extern Entity				*particules_;
+  void					selectMenuItem(GuiComponent *c);
+  void					unselectMenuItem(GuiComponent *c);
+  void					pressExitMenuItem(GuiComponent *c);
+  void					pressNewGameMenuItem(GuiComponent *c);
+  void					pressScoreMenuItem(GuiComponent *c);
+}
 
 #endif					// __SCENE_MENU_HH__
