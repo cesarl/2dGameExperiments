@@ -49,5 +49,6 @@ int					main()
   sceneManager->initialize();
 
   eventManager->play();
+  MainManager::getInstance()->deInitialize();
   return (1);
 }
