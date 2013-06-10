@@ -60,8 +60,10 @@ void					SceneMainGame::receiveMessage(e_message type, bool activate)
   (void)activate;
 }
 
-void					SceneMainGame::receiveMessage(e_message type, void *data)
+bool					SceneMainGame::initialize()
 {
-  (void)type;
-  (void)data;
+  return true;
 }
+
+void					SceneMainGame::uninitialize()
+{}

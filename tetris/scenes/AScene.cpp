@@ -1,7 +1,7 @@
 #include				"AScene.hh"
 
 AScene::AScene(std::string const & name, bool active, bool visible) :
-  name_(name), active_(active), visible_(visible), display_(NULL), sceneManager_(NULL)
+  name_(name), active_(active), visible_(visible), sceneManager_(NULL)
 {}
 
 AScene::~AScene()
@@ -45,11 +45,6 @@ void					AScene::setVisible(bool visible)
 void					AScene::setPriority(int priority)
 {
   this->priority_ = priority;
-}
-
-void					AScene::setDisplay(ALLEGRO_DISPLAY *display)
-{
-  this->display_ = display;
 }
 
 void					AScene::setManager(SceneManager *manager)

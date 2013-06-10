@@ -82,9 +82,7 @@ void					SceneMenu::input(ALLEGRO_EVENT *event)
 	case ALLEGRO_KEY_ENTER:
 	  if (this->selectedChoice_ == 2)
 	    {
-	      this->sendMessage(MSG_ACTIVE, false, this->name_);
-	      this->sendMessage(MSG_VISIBLE, false, this->name_);
-	      this->sendMessage(MSG_EXITAPP, false, "");
+	      OptionManager::getInstance()->getOption<bool>("run")->setValue(false);
 	    }
 	  else if (this->selectedChoice_ == 0)
 	    {
@@ -106,10 +104,13 @@ void					SceneMenu::receiveMessage(e_message type, bool activate)
   (void)activate;
 }
 
-void					SceneMenu::receiveMessage(e_message type, void *data)
+bool					SceneMenu::initialize()
 {
-  (void)type;
-  (void)data;
+  return true;
+}
+
+void					SceneMenu::uninitialize()
+{
 }
 
 void					SceneMenu::p_rollMenu(int direction)

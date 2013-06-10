@@ -86,11 +86,15 @@ void					ScenePause::receiveMessage(e_message type, bool activate)
   (void)activate;
 }
 
-void					ScenePause::receiveMessage(e_message type, void *data)
+bool					ScenePause::initialize()
 {
-  (void)type;
-  (void)data;
+  return true;
 }
+
+void					ScenePause::uninitialize()
+{
+}
+
 
 void					ScenePause::p_rollPause(int direction)
 {

@@ -8,25 +8,19 @@
 #include				"ImageManager.hh"
 #include				"SaveManager.hh"
 #include				"FontManager.hh"
-
-static ALLEGRO_DISPLAY			*init(int width, int height)
-{
-  ALLEGRO_DISPLAY			*display;
-
-  assert(al_init());
-  assert(display = al_create_display(width, height));
-  return display;
-}
+#include				"MainManager.hh"
 
 int					main()
 {
-  ALLEGRO_DISPLAY			*display = init(50 * 20, 50 * 20);
+  if (!MainManager::getInstance()->initialize(50 * 20, 50 * 20))
+    return -1;
+
   SceneMenu				menu;
   SceneMainGame				mainGame;
   ScenePause				pause;
   SceneGameOver				gameOver;
-  SceneManager				sceneManager;
-  EventManager				eventManager;
+  SceneManager				*sceneManager;
+  EventManager				*eventManager;
 
   FontManager::getInstance()->load("assets/fonts//LilitaOne-Regular.ttf", 80);
   FontManager::getInstance()->load("assets/fonts//LilitaOne-Regular.ttf", 50);
@@ -35,26 +29,25 @@ int					main()
   ImageManager::getInstance()->load("assets/imgs/stars.png");
   SaveManager::getInstance()->load("saveFile.cfg");
 
-  sceneManager.add(&menu);
+  eventManager = EventManager::getInstance();
+  sceneManager = SceneManager::getInstance();
+
+  sceneManager->add(&menu);
   menu.setActive(true);
   menu.setVisible(true);
-  menu.setDisplay(display);
   menu.setName("menu");
 
-  sceneManager.add(&mainGame);
-  mainGame.setDisplay(display);
+  sceneManager->add(&mainGame);
   mainGame.setName("mainGame");
 
-  sceneManager.add(&pause, HIGH);
-  pause.setDisplay(display);
+  sceneManager->add(&pause, HIGH);
   pause.setName("pause");
 
-  sceneManager.add(&gameOver, HIGH);
-  gameOver.setDisplay(display);
+  sceneManager->add(&gameOver, HIGH);
   gameOver.setName("gameOver");
 
-  eventManager.setSceneManager(&sceneManager);
-  eventManager.play();
-  al_destroy_display(display);
+  sceneManager->initialize();
+
+  eventManager->play();
   return (1);
 }

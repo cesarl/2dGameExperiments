@@ -18,6 +18,8 @@ SRCS		=	managers/EventManager.cpp \
 			managers/FontManager.cpp \
 			managers/IdManager.cpp \
 			managers/SaveManager.cpp \
+			managers/Option.cpp \
+			managers/MainManager.cpp \
 			scenes/AScene.cpp \
 			scenes/SceneMenu.cpp \
 			scenes/SceneMainGame.cpp \

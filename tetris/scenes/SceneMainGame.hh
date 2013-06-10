@@ -15,7 +15,8 @@ public:
   virtual void				draw(ALLEGRO_EVENT *event);
   virtual void				input(ALLEGRO_EVENT *event);
   virtual void				receiveMessage(e_message type, bool activate);
-  virtual void				receiveMessage(e_message type, void *data);
+  virtual bool				initialize();
+  virtual void				uninitialize();
 private: //variables
   Entity				background_;
   Entity				mainBackground_;

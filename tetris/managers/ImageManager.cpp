@@ -4,13 +4,22 @@
 
 ImageManager::ImageManager()
 {
-  if (!al_init_image_addon())
-    std::cerr << "Error - ImageManager : init image addon error" << std::endl;
 }
 
 //dtor
 
 ImageManager::~ImageManager()
+{
+}
+
+bool					ImageManager::initialize()
+{
+  if (!al_init_image_addon())
+    return false;
+  return true;
+}
+
+void					ImageManager::uninitialize()
 {
   t_iter				it;
 
@@ -19,9 +28,8 @@ ImageManager::~ImageManager()
       al_destroy_bitmap(it->second);
       this->collection_.erase(it);
     }
+  al_shutdown_image_addon();
 }
-
-// return the singleton ImageManager
 
 ImageManager				*ImageManager::getInstance()
 {

@@ -17,7 +17,6 @@ protected:
   bool					active_;
   bool					visible_;
   int					priority_;
-  ALLEGRO_DISPLAY			*display_;
   SceneManager				*sceneManager_;
 public:
   AScene(std::string const & name = "Scene", bool active = false, bool visible = false);
@@ -30,16 +29,15 @@ public:
   void					setActive(bool active);
   void					setVisible(bool visible);
   void					setPriority(int priority);
-  void					setDisplay(ALLEGRO_DISPLAY *display);
   void					setManager(SceneManager *manager);
   void					sendMessage(e_message type, bool active, std::string const & sceneTitle);
   void					sendMessage(e_message type, void *data, std::string const & sceneTitle);
   virtual void				receiveMessage(e_message type, bool activate) = 0;
-  // very dirty need to use template
-  virtual void				receiveMessage(e_message type, void *data) = 0;
   virtual void				update(ALLEGRO_EVENT *event) = 0;
   virtual void				draw(ALLEGRO_EVENT *event) = 0;
   virtual void				input(ALLEGRO_EVENT *event) = 0;
+  virtual bool				initialize() = 0;
+  virtual void				uninitialize() = 0;
 };
 
 #endif					// __ASCENE_HH__

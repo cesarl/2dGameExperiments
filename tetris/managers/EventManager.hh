@@ -3,23 +3,30 @@
 
 #include                                <allegro5/allegro.h>
 #include				<iostream>
+#include				<list>
+#include				<algorithm>
 #include				"SceneManager.hh"
+#include				"OptionManager.hpp"
 
 class					SceneManager;
+class					Input;
 
 class					EventManager
 {
 public:
-  EventManager();
   ~EventManager();
+  static EventManager			*getInstance();
+  bool					initialize();
+  void					uninitialize();
   void					play();
-  void					pause();
+  void					stop();
   void					setSceneManager(SceneManager * sceneManager);
 private:
   ALLEGRO_EVENT_QUEUE			*event_queue_;
   ALLEGRO_TIMER				*timer_;
   SceneManager				*sceneManager_;
-  bool					pause_;
+  OptionValue<bool>			*run_;
+  EventManager();
 };
 
 #endif					// __EVENT_MANAGER_HH__

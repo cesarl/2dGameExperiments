@@ -108,20 +108,28 @@ void					SceneGameOver::receiveMessage(e_message type, bool activate)
 
 // very dirty need to use template
 
-void					SceneGameOver::receiveMessage(e_message type, void *data)
-{
-  std::ostringstream			o;
-  int					*score;
+// void					SceneGameOver::receiveMessage(e_message type, void *data)
+// {
+//   std::ostringstream			o;
+//   int					*score;
 
-  if (type != SCORE)
-    return;
-  score = (int*)(data);
-  std::cout << *score << std::endl;
-  o << *score;
-  *TEXT(&(this->score_)) = o.str();
-  (void)type;
-  (void)data;
+//   if (type != SCORE)
+//     return;
+//   score = (int*)(data);
+//   std::cout << *score << std::endl;
+//   o << *score;
+//   *TEXT(&(this->score_)) = o.str();
+//   (void)type;
+//   (void)data;
+// }
+
+bool					SceneGameOver::initialize()
+{
+  return true;
 }
+
+void					SceneGameOver::uninitialize()
+{}
 
 void					SceneGameOver::p_rollChoices(int direction)
 {
