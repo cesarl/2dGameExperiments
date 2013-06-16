@@ -1,9 +1,9 @@
 #include				<iostream>
 #include				"Logger.hpp"
-#include				"SmartPointer.hpp"
-
-// le delete ne fonctionne pas et provoqeu une boucle infinie
-//#include				"Memory.hpp"
+#include				"ImageLoader.hpp"
+#include				"MediaManager.hpp"
+#include				"ResourceManager.hpp"
+#include				<allegro5/allegro_image.h>
 
 struct Test
 {
@@ -20,8 +20,9 @@ int					main()
   ////////////////////
 
   al_init();
+  al_init_image_addon();
 
-  ILogger::setLogger(new FileLogger);
+  ILogger::setLogger(new ConsoleLogger);
 
   //////////
   // main //
@@ -35,6 +36,13 @@ int					main()
   char *foo = new char[31];
   (void)foo;
   delete foo;
+
+  /////////////////////////
+  // media manager tests //
+  /////////////////////////
+  MediaManager::getInstance().registerLoader(new ImageLoader, ".png,.jpg,.jpeg");
+  Image img;
+  img = ResourceManager::getInstance().get<Image>("stars.png");
 
   ILogger::log("Foo");
   ILogger::log("%d lapins dancent en %s", 5, "ronde");

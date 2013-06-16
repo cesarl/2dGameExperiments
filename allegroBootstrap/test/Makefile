@@ -6,15 +6,16 @@ RM		=	rm -f
 
 CPPFLAGS	=	-W -Wextra -Wall -Werror
 
-CPPFLAGS	+=	-I. -I../src
+CPPFLAGS	+=	-I. -I../src/debug -I../src/manager -I../src/utilities
 
 LDFLAGS		=	-L/usr/lib -lallegro -lallegro_dialog -lallegro_primitives -lallegro_ttf -lallegro_font -lallegro_image
 
 INC		=	-I. -I/usr/include/allegro5
 
-SRCS		=	../src/ILogger.cpp \
-			../src/MemoryManager.cpp \
-			../src/Exception.cpp \
+SRCS		=	../src/debug/ILogger.cpp \
+			../src/debug/MemoryManager.cpp \
+			../src/debug/Exception.cpp \
+			../src/manager/Resource.cpp \
 			main.cpp
 
 

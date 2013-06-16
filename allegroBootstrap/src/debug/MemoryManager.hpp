@@ -10,9 +10,6 @@
 #include				"Exception.hh"
 #include				"Singleton.hpp"
 
-#undef					new
-#undef					delete
-
 struct					MemBlock
 {
   std::size_t				size;
