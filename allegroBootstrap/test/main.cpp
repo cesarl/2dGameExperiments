@@ -22,6 +22,7 @@ int					main()
 
   al_init();
   al_init_image_addon();
+  al_create_display(300, 300);
 
   ILogger::setLogger(new ConsoleLogger);
 
@@ -46,16 +47,15 @@ int					main()
       MediaManager::getInstance().registerLoader(new ImageLoader, ".jpg,.png,.jpeg");
       MediaManager::getInstance().addSearchPath("./assets/imgs/");
 
-      ImagePtr img;
-      img = (ResourceManager::getInstance().get<Image>("stars.png"));
-      if (!img)
-	{
-	  ILogger::log("L'image n'est pas encore chargee");
-	  img = MediaManager::getInstance().load<Image>("stars.png");
-	  img->sayHello();
-	  ILogger::log("Foo");
-	  ILogger::log("%d lapins dancent en %s", 5, "ronde");
-	}
+      MediaManager::getInstance().load<Image>("stars.png");
+
+      ImagePtr img = ResourceManager::getInstance().get<Image>("stars.png");
+      ImagePtr img1 = ResourceManager::getInstance().get<Image>("stars.png");
+
+      img->draw();
+      ILogger::log("Foo");
+      ILogger::log("%d lapins dancent en %s", 5, "ronde");
+      al_flip_display();
     }
   catch (const std::exception &e)
     {

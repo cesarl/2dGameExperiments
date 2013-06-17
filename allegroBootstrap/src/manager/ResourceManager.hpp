@@ -6,6 +6,7 @@
 #include				"Exception.hh"
 #include				"ILogger.hh"
 #include				"Resource.hh"
+#include				"MediaManager.hpp"
 
 class					ResourceManager : public Singleton<ResourceManager>
 {
@@ -18,20 +19,20 @@ public:
     it = this->list_.find(name);
     if (it != this->list_.end())
       {
-	it->second->addRef();
 	return static_cast<T*>(it->second);
       }
-    return NULL;
+    std::cout << this->list_.size() << std::endl;
+    MediaManager::getInstance().load<T>(name);
+    return this->get<T>(name);
   }
 
-  template				<class T>
-  T					*add(const std::string &name, Resource *resource)
+  void					add(const std::string &name, Resource *resource)
   {
     Assert(resource != NULL);
 
     if (this->list_.find(name) != this->list_.end())
       {
-	ILogger::log() << name << " : already loaded";
+	ILogger::log("%s : already loaded", name.c_str());
       }
     this->list_[name] = resource;
     resource->name_ = name;
@@ -41,12 +42,10 @@ public:
   {
     t_iter				it;
 
-    // todo - a mon sens la ressource ici est retire de la liste mais pas detruite. a tester
-
     it = this->list_.find(name);
     if (it == this->list_.end())
       {
-	ILogger::log() << name << " : destroy called, but not loaded before";
+	ILogger::log("%s : destroy called, but not loaded before", name.c_str());
 	return;
       }
     this->list_.erase(it);

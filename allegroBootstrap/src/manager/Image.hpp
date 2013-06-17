@@ -9,27 +9,25 @@
 class					Image : public Resource
 {
 public:
-  Image(ALLEGRO_BITMAP *bmp) :
-    Resource(),
+  Image(ALLEGRO_BITMAP *bmp, std::string const & name) :
+    Resource(name),
     bmp_(bmp)
   {};
 
-  Image() :
-    Resource(),
-    bmp_(NULL)
-  {};
-
-  void					sayHello() const
+  void					draw() const
   {
-    std::cout << "Hello I'm an image" << std::endl;
+    if (this->bmp_)
+      al_draw_bitmap(this->bmp_, 40, 40, 0);
   }
 
   virtual ~Image()
-  {};
+  {
+    al_destroy_bitmap(this->bmp_);
+  };
 private:
   ALLEGRO_BITMAP			*bmp_;
 };
 
-typedef					SmartPtr<Image, InternalRef> ImagePtr;
+typedef					SmartPtr<Image, ExternalRef> ImagePtr;
 
 #endif					// __IMAGE_HH__

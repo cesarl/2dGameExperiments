@@ -6,7 +6,7 @@
 class					Resource
 {
 public:
-  Resource();
+  Resource(const std::string & name = "");
   virtual ~Resource();
   const std::string			&getName() const;
   void					addRef();
@@ -18,7 +18,8 @@ private:
 private:
   std::string				name_;
   int					counter_;
-  // friend class ResourceManager;
+  // autorize ResourceManager to modify it's name
+  friend class ResourceManager;
 };
 
 #endif					// __RESOURCE_HH__

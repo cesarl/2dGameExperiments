@@ -33,6 +33,16 @@ class					MediaManager :
   friend class Singleton<MediaManager>;
 
 public:
+  template				<class T>
+  void					load(const File &file) const
+  {
+    File				path;
+
+    path = this->findMedia(file);
+    path.getFileName();
+    this->findLoader<T>(path).load(path.getFullName());
+  }
+
   void					addSearchPath(const std::string &path)
   {
     if (path.empty() || (*(path.begin()) == '\\') || (*(path.rbegin()) == '/'))
@@ -62,16 +72,6 @@ public:
 	MediaHolder<T>::loaders[(*it)] = ptr;
 	++it;
       }
-  }
-
-  template				<class T>
-  inline T				*load(const File &file) const
-  {
-    File				path;
-
-    path = this->findMedia(file);
-    std::cout << "wdefwedfw" << std::endl;
-    return this->findLoader<T>(path).load(path.getFullName());
   }
 
   template				<class T>

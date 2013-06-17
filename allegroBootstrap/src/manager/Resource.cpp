@@ -1,14 +1,16 @@
 #include				"Resource.hh"
 #include				"ResourceManager.hpp"
 
-Resource::Resource() :
-  name_(""),
+Resource::Resource(const std::string & name) :
+  name_(name),
   counter_(1)
-{}
+{
+  ResourceManager::getInstance().add(name, this);
+}
 
 Resource::~Resource()
 {
-  // todo retirer du ressource manager
+  ResourceManager::getInstance().remove(this->name_);
 }
 
 const std::string			&Resource::getName() const
