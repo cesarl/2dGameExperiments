@@ -70,6 +70,7 @@ public:
     File				path;
 
     path = this->findMedia(file);
+    std::cout << "wdefwedfw" << std::endl;
     return this->findLoader<T>(path).load(path.getFullName());
   }
 
@@ -77,15 +78,6 @@ public:
   void					save(const T *object, const File &file) const
   {
     this->findLoader<T>(file).save(object, file.getFullName());
-  }
-
-  virtual bool				initialize()
-  {
-    return true;
-  }
-
-  virtual void				deinitialize()
-  {
   }
 
 private:
@@ -106,7 +98,7 @@ private:
       {
 	File				f;
 
-	f = *it + file.getFullName();
+	f = *it + file.getFileName();
 	if (f.exists())
 	  return f;
 	++it;

@@ -3,6 +3,7 @@
 #include				"ImageLoader.hpp"
 #include				"MediaManager.hpp"
 #include				"ResourceManager.hpp"
+#include				<exception>
 #include				<allegro5/allegro_image.h>
 
 struct Test
@@ -40,12 +41,25 @@ int					main()
   /////////////////////////
   // media manager tests //
   /////////////////////////
-  MediaManager::getInstance().registerLoader(new ImageLoader, ".png,.jpg,.jpeg");
-  Image img;
-  img = ResourceManager::getInstance().get<Image>("stars.png");
+  try
+    {
+      MediaManager::getInstance().registerLoader(new ImageLoader, ".jpg,.png,.jpeg");
+      MediaManager::getInstance().addSearchPath("./assets/imgs/");
 
-  ILogger::log("Foo");
-  ILogger::log("%d lapins dancent en %s", 5, "ronde");
-
+      ImagePtr img;
+      img = (ResourceManager::getInstance().get<Image>("stars.png"));
+      if (!img)
+	{
+	  ILogger::log("L'image n'est pas encore chargee");
+	  img = MediaManager::getInstance().load<Image>("stars.png");
+	  img->sayHello();
+	  ILogger::log("Foo");
+	  ILogger::log("%d lapins dancent en %s", 5, "ronde");
+	}
+    }
+  catch (const std::exception &e)
+    {
+      ILogger::log(e.what());
+    }
   return 0;
 }

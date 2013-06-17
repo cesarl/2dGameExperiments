@@ -55,7 +55,7 @@ private:
   ResourceManager()
   {}
 
-  ~ResourceManager()
+  virtual ~ResourceManager()
   {
     t_iter				it;
 
@@ -68,6 +68,7 @@ private:
   }
 
 private:
+  friend class Singleton<ResourceManager>;
   typedef std::map<std::string, Resource*>::iterator		t_iter;
   typedef std::map<std::string, Resource*>::const_iterator	t_const_iter;
   std::map<std::string, Resource*>	list_;

@@ -51,7 +51,7 @@ public:
       ptr->release();
   }
 
-  static void				swap(InternalRef &plc)
+  static void				swap(InternalRef &)
   {
   }
 private:

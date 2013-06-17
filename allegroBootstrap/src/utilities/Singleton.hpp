@@ -12,9 +12,6 @@ public :
 
     return *that_;
   }
-
-  virtual bool				initialize() = 0;
-  virtual void				deinitialize() = 0;
 protected :
   Singleton() {}
   ~Singleton() {}
