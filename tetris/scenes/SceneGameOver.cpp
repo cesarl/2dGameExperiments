@@ -1,6 +1,7 @@
 #include				"SceneGameOver.hh"
 
-SceneGameOver::SceneGameOver()
+SceneGameOver::SceneGameOver() :
+  AScene()
 {
   this->selectedChoice_ = 0;
 

@@ -28,6 +28,6 @@ private:
   ALLEGRO_BITMAP			*bmp_;
 };
 
-typedef					SmartPtr<Image, ExternalRef> ImagePtr;
+typedef					SmartPtr<Image, InternalRef> ImagePtr;
 
 #endif					// __IMAGE_HH__

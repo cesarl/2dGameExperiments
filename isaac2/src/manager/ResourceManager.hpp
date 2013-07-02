@@ -22,18 +22,23 @@ public:
 	it->second->addRef();
 	return static_cast<T*>(it->second);
       }
-    std::cout << this->list_.size() << std::endl;
     MediaManager::getInstance().load<T>(name);
-    return this->get<T>(name);
+    return this->find<T>(name);
   }
 
-  void					add(const std::string &name, Resource *resource)
+  void					add(const std::string &name, Resource *resource, bool force = false)
   {
     Assert(resource != NULL);
-
     if (this->list_.find(name) != this->list_.end())
       {
-	ILogger::log("%s : already loaded", name.c_str());
+	if (force)
+	  {
+	    *(this->list_[name]) = *resource;
+	  }
+	else
+	  {
+	    ILogger::log("%s : already loaded", name.c_str());
+	  }
       }
     this->list_[name] = resource;
     resource->name_ = name;
@@ -51,6 +56,22 @@ public:
       }
     this->list_.erase(it);
   }
+
+  template				<class T>
+  void					reload()
+  {
+    t_iter				it;
+
+    it = this->list_.begin();
+    while (it != this->list_.end())
+      {
+	if (dynamic_cast<T*>(it->second))
+	  {
+	    MediaManager::getInstance().load<T>(it->first, true);
+	  }
+	++it;
+      }
+  }
 private:
   ResourceManager()
   {}
@@ -62,9 +83,24 @@ private:
     it = this->list_.begin();
     while (it != this->list_.end())
       {
+	ILogger::log("%s : has not been destroyed before exit the program.");
 	delete it->second;
 	++it;
       }
+  }
+
+  template				<class T>
+  inline T				*find(const std::string &name) const
+  {
+    t_const_iter			it;
+
+    it = this->list_.find(name);
+    if (it != this->list_.end())
+      {
+	return static_cast<T*>(it->second);
+      }
+    throw LoadingFailed(name, "This file is not loaded and can not be found.");
+    return NULL;
   }
 
 private:

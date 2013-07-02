@@ -13,6 +13,12 @@ struct Test
 };
 
 
+void					lolilol()
+{
+  ImagePtr img = ResourceManager::getInstance().get<Image>("stars.png");
+  std::cout << "counter : " << img->getCounter() << std::endl;
+}
+
 int					main()
 {
 
@@ -51,6 +57,11 @@ int					main()
 
       ImagePtr img = ResourceManager::getInstance().get<Image>("stars.png");
       ImagePtr img1 = ResourceManager::getInstance().get<Image>("stars.png");
+      ImagePtr img2 = ResourceManager::getInstance().get<Image>("stars.png");
+      ImagePtr img3 = ResourceManager::getInstance().get<Image>("stars.png");
+
+      std::cout << "counter : " << img1->getCounter() << std::endl;
+      // delete img1;
 
       img->draw();
       ILogger::log("Foo");
@@ -61,5 +72,7 @@ int					main()
     {
       ILogger::log(e.what());
     }
+
+  lolilol();
   return 0;
 }
