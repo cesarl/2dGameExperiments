@@ -3,7 +3,6 @@
 
 #include			<vector>
 #include			"Singleton.hpp"
-#include			"Entity.hpp"
 
 class				EntityManager : public Singleton<EntityManager>
 {
@@ -14,36 +13,30 @@ public:
 
     if (freeIds_.empty())
       {
-	list_.push_back(Entity(idCounter_));
+	list_.push_back(idCounter_);
 	res = idCounter_;
 	++idCounter_;
 	return res;
       }
     res = freeIds_.back();
-    list_[res] = Entity(res);
+    list_[res] = res;
     freeIds_.pop_back();
     return res;
   }
 
   void				eraseEntity(unsigned int id)
   {
-    list_.erase(list_.begin() + (id - 1));
+    list_[id] = 0;
     freeIds_.push_back(id);
-  }
-
-  template			<class Model>
-  unsigned int			newComponent()
-  {
-    return ++idCounter_;
   }
 
 private:
   unsigned int			idCounter_;
-  std::vector<Entity>		list_;
+  std::vector<unsigned int>	list_;
   std::vector<unsigned int>	freeIds_;
 private:
   friend class Singleton<EntityManager>;
-  EntityManager(): idCounter_(0)
+  EntityManager(): idCounter_(1)
   {
   };
   virtual ~EntityManager(){};

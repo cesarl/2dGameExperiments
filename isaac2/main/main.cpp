@@ -8,6 +8,8 @@
 #include				<exception>
 
 #include				"EntityManager.hpp"
+#include				"SystemManager.hpp"
+#include				"ComponentTypeManager.hpp"
 
 static Camera<Orthographic, FlatCamera> camera;
 
@@ -68,6 +70,14 @@ int					main()
   unsigned int thirdEntity = EntityManager::getInstance().newEntity();
   ILogger::log("Ma troisieme entite c'est %i !", thirdEntity);
 
+ILogger::log("Le type de EventManager c'est %i !", ComponentTypeManager::getInstance().getComponentType<EventManager>());
+
+ILogger::log("Le type de SystemManager c'est %i !", ComponentTypeManager::getInstance().getComponentType<SystemManager>());
+
+ILogger::log("Le type de EventManager c'est %i !", ComponentTypeManager::getInstance().getComponentType<EventManager>());
+
+
+SystemManager::getInstance().test<ImageSystem>();
 
   try
     {
