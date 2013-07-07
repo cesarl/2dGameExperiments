@@ -10,6 +10,7 @@
 #include				"EntityManager.hpp"
 #include				"SystemManager.hpp"
 #include				"ComponentTypeManager.hpp"
+#include				"ComponentManager.hpp"
 
 static Camera<Orthographic, FlatCamera> camera;
 
@@ -58,6 +59,11 @@ int					main()
   if (!camera.init())
     return 0;
 
+  ILogger::log("Le type de EventManager c'est %i !", ComponentTypeManager::getInstance().getComponentType<EventManager>());
+
+  ILogger::log("Le type de SystemManager c'est %i !", ComponentTypeManager::getInstance().getComponentType<SystemManager>());
+
+  ILogger::log("Le type de EventManager c'est %i !", ComponentTypeManager::getInstance().getComponentType<EventManager>());
 
   unsigned int firstEntity = EntityManager::getInstance().newEntity();
   ILogger::log("Ma premiere entite c'est %i !", firstEntity);
@@ -70,14 +76,11 @@ int					main()
   unsigned int thirdEntity = EntityManager::getInstance().newEntity();
   ILogger::log("Ma troisieme entite c'est %i !", thirdEntity);
 
-ILogger::log("Le type de EventManager c'est %i !", ComponentTypeManager::getInstance().getComponentType<EventManager>());
-
-ILogger::log("Le type de SystemManager c'est %i !", ComponentTypeManager::getInstance().getComponentType<SystemManager>());
-
-ILogger::log("Le type de EventManager c'est %i !", ComponentTypeManager::getInstance().getComponentType<EventManager>());
+  ComponentManager::getInstance().addComponent<Position>(thirdEntity);
+  ComponentManager::getInstance().removeComponent<Position>(thirdEntity);
 
 
-SystemManager::getInstance().test<ImageSystem>();
+  SystemManager::getInstance().test<ImageSystem>();
 
   try
     {

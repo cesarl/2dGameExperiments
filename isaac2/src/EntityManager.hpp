@@ -2,7 +2,21 @@
 # define			__ENTITY_MANAGER_HPP__
 
 #include			<vector>
+#include			<bitset>
+
 #include			"Singleton.hpp"
+
+struct				EntityData
+{
+  std::bitset<64>		components;
+  unsigned int			id;
+
+  EntityData(unsigned int entityId)
+  {
+    components.reset();
+    id = entityId;
+  }
+};
 
 class				EntityManager : public Singleton<EntityManager>
 {
@@ -13,26 +27,30 @@ public:
 
     if (freeIds_.empty())
       {
-	list_.push_back(idCounter_);
+	list_.push_back(EntityData(idCounter_));
 	res = idCounter_;
 	++idCounter_;
 	return res;
       }
     res = freeIds_.back();
-    list_[res] = res;
     freeIds_.pop_back();
     return res;
   }
 
   void				eraseEntity(unsigned int id)
   {
-    list_[id] = 0;
+    list_[id].components.reset();
     freeIds_.push_back(id);
+  }
+
+  EntityData			&getEntityData(unsigned int id)
+  {
+    return list_[id];
   }
 
 private:
   unsigned int			idCounter_;
-  std::vector<unsigned int>	list_;
+  std::vector<EntityData>	list_;
   std::vector<unsigned int>	freeIds_;
 private:
   friend class Singleton<EntityManager>;
