@@ -4,6 +4,7 @@
 #include			<map>
 #include			<typeinfo>
 #include			"Singleton.hpp"
+#include			"EntityData.hpp"
 
 class				ComponentTypeManager : public Singleton<ComponentTypeManager>
 {

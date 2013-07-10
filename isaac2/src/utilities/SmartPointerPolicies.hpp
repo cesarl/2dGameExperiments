@@ -19,7 +19,7 @@ public:
 
   void					release(T *ptr)
   {
-    if (--(this->counter_) == 0)
+    if ((*this->counter_)-- == 0)
       {
 	delete this->counter_;
 	delete ptr;

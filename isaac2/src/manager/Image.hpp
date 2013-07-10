@@ -7,6 +7,7 @@
 #include				"Resource.hh"
 #include				"SmartPointer.hpp"
 #include				"SmartPointerPolicies.hpp"
+#include				"Vector3d.hh"
 
 class					Image : public Resource
 {
@@ -31,7 +32,7 @@ public:
     this->tex_ = o.tex_;
   }
 
-  void					draw3d() const
+void					draw3d(const Vector3d & position = Vector3d(0,0,0)) const
   {
     glPushMatrix();
 
@@ -43,7 +44,8 @@ public:
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTranslatef(0.0, 0.0, 0.0);
+    glTranslatef(position.x, position.y, position.z);
+//glTranslatef(0, 0, 0);
     glBegin(GL_QUADS);
 
     glColor3f(1.0f,1.0f,1.0f);

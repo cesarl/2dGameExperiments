@@ -22,7 +22,8 @@ public:
 
   SmartPtr(T *ptr) :
     data_(ptr)
-  {}
+  {
+  }
 
   virtual ~SmartPtr()
   {

@@ -8,21 +8,31 @@
 #include				<exception>
 
 #include				"EntityManager.hpp"
-#include				"SystemManager.hpp"
-#include				"ComponentTypeManager.hpp"
 #include				"ComponentManager.hpp"
+#include				"SystemManager.hpp"
 
 static Camera<Orthographic, FlatCamera> camera;
+unsigned int				thirdEntity;
 
 void					draw(float time, const ALLEGRO_EVENT &ev)
 {
-  static ImagePtr img = ResourceManager::getInstance().get<Image>("stars.png");
+  static double				fps = 0;
+  static int				frames_done = 0;
+  static double				old_time = al_get_time();
 
   camera.update(time, ev);
-  img->draw3d();
+  EntityManager::getInstance().update(time, ev);
+  ComponentManager::getInstance().getComponent<Img>(thirdEntity)->img = ResourceManager::getInstance().get<Image>("stars.png");
 
-  (void)ev;
-  (void)time;
+
+  if(time - old_time >= 1.0)
+    {
+      fps = frames_done / (time - old_time);
+      frames_done = 0;
+      old_time = time;
+      std::cout << fps << std::endl;
+    }
+  frames_done++;
 }
 
 void					key(float time, const ALLEGRO_EVENT &ev)
@@ -65,22 +75,32 @@ int					main()
 
   ILogger::log("Le type de EventManager c'est %i !", ComponentTypeManager::getInstance().getComponentType<EventManager>());
 
-  unsigned int firstEntity = EntityManager::getInstance().newEntity();
-  ILogger::log("Ma premiere entite c'est %i !", firstEntity);
+  // unsigned int firstEntity = EntityManager::getInstance().newEntity();
+  // ILogger::log("Ma premiere entite c'est %i !", firstEntity);
 
-  unsigned int secondEntity = EntityManager::getInstance().newEntity();
-  ILogger::log("Ma deuxieme entite c'est %i !", secondEntity);
+  // unsigned int secondEntity = EntityManager::getInstance().newEntity();
+  // ILogger::log("Ma deuxieme entite c'est %i !", secondEntity);
 
-  EntityManager::getInstance().eraseEntity(firstEntity);
+  // EntityManager::getInstance().eraseEntity(firstEntity);
 
-  unsigned int thirdEntity = EntityManager::getInstance().newEntity();
+  thirdEntity = EntityManager::getInstance().newEntity();
   ILogger::log("Ma troisieme entite c'est %i !", thirdEntity);
 
-  ComponentManager::getInstance().addComponent<Position>(thirdEntity);
-  ComponentManager::getInstance().removeComponent<Position>(thirdEntity);
 
+  Position &posComponent = ComponentManager::getInstance().addComponent<Position>(thirdEntity);
+  Img &imgComponent = ComponentManager::getInstance().addComponent<Img>(thirdEntity);
 
-  SystemManager::getInstance().test<ImageSystem>();
+  posComponent.position = Vector3d(1.0f, 1.0f, 0.0f);
+  imgComponent.img = ResourceManager::getInstance().get<Image>("stars.png");
+
+  //  ComponentManager::getInstance().removeComponent<Position>(thirdEntity);
+
+  ImageSystem *imgSys = new ImageSystem();
+
+  imgSys->require<Img>();
+  imgSys->require<Position>();
+
+  SystemManager::getInstance().add(imgSys);
 
   try
     {

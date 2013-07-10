@@ -2,17 +2,35 @@
 # define			__SYSTEM_MANAGER_HPP__
 
 #include			<vector>
+#include			<allegro5/allegro.h>
 #include			"Singleton.hpp"
+#include			"EntityData.hpp"
+#include			"ComponentManager.hpp"
 
 class				System
 {
 public:
   virtual ~System(){};
-  virtual void			update(float, const ALLEGRO_EVENT &)
-  {}
-  System()
-  {}
+  virtual void			update(unsigned int, float, const ALLEGRO_EVENT &) = 0;
+
+  template			<class T>
+  void				require()
+  {
+    unsigned int			type = ComponentTypeManager::getInstance().getComponentType<T>();
+
+    componentsRequired_[type] = 1;
+  }
+
+  bool				match(const EntityData &entity)
+  {
+    if ((entity.components & componentsRequired_) == componentsRequired_)
+      return true;
+    return false;
+  }
+protected:
+  std::bitset<64>		componentsRequired_;
 private:
+  
 };
 
 class				ImageSystem : public System
@@ -21,8 +39,8 @@ public:
   virtual ~ImageSystem(){};
   ImageSystem()
   {}
-  virtual void			update(float, const ALLEGRO_EVENT &)
-  {}
+virtual void			update(unsigned int entity, float, const ALLEGRO_EVENT &);
+
 private:
 };
 
@@ -30,18 +48,11 @@ class				SystemManager : public Singleton<SystemManager>
 {
 public:
 
-  template			<class T>
-  void				test()
-  {
-    SmartPtr<T>			ptr;
+  void				add(System *sys);
 
-    ptr = new T;
-    (void)ptr;
-
-    list_.push_back(T());
-  }
+void				update(const EntityData &entity , float time, const ALLEGRO_EVENT & ev);
 private:
-  std::vector<System>		list_;
+  std::vector<System*>		list_;
 private:
   SystemManager()
   {}

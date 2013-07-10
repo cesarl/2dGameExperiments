@@ -18,7 +18,7 @@ public:
     this->event_queue_ = al_create_event_queue();
     if (!this->event_queue_)
       return false;
-    this->timer_ = al_create_timer(1.0 / 60);
+    this->timer_ = al_create_timer(0.001f);
     if (!this->timer_)
       return false;
     if (!al_install_joystick())
