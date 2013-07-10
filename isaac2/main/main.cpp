@@ -89,18 +89,25 @@ int					main()
 
   Position &posComponent = ComponentManager::getInstance().addComponent<Position>(thirdEntity);
   Img &imgComponent = ComponentManager::getInstance().addComponent<Img>(thirdEntity);
+  Velocity &velComponent = ComponentManager::getInstance().addComponent<Velocity>(thirdEntity);
 
   posComponent.position = Vector3d(1.0f, 1.0f, 0.0f);
   imgComponent.img = ResourceManager::getInstance().get<Image>("stars.png");
+  velComponent.velocity = Vector3d(0.001f, 0.001f, 0.0f);
 
   //  ComponentManager::getInstance().removeComponent<Position>(thirdEntity);
 
   ImageSystem *imgSys = new ImageSystem();
+  VelocitySystem *velSys = new VelocitySystem();
 
   imgSys->require<Img>();
   imgSys->require<Position>();
 
+  velSys->require<Position>();
+  velSys->require<Velocity>();
+
   SystemManager::getInstance().add(imgSys);
+  SystemManager::getInstance().add(velSys);
 
   try
     {

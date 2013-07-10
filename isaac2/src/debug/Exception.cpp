@@ -44,3 +44,10 @@ LoadingFailed::LoadingFailed(const std::string &file, const std::string &message
 OutOfMemory::OutOfMemory(const std::string & message) :
   Exception(message)
 {}
+
+SystemWithoutComponentRequired::SystemWithoutComponentRequired(const std::string & mes, const char *className)
+{
+  std::string m = mes;
+  m += std::string(className);
+  this->message_ = m;
+}

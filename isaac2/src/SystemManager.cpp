@@ -9,6 +9,15 @@ void				ImageSystem::update(unsigned int entity, float, const ALLEGRO_EVENT &)
   img->img->draw3d(pos->position);
 }
 
+void				VelocitySystem::update(unsigned int entity, float, const ALLEGRO_EVENT &)
+{
+  Position			*pos = ComponentManager::getInstance().getComponent<Position>(entity);
+  Velocity			*vel = ComponentManager::getInstance().getComponent<Velocity>(entity);
+
+  pos->position += vel->velocity;;
+}
+
+
 void				SystemManager::add(System *sys)
 {
 list_.push_back(sys);

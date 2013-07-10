@@ -17,6 +17,11 @@ struct				Position
   Vector3d			position;
 };
 
+struct				Velocity
+{
+  Vector3d			velocity;
+};
+
 struct				Img
 {
   ImagePtr			img;

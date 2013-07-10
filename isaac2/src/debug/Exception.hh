@@ -33,6 +33,11 @@ struct OutOfMemory : public Exception
   OutOfMemory(const std::string &message);
 };
 
+struct SystemWithoutComponentRequired : public Exception
+{
+  SystemWithoutComponentRequired(const std::string &message, const char *className);
+};
+
 # ifdef					_DEBUG
 #  define				Assert(condition) if (!(condition)) \
     throw AssertException(__FILE__, __LINE__, "Unsatisfied condition\n\n" #condition)

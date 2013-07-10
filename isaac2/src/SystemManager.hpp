@@ -16,13 +16,17 @@ public:
   template			<class T>
   void				require()
   {
-    unsigned int			type = ComponentTypeManager::getInstance().getComponentType<T>();
+    unsigned int		type = ComponentTypeManager::getInstance().getComponentType<T>();
 
     componentsRequired_[type] = 1;
   }
 
   bool				match(const EntityData &entity)
   {
+    if (componentsRequired_.none())
+      {
+	throw SystemWithoutComponentRequired("System is empty : ", typeid(*this).name());
+      }
     if ((entity.components & componentsRequired_) == componentsRequired_)
       return true;
     return false;
@@ -43,6 +47,18 @@ virtual void			update(unsigned int entity, float, const ALLEGRO_EVENT &);
 
 private:
 };
+
+class				VelocitySystem : public System
+{
+public:
+  virtual ~VelocitySystem(){};
+  VelocitySystem()
+  {}
+virtual void			update(unsigned int entity, float, const ALLEGRO_EVENT &);
+
+private:
+};
+
 
 class				SystemManager : public Singleton<SystemManager>
 {
