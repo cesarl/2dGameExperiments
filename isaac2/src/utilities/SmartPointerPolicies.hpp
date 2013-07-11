@@ -48,7 +48,6 @@ public:
 
   static T				*clone(T *ptr)
   {
-    std::cout << "lol" << std::endl;
     if (ptr)
       ptr->addRef();
     return ptr;

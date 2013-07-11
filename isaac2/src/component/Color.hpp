@@ -17,6 +17,16 @@ struct				Color
     b(ab),
     a(aa)
   {}
+  void				set(float ar = 1.0f,
+				    float ag = 1.0f,
+				    float ab = 1.0f,
+				    float aa = 1.0f)
+  {
+    this->r = ar;
+    this->g = ag;
+    this->b = ab;
+    this->a = aa;
+  }
 };
 
 #endif				// __COLOR_COMPONENT_HPP__

@@ -12,7 +12,7 @@
 #include				"SystemManager.hpp"
 #include				"ImageSystem.hpp"
 #include				"VelocitySystem.hpp"
-
+#include				"MapGenerator.hpp"
 
 #include				"Components.hpp"
 
@@ -71,30 +71,12 @@ int					main()
   if (!camera.init())
     return 0;
 
-  for (int i = 0; i < 1000; ++i)
-    {
-      unsigned int				thirdEntity;
-
-      thirdEntity = EntityManager::getInstance().newEntity();
-      // ILogger::log("Ma troisieme entite c'est %i !", thirdEntity);
-      Position &posComponent = ComponentManager::getInstance().addComponent<Position>(thirdEntity);
-      Img &imgComponent = ComponentManager::getInstance().addComponent<Img>(thirdEntity);
-      Velocity &velComponent = ComponentManager::getInstance().addComponent<Velocity>(thirdEntity);
-      ComponentManager::getInstance().addComponent<Color>(thirdEntity);
-      Scale &scaleComponent = ComponentManager::getInstance().addComponent<Scale>(thirdEntity);
-      Rotation &rotationComponent = ComponentManager::getInstance().addComponent<Rotation>(thirdEntity);
-
-      posComponent.position = Vector3d(rand() % 900, rand() % 700, rand() % 400);
-      imgComponent.img = ResourceManager::getInstance().get<Image>("stars.png");
-      velComponent.velocity = Vector3d(float(rand() % 2 - 1) / 10.0f,
-				       float(rand() % 2 - 1) / 10.0f,
-				       float(rand() % 2 - 1) / 10.0f);
-      scaleComponent.scale = Vector3d(rand() % 200, rand() % 200, rand() % 200);
-      rotationComponent.rotation = Vector3d(rand() % 360, rand() % 360, rand() % 360);
-    }
-
   SystemManager::getInstance().add<ImageSystem>(10);
   SystemManager::getInstance().add<VelocitySystem>(1);
+
+  MapGenerator g;
+  g.generate(33, 33);
+
 
   try
     {

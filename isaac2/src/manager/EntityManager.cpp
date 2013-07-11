@@ -9,7 +9,6 @@ unsigned int			EntityManager::newEntity()
 
   if (freeIds_.empty())
     {
-      std::cout << "New entity : " << idCounter_ << std::endl;
       if (list_.size() <= idCounter_)
 	list_.resize(idCounter_ + RESERVE_ENTITY);
       list_[idCounter_] = EntityData(idCounter_);
