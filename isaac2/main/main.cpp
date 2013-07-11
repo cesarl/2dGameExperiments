@@ -10,9 +10,13 @@
 #include				"EntityManager.hpp"
 #include				"ComponentManager.hpp"
 #include				"SystemManager.hpp"
+#include				"ImageSystem.hpp"
+#include				"VelocitySystem.hpp"
+
+
+#include				"Components.hpp"
 
 static Camera<Orthographic, FlatCamera> camera;
-unsigned int				thirdEntity;
 
 void					draw(float time, const ALLEGRO_EVENT &ev)
 {
@@ -22,8 +26,6 @@ void					draw(float time, const ALLEGRO_EVENT &ev)
 
   camera.update(time, ev);
   EntityManager::getInstance().update(time, ev);
-  ComponentManager::getInstance().getComponent<Img>(thirdEntity)->img = ResourceManager::getInstance().get<Image>("stars.png");
-
 
   if(time - old_time >= 1.0)
     {
@@ -69,45 +71,30 @@ int					main()
   if (!camera.init())
     return 0;
 
-  ILogger::log("Le type de EventManager c'est %i !", ComponentTypeManager::getInstance().getComponentType<EventManager>());
+  for (int i = 0; i < 1000; ++i)
+    {
+      unsigned int				thirdEntity;
 
-  ILogger::log("Le type de SystemManager c'est %i !", ComponentTypeManager::getInstance().getComponentType<SystemManager>());
+      thirdEntity = EntityManager::getInstance().newEntity();
+      // ILogger::log("Ma troisieme entite c'est %i !", thirdEntity);
+      Position &posComponent = ComponentManager::getInstance().addComponent<Position>(thirdEntity);
+      Img &imgComponent = ComponentManager::getInstance().addComponent<Img>(thirdEntity);
+      Velocity &velComponent = ComponentManager::getInstance().addComponent<Velocity>(thirdEntity);
+      ComponentManager::getInstance().addComponent<Color>(thirdEntity);
+      Scale &scaleComponent = ComponentManager::getInstance().addComponent<Scale>(thirdEntity);
+      Rotation &rotationComponent = ComponentManager::getInstance().addComponent<Rotation>(thirdEntity);
 
-  ILogger::log("Le type de EventManager c'est %i !", ComponentTypeManager::getInstance().getComponentType<EventManager>());
+      posComponent.position = Vector3d(rand() % 900, rand() % 700, rand() % 400);
+      imgComponent.img = ResourceManager::getInstance().get<Image>("stars.png");
+      velComponent.velocity = Vector3d(float(rand() % 2 - 1) / 10.0f,
+				       float(rand() % 2 - 1) / 10.0f,
+				       float(rand() % 2 - 1) / 10.0f);
+      scaleComponent.scale = Vector3d(rand() % 200, rand() % 200, rand() % 200);
+      rotationComponent.rotation = Vector3d(rand() % 360, rand() % 360, rand() % 360);
+    }
 
-  // unsigned int firstEntity = EntityManager::getInstance().newEntity();
-  // ILogger::log("Ma premiere entite c'est %i !", firstEntity);
-
-  // unsigned int secondEntity = EntityManager::getInstance().newEntity();
-  // ILogger::log("Ma deuxieme entite c'est %i !", secondEntity);
-
-  // EntityManager::getInstance().eraseEntity(firstEntity);
-
-  thirdEntity = EntityManager::getInstance().newEntity();
-  ILogger::log("Ma troisieme entite c'est %i !", thirdEntity);
-
-
-  Position &posComponent = ComponentManager::getInstance().addComponent<Position>(thirdEntity);
-  Img &imgComponent = ComponentManager::getInstance().addComponent<Img>(thirdEntity);
-  Velocity &velComponent = ComponentManager::getInstance().addComponent<Velocity>(thirdEntity);
-
-  posComponent.position = Vector3d(1.0f, 1.0f, 0.0f);
-  imgComponent.img = ResourceManager::getInstance().get<Image>("stars.png");
-  velComponent.velocity = Vector3d(0.001f, 0.001f, 0.0f);
-
-  //  ComponentManager::getInstance().removeComponent<Position>(thirdEntity);
-
-  ImageSystem *imgSys = new ImageSystem();
-  VelocitySystem *velSys = new VelocitySystem();
-
-  imgSys->require<Img>();
-  imgSys->require<Position>();
-
-  velSys->require<Position>();
-  velSys->require<Velocity>();
-
-  SystemManager::getInstance().add(imgSys);
-  SystemManager::getInstance().add(velSys);
+  SystemManager::getInstance().add<ImageSystem>(10);
+  SystemManager::getInstance().add<VelocitySystem>(1);
 
   try
     {
