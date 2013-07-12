@@ -50,6 +50,8 @@ public:
   {
     std::vector<T>		*collection = getComponentCollection<T>();
 
+    if (!collection)
+      return NULL;
     if (collection->capacity() <= entity)
       return NULL;
     return &(collection->at(entity));

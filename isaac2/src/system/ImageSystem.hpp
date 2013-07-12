@@ -9,50 +9,53 @@ class				ImageSystem : public System
 {
 public:
   virtual ~ImageSystem(){};
-ImageSystem() : System()
-{}
+  ImageSystem() : System()
+  {}
 
-virtual void			init()
-{
-require<Img>();
-require<Position>();
-require<Rotation>();
-require<Scale>();
-require<Color>();
-}
+  virtual void			init()
+  {
+    require<Img>();
+    require<Position>();
+    require<Rotation>();
+    require<Scale>();
+    require<Color>();
+  }
 
-virtual void			update(unsigned int entity, float, const ALLEGRO_EVENT &)
-{
-Img				*img = ComponentManager::getInstance().getComponent<Img>(entity);
-Position			*pos = ComponentManager::getInstance().getComponent<Position>(entity);
-Rotation			*rot = ComponentManager::getInstance().getComponent<Rotation>(entity);
-Scale				*scale = ComponentManager::getInstance().getComponent<Scale>(entity);
-Color				*color = ComponentManager::getInstance().getComponent<Color>(entity);
+  virtual void			update(unsigned int entity, float, const ALLEGRO_EVENT &)
+  {
+    Img				*img = ComponentManager::getInstance().getComponent<Img>(entity);
+    Position			*pos = ComponentManager::getInstance().getComponent<Position>(entity);
+    Rotation			*rot = ComponentManager::getInstance().getComponent<Rotation>(entity);
+    Scale			*scale = ComponentManager::getInstance().getComponent<Scale>(entity);
+    Color			*color = ComponentManager::getInstance().getComponent<Color>(entity);
 
-glPushMatrix();
+    glPushMatrix();
 
-glEnable(GL_TEXTURE_2D);
+    glEnable(GL_TEXTURE_2D);
 
-// glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-// glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-// glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
-// glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    // glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+    // glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-glTranslatef(pos->position.x, pos->position.y, pos->position.z);
+    glTranslatef(pos->position.x, pos->position.y, pos->position.z);
 
-glRotatef(rot->rotation.x, 1.0f, 0.0f, 0.0f);
-glRotatef(rot->rotation.y, 0.0f, 1.0f, 0.0f);
-glRotatef(rot->rotation.z, 0.0f, 0.0f, 1.0f);
+    glRotatef(rot->rotation.x, 1.0f, 0.0f, 0.0f);
+    glRotatef(rot->rotation.y, 0.0f, 1.0f, 0.0f);
+    glRotatef(rot->rotation.z, 0.0f, 0.0f, 1.0f);
 
-glScalef(scale->scale.x, scale->scale.y, scale->scale.z);
+    glScalef(scale->scale.x, scale->scale.y, scale->scale.z);
 
-glColor4f(color->r, color->g, color->b, color->a);
-glCallList(img->img->getDisplayList());
-glPopMatrix();
-glDisable(GL_TEXTURE_2D);
-(void)color;
-(void)rot;
-}
+    glColor4f(color->r, color->g, color->b, color->a);
+    glCallList(img->img->getDisplayList());
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
+    (void)color;
+    (void)rot;
+  }
+
+  virtual void			updateBegin(){};
+  virtual void			updateEnd(){};
 
 private:
 };

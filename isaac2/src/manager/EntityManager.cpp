@@ -21,20 +21,20 @@ unsigned int			EntityManager::newEntity()
   return res;
 }
 
-void				EntityManager::update(float time, const ALLEGRO_EVENT &ev)
-{
-  std::vector<EntityData>::iterator it = ++list_.begin();
-  unsigned int			i = 1;
+// void				EntityManager::update(float time, const ALLEGRO_EVENT &ev)
+// {
+//   std::vector<EntityData>::iterator it = ++list_.begin();
+//   unsigned int			i = 1;
 
-  while (i < idCounter_ && it != list_.end())
-    {
-      SystemManager::getInstance().update(*it, time, ev);	
-      ++it;
-      ++i;
-    }
-  (void)time;
-  (void)(ev);
-}
+//   while (i < idCounter_ && it != list_.end())
+//     {
+//       SystemManager::getInstance().update(*it, time, ev);	
+//       ++it;
+//       ++i;
+//     }
+//   (void)time;
+//   (void)(ev);
+// }
 
 void				EntityManager::eraseEntity(unsigned int id)
 {

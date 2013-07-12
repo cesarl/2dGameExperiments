@@ -7,5 +7,7 @@
 #include			"Rotation.hpp"
 #include			"Scale.hpp"
 #include			"Velocity.hpp"
+#include			"BoundingBox.hpp"
+#include			"Collision.hpp"
 
 #endif				// __COMPONENTS_HPP__

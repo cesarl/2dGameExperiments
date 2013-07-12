@@ -14,7 +14,7 @@ public:
 
   void				add(System *sys);
 
-  void				update(const EntityData &entity , float time, const ALLEGRO_EVENT & ev);
+  void				update(float time, const ALLEGRO_EVENT &ev);
 
   template			<class T>
   T				*add(int priority)

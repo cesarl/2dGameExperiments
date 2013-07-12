@@ -155,8 +155,6 @@ public:
 	  }
       }
 
-    std::cout << start_ << std::endl;
-    std::cout << end_ << std::endl;
     while (!isConnected(start_, end_))
       {
     	while (!open(rand() % (width * height)))
@@ -174,11 +172,15 @@ public:
 	Color &colorComponent = ComponentManager::getInstance().addComponent<Color>(e);
 	ComponentManager::getInstance().addComponent<Rotation>(e);
 
-	if (open_[i])
-	  colorComponent.set(1.0f, 0.0f, 1.0f, 1.0f);
-	posComponent.position = Vector3d(i % width_ * (900 / width_), i / width_ * (700 / height_), 0);
+	if (!open_[i])
+	  {
+	    colorComponent.set(1.0f, 0.0f, 1.0f, 1.0f);
+	    BoundingBox &bbComponent = ComponentManager::getInstance().addComponent<BoundingBox>(e);
+	    bbComponent.set(Vector3d(64.0f, 64.0f, 0.0f));
+	  }
+	posComponent.position = Vector3d((float)(i % width_) * 64.0f, (float)(i / width_) * 64.0f, 0.0f);
 	imgComponent.img = ResourceManager::getInstance().get<Image>("stars.png");
-	scaleComponent.scale = Vector3d(900 / width_, 700 / height, 0);
+	scaleComponent.scale = Vector3d(64.0f, 64.0f, 0.0f);
 	this->entities_.push_back(e);
       }
   }

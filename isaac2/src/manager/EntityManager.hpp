@@ -10,10 +10,25 @@
 class				EntityManager : public Singleton<EntityManager>
 {
 public:
+  typedef std::vector<EntityData>::iterator iterator;
+
   unsigned int			newEntity();
-  void				update(float time, const ALLEGRO_EVENT &ev);
   void				eraseEntity(unsigned int id);
   EntityData			&getEntityData(unsigned int id);
+  iterator			&begin()
+  {
+    static iterator		it;
+
+    it = list_.begin();
+    return it;
+  }
+  iterator			&end()
+  {
+    static iterator		it;
+
+    it = list_.end();    
+    return it;
+  }
 private:
   unsigned int			idCounter_;
   std::vector<EntityData>	list_;

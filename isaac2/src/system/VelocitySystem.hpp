@@ -26,6 +26,9 @@ public:
     pos->position += vel->velocity;
   }
 
+  virtual void			updateBegin(){};
+  virtual void			updateEnd(){};
+
 private:
 };
 

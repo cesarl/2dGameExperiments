@@ -6,6 +6,8 @@ class				System
 public:
   virtual ~System(){};
   virtual void			update(unsigned int, float, const ALLEGRO_EVENT &) = 0;
+  virtual void			updateBegin() = 0;
+  virtual void			updateEnd() = 0;
   virtual void			init() = 0;
 
   template			<class T>
