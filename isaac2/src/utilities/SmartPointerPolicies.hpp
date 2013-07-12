@@ -43,7 +43,7 @@ template				<class T>
 class					InternalRef
 {
 public:
-  InternalRef() : counter_(new int(1))
+  InternalRef() : counter_(NULL)
   {}
 
   static T				*clone(T *ptr)

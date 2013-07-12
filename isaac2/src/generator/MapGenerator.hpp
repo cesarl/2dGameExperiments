@@ -71,25 +71,23 @@ public:
 
   bool				open(unsigned int p)
   {
+    if (open_[p])
+      return false;
+
     unsigned int		x = p % width_;
     unsigned int		y = p / width_;
 
-    if (open_[p])
-      {
-	int i = p < (width_ * height_) / 2 ? 1 : -1;
-	while (p < start_)
-	  {
-	    if (!open_[p])
-	      {
-		break;
-	      }
-	    p += i;
-	  }
-	if (p >= start_)
-	  return false;
-      }
+    if (x == 0 || x >= width_ - 1 || y == 0 || y >= height_ - 1)
+      return false;
     open_[p] = 1;
 
+    setUnionAfterOpen(p, x, y);
+
+    return true;
+  }
+
+  void				setUnionAfterOpen(unsigned int p, unsigned int x, unsigned int y)
+  {
     // union left
     if (x > 0 && open_[p - 1])
       setUnion(p, p - 1);
@@ -105,48 +103,67 @@ public:
     // union down
     if (y < height_ - 1 && open_[p + width_])
       setUnion(p, p + width_);
-
-    // union start
-    if (y == 0)
-      setUnion(p, start_);
-
-    // union end
-    if (y == height_ - 1)
-      setUnion(p, end_);
-
-    return true;
   }
 
   void				generate(unsigned int width, unsigned int height)
   {
     clear();
-    start_ = width * height;
-    end_ = width * height + 1;
+    start_ = width / 2;
+    end_ = (height - 1) * width + width / 2;
     width_ = width;
     height_ = height;
 
-    if (!(list_ = new int[width * height + 2])
-	|| !(wg_ = new unsigned int[width * height + 2])
-	|| !(open_ = new unsigned int[width * height + 2]))
+    if (!(list_ = new int[width * height]) 
+	|| !(wg_ = new unsigned int[width * height])
+	|| !(open_ = new unsigned int[width * height]))
       {
 	std::cout << "Out of memory" << std::endl;
       }
-    for (unsigned int i = 0; i < end_ + 1; ++i)
+    for (unsigned int i = 0; i < width * height; ++i)
       {
-	list_[i] = i;
-	open_[i] = 0;
-	wg_[i] = 1;
+    	list_[i] = i;
+    	open_[i] = 0;
+    	wg_[i] = 1;
       }
     open_[start_] = 1;
     open_[end_] = 1;
 
     while (!isConnected(start_, end_))
       {
-	while (!open(rand() % start_))
-	  ;
+    	while (!open(rand() % (width * height)))
+    	  ;
       }
 
-    for (unsigned int i = 0; i < this->start_; ++i)
+    start_ = (height / 2) * width;
+    end_ =  (height / 2 + 1) * width - 1;
+
+    for (unsigned int i = 0; i < width * height; ++i)
+      {
+	list_[i] = i;
+	// open_[i] = 0;
+	wg_[i] = 1;
+      }
+
+    open_[start_] = 1;
+    open_[end_] = 1;
+
+    for (unsigned int i = 0; i < width * height; ++i)
+      {
+	if (open_[i])
+	  {
+	    setUnionAfterOpen(i, i % width, i / width);
+	  }
+      }
+
+    std::cout << start_ << std::endl;
+    std::cout << end_ << std::endl;
+    while (!isConnected(start_, end_))
+      {
+    	while (!open(rand() % (width * height)))
+    	  ;
+      }
+
+    for (unsigned int i = 0; i < width * height; ++i)
       {
 	unsigned int				e;
 
@@ -159,7 +176,7 @@ public:
 
 	if (open_[i])
 	  colorComponent.set(1.0f, 0.0f, 1.0f, 1.0f);
-	posComponent.position = Vector3d(i % width_ * (900 / width_), i / height_ * (700 / height_), 0);
+	posComponent.position = Vector3d(i % width_ * (900 / width_), i / width_ * (700 / height_), 0);
 	imgComponent.img = ResourceManager::getInstance().get<Image>("stars.png");
 	scaleComponent.scale = Vector3d(900 / width_, 700 / height, 0);
 	this->entities_.push_back(e);
@@ -169,9 +186,9 @@ private:
   typedef std::vector<unsigned int>::iterator t_iter;
   typedef std::vector<unsigned int>::const_iterator t_const_iter;
 
-  int				*list_;//[N * N + 2];
-  unsigned int			*open_;//[N * N + 2];
-  unsigned int			*wg_;//[N * N + 2];
+  int				*list_;
+  unsigned int			*open_;
+  unsigned int			*wg_;
   std::vector<unsigned int>	entities_;
   unsigned int			width_;
   unsigned int			height_;

@@ -32,6 +32,7 @@ public:
     // glEnable(GL_CULL_FACE);
     if (!EventManager::getInstance().init())
       return false;
+    srand(time(NULL));
     return true;
   }
 private:

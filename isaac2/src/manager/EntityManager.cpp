@@ -40,6 +40,7 @@ void				EntityManager::eraseEntity(unsigned int id)
 {
   list_[id].components.reset();
   freeIds_.push_back(id);
+  // std::cout << id << std::endl;
 }
 
 EntityData			&EntityManager::getEntityData(unsigned int id)

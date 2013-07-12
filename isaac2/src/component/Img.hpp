@@ -5,8 +5,9 @@ struct				Img
 {
   ImagePtr			img;
 
-  Img				operator=(Img)
+  Img				&operator=(const Img &o )
   {
+    this->img = o.img;
     return *this;
   }
 };

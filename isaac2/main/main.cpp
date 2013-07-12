@@ -40,6 +40,11 @@ void					draw(float time, const ALLEGRO_EVENT &ev)
 void					key(float time, const ALLEGRO_EVENT &ev)
 {
   camera.input(time, ev);
+
+  static MapGenerator g;
+  if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
+    g.generate(100, 100);
+
   (void)time;
 }
 
@@ -73,10 +78,6 @@ int					main()
 
   SystemManager::getInstance().add<ImageSystem>(10);
   SystemManager::getInstance().add<VelocitySystem>(1);
-
-  MapGenerator g;
-  g.generate(33, 33);
-
 
   try
     {
