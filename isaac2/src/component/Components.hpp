@@ -9,5 +9,6 @@
 #include			"Velocity.hpp"
 #include			"BoundingBox.hpp"
 #include			"Collision.hpp"
+#include			"RotationForce.hpp"
 
 #endif				// __COMPONENTS_HPP__

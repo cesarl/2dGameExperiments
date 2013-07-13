@@ -40,11 +40,19 @@ public:
 
     glTranslatef(pos->position.x, pos->position.y, pos->position.z);
 
+    glScalef(scale->scale.x, scale->scale.y, scale->scale.z);
+
+    glTranslatef(rot->axe.x,
+		 rot->axe.y,
+		 rot->axe.z);
+
     glRotatef(rot->rotation.x, 1.0f, 0.0f, 0.0f);
     glRotatef(rot->rotation.y, 0.0f, 1.0f, 0.0f);
     glRotatef(rot->rotation.z, 0.0f, 0.0f, 1.0f);
 
-    glScalef(scale->scale.x, scale->scale.y, scale->scale.z);
+    glTranslatef(- rot->axe.x,
+		 - rot->axe.y,
+		 - rot->axe.z);
 
     glColor4f(color->r, color->g, color->b, color->a);
     glCallList(img->img->getDisplayList());

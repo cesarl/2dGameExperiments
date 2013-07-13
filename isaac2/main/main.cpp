@@ -14,12 +14,14 @@
 #include				"ImageSystem.hpp"
 #include				"VelocitySystem.hpp"
 #include				"BoundingBoxSystem.hpp"
+#include				"RotationForceSystem.hpp"
 
 #include				"MapGenerator.hpp"
 
 #include				"Components.hpp"
 
-static Camera<Orthographic, FlatCamera> camera;
+// static Camera<Orthographic, FlatCamera> camera;
+static Camera<Perspective, FreeFly> camera;
 
 void					draw(float time, const ALLEGRO_EVENT &ev)
 {
@@ -80,6 +82,7 @@ int					main()
   SystemManager::getInstance().add<ImageSystem>(10);
   SystemManager::getInstance().add<VelocitySystem>(2);
   SystemManager::getInstance().add<BoundingBoxSystem>(1);
+  SystemManager::getInstance().add<RotationForceSystem>(3);
 
 
   ////////////////////
