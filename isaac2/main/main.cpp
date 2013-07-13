@@ -15,13 +15,14 @@
 #include				"VelocitySystem.hpp"
 #include				"BoundingBoxSystem.hpp"
 #include				"RotationForceSystem.hpp"
+#include				"InputMovementSystem.hpp"
 
 #include				"MapGenerator.hpp"
 
 #include				"Components.hpp"
 
-// static Camera<Orthographic, FlatCamera> camera;
-static Camera<Perspective, FreeFly> camera;
+static Camera<Orthographic, FlatCamera> camera;
+// static Camera<Perspective, FreeFly> camera;
 
 void					draw(float time, const ALLEGRO_EVENT &ev)
 {
@@ -40,6 +41,12 @@ void					draw(float time, const ALLEGRO_EVENT &ev)
       std::cout << fps << std::endl;
     }
   frames_done++;
+
+  static MapGenerator g;
+if (ev.type == ALLEGRO_EVENT_KEY_DOWN && ev.keyboard.keycode == ALLEGRO_KEY_G)
+    g.generate(21, 11);
+
+
 }
 
 void					key(float time, const ALLEGRO_EVENT &ev)
@@ -82,6 +89,7 @@ int					main()
   SystemManager::getInstance().add<ImageSystem>(10);
   SystemManager::getInstance().add<VelocitySystem>(2);
   SystemManager::getInstance().add<BoundingBoxSystem>(1);
+  SystemManager::getInstance().add<InputMovementSystem>(1);
   SystemManager::getInstance().add<RotationForceSystem>(3);
 
 
@@ -91,7 +99,7 @@ int					main()
 
   unsigned int				e;
 
-EntityManager::getInstance().newEntity();
+  EntityManager::getInstance().newEntity();
   e = EntityManager::getInstance().newEntity();
   (void)e;
   ComponentManager::getInstance().addComponent<Rotation>(e);
@@ -100,12 +108,14 @@ EntityManager::getInstance().newEntity();
   Scale &scaleC = ComponentManager::getInstance().addComponent<Scale>(e);
   Color &colorC = ComponentManager::getInstance().addComponent<Color>(e);
   BoundingBox &bbC = ComponentManager::getInstance().addComponent<BoundingBox>(e);
+  ComponentManager::getInstance().addComponent<InputMovement>(e).speed = 0.01f;
+  ComponentManager::getInstance().addComponent<Velocity>(e);
 
   colorC.set(0.0f, 1.0f, 1.0f, 1.0f);
   bbC.set(Vector3d(32.0f, 32.0f, 0.0f));
-  posC.position = Vector3d(0.0f, 0.0f, -10.0f);
-  imgC.img = ResourceManager::getInstance().get<Image>("stars.png");
-  scaleC.scale = Vector3d(32.0f, 32.0f, 0.0f);
+  posC.position = Vector3d(0.0f, 0.0f, 100.0f);
+  imgC.img = ResourceManager::getInstance().get<Image>("kitty.jpg");
+  scaleC.scale = Vector3d(50.0f, 45.0f, 0.0f);
 
 
   try

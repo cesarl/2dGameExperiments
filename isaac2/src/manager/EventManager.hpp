@@ -18,7 +18,7 @@ public:
     this->event_queue_ = al_create_event_queue();
     if (!this->event_queue_)
       return false;
-    this->timer_ = al_create_timer(0.001f);
+    this->timer_ = al_create_timer(1.0f / 120.0f);
     if (!this->timer_)
       return false;
     if (!al_install_joystick())
@@ -54,20 +54,12 @@ public:
 	draw = false;
 	al_wait_for_event(this->event_queue_, &ev);
 	if (ev.type == ALLEGRO_EVENT_TIMER)
-	  {
-	    draw = true;
-	    if (this->upt_)
-	      this->upt_(al_get_time(), ev);
-	  }
-	else if (this->key_)
-	      this->key_(al_get_time(), ev);
-	if (draw && al_is_event_queue_empty(this->event_queue_))
-	  {
-	    al_clear_to_color(al_map_rgb(0,0,0));
-	    if (this->draw_)
-	      this->draw_(al_get_time(), ev);
-	    al_flip_display();
-	  }
+	  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	if (this->draw_)
+	  this->draw_(al_get_time(), ev);
+	if (ev.type == ALLEGRO_EVENT_TIMER)
+	  al_flip_display();
+	    (void)draw;
 	if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
 	  {
 	    this->stop();

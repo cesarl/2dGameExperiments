@@ -19,7 +19,7 @@ public:
   template			<class T>
   T				*add(int priority)
   {
-    std::map<const char *, System *>::iterator it;
+    std::multimap<const char *, System *>::iterator it;
     T				*sys;
 
     it = map_.find(typeid(T).name());
@@ -35,8 +35,8 @@ sys->init();
   }
 
 private:
-  std::map<int, System*>	list_;
-  std::map<const char *, System*> map_;
+  std::multimap<int, System*>	list_;
+  std::multimap<const char *, System*> map_;
 private:
   SystemManager()
   {}

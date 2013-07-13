@@ -30,6 +30,7 @@ public:
       return false;
     glEnable(GL_TEXTURE_2D);
     // glEnable(GL_CULL_FACE);
+    glEnable(GL_DEPTH_TEST);
     if (!EventManager::getInstance().init())
       return false;
     srand(time(NULL));

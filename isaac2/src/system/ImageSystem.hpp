@@ -21,8 +21,10 @@ public:
     require<Color>();
   }
 
-  virtual void			update(unsigned int entity, float, const ALLEGRO_EVENT &)
+  virtual void			update(unsigned int entity, float, const ALLEGRO_EVENT &ev)
   {
+    if (ev.type != ALLEGRO_EVENT_TIMER)
+      return;
     Img				*img = ComponentManager::getInstance().getComponent<Img>(entity);
     Position			*pos = ComponentManager::getInstance().getComponent<Position>(entity);
     Rotation			*rot = ComponentManager::getInstance().getComponent<Rotation>(entity);

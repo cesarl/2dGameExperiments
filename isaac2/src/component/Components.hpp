@@ -10,5 +10,6 @@
 #include			"BoundingBox.hpp"
 #include			"Collision.hpp"
 #include			"RotationForce.hpp"
+#include			"InputMovement.hpp"
 
 #endif				// __COMPONENTS_HPP__

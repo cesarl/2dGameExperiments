@@ -33,60 +33,60 @@ public:
 
   inline void				inputBehavior(float time, const ALLEGRO_EVENT &ev) throw()
   {
-    static float			lastTime = -1;
-    ALLEGRO_KEYBOARD_STATE		k;
-    float				speed;
-    Vector3d				direction;
-    Vector3d				angle;
+    // static float			lastTime = -1;
+    // ALLEGRO_KEYBOARD_STATE		k;
+    // float				speed;
+    // Vector3d				direction;
+    // Vector3d				angle;
 
-    al_get_keyboard_state(&k);
+    // al_get_keyboard_state(&k);
 
-    if (lastTime == -1)
-      lastTime = al_get_time();
-    speed = (time - lastTime) * this->speed_;
+    // if (lastTime == -1)
+    //   lastTime = al_get_time();
+    // speed = (time - lastTime) * this->speed_;
 
-    direction = Vector3d(0,0,0);
-    angle = Vector3d(0,0,0);
+    // direction = Vector3d(0,0,0);
+    // angle = Vector3d(0,0,0);
 
-    if (al_key_down(&k, ALLEGRO_KEY_W))
-      {
-	direction += Vector3d(0, 1, 0);// * Vector3d(speed, speed, speed);
-      }
-    if (al_key_down(&k, ALLEGRO_KEY_S))
-      {
-	direction -= Vector3d(0, 1, 0);
-      }
-    if (al_key_down(&k, ALLEGRO_KEY_A))
-      {
-	direction += Vector3d(1, 0, 0);
-      }
-    if (al_key_down(&k, ALLEGRO_KEY_D))
-      {
-	direction -= Vector3d(1, 0, 0);
-      }
-    if (al_key_down(&k, ALLEGRO_KEY_Q))
-      {
-	angle -= Vector3d(0, 1, 0);
-      }
-    if (al_key_down(&k, ALLEGRO_KEY_E))
-      {
-	angle += Vector3d(0, 1, 0);
-      }
-    if (al_key_down(&k, ALLEGRO_KEY_Z))
-      {
-	angle -= Vector3d(1, 0, 0);
-      }
-    if (al_key_down(&k, ALLEGRO_KEY_X))
-      {
-	angle += Vector3d(1, 0, 0);
-      }
+    // if (al_key_down(&k, ALLEGRO_KEY_W))
+    //   {
+    // 	direction += Vector3d(0, 1, 0);// * Vector3d(speed, speed, speed);
+    //   }
+    // if (al_key_down(&k, ALLEGRO_KEY_S))
+    //   {
+    // 	direction -= Vector3d(0, 1, 0);
+    //   }
+    // if (al_key_down(&k, ALLEGRO_KEY_A))
+    //   {
+    // 	direction += Vector3d(1, 0, 0);
+    //   }
+    // if (al_key_down(&k, ALLEGRO_KEY_D))
+    //   {
+    // 	direction -= Vector3d(1, 0, 0);
+    //   }
+    // if (al_key_down(&k, ALLEGRO_KEY_Q))
+    //   {
+    // 	angle -= Vector3d(0, 1, 0);
+    //   }
+    // if (al_key_down(&k, ALLEGRO_KEY_E))
+    //   {
+    // 	angle += Vector3d(0, 1, 0);
+    //   }
+    // if (al_key_down(&k, ALLEGRO_KEY_Z))
+    //   {
+    // 	angle -= Vector3d(1, 0, 0);
+    //   }
+    // if (al_key_down(&k, ALLEGRO_KEY_X))
+    //   {
+    // 	angle += Vector3d(1, 0, 0);
+    //   }
 
-    angle *= speed;
-    direction *= speed;
-    this->rotation_ += angle;
-    this->position_ += direction;
+    // angle *= speed;
+    // direction *= speed;
+    // this->rotation_ += angle;
+    // this->position_ += direction;
 
-    lastTime = time;
+    // lastTime = time;
     (void)ev;
     (void)time;
   }
