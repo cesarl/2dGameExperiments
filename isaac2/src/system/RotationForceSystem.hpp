@@ -21,12 +21,14 @@ public:
   }
 
 
-  virtual void			update(unsigned int entity, float, const ALLEGRO_EVENT &)
+  virtual void			update(unsigned int entity, float time, const ALLEGRO_EVENT &)
   {
     Rotation			*rot = ComponentManager::getInstance().getComponent<Rotation>(entity);
     RotationForce		*force = ComponentManager::getInstance().getComponent<RotationForce>(entity);
 
-    rot->rotation += force->force;
+    Vector3d inc = force->force;
+    inc *= time;
+    rot->rotation += inc;
   }
 
   virtual void			updateBegin()

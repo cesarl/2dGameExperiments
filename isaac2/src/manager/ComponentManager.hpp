@@ -48,6 +48,12 @@ public:
   template			<class T>
   T				*getComponent(unsigned int entity)
   {
+    unsigned int		type = ComponentTypeManager::getInstance().getComponentType<T>();
+    EntityData			&data = EntityManager::getInstance().getEntityData(entity);
+
+    if (data.components[type] == 0)
+      return NULL;
+
     std::vector<T>		*collection = getComponentCollection<T>();
 
     if (!collection)

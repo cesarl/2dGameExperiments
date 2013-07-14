@@ -11,5 +11,7 @@
 #include			"Collision.hpp"
 #include			"RotationForce.hpp"
 #include			"InputMovement.hpp"
+#include			"VelocityFriction.hpp"
+#include			"Physic.hpp"
 
 #endif				// __COMPONENTS_HPP__

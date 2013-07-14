@@ -20,17 +20,31 @@ public:
   }
 
 
-  virtual void			update(unsigned int entity, float, const ALLEGRO_EVENT &)
+  virtual void			update(unsigned int entity, float time, const ALLEGRO_EVENT &ev)
   {
+    if (ev.type != ALLEGRO_EVENT_TIMER)
+      return;
+
     Position			*pos = ComponentManager::getInstance().getComponent<Position>(entity);
     BoundingBox			*bb = ComponentManager::getInstance().getComponent<BoundingBox>(entity);
     Collision			*col = ComponentManager::getInstance().getComponent<Collision>(entity);
+    Velocity			*vel = ComponentManager::getInstance().getComponent<Velocity>(entity);
 
     if (col)
-      col->list.clear();
+      {
+	col->list.clear();
+	ComponentManager::getInstance().removeComponent<Collision>(entity);
+      }
 
     bb->from = pos->position;
     bb->from += bb->offset;
+
+    if (vel)
+      {
+	Vector3d v = vel->velocity;
+	v *= time;
+	bb->from +=  v;
+      }
 
     bb->to = bb->from;
     bb->to += bb->size;

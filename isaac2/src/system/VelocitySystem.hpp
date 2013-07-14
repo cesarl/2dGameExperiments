@@ -18,12 +18,14 @@ public:
   }
 
 
-  virtual void			update(unsigned int entity, float, const ALLEGRO_EVENT &)
+  virtual void			update(unsigned int entity, float time, const ALLEGRO_EVENT &)
   {
     Position			*pos = ComponentManager::getInstance().getComponent<Position>(entity);
     Velocity			*vel = ComponentManager::getInstance().getComponent<Velocity>(entity);
 
-    pos->position += vel->velocity;
+    Vector3d inc = vel->velocity;
+    inc *= time;
+    pos->position += inc;
   }
 
   virtual void			updateBegin(){};

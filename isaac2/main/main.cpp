@@ -16,6 +16,8 @@
 #include				"BoundingBoxSystem.hpp"
 #include				"RotationForceSystem.hpp"
 #include				"InputMovementSystem.hpp"
+#include				"VelocityFrictionSystem.hpp"
+#include				"PhysicSystem.hpp"
 
 #include				"MapGenerator.hpp"
 
@@ -87,10 +89,12 @@ int					main()
     return 0;
 
   SystemManager::getInstance().add<ImageSystem>(10);
-  SystemManager::getInstance().add<VelocitySystem>(2);
+  SystemManager::getInstance().add<VelocitySystem>(11);
   SystemManager::getInstance().add<BoundingBoxSystem>(1);
   SystemManager::getInstance().add<InputMovementSystem>(1);
   SystemManager::getInstance().add<RotationForceSystem>(3);
+  SystemManager::getInstance().add<VelocityFrictionSystem>(1);
+  SystemManager::getInstance().add<PhysicSystem>(8);
 
 
   ////////////////////
@@ -101,21 +105,23 @@ int					main()
 
   EntityManager::getInstance().newEntity();
   e = EntityManager::getInstance().newEntity();
-  (void)e;
   ComponentManager::getInstance().addComponent<Rotation>(e);
   Position &posC = ComponentManager::getInstance().addComponent<Position>(e);
   Img &imgC = ComponentManager::getInstance().addComponent<Img>(e);
   Scale &scaleC = ComponentManager::getInstance().addComponent<Scale>(e);
   Color &colorC = ComponentManager::getInstance().addComponent<Color>(e);
   BoundingBox &bbC = ComponentManager::getInstance().addComponent<BoundingBox>(e);
-  ComponentManager::getInstance().addComponent<InputMovement>(e).speed = 0.01f;
+  Physic &phy = ComponentManager::getInstance().addComponent<Physic>(e);
+  ComponentManager::getInstance().addComponent<InputMovement>(e).speed = 7.0f;
+  ComponentManager::getInstance().addComponent<VelocityFriction>(e).friction = 0.99f;
   ComponentManager::getInstance().addComponent<Velocity>(e);
 
   colorC.set(0.0f, 1.0f, 1.0f, 1.0f);
-  bbC.set(Vector3d(32.0f, 32.0f, 0.0f));
-  posC.position = Vector3d(0.0f, 0.0f, 100.0f);
+  bbC.set(Vector3d(50.0f, 45.0f, 0.0f));
+  posC.position = Vector3d(64.0f * 2.0f, 64.0f * 2.0f, 100.0f);
   imgC.img = ResourceManager::getInstance().get<Image>("kitty.jpg");
   scaleC.scale = Vector3d(50.0f, 45.0f, 0.0f);
+  phy.fixed = false;
 
 
   try
