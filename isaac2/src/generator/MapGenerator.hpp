@@ -182,7 +182,7 @@ public:
 	    Physic &phy = ComponentManager::getInstance().addComponent<Physic>(e);
 	    phy.fixed = true;
 	  }
-	posComponent.position = Vector3d((float)(i % width_) * 65.0f, (float)(i / width_) * 65.0f, 0.0f);
+	posComponent.position = Vector3d((float)(i % width_) * 64.0f, (float)(i / width_) * 64.0f, 0.0f);
 	imgComponent.img = ResourceManager::getInstance().get<Image>("stars.png");
 	scaleComponent.scale = Vector3d(64.0f, 64.0f, 0.0f);
 	// rotForce.force = Vector3d(0.0f, 0.0f, 25.0f);

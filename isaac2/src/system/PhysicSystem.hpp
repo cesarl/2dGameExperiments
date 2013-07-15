@@ -136,7 +136,7 @@ public:
       pos->position.y += vel->velocity.y * (difTime - 0.1) * time;
 
     Vector3d n = Vector3d(normalX, normalY, 0.0f);
-    Vector3d im = Vector3d(0.0f, 0.0f, 0.0f) - (vel->velocity * n) * n;
+    Vector3d im = (Vector3d(0.0f, 0.0f, 0.0f) - (vel->velocity * n)) * n;
     vel->velocity += im;
     BoundingBoxSystem::updateBoundingBox(entity, time);
   }

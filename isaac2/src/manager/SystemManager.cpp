@@ -3,11 +3,11 @@
 
 void				SystemManager::update(float time, const ALLEGRO_EVENT &ev)
 {
-  EntityManager			&em = EntityManager::getInstance();
+  static EntityManager		&em = EntityManager::getInstance();
   std::map<int, System*>::iterator i;
-  i = list_.begin();
   static float lastTime = al_get_time();
 
+  i = list_.begin();
   while (i != list_.end())
     {
       i->second->updateBegin();

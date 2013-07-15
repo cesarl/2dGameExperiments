@@ -40,7 +40,7 @@ void					draw(float time, const ALLEGRO_EVENT &ev)
       fps = frames_done / (time - old_time);
       frames_done = 0;
       old_time = time;
-      std::cout << fps << std::endl;
+      std::cout << "FPS : " << fps << " || TIME : " << old_time << std::endl;
     }
   frames_done++;
 
@@ -88,13 +88,13 @@ int					main()
   if (!camera.init())
     return 0;
 
-  SystemManager::getInstance().add<ImageSystem>(10);
-  SystemManager::getInstance().add<VelocitySystem>(9);
-  SystemManager::getInstance().add<BoundingBoxSystem>(3);
   SystemManager::getInstance().add<InputMovementSystem>(1);
-  SystemManager::getInstance().add<RotationForceSystem>(3);
   SystemManager::getInstance().add<VelocityFrictionSystem>(2);
+  SystemManager::getInstance().add<BoundingBoxSystem>(3);
+  SystemManager::getInstance().add<RotationForceSystem>(3);
   SystemManager::getInstance().add<PhysicSystem>(4);
+  SystemManager::getInstance().add<VelocitySystem>(9);
+  SystemManager::getInstance().add<ImageSystem>(10);
 
 
   ////////////////////
@@ -113,7 +113,7 @@ int					main()
   BoundingBox &bbC = ComponentManager::getInstance().addComponent<BoundingBox>(e);
   Physic &phy = ComponentManager::getInstance().addComponent<Physic>(e);
   ComponentManager::getInstance().addComponent<InputMovement>(e).speed = 10.0f;
-  ComponentManager::getInstance().addComponent<VelocityFriction>(e).friction = 0.993f;
+  ComponentManager::getInstance().addComponent<VelocityFriction>(e).friction = 0.99f;
   ComponentManager::getInstance().addComponent<Velocity>(e);
 
   colorC.set(0.0f, 1.0f, 1.0f, 1.0f);
