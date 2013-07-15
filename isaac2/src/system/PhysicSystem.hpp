@@ -20,17 +20,24 @@ public:
   }
 
 
+  // bool				stillCollide(unsigned int e1, unsigned int e2)
+  // {
+  //   BoundingBox			*bb1 = ComponentManager::getInstance().getComponent<BoundingBox>(entity);
+  //   BoundingBox			*bb2 = ComponentManager::getInstance().getComponent<BoundingBox>(entity);
+  // }
+
   virtual void			update(unsigned int entity, float time, const ALLEGRO_EVENT &)
   {
     Physic			*phy = ComponentManager::getInstance().getComponent<Physic>(entity);
 
-    std::cout << "Merde ALORS" <<std::endl;
     if (phy->fixed)
       return;
 
     BoundingBox			*bb1 = ComponentManager::getInstance().getComponent<BoundingBox>(entity);
     Collision			*col1 = ComponentManager::getInstance().getComponent<Collision>(entity);
     Velocity			*vel1 = ComponentManager::getInstance().getComponent<Velocity>(entity);
+
+    std::cout << "Physic test on : " << entity << std::endl;
 
     for (std::list<unsigned int>::iterator it = col1->list.begin();
 	 it != col1->list.end();
@@ -41,54 +48,53 @@ public:
 	float xInvEntry, yInvEntry;
 	float xInvExit, yInvExit;
 
-	std::cout << *it << std::endl;
 	// compute distance
-	if (vel1->velocity.x * time> 0.0f)
+	if (vel1->velocity.x * time > 0.0f)
 	  {
-	    xInvEntry = bb2->from.x - bb1->to.x;
-	    xInvExit = bb2->to.x - bb1->from.x;
+	    xInvEntry = bb2->pastFrom.x - bb1->pastTo.x;
+	    xInvExit = bb2->pastTo.x - bb1->pastFrom.x;
 	  }
 	else 
 	  {
-	    xInvEntry = bb2->to.x - bb1->from.x;
-	    xInvExit = bb2->from.x - bb1->to.x;
+	    xInvEntry = bb2->pastTo.x - bb1->pastFrom.x;
+	    xInvExit = bb2->pastFrom.x - bb1->pastTo.x;
 	  }
 
 	if (vel1->velocity.y * time > 0.0f)
 	  {
-	    yInvEntry = bb2->from.y - bb1->to.y;
-	    yInvExit = bb2->to.y - bb1->from.y;
+	    yInvEntry = bb2->pastFrom.y - bb1->pastTo.y;
+	    yInvExit = bb2->pastTo.y - bb1->pastFrom.y;
 	  }
 	else
 	  {
-	    yInvEntry = bb2->to.y - bb1->from.y;
-	    yInvExit = bb2->from.y - bb1->to.y;
+	    yInvEntry = bb2->pastTo.y - bb1->pastFrom.y;
+	    yInvExit = bb2->pastFrom.y - bb1->pastTo.y;
 	  }
 
 	// time of collision and time of leaving for each axes
 	float xEntry, yEntry;
 	float xExit, yExit;
 
-	if (vel1->velocity.x * time == 0.0f)
+	if (vel1->velocity.x == 0)
 	  {
 	    xEntry = - std::numeric_limits<float>::infinity();
 	    xExit = std::numeric_limits<float>::infinity();
 	  }
 	else
 	  {
-	    xEntry = xInvEntry / (vel1->velocity.x * time);
-	    xExit = xInvExit / (vel1->velocity.x * time);
+	    xEntry = xInvEntry / (vel1->velocity.x);
+	    xExit = xInvExit / (vel1->velocity.x);
 	  }
 
-	if (vel1->velocity.y * time == 0.0f)
+	if (vel1->velocity.y == 0)
 	  {
 	    yEntry = - std::numeric_limits<float>::infinity();
 	    yExit = std::numeric_limits<float>::infinity();
 	  }
 	else
 	  {
-	    yEntry = yInvEntry / (vel1->velocity.y * time);
-	    yExit = yInvExit / (vel1->velocity.y * time);
+	    yEntry = yInvEntry / (vel1->velocity.y);
+	    yExit = yInvExit / (vel1->velocity.y);
 	  }
 
 	// find the earliest and latest times of collision
@@ -96,16 +102,16 @@ public:
 	float exitTime = std::min(xExit, yExit);
 	float normalx, normaly;
 
-	// // if there was no collision
-	// if (entryTime > exitTime || (xEntry < 0.0f && yEntry < 0.0f) || xEntry > 1.0f || yEntry > 1.0f)
-	//   {
-	//     normalx = 0.0f;
-	//     normaly = 0.0f;
-	//     std::cout << "merde   " << entryTime << " " << exitTime << std::endl;
-	//     continue;
-	//   }
-	// else // if there was a collision
-	(void)exitTime;
+	// if there was no collision
+	if (entryTime > exitTime || (xEntry < 0.0f && yEntry < 0.0f) || xEntry > 1.0f || yEntry > 1.0f)
+	  {
+	    normalx = 0.0f;
+	    normaly = 0.0f;
+	    std::cout << "ya pas de collision mon cul !   " << entryTime << " " << exitTime << std::endl;
+	    continue;
+	  }
+	else //if there was a collision
+	// (void)exitTime;
 	  {        
 	    // calculate normal of collided surface
 	    if (xEntry > yEntry)
@@ -136,7 +142,7 @@ public:
 	      }
 	  }
 	  response(entity, entryTime, time, normalx, normaly);
-	  break;
+	  //break;
       }
   }
 
@@ -146,14 +152,42 @@ public:
     Velocity			*vel = ComponentManager::getInstance().getComponent<Velocity>(entity);
     // float			remainingTime = 1.0f - difTime;
 
-    pos->position.x += vel->velocity.x * difTime * time;
-    pos->position.y += vel->velocity.y * difTime * time;
+    // if (difTime > 1.0f)
+    //   return;
 
-    if (normalX != 0.0f)
-      vel->velocity.x *= -0.5f;
-    if (normalY != 0.0f)
-      vel->velocity.y *= -0.5f;
+    std::cout << "PAST POS : " << pos->position.x << "   " << pos->position.y << std::endl;
 
+    if (vel->velocity.x != 0)
+      pos->position.x += vel->velocity.x * difTime * time;
+    if (vel->velocity.y != 0)
+      pos->position.y += vel->velocity.y * difTime * time;
+    std::cout << "difTime " << difTime << " ++ time " << time << std::endl;
+    std::cout << "POST POS : " << pos->position.x << "   " << pos->position.y << std::endl;
+
+    float dotprod = (vel->velocity.x * normalY + vel->velocity.y * normalX);
+    // if (dotprod > 0.0f)
+    //   dotprod = 1.0f;
+    // else if (dotprod < 0.0f)
+    //   dotprod = -1.0f;
+
+    std::cout << "PAST VELOCITY : " << vel->velocity.x << "   " << vel->velocity.y << std::endl;
+    Vector3d n = Vector3d(normalX, normalY, 0.0f);
+    Vector3d im = Vector3d(0.0f, 0.0f, 0.0f) - (vel->velocity * n) * n;
+    vel->velocity += im;
+    (void)dotprod;
+    // if (dotprod == dotprod)
+    //   {
+    // 	vel->velocity.x = dotprod * normalY;
+    // 	vel->velocity.y = dotprod * normalX;
+    //   }
+
+
+    // if (normalX != 0.0f)
+    //   vel->velocity.x *= -0.5f;
+    // if (normalY != 0.0f)
+    //   vel->velocity.y *= -0.5f;
+
+    std::cout << "POST VELOCITY : " << vel->velocity.x << "   " << vel->velocity.y << std::endl;
       
     std::cout << "NORMAL : " << normalX << " ___ " << normalY << " " << time << std::endl;
 

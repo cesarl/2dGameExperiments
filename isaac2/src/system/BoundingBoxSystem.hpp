@@ -39,6 +39,10 @@ public:
     bb->from = pos->position;
     bb->from += bb->offset;
 
+    bb->pastFrom = bb->from;
+    bb->pastTo = bb->from;
+    bb->pastTo += bb->size;
+
     if (vel)
       {
 	Vector3d v = vel->velocity;

@@ -89,11 +89,11 @@ int					main()
     return 0;
 
   SystemManager::getInstance().add<ImageSystem>(10);
-  SystemManager::getInstance().add<VelocitySystem>(11);
-  SystemManager::getInstance().add<BoundingBoxSystem>(1);
+  SystemManager::getInstance().add<VelocitySystem>(9);
+  SystemManager::getInstance().add<BoundingBoxSystem>(3);
   SystemManager::getInstance().add<InputMovementSystem>(1);
   SystemManager::getInstance().add<RotationForceSystem>(3);
-  SystemManager::getInstance().add<VelocityFrictionSystem>(1);
+  SystemManager::getInstance().add<VelocityFrictionSystem>(2);
   SystemManager::getInstance().add<PhysicSystem>(8);
 
 
