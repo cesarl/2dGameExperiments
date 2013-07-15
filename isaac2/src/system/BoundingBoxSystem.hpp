@@ -103,6 +103,9 @@ public:
     BoundingBox			*bb1 = ComponentManager::getInstance().getComponent<BoundingBox>(e1);
     BoundingBox			*bb2 = ComponentManager::getInstance().getComponent<BoundingBox>(e2);
 
+    if (!bb1 || !bb2)
+      return false;
+
     if (bb1->from.x > bb2->to.x ||
 	bb1->to.x < bb2->from.x ||
 	bb1->from.y > bb2->to.y ||

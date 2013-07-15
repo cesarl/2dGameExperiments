@@ -112,8 +112,8 @@ int					main()
   Color &colorC = ComponentManager::getInstance().addComponent<Color>(e);
   BoundingBox &bbC = ComponentManager::getInstance().addComponent<BoundingBox>(e);
   Physic &phy = ComponentManager::getInstance().addComponent<Physic>(e);
-  ComponentManager::getInstance().addComponent<InputMovement>(e).speed = 7.0f;
-  ComponentManager::getInstance().addComponent<VelocityFriction>(e).friction = 0.999f;
+  ComponentManager::getInstance().addComponent<InputMovement>(e).speed = 10.0f;
+  ComponentManager::getInstance().addComponent<VelocityFriction>(e).friction = 0.993f;
   ComponentManager::getInstance().addComponent<Velocity>(e);
 
   colorC.set(0.0f, 1.0f, 1.0f, 1.0f);
