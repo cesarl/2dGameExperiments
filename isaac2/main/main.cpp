@@ -94,7 +94,7 @@ int					main()
   SystemManager::getInstance().add<InputMovementSystem>(1);
   SystemManager::getInstance().add<RotationForceSystem>(3);
   SystemManager::getInstance().add<VelocityFrictionSystem>(2);
-  SystemManager::getInstance().add<PhysicSystem>(8);
+  SystemManager::getInstance().add<PhysicSystem>(4);
 
 
   ////////////////////
@@ -113,7 +113,7 @@ int					main()
   BoundingBox &bbC = ComponentManager::getInstance().addComponent<BoundingBox>(e);
   Physic &phy = ComponentManager::getInstance().addComponent<Physic>(e);
   ComponentManager::getInstance().addComponent<InputMovement>(e).speed = 7.0f;
-  ComponentManager::getInstance().addComponent<VelocityFriction>(e).friction = 0.99f;
+  ComponentManager::getInstance().addComponent<VelocityFriction>(e).friction = 0.999f;
   ComponentManager::getInstance().addComponent<Velocity>(e);
 
   colorC.set(0.0f, 1.0f, 1.0f, 1.0f);

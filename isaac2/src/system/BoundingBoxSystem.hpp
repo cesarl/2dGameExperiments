@@ -20,21 +20,11 @@ public:
   }
 
 
-  virtual void			update(unsigned int entity, float time, const ALLEGRO_EVENT &ev)
+  static void			updateBoundingBox(unsigned int entity, float time)
   {
-    if (ev.type != ALLEGRO_EVENT_TIMER)
-      return;
-
-    Position			*pos = ComponentManager::getInstance().getComponent<Position>(entity);
     BoundingBox			*bb = ComponentManager::getInstance().getComponent<BoundingBox>(entity);
-    Collision			*col = ComponentManager::getInstance().getComponent<Collision>(entity);
+    Position			*pos = ComponentManager::getInstance().getComponent<Position>(entity);
     Velocity			*vel = ComponentManager::getInstance().getComponent<Velocity>(entity);
-
-    if (col)
-      {
-	col->list.clear();
-	ComponentManager::getInstance().removeComponent<Collision>(entity);
-      }
 
     bb->from = pos->position;
     bb->from += bb->offset;
@@ -52,6 +42,23 @@ public:
 
     bb->to = bb->from;
     bb->to += bb->size;
+  }
+
+  virtual void			update(unsigned int entity, float time, const ALLEGRO_EVENT &ev)
+  {
+    if (ev.type != ALLEGRO_EVENT_TIMER)
+      return;
+
+    BoundingBox			*bb = ComponentManager::getInstance().getComponent<BoundingBox>(entity);
+    Collision			*col = ComponentManager::getInstance().getComponent<Collision>(entity);
+
+    updateBoundingBox(entity, time);
+
+    if (col)
+      {
+	col->list.clear();
+	ComponentManager::getInstance().removeComponent<Collision>(entity);
+      }
 
     Vector3d from = bb->from;
     from /= Vector3d(side_, side_, 0);
@@ -91,7 +98,7 @@ public:
       }
   };
   
-  bool				collide(unsigned int e1, unsigned int e2)
+  static bool			collide(unsigned int e1, unsigned int e2)
   {
     BoundingBox			*bb1 = ComponentManager::getInstance().getComponent<BoundingBox>(e1);
     BoundingBox			*bb2 = ComponentManager::getInstance().getComponent<BoundingBox>(e2);

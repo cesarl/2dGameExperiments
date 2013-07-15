@@ -28,7 +28,6 @@ public:
 
     if (ev.type == ALLEGRO_EVENT_KEY_DOWN || ev.type == ALLEGRO_EVENT_KEY_UP)
       {
-	std::cout << "prout " << std::endl;
 	switch (ev.keyboard.keycode)
 	  {
 	  case ALLEGRO_KEY_W:
