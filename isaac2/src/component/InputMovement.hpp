@@ -4,14 +4,8 @@
 struct				InputMovement
 {
   float				speed;
-  bool				up;
-  bool				down;
-  bool				left;
-  bool				right;
-
   InputMovement()
   {
-    up = down = left = right = false;
     speed = 0.0f;
   }
 };

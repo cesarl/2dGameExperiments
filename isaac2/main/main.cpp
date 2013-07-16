@@ -18,6 +18,7 @@
 #include				"InputMovementSystem.hpp"
 #include				"VelocityFrictionSystem.hpp"
 #include				"PhysicSystem.hpp"
+#include				"InputSystem.hpp"
 
 #include				"MapGenerator.hpp"
 
@@ -88,6 +89,7 @@ int					main()
   if (!camera.init())
     return 0;
 
+  SystemManager::getInstance().add<InputSystem>(0);
   SystemManager::getInstance().add<InputMovementSystem>(1);
   SystemManager::getInstance().add<VelocityFrictionSystem>(2);
   SystemManager::getInstance().add<BoundingBoxSystem>(3);
@@ -112,7 +114,7 @@ int					main()
   Color &colorC = ComponentManager::getInstance().addComponent<Color>(e);
   BoundingBox &bbC = ComponentManager::getInstance().addComponent<BoundingBox>(e);
   Physic &phy = ComponentManager::getInstance().addComponent<Physic>(e);
-  ComponentManager::getInstance().addComponent<InputMovement>(e).speed = 700.0f;
+  ComponentManager::getInstance().addComponent<InputMovement>(e).speed = 1000.0f;
   ComponentManager::getInstance().addComponent<VelocityFriction>(e).friction = 0.99f;
   ComponentManager::getInstance().addComponent<Velocity>(e);
 

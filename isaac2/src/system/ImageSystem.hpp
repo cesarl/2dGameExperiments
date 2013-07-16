@@ -64,9 +64,6 @@ public:
     (void)rot;
   }
 
-  virtual void			updateBegin(){};
-  virtual void			updateEnd(){};
-
 private:
 };
 

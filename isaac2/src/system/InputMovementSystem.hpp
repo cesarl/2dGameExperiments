@@ -4,6 +4,7 @@
 #include			"System.hpp"
 #include			"ComponentManager.hpp"
 #include			"Components.hpp"
+#include			"InputSystem.hpp"
 
 class				InputMovementSystem : public System
 {
@@ -17,64 +18,27 @@ public:
   void				init()
   {
     require<InputMovement>();
-    require<Velocity>();
   }
 
 
-  virtual void			update(unsigned int entity, float time, const ALLEGRO_EVENT &ev)
+  virtual void			update(unsigned int entity, float time, const ALLEGRO_EVENT &)
   {
     InputMovement		*input = ComponentManager::getInstance().getComponent<InputMovement>(entity);
     Velocity			*vel = ComponentManager::getInstance().getComponent<Velocity>(entity);
+    InputSystem			*sys = SystemManager::getInstance().getSystem<InputSystem>();
 
-    if (ev.type == ALLEGRO_EVENT_KEY_DOWN || ev.type == ALLEGRO_EVENT_KEY_UP)
-      {
-	switch (ev.keyboard.keycode)
-	  {
-	  case ALLEGRO_KEY_W:
-	    if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
-	      input->up = true;
-	    else if (ev.type == ALLEGRO_EVENT_KEY_UP)
-	      input->up = false;
-	    break;
-	  case ALLEGRO_KEY_S:
-	    if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
-	      input->down = true;
-	    else if (ev.type == ALLEGRO_EVENT_KEY_UP)
-	      input->down = false;
-	    break;
-	  case ALLEGRO_KEY_A:
-	    if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
-	      input->left = true;
-	    else if (ev.type == ALLEGRO_EVENT_KEY_UP)
-	      input->left = false;
-	    break;
-	  case ALLEGRO_KEY_D:
-	    if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
-	      input->right = true;
-	    else if (ev.type == ALLEGRO_EVENT_KEY_UP)
-	      input->right = false;
-	    break;
-	  }
-      }
+    if (!sys)
+      return;
 
-    // std::cout << "lol" <<std::endl;
-    if (input->up)
+    if (sys->isDown(ALLEGRO_KEY_W))
       vel->velocity.y += input->speed * time;
-    if (input->down)
+    if (sys->isDown(ALLEGRO_KEY_S))
       vel->velocity.y -= input->speed * time;
-    if (input->left)
+    if (sys->isDown(ALLEGRO_KEY_A))
       vel->velocity.x -= input->speed * time;
-    if (input->right)
+    if (sys->isDown(ALLEGRO_KEY_D))
       vel->velocity.x += input->speed * time;
-
-      
   }
-
-  virtual void			updateBegin()
-  {}
-
-  virtual void			updateEnd()
-  {}
 
 private:
 };

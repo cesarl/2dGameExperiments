@@ -28,9 +28,6 @@ public:
     vel->velocity *= t;
   }
 
-  virtual void			updateBegin(){};
-  virtual void			updateEnd(){};
-
 private:
 };
 

@@ -30,13 +30,6 @@ public:
     inc *= time;
     rot->rotation += inc;
   }
-
-  virtual void			updateBegin()
-  {}
-
-  virtual void			updateEnd()
-  {}
-
 private:
 };
 

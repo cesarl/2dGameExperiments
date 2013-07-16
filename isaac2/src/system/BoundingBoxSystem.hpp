@@ -86,7 +86,7 @@ public:
       }
   }
 
-  virtual void			updateBegin()
+  virtual void			updateBegin(float, const ALLEGRO_EVENT &)
   {
     std::map<int, std::list<unsigned int> >::iterator it;
 
@@ -133,7 +133,7 @@ public:
     c2->list.push_back(e1);
   }
 
-  virtual void			updateEnd()
+  virtual void			updateEnd(float, const ALLEGRO_EVENT &)
   {
     std::map<int, std::list<unsigned int> >::iterator it;
 

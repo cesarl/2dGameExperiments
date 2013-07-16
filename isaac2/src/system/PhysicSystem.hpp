@@ -141,9 +141,6 @@ public:
     BoundingBoxSystem::updateBoundingBox(entity, time);
   }
 
-  virtual void			updateBegin(){};
-  virtual void			updateEnd(){};
-
 private:
 };
 

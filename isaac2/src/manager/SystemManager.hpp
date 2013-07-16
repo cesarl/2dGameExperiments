@@ -34,6 +34,17 @@ sys->init();
     return sys;
   }
 
+  template			<class T>
+  T				*getSystem()
+  {
+    std::multimap<const char *, System *>::iterator it;
+
+    it = map_.find(typeid(T).name());
+    if (it != map_.end())
+      return static_cast<T*>(it->second);
+    return NULL;
+  }
+
 private:
   std::multimap<int, System*>	list_;
   std::multimap<const char *, System*> map_;

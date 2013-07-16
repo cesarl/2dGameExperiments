@@ -28,9 +28,6 @@ public:
     pos->position += inc;
   }
 
-  virtual void			updateBegin(){};
-  virtual void			updateEnd(){};
-
 private:
 };
 

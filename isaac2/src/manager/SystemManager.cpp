@@ -10,7 +10,7 @@ void				SystemManager::update(float time, const ALLEGRO_EVENT &ev)
   i = list_.begin();
   while (i != list_.end())
     {
-      i->second->updateBegin();
+      i->second->updateBegin(time, ev);
       EntityManager::iterator	&it = em.begin();
       while (it != em.end())
 	{
@@ -18,7 +18,7 @@ void				SystemManager::update(float time, const ALLEGRO_EVENT &ev)
 	    i->second->update((*it).id, time - lastTime, ev);
 	  ++it;
 	}
-      i->second->updateEnd();
+      i->second->updateEnd(time, ev);
       ++i;
     }
   lastTime = time;
