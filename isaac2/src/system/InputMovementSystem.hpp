@@ -21,7 +21,7 @@ public:
   }
 
 
-  virtual void			update(unsigned int entity, float, const ALLEGRO_EVENT &ev)
+  virtual void			update(unsigned int entity, float time, const ALLEGRO_EVENT &ev)
   {
     InputMovement		*input = ComponentManager::getInstance().getComponent<InputMovement>(entity);
     Velocity			*vel = ComponentManager::getInstance().getComponent<Velocity>(entity);
@@ -59,13 +59,13 @@ public:
 
     // std::cout << "lol" <<std::endl;
     if (input->up)
-      vel->velocity.y += input->speed;
+      vel->velocity.y += input->speed * time;
     if (input->down)
-      vel->velocity.y -= input->speed;
+      vel->velocity.y -= input->speed * time;
     if (input->left)
-      vel->velocity.x -= input->speed;
+      vel->velocity.x -= input->speed * time;
     if (input->right)
-      vel->velocity.x += input->speed;
+      vel->velocity.x += input->speed * time;
 
       
   }
