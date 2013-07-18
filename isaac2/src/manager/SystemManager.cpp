@@ -6,17 +6,19 @@ void				SystemManager::update(float time, const ALLEGRO_EVENT &ev)
   static EntityManager		&em = EntityManager::getInstance();
   std::map<int, System*>::iterator i;
   static float lastTime = al_get_time();
+  std::vector<EntityData>	&list = em.getList();
 
   i = list_.begin();
   while (i != list_.end())
     {
       i->second->updateBegin(time, ev);
-      EntityManager::iterator	&it = em.begin();
-      while (it != em.end())
+      for (unsigned int	it = 0, mit = em.end(); it < mit; ++it)
 	{
-	  if (i->second->match(*it))
-	    i->second->update((*it).id, time - lastTime, ev);
-	  ++it;
+	  EntityData		e = list[it];
+	  // // if (!e.active)
+	  // //   continue;
+	  if (i->second->match(e))
+	    i->second->update(it, time - lastTime, ev);
 	}
       i->second->updateEnd(time, ev);
       ++i;

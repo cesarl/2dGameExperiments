@@ -15,19 +15,15 @@ public:
   unsigned int			newEntity();
   void				eraseEntity(unsigned int id);
   EntityData			&getEntityData(unsigned int id);
-  iterator			&begin()
-  {
-    static iterator		it;
 
-    it = list_.begin();
-    return it;
+  unsigned int			end()
+  {
+    return list_.size();
   }
-  iterator			&end()
-  {
-    static iterator		it;
 
-    it = list_.end();    
-    return it;
+  std::vector<EntityData>	&getList()
+  {
+    return list_;
   }
 private:
   unsigned int			idCounter_;

@@ -19,6 +19,8 @@
 #include				"VelocityFrictionSystem.hpp"
 #include				"PhysicSystem.hpp"
 #include				"InputSystem.hpp"
+#include				"PistolSystem.hpp"
+#include				"LifetimeSystem.hpp"
 
 #include				"MapGenerator.hpp"
 
@@ -90,7 +92,9 @@ int					main()
     return 0;
 
   SystemManager::getInstance().add<InputSystem>(0);
+  SystemManager::getInstance().add<PistolSystem>(0);
   SystemManager::getInstance().add<InputMovementSystem>(1);
+  SystemManager::getInstance().add<LifetimeSystem>(1);
   SystemManager::getInstance().add<VelocityFrictionSystem>(2);
   SystemManager::getInstance().add<BoundingBoxSystem>(3);
   SystemManager::getInstance().add<RotationForceSystem>(3);
@@ -117,6 +121,7 @@ int					main()
   ComponentManager::getInstance().addComponent<InputMovement>(e).speed = 1000.0f;
   ComponentManager::getInstance().addComponent<VelocityFriction>(e).friction = 0.99f;
   ComponentManager::getInstance().addComponent<Velocity>(e);
+  ComponentManager::getInstance().addComponent<Pistol>(e);
 
   colorC.set(0.0f, 1.0f, 1.0f, 1.0f);
   bbC.set(Vector3d(50.0f, 45.0f, 0.0f));

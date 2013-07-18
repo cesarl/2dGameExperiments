@@ -14,5 +14,7 @@
 #include			"InputMovement.hpp"
 #include			"VelocityFriction.hpp"
 #include			"Physic.hpp"
+#include			"Pistol.hpp"
+#include			"Lifetime.hpp"
 
 #endif				// __COMPONENTS_HPP__
