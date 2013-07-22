@@ -38,6 +38,11 @@ struct SystemWithoutComponentRequired : public Exception
   SystemWithoutComponentRequired(const std::string &message, const char *className);
 };
 
+struct TagToLong : public Exception
+{
+  TagToLong(unsigned int id, const std::string &tag, bool tagOrLayer);
+};
+
 # ifdef					_DEBUG
 #  define				Assert(condition) if (!(condition)) \
     throw AssertException(__FILE__, __LINE__, "Unsatisfied condition\n\n" #condition)

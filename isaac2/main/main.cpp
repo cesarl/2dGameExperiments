@@ -11,16 +11,7 @@
 #include				"ComponentManager.hpp"
 #include				"SystemManager.hpp"
 
-#include				"ImageSystem.hpp"
-#include				"VelocitySystem.hpp"
-#include				"BoundingBoxSystem.hpp"
-#include				"RotationForceSystem.hpp"
-#include				"InputMovementSystem.hpp"
-#include				"VelocityFrictionSystem.hpp"
-#include				"PhysicSystem.hpp"
-#include				"InputSystem.hpp"
-#include				"PistolSystem.hpp"
-#include				"LifetimeSystem.hpp"
+#include				"Systems.hpp"
 
 #include				"MapGenerator.hpp"
 
@@ -93,14 +84,18 @@ int					main()
 
   SystemManager::getInstance().add<InputSystem>(0);
   SystemManager::getInstance().add<PistolSystem>(0);
-  SystemManager::getInstance().add<InputMovementSystem>(1);
-  SystemManager::getInstance().add<LifetimeSystem>(1);
-  SystemManager::getInstance().add<VelocityFrictionSystem>(2);
-  SystemManager::getInstance().add<BoundingBoxSystem>(3);
-  SystemManager::getInstance().add<RotationForceSystem>(3);
-  SystemManager::getInstance().add<PhysicSystem>(4);
-  SystemManager::getInstance().add<VelocitySystem>(9);
-  SystemManager::getInstance().add<ImageSystem>(10);
+  SystemManager::getInstance().add<InputMovementSystem>(10);
+  SystemManager::getInstance().add<BulletSystem>(11);
+  SystemManager::getInstance().add<LifetimeSystem>(12);
+  SystemManager::getInstance().add<VelocityFrictionSystem>(20);
+  SystemManager::getInstance().add<BoundingBoxSystem>(30);
+  SystemManager::getInstance().add<RotationForceSystem>(31);
+  SystemManager::getInstance().add<PhysicSystem>(40);
+  SystemManager::getInstance().add<VelocitySystem>(90);
+  SystemManager::getInstance().add<ImageSystem>(100);
+
+  BoundingBoxSystem *s = SystemManager::getInstance().getSystem<BoundingBoxSystem>();
+  s->addException("Good", "Good");
 
 
   ////////////////////
@@ -111,6 +106,9 @@ int					main()
 
   EntityManager::getInstance().newEntity();
   e = EntityManager::getInstance().newEntity();
+
+  EntityManager::getInstance().getEntityData(e).setLayer("Good");
+
   ComponentManager::getInstance().addComponent<Rotation>(e);
   Position &posC = ComponentManager::getInstance().addComponent<Position>(e);
   Img &imgC = ComponentManager::getInstance().addComponent<Img>(e);

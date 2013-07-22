@@ -51,3 +51,16 @@ SystemWithoutComponentRequired::SystemWithoutComponentRequired(const std::string
   m += std::string(className);
   this->message_ = m;
 }
+
+TagToLong::TagToLong(unsigned int id, const std::string &tag, bool tagOrLayer)
+{
+  std::ostringstream			f;
+
+  f << (tagOrLayer ? "Tag" : "Layer")
+    << " to long : "
+    << tag
+    << " for entity : "
+    << id
+    << std::endl;
+  this->message_ = f.str();
+}

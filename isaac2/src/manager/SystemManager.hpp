@@ -30,7 +30,7 @@ public:
       throw OutOfMemory("Cannot allocate new System");
     map_.insert(std::pair<const char *, System *>(typeid(T).name(), sys));
     list_.insert(std::pair<int, System *>(priority, sys));
-sys->init();
+    sys->init();
     return sys;
   }
 

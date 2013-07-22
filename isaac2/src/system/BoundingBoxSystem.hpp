@@ -19,6 +19,28 @@ public:
     require<BoundingBox>();
   }
 
+  void				addException(const std::string &layer1, const std::string &layer2)
+  {
+    std::string			s;
+
+    s = (layer1.compare(layer2) < 0) ? (layer1 + layer2) : layer2 + layer1;
+    exceptions_.insert(s);
+  }
+
+  bool				isLayerCollidable(unsigned int a, unsigned int b)
+  {
+    static EntityManager	&mgr = EntityManager::getInstance();
+
+    std::string al = mgr.getEntityData(a).getLayer();
+    std::string bl = mgr.getEntityData(b).getLayer();
+
+    std::string s = (al.compare(bl) < 0) ? (al + bl) : al + bl;
+
+    std::set<std::string>::iterator it;
+
+    it = exceptions_.find(s);
+    return (it == exceptions_.end());
+  }
 
   static void			updateBoundingBox(unsigned int entity, float time)
   {
@@ -146,7 +168,7 @@ public:
 	    std::list<unsigned int>::iterator two = --it->second.end();
 	    while (two != one)
 	      {
-		if (*one != *two && collide(*one, *two))
+		if (*one != *two && isLayerCollidable(*one, *two) &&collide(*one, *two))
 		  addCollisionComponent(*one, *two);
 		--two;
 	      }
@@ -159,6 +181,7 @@ public:
 private:
   unsigned int			side_;
   std::map<int, std::list<unsigned int> > list_;
+  std::set<std::string>	exceptions_;
 };
 
 #endif				// __BB_SYSTEM_HPP__

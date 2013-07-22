@@ -27,6 +27,8 @@ public:
     ComponentManager		&c = ComponentManager::getInstance();
 
     e = EntityManager::getInstance().newEntity();
+    EntityManager::getInstance().getEntityData(e).setLayer("Good");
+
     Position &posComponent = c.addComponent<Position>(e);
     Img &imgComponent = c.addComponent<Img>(e);
     Scale &scaleComponent = c.addComponent<Scale>(e);
@@ -34,12 +36,12 @@ public:
     RotationForce &rotForce = c.addComponent<RotationForce>(e);
     Velocity &vel = c.addComponent<Velocity>(e);
     Rotation &rot = c.addComponent<Rotation>(e);
-    // BoundingBox &bbComponent = c.addComponent<BoundingBox>(e);
+    BoundingBox &bbComponent = c.addComponent<BoundingBox>(e);
     Physic &phy = c.addComponent<Physic>(e);
     Lifetime &life = c.addComponent<Lifetime>(e);
 
-    // bbComponent.set(Vector3d(64.0f, 64.0f, 0.0f));
-    phy.fixed = true;
+    bbComponent.set(Vector3d(64.0f, 64.0f, 0.0f));
+    phy.fixed = false;
     vel.velocity = Vector3d(60.0f, 60.0f, 0.0f);
     posComponent.position = position;
     imgComponent.img = ResourceManager::getInstance().get<Image>("stars.png");
