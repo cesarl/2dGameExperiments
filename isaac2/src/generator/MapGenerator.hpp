@@ -176,11 +176,16 @@ public:
 
 	if (!open_[i])
 	  {
+	    EntityManager::getInstance().getEntityData(e).setTag("Wall");
 	    colorComponent.set(1.0f, 0.0f, 1.0f, 1.0f);
 	    BoundingBox &bbComponent = ComponentManager::getInstance().addComponent<BoundingBox>(e);
 	    bbComponent.set(Vector3d(64.0f, 64.0f, 0.0f));
 	    Physic &phy = ComponentManager::getInstance().addComponent<Physic>(e);
 	    phy.fixed = true;
+	  }
+	else
+	  {
+	    EntityManager::getInstance().getEntityData(e).setTag("Ground");
 	  }
 	posComponent.position = Vector3d((float)(i % width_) * 64.0f, (float)(i / width_) * 64.0f, 0.0f);
 	imgComponent.img = ResourceManager::getInstance().get<Image>("stars.png");

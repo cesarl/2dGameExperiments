@@ -23,7 +23,7 @@ public:
 
     life->time -= time;
     if (life->time <= 0.0f)
-      EntityManager::getInstance().eraseEntity(entity);
+      ComponentManager::getInstance().addComponent<Death>(entity);
   }
 
 private:

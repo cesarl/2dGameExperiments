@@ -16,5 +16,6 @@
 #include			"Physic.hpp"
 #include			"Pistol.hpp"
 #include			"Lifetime.hpp"
+#include			"Death.hpp"
 
 #endif				// __COMPONENTS_HPP__

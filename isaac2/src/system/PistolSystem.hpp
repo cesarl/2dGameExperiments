@@ -21,10 +21,10 @@ public:
   }
 
 
-  unsigned int			createBullet(const Vector3d & position)
+  unsigned int			createBullet(const Vector3d & position, const Vector3d & dir, unsigned int entity)
   {
     unsigned int		e;
-    ComponentManager		&c = ComponentManager::getInstance();
+    static ComponentManager	&c = ComponentManager::getInstance();
 
     e = EntityManager::getInstance().newEntity();
     EntityManager::getInstance().getEntityData(e).setLayer("Good");
@@ -40,12 +40,16 @@ public:
     Physic &phy = c.addComponent<Physic>(e);
     Lifetime &life = c.addComponent<Lifetime>(e);
 
-    bbComponent.set(Vector3d(64.0f, 64.0f, 0.0f));
+    c.addComponent<VelocityFriction>(e).friction = 0.9999f;
+    bbComponent.set(Vector3d(32.0f, 32.0f, 0.0f));
     phy.fixed = false;
-    vel.velocity = Vector3d(60.0f, 60.0f, 0.0f);
+    vel.velocity = dir;
+    vel.velocity *= 700.0f;
+    vel.velocity += c.getComponent<Velocity>(entity)->velocity;
     posComponent.position = position;
+    posComponent.position.z = 1000;
     imgComponent.img = ResourceManager::getInstance().get<Image>("stars.png");
-    scaleComponent.scale = Vector3d(64.0f, 64.0f, 0.0f);
+    scaleComponent.scale = Vector3d(32.0f, 32.0f, 0.0f);
     rotForce.force = Vector3d(0.0f, 0.0f, 25.0f);
     colorComponent.set(0.5f, 0.2f, 0.0f, 1.0f);
     life.time = 3.0f;
@@ -57,7 +61,7 @@ public:
   virtual void			update(unsigned int entity, float time, const ALLEGRO_EVENT &)
   {
     Pistol			*pistol = ComponentManager::getInstance().getComponent<Pistol>(entity);
-    InputSystem			*sys = SystemManager::getInstance().getSystem<InputSystem>();
+    static InputSystem		*sys = SystemManager::getInstance().getSystem<InputSystem>();
  
     if (!pistol)
       return;
@@ -68,17 +72,55 @@ public:
 	return;
       }
 
-    if (!sys->isDown(ALLEGRO_KEY_SPACE)) 
-      return;
-
+    unsigned int b = 0;
+    Vector3d dir;
     Position			*position = ComponentManager::getInstance().getComponent<Position>(entity);
+
+    if (sys->isDown(ALLEGRO_KEY_LEFT)
+	&& sys->isDown(ALLEGRO_KEY_UP)) // left up
+      {
+	b = createBullet(position->position, Vector3d(-1, 1, 0), entity);
+      }
+    else if (sys->isDown(ALLEGRO_KEY_LEFT)
+	     && sys->isDown(ALLEGRO_KEY_DOWN)) // left down
+      {
+	b = createBullet(position->position, Vector3d(-1, -1, 0), entity);
+      }
+    else if (sys->isDown(ALLEGRO_KEY_RIGHT)
+	     && sys->isDown(ALLEGRO_KEY_UP)) // right up
+      {
+	b = createBullet(position->position, Vector3d(1, 1, 0), entity);
+      }
+    else if (sys->isDown(ALLEGRO_KEY_RIGHT)
+	     && sys->isDown(ALLEGRO_KEY_DOWN)) // right down
+      {
+	b = createBullet(position->position, Vector3d(1, -1, 0), entity);
+      }
+    else if (sys->isDown(ALLEGRO_KEY_LEFT)) // left
+      {
+	b = createBullet(position->position, Vector3d(-1, 0, 0), entity);
+      }
+    else if (sys->isDown(ALLEGRO_KEY_RIGHT)) // right
+      {
+	b = createBullet(position->position, Vector3d(1, 0, 0), entity);
+      }
+    else if (sys->isDown(ALLEGRO_KEY_UP)) // up
+      {
+	b = createBullet(position->position, Vector3d(0, 1, 0), entity);
+      }
+    else if (sys->isDown(ALLEGRO_KEY_DOWN)) // down
+      {
+	b = createBullet(position->position, Vector3d(0, -1, 0), entity);
+      }
+
+    if (b == 0)
+      return;
 
     if (pistol->fireRateCache <= 0.0f)
       {
 	pistol->fireRateCache = pistol->fireRate;
       }
 
-    unsigned int b = createBullet(position->position);
     std::cout << "New bullet : " << b << std::endl;
     (void)b;
   }

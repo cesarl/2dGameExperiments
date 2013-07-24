@@ -9,9 +9,13 @@ void				SystemManager::update(float time, const ALLEGRO_EVENT &ev)
   std::vector<EntityData>	&list = em.getList();
 
   i = list_.begin();
+  
   while (i != list_.end())
     {
       i->second->updateBegin(time, ev);
+
+      // #pragma omp sections
+      // {
       for (unsigned int	it = 0, mit = em.end(); it < mit; ++it)
 	{
 	  EntityData		e = list[it];
@@ -20,6 +24,7 @@ void				SystemManager::update(float time, const ALLEGRO_EVENT &ev)
 	  if (i->second->match(e))
 	    i->second->update(it, time - lastTime, ev);
 	}
+    // }
       i->second->updateEnd(time, ev);
       ++i;
     }
