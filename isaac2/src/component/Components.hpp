@@ -17,5 +17,6 @@
 #include			"Pistol.hpp"
 #include			"Lifetime.hpp"
 #include			"Death.hpp"
+#include			"ColorEasing.hpp"
 
 #endif				// __COMPONENTS_HPP__

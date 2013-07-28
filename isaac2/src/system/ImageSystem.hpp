@@ -33,13 +33,13 @@ public:
 
     glPushMatrix();
 
-    glEnable(GL_TEXTURE_2D);
+    // glEnable(GL_TEXTURE_2D);
 
     // glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     // glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     // glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
     // glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
+    
     glTranslatef(pos->position.x, pos->position.y, pos->position.z);
 
     glScalef(scale->scale.x, scale->scale.y, scale->scale.z);
@@ -59,7 +59,7 @@ public:
     glColor4f(color->r, color->g, color->b, color->a);
     glCallList(img->img->getDisplayList());
     glPopMatrix();
-    glDisable(GL_TEXTURE_2D);
+    // glDisable(GL_TEXTURE_2D);
     (void)color;
     (void)rot;
   }

@@ -12,5 +12,6 @@
 #include			"RotationForceSystem.hpp"
 #include			"VelocityFrictionSystem.hpp"
 #include			"VelocitySystem.hpp"
+#include			"ColorEasingSystem.hpp"
 
 #endif				// __SYSTEMS_HPP__

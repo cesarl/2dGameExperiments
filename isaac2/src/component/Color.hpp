@@ -17,6 +17,7 @@ struct				Color
     b(ab),
     a(aa)
   {}
+
   void				set(float ar = 1.0f,
 				    float ag = 1.0f,
 				    float ab = 1.0f,

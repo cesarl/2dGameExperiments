@@ -14,8 +14,6 @@ void				SystemManager::update(float time, const ALLEGRO_EVENT &ev)
     {
       i->second->updateBegin(time, ev);
 
-      // #pragma omp sections
-      // {
       for (unsigned int	it = 0, mit = em.end(); it < mit; ++it)
 	{
 	  EntityData		e = list[it];
@@ -24,7 +22,6 @@ void				SystemManager::update(float time, const ALLEGRO_EVENT &ev)
 	  if (i->second->match(e))
 	    i->second->update(it, time - lastTime, ev);
 	}
-    // }
       i->second->updateEnd(time, ev);
       ++i;
     }

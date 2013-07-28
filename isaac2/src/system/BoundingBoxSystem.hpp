@@ -72,15 +72,14 @@ public:
       return;
 
     BoundingBox			*bb = ComponentManager::getInstance().getComponent<BoundingBox>(entity);
-    Collision			*col = ComponentManager::getInstance().getComponent<Collision>(entity);
 
     updateBoundingBox(entity, time);
 
-    if (col)
-      {
-	col->list.clear();
-	ComponentManager::getInstance().removeComponent<Collision>(entity);
-      }
+    // if (col)
+    //   {
+    // 	col->list.clear();
+    // 	ComponentManager::getInstance().removeComponent<Collision>(entity);
+    //   }
 
     Vector3d from = bb->from;
     from /= Vector3d(side_, side_, 0);
@@ -115,6 +114,19 @@ public:
     it = list_.begin();
     while (it != list_.end())
       {
+	std::list<unsigned int>::iterator it2 = it->second.begin();
+
+	while (it2 != it->second.end())
+	  {
+	    Collision		*col = ComponentManager::getInstance().getComponent<Collision>(*it2);
+
+	    if (col)
+	      {
+		col->list.clear();
+		ComponentManager::getInstance().removeComponent<Collision>(*it2);
+	      }
+	    ++it2;
+	  }
 	it->second.clear();
 	++it;
       }

@@ -92,6 +92,7 @@ int					main()
   SystemManager::getInstance().add<RotationForceSystem>(31);
   SystemManager::getInstance().add<PhysicSystem>(40);
   SystemManager::getInstance().add<VelocitySystem>(90);
+  SystemManager::getInstance().add<ColorEasingSystem>(90);
   SystemManager::getInstance().add<ImageSystem>(100);
 
   BoundingBoxSystem *s = SystemManager::getInstance().getSystem<BoundingBoxSystem>();
@@ -124,7 +125,7 @@ int					main()
   colorC.set(0.0f, 1.0f, 1.0f, 1.0f);
   bbC.set(Vector3d(50.0f, 45.0f, 0.0f));
   posC.position = Vector3d(64.0f * 2.0f, 64.0f * 2.0f, 100.0f);
-  imgC.img = ResourceManager::getInstance().get<Image>("kitty.jpg");
+  imgC.img = ResourceManager::getInstance().get<Image>("heros.png");
   scaleC.scale = Vector3d(50.0f, 45.0f, 0.0f);
   phy.fixed = false;
 

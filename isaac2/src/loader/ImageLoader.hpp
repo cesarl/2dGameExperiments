@@ -9,6 +9,11 @@
 class					ImageLoader : public Loader<Image>
 {
 public:
+  ImageLoader() : Loader<Image>()
+  {
+    // al_set_new_bitmap_flags(ALLEGRO_NO_PREMULTIPLIED_ALPHA);
+  }
+
   virtual ~ImageLoader()
   {}
   virtual Image				*load(const File &file, bool force = false)

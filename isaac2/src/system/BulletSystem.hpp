@@ -29,7 +29,13 @@ public:
 
 	if (tag == "Wall")
 	  {
-	    
+	    std::cout << "lol " << std::endl;
+	    ComponentManager::getInstance().getComponent<Position>(entity)->position.z = 3;
+	    ComponentManager::getInstance().removeComponent<RotationForce>(entity);
+	    ComponentManager::getInstance().removeComponent<BoundingBox>(entity);
+	    ComponentManager::getInstance().removeComponent<Velocity>(entity);
+	    ComponentManager::getInstance().addComponent<ColorEasing>(entity);
+	    ComponentManager::getInstance().getComponent<ColorEasing>(entity)->setEasing(Color(1.0f, 0.0f, 0.0f, 1.0f), 10.0f);
 	  }
 	return;
       }

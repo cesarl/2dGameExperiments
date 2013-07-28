@@ -29,8 +29,14 @@ public:
     if (!al_create_display(width, height))
       return false;
     glEnable(GL_TEXTURE_2D);
-    // glEnable(GL_CULL_FACE);
+    glEnable(GL_CULL_FACE);
     glEnable(GL_DEPTH_TEST);
+    // glEnable(GL_ALPHA_TEST);
+    //glEnable(GL_BLEND);
+
+    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    // glAlphaFunc(GL_GREATER, 0.1);
+
     if (!EventManager::getInstance().init())
       return false;
     srand(time(NULL));
