@@ -51,7 +51,7 @@ public:
     imgComponent.img = ResourceManager::getInstance().get<Image>("stars.png");
     scaleComponent.scale = Vector3d(32.0f, 32.0f, 0.0f);
     rotForce.force = Vector3d(0.0f, 0.0f, 25.0f);
-    colorComponent.set(1.0f, 1.0f, 1.0f, 1.0f);
+    colorComponent = (Color(1.0f, 0.0f, 1.0f, 1.0f));
     life.time = 3.0f;
 
     (void)rot;

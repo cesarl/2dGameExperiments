@@ -4,6 +4,7 @@
 #include			"System.hpp"
 #include			"ComponentManager.hpp"
 #include			"Components.hpp"
+#include			"lerp.hpp"
 
 class				ColorEasingSystem : public System
 {
@@ -23,27 +24,24 @@ public:
     ColorEasing			*eas = ComponentManager::getInstance().getComponent<ColorEasing>(entity);
     Color			*color = ComponentManager::getInstance().getComponent<Color>(entity);
 
-    color->r = color->r + (eas->color.r - color->r) * time;
-    color->g = color->g + (eas->color.g - color->g) * time;
-    color->b = color->b + (eas->color.b - color->b) * time;
-    color->a = color->a + (eas->color.a - color->a) * time;
+    // color->r = eas->colorOrigin.r + (eas->color.r - eas->colorOrigin.r) * eas->time;
+    // color->g = eas->colorOrigin.g + (eas->color.g - eas->colorOrigin.g) * eas->time;
+    // color->b = eas->colorOrigin.b + (eas->color.b - eas->colorOrigin.b) * eas->time;
+    // color->a = eas->colorOrigin.a + (eas->color.a - eas->colorOrigin.a) * eas->time;
 
-    eas->time = (float)eas->time - time;
+    *color = Utils::lerp<Color>(eas->colorOrigin, eas->color, eas->duration, eas->time);
 
-    std::cout << color->r << " " << color->g << " " << color->b << " " << color->a << " " << eas->time << " " << time <<std::endl;
+    eas->time = (float)eas->time + time;
 
-    if (eas->time <= 0.0f)
+    //std::cout << color->r << " " << color->g << " " << color->b << " " << color->a << " " << eas->time << " " << time << std::endl;
+
+    if (eas->time >= eas->duration)
       ComponentManager::getInstance().removeComponent<ColorEasing>(entity);
   }
 
 private:
 };
 
-// template<typename Type, typename DeltaType = float>
-// Type Lerp(Type src, Type dest, DeltaType delta)
-// {
-//   return src + (dest - src) * delta;
-// }
 
 // Lerp(currentColor, destColor, delta)
 

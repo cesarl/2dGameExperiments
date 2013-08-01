@@ -46,20 +46,28 @@ public:
   void					play()
   {
     bool				draw;
+    ALLEGRO_EVENT			 ev;
+    float				time;
 
     this->run_->setValue(true);
+    draw = false;
     while (this->run_->getValue())
       {
-	ALLEGRO_EVENT			 ev;
-	draw = false;
+	time = al_get_time();
 	al_wait_for_event(this->event_queue_, &ev);
 	if (ev.type == ALLEGRO_EVENT_TIMER)
-	  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	if (this->draw_)
-	  this->draw_(al_get_time(), ev);
-	if (ev.type == ALLEGRO_EVENT_TIMER)
-	  al_flip_display();
-	    (void)draw;
+	  {
+	    draw = true;
+	  }
+	if (upt_)
+	  this->upt_(time, ev);
+	if (draw && al_is_event_queue_empty(this->event_queue_) && this->draw_)
+	  {
+	    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	    this->draw_(time, ev);
+	    al_flip_display();
+	    draw = false;
+	  }
 	if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
 	  {
 	    this->stop();

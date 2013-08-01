@@ -11,7 +11,7 @@ struct				Pistol
 
   Pistol()
   {
-    fireRate = 0.2f;
+    fireRate = 0.01f;
     fireRateCache = 0.0f;
     fireForce = 1.0f;
     fireType = 1.0f;

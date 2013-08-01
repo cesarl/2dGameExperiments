@@ -15,9 +15,10 @@ public:
   void				add(System *sys);
 
   void				update(float time, const ALLEGRO_EVENT &ev);
+  void				draw(float time, const ALLEGRO_EVENT &ev);
 
   template			<class T>
-  T				*add(int priority)
+  T				*add(int priority, bool draw = false)
   {
     std::multimap<const char *, System *>::iterator it;
     T				*sys;
@@ -29,7 +30,10 @@ public:
     if (!sys)
       throw OutOfMemory("Cannot allocate new System");
     map_.insert(std::pair<const char *, System *>(typeid(T).name(), sys));
-    list_.insert(std::pair<int, System *>(priority, sys));
+    if (!draw)
+      list_.insert(std::pair<int, System *>(priority, sys));
+    else
+      drawList_.insert(std::pair<int, System*>(priority, sys));
     sys->init();
     return sys;
   }
@@ -48,12 +52,22 @@ public:
 private:
   std::multimap<int, System*>	list_;
   std::multimap<const char *, System*> map_;
+  std::multimap<int, System*>	drawList_;
 private:
   SystemManager()
   {}
 
   virtual ~SystemManager()
-  {}
+  {
+    std::multimap<int, System*>::iterator it;
+
+    it = list_.begin();
+    while (it != list_.end())
+      {
+	delete it->second;
+	++it;
+      }
+  }
 private:
   friend class Singleton<SystemManager>;
 };

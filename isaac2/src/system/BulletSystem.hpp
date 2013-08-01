@@ -35,7 +35,7 @@ public:
 	    ComponentManager::getInstance().removeComponent<BoundingBox>(entity);
 	    ComponentManager::getInstance().removeComponent<Velocity>(entity);
 	    ComponentManager::getInstance().addComponent<ColorEasing>(entity);
-	    ComponentManager::getInstance().getComponent<ColorEasing>(entity)->setEasing(Color(1.0f, 0.0f, 0.0f, 1.0f), 10.0f);
+	    ComponentManager::getInstance().getComponent<ColorEasing>(entity)->setEasing(Color(0.0f, 1.0f, 0.0f, 0.1f), 10.0f, entity);
 	  }
 	return;
       }

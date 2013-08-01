@@ -8,16 +8,17 @@ struct				ColorEasing
 {
 public:
   float				time;
-  float				timeOrigin;
+  float				duration;
   Color				color;
   Color				colorOrigin;
 
 public:
-  void				setEasing(const Color & c, float _time)
+  void				setEasing(const Color & c, float _time, unsigned int entity)
   {
     color = c;
-    time = _time;
-    timeOrigin = _time;
+    time = 0.0f;
+    duration = _time;
+    colorOrigin = *(ComponentManager::getInstance().getComponent<Color>(entity));
   }
 
 };

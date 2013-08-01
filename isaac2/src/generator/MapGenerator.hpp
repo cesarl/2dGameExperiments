@@ -177,7 +177,7 @@ public:
 	if (!open_[i])
 	  {
 	    EntityManager::getInstance().getEntityData(e).setTag("Wall");
-	    colorComponent.set(1.0f, 0.0f, 1.0f, 1.0f);
+	    colorComponent = (Color(1.0f, 0.0f, 1.0f, 1.0f));
 	    BoundingBox &bbComponent = ComponentManager::getInstance().addComponent<BoundingBox>(e);
 	    bbComponent.set(Vector3d(64.0f, 64.0f, 0.0f));
 	    Physic &phy = ComponentManager::getInstance().addComponent<Physic>(e);

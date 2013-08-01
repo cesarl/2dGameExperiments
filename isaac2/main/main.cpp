@@ -27,7 +27,7 @@ void					draw(float time, const ALLEGRO_EVENT &ev)
   static double				old_time = al_get_time();
 
   camera.update(time, ev);
-  SystemManager::getInstance().update(time, ev);
+  SystemManager::getInstance().draw(time, ev);
 
   if(time - old_time >= 1.0)
     {
@@ -37,13 +37,17 @@ void					draw(float time, const ALLEGRO_EVENT &ev)
       std::cout << "FPS : " << fps << " || TIME : " << old_time << std::endl;
     }
   frames_done++;
+}
+
+void					update(float time, const ALLEGRO_EVENT &ev)
+{
+  SystemManager::getInstance().update(time, ev);
 
   static MapGenerator g;
-if (ev.type == ALLEGRO_EVENT_KEY_DOWN && ev.keyboard.keycode == ALLEGRO_KEY_G)
+  if (ev.type == ALLEGRO_EVENT_KEY_DOWN && ev.keyboard.keycode == ALLEGRO_KEY_G)
     g.generate(21, 11);
-
-
 }
+
 
 void					key(float time, const ALLEGRO_EVENT &ev)
 {
@@ -78,6 +82,7 @@ int					main()
 
   EventManager::getInstance().setDrawLoop(draw);
   EventManager::getInstance().setKeyLoop(key);
+  EventManager::getInstance().setUpdateLoop(update);
 
   if (!camera.init())
     return 0;
@@ -93,10 +98,11 @@ int					main()
   SystemManager::getInstance().add<PhysicSystem>(40);
   SystemManager::getInstance().add<VelocitySystem>(90);
   SystemManager::getInstance().add<ColorEasingSystem>(90);
-  SystemManager::getInstance().add<ImageSystem>(100);
+  SystemManager::getInstance().add<ImageSystem>(100, true);
 
   BoundingBoxSystem *s = SystemManager::getInstance().getSystem<BoundingBoxSystem>();
-  s->addException("Good", "Good");
+  if (s)
+    s->addException("Good", "Good");
 
 
   ////////////////////
@@ -122,7 +128,7 @@ int					main()
   ComponentManager::getInstance().addComponent<Velocity>(e);
   ComponentManager::getInstance().addComponent<Pistol>(e);
 
-  colorC.set(0.0f, 1.0f, 1.0f, 1.0f);
+  colorC = Color(0.0f, 1.0f, 1.0f, 1.0f);
   bbC.set(Vector3d(50.0f, 45.0f, 0.0f));
   posC.position = Vector3d(64.0f * 2.0f, 64.0f * 2.0f, 100.0f);
   imgC.img = ResourceManager::getInstance().get<Image>("heros.png");

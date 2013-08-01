@@ -24,6 +24,7 @@ public:
     bmp = al_load_bitmap(file.getFullName().c_str());
     if (!bmp)
       throw LoadingFailed(file.getFullName(), "ImageLoader failed to load image.");
+    // al_convert_mask_to_alpha(bmp, al_map_rgb(255, 0, 0));
     tex = al_get_opengl_texture(bmp);
     if (tex == 0)
       throw LoadingFailed(file.getFullName(), "ImageLoader failed to load texture.");

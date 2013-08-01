@@ -4,7 +4,8 @@ CC		=	g++
 
 RM		=	rm -f
 
-CPPFLAGS	=	-W -Wextra -Wall -Werror -MMD -g -O2 -fopenmp -lpthread
+CPPFLAGS	=	-W -Wextra -Wall -Werror -MMD -g 
+#-O2 -fopenmp -lpthread
 
 LDFLAGS		=	-L/usr/lib -lallegro -lallegro_dialog -lallegro_primitives -lallegro_ttf -lallegro_font -lallegro_image -lGLU
 
