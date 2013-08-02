@@ -1,7 +1,9 @@
 #ifndef				__COLOR_COMPONENT_HPP__
 # define			__COLOR_COMPONENT_HPP__
 
-struct				Color
+#include			"Component.hpp"
+
+struct				Color : public Component<Color>
 {
   float				r;
   float				g;

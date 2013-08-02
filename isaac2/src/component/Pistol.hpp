@@ -1,7 +1,9 @@
 #ifndef				__PISTOL_COMPONENT_HPP__
 # define			__PISTOL_COMPONENT_HPP__
 
-struct				Pistol
+#include			"Component.hpp"
+
+struct				Pistol : public Component<Pistol>
 {
   float				fireRate;
   float				fireRateCache;

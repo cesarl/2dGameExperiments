@@ -1,7 +1,9 @@
 #ifndef				__BB_COMPONENT_HPP__
 # define			__BB_COMPONENT_HPP__
 
-struct				BoundingBox
+#include			"Component.hpp"
+
+struct				BoundingBox : public Component<BoundingBox>
 {
   Vector3d			offset;
   Vector3d			size;

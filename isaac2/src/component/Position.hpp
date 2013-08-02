@@ -1,7 +1,9 @@
 #ifndef				__POSITION_COMPONENT_HPP__
 # define			__POSITION_COMPONENT_HPP__
 
-struct				Position
+#include			"Component.hpp"
+
+struct				Position : public Component<Position>
 {
   Vector3d			position;
 };

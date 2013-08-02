@@ -1,7 +1,9 @@
 #ifndef				__IPT_MOVEMENT_COMPONENT_HPP__
 # define			__IPT_MOVEMENT_COMPONENT_HPP__
 
-struct				InputMovement
+#include			"Component.hpp"
+
+struct				InputMovement : public Component<InputMovement>
 {
   float				speed;
   InputMovement()

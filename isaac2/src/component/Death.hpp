@@ -1,7 +1,9 @@
 #ifndef				__DEATH_COMPONENT_HPP__
 # define			__DEATH_COMPONENT_HPP__
 
-struct				Death
+#include			"Component.hpp"
+
+struct				Death : public Component<Death>
 {
 };
 

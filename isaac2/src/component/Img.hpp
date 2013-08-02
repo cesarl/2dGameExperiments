@@ -1,7 +1,9 @@
 #ifndef				__IMG_COMPONENT_HPP__
 # define			__IMG_COMPONENT_HPP__
 
-struct				Img
+#include			"Component.hpp"
+
+struct				Img : public Component<Img>
 {
   ImagePtr			img;
 

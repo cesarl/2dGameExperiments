@@ -1,7 +1,9 @@
 #ifndef				__SCALE_COMPONENT_HPP__
 # define			__SCALE_COMPONENT_HPP__
 
-struct				Scale
+#include			"Component.hpp"
+
+struct				Scale : public Component<Scale>
 {
   Vector3d			scale;
 

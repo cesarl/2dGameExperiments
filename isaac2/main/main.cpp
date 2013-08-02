@@ -135,7 +135,6 @@ int					main()
   scaleC.scale = Vector3d(50.0f, 45.0f, 0.0f);
   phy.fixed = false;
 
-
   try
     {
       EventManager::getInstance().play();

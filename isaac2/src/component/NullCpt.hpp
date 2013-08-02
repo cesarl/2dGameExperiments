@@ -1,7 +1,9 @@
 #ifndef				__NULL_COMPONENT_HPP__
 # define			__NULL_COMPONENT_HPP__
 
-struct				NullCpt
+#include			"Component.hpp"
+
+struct				NullCpt : public Component<NullCpt>
 {
 };
 

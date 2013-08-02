@@ -1,7 +1,9 @@
 #ifndef				__ROTATION_FORCE_COMPONENT_HPP__
 # define			__ROTATION_FORCE_COMPONENT_HPP__
 
-struct				RotationForce
+#include			"Component.hpp"
+
+struct				RotationForce : public Component<RotationForce>
 {
   Vector3d			force;
 };

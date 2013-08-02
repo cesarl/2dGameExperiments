@@ -1,7 +1,9 @@
 #ifndef				__LIFETIME_COMPONENT_HPP__
 # define			__LIFETIME_COMPONENT_HPP__
 
-struct				Lifetime
+#include			"Component.hpp"
+
+struct				Lifetime : public Component<Lifetime>
 {
   float				time;
 };

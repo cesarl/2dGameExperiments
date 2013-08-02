@@ -3,8 +3,9 @@
 
 #include			"Color.hpp"
 #include			"ComponentManager.hpp"
+#include			"Component.hpp"
 
-struct				ColorEasing
+struct				ColorEasing : public Component<ColorEasing>
 {
 public:
   float				time;

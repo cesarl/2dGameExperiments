@@ -1,7 +1,9 @@
 #ifndef				__VELOCITY_FRICTION_COMPONENT_HPP__
 # define			__VELOCITY_FRICTION_COMPONENT_HPP__
 
-struct				VelocityFriction
+#include			"Component.hpp"
+
+struct				VelocityFriction : public Component<VelocityFriction>
 {
   float				friction;
 };

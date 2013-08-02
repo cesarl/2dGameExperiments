@@ -2,8 +2,9 @@
 # define			__COLLISION_COMPONENT_HPP__
 
 #include			<list>
+#include			"Component.hpp"
 
-struct				Collision
+struct				Collision : public Component<Collision>
 {
   std::list<unsigned int>	list;
   Collision			operator=(const Collision &)

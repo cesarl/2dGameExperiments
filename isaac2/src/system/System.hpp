@@ -13,9 +13,7 @@ public:
   template			<class T>
   void				require()
   {
-    unsigned int		type = ComponentTypeManager::getInstance().getComponentType<T>();
-
-    componentsRequired_[type] = 1;
+    componentsRequired_[T::getTypeId()] = 1;
   }
 
   bool				match(const EntityData &entity)

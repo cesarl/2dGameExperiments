@@ -22,7 +22,6 @@ public:
   {
     std::vector<T>		*collection = getComponentCollection<T>();
     EntityData			&data = EntityManager::getInstance().getEntityData(entity);
-    unsigned int		type = ComponentTypeManager::getInstance().getComponentType<T>();
 
     if (collection->size() <= entity)
       {
@@ -30,7 +29,7 @@ public:
       }
 
     collection->at(entity) = T();
-    data.components[type] = 1;
+    data.components[T::getTypeId()] = 1;
     return collection->at(entity);
     // todo reinitialiser les  valeurs
   }
@@ -39,19 +38,17 @@ public:
   void				removeComponent(unsigned int entity)
   {
     EntityData			&data = EntityManager::getInstance().getEntityData(entity);
-    unsigned int		type = ComponentTypeManager::getInstance().getComponentType<T>();
 
-    data.components[type] = 0;
+    data.components[T::getTypeId()] = 0;
     // todo resseter les valeurs par defauts
   }
 
   template			<class T>
   T				*getComponent(unsigned int entity)
   {
-    unsigned int		type = ComponentTypeManager::getInstance().getComponentType<T>();
     EntityData			&data = EntityManager::getInstance().getEntityData(entity);
 
-    if (data.components[type] == 0)
+    if (data.components[T::getTypeId()] == 0)
       return NULL;
 
     std::vector<T>		*collection = getComponentCollection<T>();
@@ -66,21 +63,21 @@ public:
   template			<class T>
   std::vector<T>		*getComponentCollection()
   {
-    std::map<const char *, void*>::iterator it;
+    std::map<unsigned int, void*>::iterator it;
     std::vector<T>		*res;
 
-    it = componentListCollection_.find(typeid(T).name());
+    it = componentListCollection_.find(T::getTypeId());
     if (it != componentListCollection_.end())
       {
 	res = (std::vector<T> *)(it->second);
 	return res;
       }
     res = new std::vector<T>;
-    componentListCollection_.insert(std::pair<const char *, void *>(typeid(T).name(), res));
+    componentListCollection_.insert(std::pair<unsigned int, void *>(T::getTypeId(), res));
     return res;
   }
 private:
-  std::map<const char *, void *>	componentListCollection_;
+  std::map<unsigned int, void *>	componentListCollection_;
 private:
   friend class Singleton<ComponentManager>;
   ComponentManager()

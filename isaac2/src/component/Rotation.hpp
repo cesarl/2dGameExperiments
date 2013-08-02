@@ -1,7 +1,9 @@
 #ifndef				__ROTATION_COMPONENT_HPP__
 # define			__ROTATION_COMPONENT_HPP__
 
-struct				Rotation
+#include			"Component.hpp"
+
+struct				Rotation : public Component<Rotation>
 {
   Vector3d			rotation;
   Vector3d			axe;

@@ -1,7 +1,9 @@
 #ifndef				__VELOCITY_COMPONENT_HPP__
 # define			__VELOCITY_COMPONENT_HPP__
 
-struct				Velocity
+#include			"Component.hpp"
+
+struct				Velocity : public Component<Velocity>
 {
   Vector3d			velocity;
 };

@@ -1,7 +1,9 @@
 #ifndef				__PHYSIC_COMPONENT_HPP__
 # define			__PHYSIC_COMPONENT_HPP__
 
-struct				Physic
+#include			"Component.hpp"
+
+struct				Physic : public Component<Physic>
 {
   float				mass;
   bool				fixed;
