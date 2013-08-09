@@ -41,7 +41,7 @@ void					draw(float time, const ALLEGRO_EVENT &ev)
 
 void					update(float time, const ALLEGRO_EVENT &ev)
 {
-  static int tmp = 0;
+  static unsigned int tmp = 0;
   SystemManager::getInstance().update(time, ev);
 
   static MapGenerator g;
@@ -49,9 +49,10 @@ void					update(float time, const ALLEGRO_EVENT &ev)
   if (tmp == 0)
     g.generate(21, 11);
 
-  if (tmp >= 2000)
-    exit(0);
-  ++tmp;
+  // if (tmp >= 2000)
+  //  exit(0);
+  if (tmp == 0) 
+    ++tmp;
 }
 
 
