@@ -4,6 +4,7 @@
 #include			<bitset>
 #include			<string>
 #include			"Exception.hh"
+#include			"TagIdManager.hpp"
 
 #define				TAG_LENGTH (32)
 #define				LAYER_LENGTH (32)
@@ -16,28 +17,28 @@ struct				EntityData
   unsigned int			id;
   bool				active;
 private:
-  std::string			tag;
-  std::string			layer;
+  unsigned int			tag_;
+  unsigned int			layer_;
 
 public:
   EntityData(unsigned int entityId = 0,
 	     bool active = false,
-	     const std::string & _tag = DEFAULT_TAG,
-	     const std::string & _layer = DEFAULT_LAYER)
+	     const std::string & tag = DEFAULT_TAG,
+	     const std::string & layer = DEFAULT_LAYER)
   {
     components.reset();
     id = entityId;
     active = active;
-    if (_tag.size() > TAG_LENGTH)
+    if (tag.size() > TAG_LENGTH)
       {
-	throw TagToLong(entityId, _tag, true);    
+	throw TagToLong(entityId, tag, true);    
       }
-    tag = _tag;
-    if (_layer.size() > LAYER_LENGTH)
+    tag_ = TagIdManager::getInstance().getTagId(tag);
+    if (layer.size() > LAYER_LENGTH)
       {
-	throw TagToLong(entityId, _layer, false);    
+	throw TagToLong(entityId, layer, false);    
       }
-    layer = _layer;
+    layer_ = TagIdManager::getInstance().getTagId(layer);
   }
 
   EntityData			&operator=(const EntityData &o)
@@ -45,29 +46,29 @@ public:
     components = o.components;
     id = o.id;
     active = o.active;
-    tag = o.tag;
-    layer = o.layer;
+    tag_ = o.tag_;
+    layer_ = o.layer_;
     return *this;
   }
 
-  std::string			&getTag()
+  unsigned int			&getTag()
   {
-    return tag;
+    return tag_;
   }
 
-  std::string			&getLayer()
+  unsigned int			&getLayer()
   {
-    return layer;
+    return layer_;
   }
 
-  void				setTag(const std::string & _tag)
+  void				setTag(const std::string & tag)
   {
-    tag = _tag;
+    tag_ = TagIdManager::getInstance().getTagId(tag);
   }
 
-  void				setLayer(const std::string & _layer)
+  void				setLayer(const std::string & layer)
   {
-    layer = _layer;
+    layer_ = TagIdManager::getInstance().getTagId(layer);
   }
 
 

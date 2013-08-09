@@ -4,6 +4,7 @@
 #include			"System.hpp"
 #include			"ComponentManager.hpp"
 #include			"Components.hpp"
+#include			"TagIdManager.hpp"
 
 class				BulletSystem : public System
 {
@@ -22,12 +23,12 @@ public:
   virtual void			update(unsigned int entity, float, const ALLEGRO_EVENT &)
   {
     Collision			*col = ComponentManager::getInstance().getComponent<Collision>(entity);
+    static unsigned int wallTag = TagIdManager::getInstance().getTagId("Wall");
 
     if (col)
       {
-	std::string tag = EntityManager::getInstance().getEntityData(col->list.front()).getTag();
-
-	if (tag == "Wall")
+	unsigned int tag = EntityManager::getInstance().getEntityData(col->list.front()).getTag();
+	if (tag == wallTag)
 	  {
 	    std::cout << "lol " << std::endl;
 	    ComponentManager::getInstance().getComponent<Position>(entity)->position.z = 3;

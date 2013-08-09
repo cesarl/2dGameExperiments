@@ -4,6 +4,7 @@
 #include			"System.hpp"
 #include			"ComponentManager.hpp"
 #include			"Components.hpp"
+#include			"TagIdManager.hpp"
 
 class				BoundingBoxSystem : public System
 {
@@ -21,23 +22,20 @@ public:
 
   void				addException(const std::string &layer1, const std::string &layer2)
   {
-    std::string			s;
-
-    s = (layer1.compare(layer2) < 0) ? (layer1 + layer2) : layer2 + layer1;
+    unsigned int		l1 = TagIdManager::getInstance().getTagId(layer1);
+    unsigned int		l2 = TagIdManager::getInstance().getTagId(layer2);
+    unsigned int s = l1 < l2 ? l1 * 1000 + l2 : l2 * 1000 + l1;
     exceptions_.insert(s);
   }
 
-  bool				isLayerCollidable(unsigned int a, unsigned int b)
+  bool				isLayerCollidable(EntityData &e1, EntityData &e2)
   {
-    static EntityManager	&mgr = EntityManager::getInstance();
+    unsigned int al = e1.getLayer();
+    unsigned int bl = e2.getLayer();
 
-    std::string al = mgr.getEntityData(a).getLayer();
-    std::string bl = mgr.getEntityData(b).getLayer();
+    unsigned int s = al < bl ? al * 1000 + bl : bl * 1000 + al;
 
-    std::string s = (al.compare(bl) < 0) ? (al + bl) : al + bl;
-
-    std::set<std::string>::iterator it;
-
+    std::set<unsigned int>::iterator it;
     it = exceptions_.find(s);
     return (it == exceptions_.end());
   }
@@ -170,6 +168,7 @@ public:
   virtual void			updateEnd(float, const ALLEGRO_EVENT &)
   {
     std::map<int, std::list<unsigned int> >::iterator it;
+    static EntityManager	&mgr = EntityManager::getInstance();
 
     it = list_.begin();
     while (it != list_.end())
@@ -180,7 +179,9 @@ public:
 	    std::list<unsigned int>::iterator two = --it->second.end();
 	    while (two != one)
 	      {
-		if (*one != *two && isLayerCollidable(*one, *two) &&collide(*one, *two))
+		EntityData &e1 = mgr.getEntityData(*one);
+		EntityData &e2 = mgr.getEntityData(*two);
+		if (*one != *two && isLayerCollidable(e1, e2) &&collide(*one, *two))
 		  addCollisionComponent(*one, *two);
 		--two;
 	      }
@@ -193,7 +194,7 @@ public:
 private:
   unsigned int			side_;
   std::map<int, std::list<unsigned int> > list_;
-  std::set<std::string>	exceptions_;
+  std::set<unsigned int>	exceptions_;
 };
 
 #endif				// __BB_SYSTEM_HPP__
