@@ -21,7 +21,7 @@ public:
   }
 
 
-  unsigned int			createBullet(const Vector3d & position, const Vector3d & dir, unsigned int entity)
+  unsigned int			createBullet(const Vector3d & position, const Vector3d & dir, EntityData &entity)
   {
     unsigned int		e;
     static ComponentManager	&c = ComponentManager::getInstance();
@@ -58,7 +58,7 @@ public:
     return e;
   }
 
-  virtual void			update(unsigned int entity, float time, const ALLEGRO_EVENT &)
+  virtual void			update(EntityData &entity, float time, const ALLEGRO_EVENT &)
   {
     Pistol			*pistol = ComponentManager::getInstance().getComponent<Pistol>(entity);
     static InputSystem		*sys = SystemManager::getInstance().getSystem<InputSystem>();

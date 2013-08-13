@@ -11,7 +11,7 @@ class				System
 
 public:
   virtual ~System(){};
-  virtual void			update(unsigned int, float, const ALLEGRO_EVENT &) = 0;
+  virtual void			update(EntityData & e, float, const ALLEGRO_EVENT &) = 0;
   virtual void			updateBegin(float, const ALLEGRO_EVENT &){};
   virtual void			updateEnd(float, const ALLEGRO_EVENT &){};
   virtual void			init() = 0;

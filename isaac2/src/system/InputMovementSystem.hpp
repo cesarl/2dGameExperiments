@@ -21,7 +21,7 @@ public:
   }
 
 
-  virtual void			update(unsigned int entity, float time, const ALLEGRO_EVENT &)
+  virtual void			update(EntityData &entity, float time, const ALLEGRO_EVENT &)
   {
     InputMovement		*input = ComponentManager::getInstance().getComponent<InputMovement>(entity);
     Velocity			*vel = ComponentManager::getInstance().getComponent<Velocity>(entity);

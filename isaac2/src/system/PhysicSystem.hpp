@@ -26,7 +26,7 @@ public:
   //   BoundingBox			*bb2 = ComponentManager::getInstance().getComponent<BoundingBox>(entity);
   // }
 
-  virtual void			update(unsigned int entity, float time, const ALLEGRO_EVENT &)
+  virtual void			update(EntityData &entity, float time, const ALLEGRO_EVENT &)
   {
     Physic			*phy = ComponentManager::getInstance().getComponent<Physic>(entity);
 
@@ -44,7 +44,7 @@ public:
 	 ++it)
       {
 
-	if (!BoundingBoxSystem::collide(entity, *it))
+	if (!BoundingBoxSystem::collide(entity, EntityManager::getInstance().getEntityData(*it)))
 	  continue;
 
 	BoundingBox		*bb2 = ComponentManager::getInstance().getComponent<BoundingBox>(*it);
@@ -125,7 +125,7 @@ public:
       }
   }
 
-  void				response(unsigned int entity, float difTime, float time, float normalX, float normalY)
+  void				response(const EntityData &entity, float difTime, float time, float normalX, float normalY)
   {
     Position			*pos = ComponentManager::getInstance().getComponent<Position>(entity);
     Velocity			*vel = ComponentManager::getInstance().getComponent<Velocity>(entity);

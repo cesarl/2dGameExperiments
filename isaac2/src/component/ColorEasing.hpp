@@ -14,7 +14,7 @@ public:
   Color				colorOrigin;
 
 public:
-  void				setEasing(const Color & c, float _time, unsigned int entity)
+  void				setEasing(const Color & c, float _time, EntityData &entity)
   {
     color = c;
     time = 0.0f;

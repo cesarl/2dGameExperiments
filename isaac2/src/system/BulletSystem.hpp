@@ -20,7 +20,7 @@ public:
     require<Lifetime>();
   }
 
-  virtual void			update(unsigned int entity, float, const ALLEGRO_EVENT &)
+  virtual void			update(EntityData &entity, float, const ALLEGRO_EVENT &)
   {
     Collision			*col = ComponentManager::getInstance().getComponent<Collision>(entity);
     static unsigned int wallTag = TagIdManager::getInstance().getTagId("Wall");

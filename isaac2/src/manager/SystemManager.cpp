@@ -17,10 +17,8 @@ void				SystemManager::update(float time, const ALLEGRO_EVENT &ev)
 	   it != i->second->entities_.end();
 	   ++it)
 	{
-	  // // if (!e.active)
-	  // //   continue;
-	  // if (i->second->match(EntityManager::getInstance().getEntityData(*it)))
-	  i->second->update(*it, time - lastTime, ev);
+	  EntityData &ent = EntityManager::getInstance().getEntityData(*it);
+	  i->second->update(ent, time - lastTime, ev);
 	}
       i->second->updateEnd(time, ev);
       ++i;
@@ -52,7 +50,10 @@ void				SystemManager::draw(float time, const ALLEGRO_EVENT &ev)
       while (i != drawList_.end())
 	{
 	  if (i->second->match(e))
-	    i->second->update(it, time - lastTime, ev);
+	    {
+	      EntityData &ent = EntityManager::getInstance().getEntityData(it);
+	      i->second->update(ent, time - lastTime, ev);
+	    }
 	  ++i;
 	}
     }

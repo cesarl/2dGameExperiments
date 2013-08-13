@@ -21,7 +21,7 @@ public:
     require<Color>();
   }
 
-  virtual void			update(unsigned int entity, float, const ALLEGRO_EVENT &ev)
+  virtual void			update(EntityData &entity, float, const ALLEGRO_EVENT &ev)
   {
     if (ev.type != ALLEGRO_EVENT_TIMER)
       return;

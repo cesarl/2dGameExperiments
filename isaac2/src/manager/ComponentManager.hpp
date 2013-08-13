@@ -37,6 +37,24 @@ public:
   }
 
   template			<class T>
+  T				&addComponent(EntityData &entity)
+  {
+    std::vector<T>		*collection = getComponentCollection<T>();
+    static SystemManager	&sys = SystemManager::getInstance();
+
+    if (collection->size() <= entity.id)
+      {
+	collection->resize(entity.id + RESERVE_COMPONENT);
+      }
+
+    collection->at(entity.id) = T();
+    entity.components[T::getTypeId()] = 1;
+    sys.add(entity);
+    return collection->at(entity.id);
+    // todo reinitialiser les  valeurs
+  }
+
+  template			<class T>
   void				removeComponent(unsigned int entity)
   {
     EntityData			&data = EntityManager::getInstance().getEntityData(entity);
@@ -44,6 +62,16 @@ public:
 
     data.components[T::getTypeId()] = 0;
     sys.remove(data);
+    // todo resseter les valeurs par defauts
+  }
+
+  template			<class T>
+  void				removeComponent(EntityData &entity)
+  {
+    static SystemManager	&sys = SystemManager::getInstance();
+
+    entity.components[T::getTypeId()] = 0;
+    sys.remove(entity);
     // todo resseter les valeurs par defauts
   }
 
@@ -62,6 +90,21 @@ public:
     if (collection->capacity() <= entity)
       return NULL;
     return &(collection->at(entity));
+  }
+
+  template			<class T>
+  T				*getComponent(const EntityData &entity)
+  {
+    if (entity.components[T::getTypeId()] == 0)
+      return NULL;
+
+    std::vector<T>		*collection = getComponentCollection<T>();
+
+    if (!collection)
+      return NULL;
+    if (collection->capacity() <= entity.id)
+      return NULL;
+    return &(collection->at(entity.id));
   }
 
   template			<class T>

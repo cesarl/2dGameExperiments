@@ -21,7 +21,7 @@ public:
   }
 
 
-  virtual void			update(unsigned int entity, float time, const ALLEGRO_EVENT &)
+  virtual void			update(EntityData &entity, float time, const ALLEGRO_EVENT &)
   {
     Rotation			*rot = ComponentManager::getInstance().getComponent<Rotation>(entity);
     RotationForce		*force = ComponentManager::getInstance().getComponent<RotationForce>(entity);

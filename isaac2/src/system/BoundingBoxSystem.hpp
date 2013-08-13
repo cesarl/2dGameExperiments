@@ -40,7 +40,7 @@ public:
     return (it == exceptions_.end());
   }
 
-  static void			updateBoundingBox(unsigned int entity, float time)
+  static void			updateBoundingBox(const EntityData &entity, float time)
   {
     BoundingBox			*bb = ComponentManager::getInstance().getComponent<BoundingBox>(entity);
     Position			*pos = ComponentManager::getInstance().getComponent<Position>(entity);
@@ -64,7 +64,7 @@ public:
     bb->to += bb->size;
   }
 
-  virtual void			update(unsigned int entity, float time, const ALLEGRO_EVENT &ev)
+  virtual void			update(EntityData &entity, float time, const ALLEGRO_EVENT &ev)
   {
     if (ev.type != ALLEGRO_EVENT_TIMER)
       return;
@@ -92,13 +92,13 @@ public:
 	    std::map<int, std::list<unsigned int> >::iterator it = list_.find(key);
 	    if (it != list_.end())
 	      {
-		it->second.push_back(entity);
+		it->second.push_back(entity.id);
 	      }
 	    else
 	      {
 		std::list<unsigned int> newList;
 		
-		newList.push_back(entity);
+		newList.push_back(entity.id);
 		list_.insert(std::pair<int, std::list<unsigned int> >(key, newList));
 	      }
 	  }
@@ -130,7 +130,7 @@ public:
       }
   };
   
-  static bool			collide(unsigned int e1, unsigned int e2)
+  static bool			collide(const EntityData &e1, const EntityData &e2)
   {
     BoundingBox			*bb1 = ComponentManager::getInstance().getComponent<BoundingBox>(e1);
     BoundingBox			*bb2 = ComponentManager::getInstance().getComponent<BoundingBox>(e2);
@@ -181,7 +181,7 @@ public:
 	      {
 		EntityData &e1 = mgr.getEntityData(*one);
 		EntityData &e2 = mgr.getEntityData(*two);
-		if (*one != *two && isLayerCollidable(e1, e2) &&collide(*one, *two))
+		if (*one != *two && isLayerCollidable(e1, e2) && collide(e1, e2))
 		  addCollisionComponent(*one, *two);
 		--two;
 	      }

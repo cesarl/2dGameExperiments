@@ -28,7 +28,7 @@ public:
   }
 
 
-  virtual void			update(unsigned int, float, const ALLEGRO_EVENT &)
+  virtual void			update(EntityData&, float, const ALLEGRO_EVENT &)
   {
   }
 

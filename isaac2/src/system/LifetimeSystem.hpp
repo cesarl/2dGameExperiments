@@ -17,7 +17,7 @@ public:
   }
 
 
-  virtual void			update(unsigned int entity, float time, const ALLEGRO_EVENT &)
+  virtual void			update(EntityData &entity, float time, const ALLEGRO_EVENT &)
   {
     Lifetime			*life = ComponentManager::getInstance().getComponent<Lifetime>(entity);
 
