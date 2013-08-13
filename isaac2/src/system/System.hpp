@@ -1,8 +1,14 @@
 #ifndef				__SYSTEM_HPP__
 #define				__SYSTEM_HPP__
 
+#include			<set>
+
+class				SystemManager;
+
 class				System
 {
+  friend class			SystemManager;
+
 public:
   virtual ~System(){};
   virtual void			update(unsigned int, float, const ALLEGRO_EVENT &) = 0;
@@ -14,6 +20,27 @@ public:
   void				require()
   {
     componentsRequired_[T::getTypeId()] = 1;
+  }
+
+  bool				add(const EntityData & e)
+  {
+    if (match(e))
+      {
+	entities_ .insert(e.id);
+	return true;
+      }
+    return false;
+  }
+
+  bool				remove(const EntityData & e)
+  {
+    std::set<unsigned int>::iterator it;
+    if (!match(e) && (it = entities_.find(e.id)) != entities_.end())
+      {
+	entities_.erase(e.id);
+	return true;
+      }
+    return false;
   }
 
   bool				match(const EntityData &entity)
@@ -29,6 +56,7 @@ public:
 
 protected:
   std::bitset<64>		componentsRequired_;
+  std::set<unsigned int>	entities_;
 private:
   
 };

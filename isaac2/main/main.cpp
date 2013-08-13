@@ -48,7 +48,6 @@ void					update(float time, const ALLEGRO_EVENT &ev)
   // if (ev.type == ALLEGRO_EVENT_KEY_DOWN && ev.keyboard.keycode == ALLEGRO_KEY_G)
   if (tmp == 0)
     g.generate(21, 11);
-
   // if (tmp >= 2000)
   //  exit(0);
   if (tmp == 0) 

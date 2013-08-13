@@ -3,14 +3,14 @@
 
 #include			<vector>
 #include			<map>
-#include			<typeinfo>
-#include			<iostream>
+#include			<cstdlib>
 
 #include			"Singleton.hpp"
 #include			"ComponentTypeManager.hpp"
 #include			"Image.hpp"
 #include			"EntityData.hpp"
 #include			"EntityManager.hpp"
+#include			"SystemManager.hpp"
 
 #define				RESERVE_COMPONENT (100)
 
@@ -22,6 +22,7 @@ public:
   {
     std::vector<T>		*collection = getComponentCollection<T>();
     EntityData			&data = EntityManager::getInstance().getEntityData(entity);
+    static SystemManager	&sys = SystemManager::getInstance();
 
     if (collection->size() <= entity)
       {
@@ -30,6 +31,7 @@ public:
 
     collection->at(entity) = T();
     data.components[T::getTypeId()] = 1;
+    sys.add(data);
     return collection->at(entity);
     // todo reinitialiser les  valeurs
   }
@@ -38,8 +40,10 @@ public:
   void				removeComponent(unsigned int entity)
   {
     EntityData			&data = EntityManager::getInstance().getEntityData(entity);
+    static SystemManager	&sys = SystemManager::getInstance();
 
     data.components[T::getTypeId()] = 0;
+    sys.remove(data);
     // todo resseter les valeurs par defauts
   }
 

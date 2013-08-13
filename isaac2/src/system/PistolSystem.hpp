@@ -121,7 +121,7 @@ public:
 	pistol->fireRateCache = pistol->fireRate;
       }
 
-    std::cout << "New bullet : " << b << std::endl;
+    // std::cout << "New bullet : " << b << std::endl;
     (void)b;
   }
 private:

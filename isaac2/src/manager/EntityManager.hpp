@@ -31,7 +31,7 @@ private:
   std::vector<unsigned int>	freeIds_;
 private:
   friend class Singleton<EntityManager>;
-  EntityManager(): idCounter_(1)
+  EntityManager(): idCounter_(0)
   {
   };
   virtual ~EntityManager(){};

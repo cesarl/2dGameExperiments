@@ -30,7 +30,6 @@ public:
 	unsigned int tag = EntityManager::getInstance().getEntityData(col->list.front()).getTag();
 	if (tag == wallTag)
 	  {
-	    std::cout << "lol " << std::endl;
 	    ComponentManager::getInstance().getComponent<Position>(entity)->position.z = 3;
 	    ComponentManager::getInstance().removeComponent<RotationForce>(entity);
 	    ComponentManager::getInstance().removeComponent<BoundingBox>(entity);

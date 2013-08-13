@@ -3,9 +3,10 @@
 
 #include			<map>
 #include			<allegro5/allegro.h>
+#include			<typeinfo>
+#include			<iostream>
 #include			"Singleton.hpp"
 #include			"EntityData.hpp"
-#include			"ComponentManager.hpp"
 #include			"System.hpp"
 
 class				SystemManager : public Singleton<SystemManager>
@@ -47,6 +48,28 @@ public:
     if (it != map_.end())
       return static_cast<T*>(it->second);
     return NULL;
+  }
+
+  void				add(const EntityData &e)
+  {
+    std::multimap<int, System*>::iterator i = list_.begin();
+
+    while (i != list_.end())
+      {
+	i->second->add(e);
+	++i;
+      }
+  }
+
+  void				remove(const EntityData &e)
+  {
+    std::multimap<int, System*>::iterator i = list_.begin();
+
+    while (i != list_.end())
+      {
+	i->second->remove(e);
+	++i;
+      }
   }
 
 private:

@@ -7,7 +7,6 @@ unsigned int			EntityManager::newEntity()
 {
   unsigned int		res;
 
-  // std::cout << "++ " << idCounter_ << std::endl;
   if (freeIds_.empty())
     {
       if (list_.size() <= idCounter_)
@@ -16,7 +15,7 @@ unsigned int			EntityManager::newEntity()
 	  list_.resize(idCounter_ + RESERVE_ENTITY);
 	}
       list_[idCounter_] = EntityData(idCounter_, true);
-      list_[idCounter_] = true;
+      list_[idCounter_].active = true;
       res = idCounter_;
       ++idCounter_;
       return res;
@@ -24,6 +23,7 @@ unsigned int			EntityManager::newEntity()
   res = freeIds_.back();
   freeIds_.pop_back();
   list_[res].active = true;
+  list_[res] = EntityData(res, true);
   return res;
 }
 
@@ -32,7 +32,6 @@ void				EntityManager::eraseEntity(unsigned int id)
   list_[id].components.reset();
   list_[id].active = false;
   freeIds_.push_back(id);
-  // std::cout << id << std::endl;
 }
 
 EntityData			&EntityManager::getEntityData(unsigned int id)

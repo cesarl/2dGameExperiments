@@ -1,12 +1,11 @@
 #include			"SystemManager.hpp"
 #include			"EntityManager.hpp"
+#include			"ComponentManager.hpp"
 
 void				SystemManager::update(float time, const ALLEGRO_EVENT &ev)
 {
-  static EntityManager		&em = EntityManager::getInstance();
   std::multimap<int, System*>::iterator i;
   static float lastTime = al_get_time();
-  std::vector<EntityData>	&list = em.getList();
 
   i = list_.begin();
   
@@ -14,13 +13,14 @@ void				SystemManager::update(float time, const ALLEGRO_EVENT &ev)
     {
       i->second->updateBegin(time, ev);
 
-      for (unsigned int	it = 0, mit = em.end(); it < mit; ++it)
+      for (std::set<unsigned int>::iterator it = i->second->entities_.begin();
+	   it != i->second->entities_.end();
+	   ++it)
 	{
-	  EntityData		e = list[it];
 	  // // if (!e.active)
 	  // //   continue;
-	  if (i->second->match(e))
-	    i->second->update(it, time - lastTime, ev);
+	  // if (i->second->match(EntityManager::getInstance().getEntityData(*it)))
+	  i->second->update(*it, time - lastTime, ev);
 	}
       i->second->updateEnd(time, ev);
       ++i;

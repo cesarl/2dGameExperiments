@@ -22,6 +22,7 @@ public:
   {
     VelocityFriction		*fri = ComponentManager::getInstance().getComponent<VelocityFriction>(entity);
     Velocity			*vel = ComponentManager::getInstance().getComponent<Velocity>(entity);
+
     float t = fri->friction;
 
     t -= time;
