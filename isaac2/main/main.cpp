@@ -108,6 +108,7 @@ int					main()
   SystemManager::getInstance().add<VelocitySystem>(90);
   SystemManager::getInstance().add<ColorEasingSystem>(90);
   SystemManager::getInstance().add<ImageSystem>(100, true);
+  SystemManager::getInstance().add<SpriteSystem>(100, true);
 
   std::cout << BoundingBox::getTypeId() << " "
 	    << Collision::getTypeId() << " "
@@ -147,7 +148,7 @@ int					main()
 
       ComponentManager::getInstance().addComponent<Rotation>(e);
       Position &posC = ComponentManager::getInstance().addComponent<Position>(e);
-      Img &imgC = ComponentManager::getInstance().addComponent<Img>(e);
+      // Img &imgC = ComponentManager::getInstance().addComponent<Img>(e);
       Scale &scaleC = ComponentManager::getInstance().addComponent<Scale>(e);
       Color &colorC = ComponentManager::getInstance().addComponent<Color>(e);
       BoundingBox &bbC = ComponentManager::getInstance().addComponent<BoundingBox>(e);
@@ -160,7 +161,9 @@ int					main()
       colorC = Color(0.0f, 1.0f, 1.0f, 1.0f);
       bbC.set(Vector3d(50.0f, 45.0f, 0.0f));
       posC.position = Vector3d(64.0f * 2.0f, 64.0f * 2.0f, 100.0f);
-      imgC.img = ResourceManager::getInstance().get<Image>("heros.png");
+      // imgC.img = ResourceManager::getInstance().get<Image>("heros.png")
+      Sprite &spriteC = ComponentManager::getInstance().addComponent<Sprite>(e);
+      spriteC.animation = ResourceManager::getInstance().get<Animation>("test.anim");
       scaleC.scale = Vector3d(50.0f, 45.0f, 0.0f);
       phy.fixed = false;
 

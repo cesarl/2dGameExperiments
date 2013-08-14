@@ -45,6 +45,9 @@ void				SystemManager::draw(float time, const ALLEGRO_EVENT &ev)
       ++i;
     }
 
+  if (em.end() % 50 == 0)
+    std::cout << "Entities : " << em.end() << std::endl;
+
   for (unsigned int	it = 0, mit = em.end(); it < mit; ++it)
     {
       EntityData		e = list[it];

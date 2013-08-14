@@ -31,7 +31,8 @@ public:
     EntityManager::getInstance().getEntityData(e).setLayer("Good");
 
     Position &posComponent = c.addComponent<Position>(e);
-    Img &imgComponent = c.addComponent<Img>(e);
+    // Img &imgComponent = c.addComponent<Img>(e);
+    Sprite &spriteComponent = c.addComponent<Sprite>(e);
     Scale &scaleComponent = c.addComponent<Scale>(e);
     Color &colorComponent = c.addComponent<Color>(e);
     RotationForce &rotForce = c.addComponent<RotationForce>(e);
@@ -54,7 +55,7 @@ public:
     (void)entity;
     posComponent.position = position;
     posComponent.position.z = 1000;
-    imgComponent.img = ResourceManager::getInstance().get<Image>("kitty.jpg");
+    spriteComponent.animation = ResourceManager::getInstance().get<Animation>("test.anim");
     scaleComponent.scale = Vector3d(32.0f, 32.0f, 0.0f);
     rotForce.force = Vector3d(0.0f, 0.0f, 25.0f);
     colorComponent = (Color(1.0f, 1.0f, 1.0f, 1.0f));

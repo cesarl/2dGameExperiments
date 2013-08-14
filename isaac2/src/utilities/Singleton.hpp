@@ -5,7 +5,7 @@ template				<class T>
 class					Singleton
 {
 public :
-  static T				&getInstance()
+  inline static T			&getInstance()
   {
     if (!that_)
       that_ = new T;

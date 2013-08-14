@@ -13,5 +13,6 @@
 #include			"VelocityFrictionSystem.hpp"
 #include			"VelocitySystem.hpp"
 #include			"ColorEasingSystem.hpp"
+#include			"SpriteSystem.hpp"
 
 #endif				// __SYSTEMS_HPP__
