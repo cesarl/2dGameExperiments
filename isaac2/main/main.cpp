@@ -1,4 +1,5 @@
 #include				"Logger.hpp"
+#include				"AnimationLoader.hpp"
 #include				"ImageLoader.hpp"
 #include				"SkyboxLoader.hpp"
 #include				"MediaManager.hpp"
@@ -84,7 +85,9 @@ int					main()
 
   MediaManager::getInstance().registerLoader(new ImageLoader, ".jpg,.png,.jpeg");
   MediaManager::getInstance().registerLoader(new SkyboxLoader, ".skybox");
+  MediaManager::getInstance().registerLoader(new AnimationLoader, ".anim");
   MediaManager::getInstance().addSearchPath("./assets/imgs/");
+  MediaManager::getInstance().addSearchPath("./assets/animations/");
 
   EventManager::getInstance().setDrawLoop(draw);
   EventManager::getInstance().setKeyLoop(key);
@@ -106,48 +109,49 @@ int					main()
   SystemManager::getInstance().add<ColorEasingSystem>(90);
   SystemManager::getInstance().add<ImageSystem>(100, true);
 
-  BoundingBoxSystem *s = SystemManager::getInstance().getSystem<BoundingBoxSystem>();
-  if (s)
-    s->addException("Good", "Good");
-
-
-  ////////////////////
-  // GENRATE PLAYER //
-  ////////////////////
-
-  unsigned int				e;
-
-  EntityManager::getInstance().newEntity();
-  e = EntityManager::getInstance().newEntity();
-
-  EntityManager::getInstance().getEntityData(e).setLayer("Good");
-
-  ComponentManager::getInstance().addComponent<Rotation>(e);
-  Position &posC = ComponentManager::getInstance().addComponent<Position>(e);
-  Img &imgC = ComponentManager::getInstance().addComponent<Img>(e);
-  Scale &scaleC = ComponentManager::getInstance().addComponent<Scale>(e);
-  Color &colorC = ComponentManager::getInstance().addComponent<Color>(e);
-  BoundingBox &bbC = ComponentManager::getInstance().addComponent<BoundingBox>(e);
-  Physic &phy = ComponentManager::getInstance().addComponent<Physic>(e);
-  ComponentManager::getInstance().addComponent<InputMovement>(e).speed = 1000.0f;
-  ComponentManager::getInstance().addComponent<VelocityFriction>(e).friction = 0.99f;
-  ComponentManager::getInstance().addComponent<Velocity>(e);
-  ComponentManager::getInstance().addComponent<Pistol>(e);
-
-  colorC = Color(0.0f, 1.0f, 1.0f, 1.0f);
-  bbC.set(Vector3d(50.0f, 45.0f, 0.0f));
-  posC.position = Vector3d(64.0f * 2.0f, 64.0f * 2.0f, 100.0f);
-  imgC.img = ResourceManager::getInstance().get<Image>("heros.png");
-  scaleC.scale = Vector3d(50.0f, 45.0f, 0.0f);
-  phy.fixed = false;
-
   try
     {
-      EventManager::getInstance().play();
+      BoundingBoxSystem *s = SystemManager::getInstance().getSystem<BoundingBoxSystem>();
+      if (s)
+	s->addException("Good", "Good");
+
+
+      ////////////////////
+      // GENRATE PLAYER //
+      ////////////////////
+
+      unsigned int				e;
+
+      EntityManager::getInstance().newEntity();
+      e = EntityManager::getInstance().newEntity();
+
+      EntityManager::getInstance().getEntityData(e).setLayer("Good");
+
+      ComponentManager::getInstance().addComponent<Rotation>(e);
+      Position &posC = ComponentManager::getInstance().addComponent<Position>(e);
+      Img &imgC = ComponentManager::getInstance().addComponent<Img>(e);
+      Scale &scaleC = ComponentManager::getInstance().addComponent<Scale>(e);
+      Color &colorC = ComponentManager::getInstance().addComponent<Color>(e);
+      BoundingBox &bbC = ComponentManager::getInstance().addComponent<BoundingBox>(e);
+      Physic &phy = ComponentManager::getInstance().addComponent<Physic>(e);
+      ComponentManager::getInstance().addComponent<InputMovement>(e).speed = 1000.0f;
+      ComponentManager::getInstance().addComponent<VelocityFriction>(e).friction = 0.99f;
+      ComponentManager::getInstance().addComponent<Velocity>(e);
+      ComponentManager::getInstance().addComponent<Pistol>(e);
+
+      colorC = Color(0.0f, 1.0f, 1.0f, 1.0f);
+      bbC.set(Vector3d(50.0f, 45.0f, 0.0f));
+      posC.position = Vector3d(64.0f * 2.0f, 64.0f * 2.0f, 100.0f);
+      imgC.img = ResourceManager::getInstance().get<Image>("heros.png");
+      scaleC.scale = Vector3d(50.0f, 45.0f, 0.0f);
+      phy.fixed = false;
+
+      // EventManager::getInstance().play();
     }
   catch (const std::exception &e)
     {
       ILogger::log(e.what());
     }
+      AnimationPtr ptr = ResourceManager::getInstance().get<Animation>("test.anim");
   return 0;
 }

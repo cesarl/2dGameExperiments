@@ -22,6 +22,7 @@ public:
 	it->second->addRef();
 	return static_cast<T*>(it->second);
       }
+    std::cout << "LOADING " << name << std::endl;
     MediaManager::getInstance().load<T>(name);
     return this->find<T>(name);
   }
