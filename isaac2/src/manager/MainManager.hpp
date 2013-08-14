@@ -29,7 +29,7 @@ public:
     if (!al_create_display(width, height))
       return false;
     glEnable(GL_TEXTURE_2D);
-    glEnable(GL_CULL_FACE);
+    // glEnable(GL_CULL_FACE);
     glEnable(GL_DEPTH_TEST);
     //glEnable(GL_ALPHA_TEST);
     //glEnable(GL_BLEND);

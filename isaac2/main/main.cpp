@@ -163,7 +163,7 @@ int					main()
       posC.position = Vector3d(64.0f * 2.0f, 64.0f * 2.0f, 100.0f);
       // imgC.img = ResourceManager::getInstance().get<Image>("heros.png")
       Sprite &spriteC = ComponentManager::getInstance().addComponent<Sprite>(e);
-      spriteC.animation = ResourceManager::getInstance().get<Animation>("test.anim");
+      spriteC.animation = ResourceManager::getInstance().get<Animation>("herosWalkSide.anim");
       scaleC.scale = Vector3d(50.0f, 45.0f, 0.0f);
       phy.fixed = false;
 
