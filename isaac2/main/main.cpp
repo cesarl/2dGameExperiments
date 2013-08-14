@@ -146,12 +146,12 @@ int					main()
       scaleC.scale = Vector3d(50.0f, 45.0f, 0.0f);
       phy.fixed = false;
 
-      // EventManager::getInstance().play();
+      AnimationPtr ptr = ResourceManager::getInstance().get<Animation>("test.anim");
+      EventManager::getInstance().play();
     }
   catch (const std::exception &e)
     {
       ILogger::log(e.what());
     }
-      AnimationPtr ptr = ResourceManager::getInstance().get<Animation>("test.anim");
   return 0;
 }

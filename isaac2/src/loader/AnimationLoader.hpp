@@ -6,7 +6,7 @@
 #include				<string>
 #include				"Animation.hpp"
 #include				"strUtil.hpp"
-#include				"ResourceManager.hpp"
+#include				"Loader.hpp"
 
 class					AnimationLoader : public Loader<Animation>
 {
@@ -27,7 +27,6 @@ public:
 	throw LoadingFailed(file.getFullName(), "AnimationLoader failed to load animation.");
       }
 
-    std::string				name;
     std::string				imgFile;
     int					stepNumber = 0;
     double				*timeSteps = NULL;
@@ -43,14 +42,10 @@ public:
 	split(line, list, " ");
 	if (list.size() < 2)
 	  continue;
-	if (list[0] == "NAME")
-	  {
-	    name = list[1];
-	  }
 	else if (list[0] == "IMG")
 	  {
 	    imgFile = list[1];
-	    image = ResourceManager::getInstance().get<Image>(imgFile);
+	    // image = ResourceManager::getInstance().get<Image>(imgFile);
 	  }
 	else if (list[0] == "STEPNB")
 	  {
@@ -68,8 +63,8 @@ public:
 	(void)timeSteps;
 	(void)force;
       }
-    std::cout << name << " " << imgFile << " " << stepNumber << " " << reverse << " " << cycleNumber << std::endl;	myfile.close();
-    return new Animation(image, timeSteps, stepNumber, reverse, cycleNumber, coords, name, force);
+    std::cout << file.getFileName() << " " << imgFile << " " << stepNumber << " " << reverse << " " << cycleNumber << std::endl;	myfile.close();
+    return new Animation(image, timeSteps, stepNumber, reverse, cycleNumber, coords, file.getFileName(), force);
   }
 
   virtual void				save(const Animation *, const std::string &name)

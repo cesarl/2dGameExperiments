@@ -22,7 +22,6 @@ public:
 	it->second->addRef();
 	return static_cast<T*>(it->second);
       }
-    std::cout << "LOADING " << name << std::endl;
     MediaManager::getInstance().load<T>(name);
     return this->find<T>(name);
   }
@@ -34,12 +33,13 @@ public:
       {
 	if (force)
 	  {
-	    *(this->list_[name]) = *resource;
+	    this->list_[name] = resource;
 	  }
 	else
 	  {
 	    ILogger::log("%s : already loaded", name.c_str());
 	  }
+	return;
       }
     this->list_[name] = resource;
     resource->name_ = name;
