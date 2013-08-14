@@ -44,7 +44,6 @@ public:
   {
     BoundingBox			*bb = ComponentManager::getInstance().getComponent<BoundingBox>(entity);
     Position			*pos = ComponentManager::getInstance().getComponent<Position>(entity);
-    Velocity			*vel = ComponentManager::getInstance().getComponent<Velocity>(entity);
 
     bb->from = pos->position;
     bb->from += bb->offset;
@@ -53,9 +52,10 @@ public:
     bb->pastTo = bb->from;
     bb->pastTo += bb->size;
 
-    if (vel)
+    if (ComponentManager::getInstance().hasComponent<Velocity>(entity))
       {
-	Vector3d v = vel->velocity;
+	Velocity		*vel = ComponentManager::getInstance().getComponent<Velocity>(entity);
+	Vector3d		v = vel->velocity;
 	v *= time;
 	bb->from +=  v;
       }

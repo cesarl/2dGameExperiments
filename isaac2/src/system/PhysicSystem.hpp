@@ -17,6 +17,7 @@ public:
     require<Physic>();
     require<Collision>();
     require<Velocity>();
+    require<BoundingBox>();
   }
 
 

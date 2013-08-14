@@ -4,6 +4,8 @@
 #include			<vector>
 #include			<map>
 #include			<cstdlib>
+// a retirer ensuite pour debug
+#include			<csignal>
 
 #include			"Singleton.hpp"
 #include			"ComponentTypeManager.hpp"
@@ -96,15 +98,58 @@ public:
   T				*getComponent(const EntityData &entity)
   {
     if (entity.components[T::getTypeId()] == 0)
-      return NULL;
+      {
+	std::cout << "Pas possible c est pas dans mon code bar" << std::endl;
+	std::cout << entity.components << " " << T::getTypeId() << " " << entity.id << std::endl;
+	// raise(SIGINT);
+	return NULL;
+      }
 
     std::vector<T>		*collection = getComponentCollection<T>();
 
     if (!collection)
-      return NULL;
+      {
+	std::cout << "Pas possible j ai aps de collection" << std::endl;
+	return NULL;
+      }
     if (collection->capacity() <= entity.id)
-      return NULL;
+      {
+	std::cout << "Pas possible mon vector est trop petit" << std::endl;
+	return NULL;
+      }
     return &(collection->at(entity.id));
+  }
+
+  template			<class T>
+  bool				hasComponent(unsigned int entity)
+  {
+    EntityData			&data = EntityManager::getInstance().getEntityData(entity);
+
+    if (data.components[T::getTypeId()] == 0)
+      return false;
+
+    std::vector<T>		*collection = getComponentCollection<T>();
+
+    if (!collection)
+      return false;
+    if (collection->capacity() <= entity)
+      return false;
+    return true;
+  }
+
+  template			<class T>
+  bool				hasComponent(const EntityData &entity)
+  {
+    if (entity.components[T::getTypeId()] == 0)
+      return false;
+
+    std::vector<T>		*collection = getComponentCollection<T>();
+
+    if (!collection)
+      return false;
+    if (collection->capacity() <= entity.id)
+      return false;
+    return true;
   }
 
   template			<class T>

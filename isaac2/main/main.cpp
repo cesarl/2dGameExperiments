@@ -99,15 +99,33 @@ int					main()
   SystemManager::getInstance().add<InputSystem>(0);
   SystemManager::getInstance().add<PistolSystem>(0);
   SystemManager::getInstance().add<InputMovementSystem>(10);
-  SystemManager::getInstance().add<BulletSystem>(11);
   SystemManager::getInstance().add<LifetimeSystem>(12);
   SystemManager::getInstance().add<VelocityFrictionSystem>(20);
   SystemManager::getInstance().add<BoundingBoxSystem>(30);
+  SystemManager::getInstance().add<BulletSystem>(31);
   SystemManager::getInstance().add<RotationForceSystem>(31);
   SystemManager::getInstance().add<PhysicSystem>(40);
   SystemManager::getInstance().add<VelocitySystem>(90);
   SystemManager::getInstance().add<ColorEasingSystem>(90);
   SystemManager::getInstance().add<ImageSystem>(100, true);
+
+  std::cout << BoundingBox::getTypeId() << " "
+	    << Collision::getTypeId() << " "
+	    << ColorEasing::getTypeId() << " "
+	    << Color::getTypeId() << " "
+	    << Death::getTypeId() << " "
+	    << Img::getTypeId() << " "
+	    << InputMovement::getTypeId() << " "
+	    << Lifetime::getTypeId() << " "
+	    << NullCpt::getTypeId() << " "
+	    << Physic::getTypeId() << " "
+	    << Pistol::getTypeId() << " "
+	    << Position::getTypeId() << " "
+	    << RotationForce::getTypeId() << " "
+	    << Rotation::getTypeId() << " "
+	    << Scale::getTypeId() << " "
+	    << VelocityFriction::getTypeId() << " "
+	    << Velocity::getTypeId() << std::endl;
 
   try
     {

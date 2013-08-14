@@ -18,6 +18,7 @@ public:
   {
     require<Pistol>();
     require<Position>();
+    require<Velocity>();
   }
 
 
@@ -45,13 +46,18 @@ public:
     phy.fixed = false;
     vel.velocity = dir;
     vel.velocity *= 700.0f;
-    vel.velocity += c.getComponent<Velocity>(entity)->velocity;
+    Velocity *v = ComponentManager::getInstance().getComponent<Velocity>(entity);
+    if (!v)
+      std::cout << "YA PAS DE VELOCITY !!!! WTF !!!" << std::endl;
+    else
+      vel.velocity += v->velocity;
+    (void)entity;
     posComponent.position = position;
     posComponent.position.z = 1000;
-    imgComponent.img = ResourceManager::getInstance().get<Image>("stars.png");
+    imgComponent.img = ResourceManager::getInstance().get<Image>("kitty.jpg");
     scaleComponent.scale = Vector3d(32.0f, 32.0f, 0.0f);
     rotForce.force = Vector3d(0.0f, 0.0f, 25.0f);
-    colorComponent = (Color(1.0f, 0.0f, 1.0f, 1.0f));
+    colorComponent = (Color(1.0f, 1.0f, 1.0f, 1.0f));
     life.time = 3.0f;
 
     (void)rot;

@@ -18,6 +18,8 @@ public:
   void				init()
   {
     require<Lifetime>();
+    require<Collision>();
+    require<Velocity>();
   }
 
   virtual void			update(EntityData &entity, float, const ALLEGRO_EVENT &)
@@ -33,7 +35,7 @@ public:
 	    ComponentManager::getInstance().getComponent<Position>(entity)->position.z = 3;
 	    ComponentManager::getInstance().removeComponent<RotationForce>(entity);
 	    ComponentManager::getInstance().removeComponent<BoundingBox>(entity);
-	    ComponentManager::getInstance().removeComponent<Velocity>(entity);
+	    //ComponentManager::getInstance().removeComponent<Velocity>(entity);
 	    ComponentManager::getInstance().addComponent<ColorEasing>(entity);
 	    ComponentManager::getInstance().getComponent<ColorEasing>(entity)->setEasing(Color(0.0f, 1.0f, 0.0f, 0.1f), 10.0f, entity);
 	  }
