@@ -13,12 +13,21 @@ public:
   typedef std::vector<EntityData>::iterator iterator;
 
   unsigned int			newEntity();
-  void				eraseEntity(unsigned int id);
-  EntityData			&getEntityData(unsigned int id);
-
-  unsigned int			end()
+  inline void			eraseEntity(unsigned int id)
   {
-    return list_.size();
+    list_[id].components.reset();
+    list_[id].active = false;
+    freeIds_.push_back(id);
+  }
+
+  EntityData		&getEntityData(unsigned int id)
+  {
+    return list_[id];
+  }
+
+  inline unsigned int		end()
+  {
+    return idCounter_;
   }
 
   std::vector<EntityData>	&getList()

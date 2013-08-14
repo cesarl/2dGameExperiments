@@ -14,7 +14,7 @@
 #include			"EntityManager.hpp"
 #include			"SystemManager.hpp"
 
-#define				RESERVE_COMPONENT (100)
+#define				RESERVE_COMPONENT (10000)
 
 class				ComponentManager : public Singleton<ComponentManager>
 {
@@ -24,7 +24,6 @@ public:
   {
     std::vector<T>		*collection = getComponentCollection<T>();
     EntityData			&data = EntityManager::getInstance().getEntityData(entity);
-    static SystemManager	&sys = SystemManager::getInstance();
 
     if (collection->size() <= entity)
       {
@@ -33,7 +32,6 @@ public:
 
     collection->at(entity) = T();
     data.components[T::getTypeId()] = 1;
-    sys.add(data);
     return collection->at(entity);
     // todo reinitialiser les  valeurs
   }
@@ -42,7 +40,6 @@ public:
   T				&addComponent(EntityData &entity)
   {
     std::vector<T>		*collection = getComponentCollection<T>();
-    static SystemManager	&sys = SystemManager::getInstance();
 
     if (collection->size() <= entity.id)
       {
@@ -51,34 +48,34 @@ public:
 
     collection->at(entity.id) = T();
     entity.components[T::getTypeId()] = 1;
-    sys.add(entity);
     return collection->at(entity.id);
     // todo reinitialiser les  valeurs
   }
 
   template			<class T>
-  void				removeComponent(unsigned int entity)
+  inline void			removeComponent(unsigned int entity)
   {
     EntityData			&data = EntityManager::getInstance().getEntityData(entity);
-    static SystemManager	&sys = SystemManager::getInstance();
 
+    if (std::string(typeid(T).name()) != "9Collision")
+      {
+	std::cout << "BEFORE " << entity << " " << data.id << " -> " << data.components << std::endl;
+      }
     data.components[T::getTypeId()] = 0;
-    sys.remove(data);
+    if (std::string(typeid(T).name()) != "9Collision")
+      std::cout << "AFTERE " << entity << " " << data.id << " -> " << data.components << std::endl;
     // todo resseter les valeurs par defauts
   }
 
   template			<class T>
-  void				removeComponent(EntityData &entity)
+  inline void			removeComponent(EntityData &entity)
   {
-    static SystemManager	&sys = SystemManager::getInstance();
-
     entity.components[T::getTypeId()] = 0;
-    sys.remove(entity);
     // todo resseter les valeurs par defauts
   }
 
   template			<class T>
-  T				*getComponent(unsigned int entity)
+  inline T			*getComponent(unsigned int entity)
   {
     EntityData			&data = EntityManager::getInstance().getEntityData(entity);
 
@@ -95,7 +92,7 @@ public:
   }
 
   template			<class T>
-  T				*getComponent(const EntityData &entity)
+  inline T			*getComponent(const EntityData &entity)
   {
     if (entity.components[T::getTypeId()] == 0)
       {

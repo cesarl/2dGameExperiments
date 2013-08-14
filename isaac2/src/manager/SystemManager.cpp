@@ -6,6 +6,8 @@ void				SystemManager::update(float time, const ALLEGRO_EVENT &ev)
 {
   std::multimap<int, System*>::iterator i;
   static float lastTime = al_get_time();
+  std::vector<EntityData>&list = EntityManager::getInstance().getList();
+  float difTime = time - lastTime;
 
   i = list_.begin();
   
@@ -13,12 +15,13 @@ void				SystemManager::update(float time, const ALLEGRO_EVENT &ev)
     {
       i->second->updateBegin(time, ev);
 
-      for (std::set<unsigned int>::iterator it = i->second->entities_.begin();
-	   it != i->second->entities_.end();
-	   ++it)
+      for (unsigned int it = 0, mit = EntityManager::getInstance().end(); it < mit; ++it)
 	{
-	  EntityData &ent = EntityManager::getInstance().getEntityData(*it);
-	  i->second->update(ent, time - lastTime, ev);
+	  EntityData e = list[it];
+	  // // if (!e.active)
+	  // //   continue;
+	  if (i->second->match(e))
+	    i->second->update(list[it], difTime, ev);
 	}
       i->second->updateEnd(time, ev);
       ++i;
@@ -48,14 +51,14 @@ void				SystemManager::draw(float time, const ALLEGRO_EVENT &ev)
 
       i = drawList_.begin();  
       while (i != drawList_.end())
-	{
-	  if (i->second->match(e))
-	    {
-	      EntityData &ent = EntityManager::getInstance().getEntityData(it);
-	      i->second->update(ent, time - lastTime, ev);
-	    }
-	  ++i;
-	}
+  	{
+  	  if (i->second->match(e))
+  	    {
+  	      EntityData &ent = EntityManager::getInstance().getEntityData(it);
+  	      i->second->update(ent, time - lastTime, ev);
+  	    }
+  	  ++i;
+  	}
     }
 
   i = drawList_.begin();  

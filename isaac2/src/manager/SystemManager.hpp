@@ -50,28 +50,6 @@ public:
     return NULL;
   }
 
-  void				add(const EntityData &e)
-  {
-    std::multimap<int, System*>::iterator i = list_.begin();
-
-    while (i != list_.end())
-      {
-	i->second->add(e);
-	++i;
-      }
-  }
-
-  void				remove(const EntityData &e)
-  {
-    std::multimap<int, System*>::iterator i = list_.begin();
-
-    while (i != list_.end())
-      {
-	i->second->remove(e);
-	++i;
-      }
-  }
-
 private:
   std::multimap<int, System*>	list_;
   std::multimap<const char *, System*> map_;
