@@ -7,6 +7,7 @@
 #include				"Animation.hpp"
 #include				"strUtil.hpp"
 #include				"Loader.hpp"
+#include				"ResourceManager.hpp"
 
 class					AnimationLoader : public Loader<Animation>
 {
@@ -34,10 +35,12 @@ public:
     int					cycleNumber = 0;
     Animation::Coords			*coords = NULL;
     ImagePtr				image;
+    unsigned int			it = 0;
+    std::vector<std::string>		list;
 
     while (myfile.good())
       {
-	std::vector<std::string> list;
+	list.clear();
 	std::getline(myfile, line);
 	split(line, list, " ");
 	if (list.size() < 2)
@@ -45,7 +48,7 @@ public:
 	else if (list[0] == "IMG")
 	  {
 	    imgFile = list[1];
-	    // image = ResourceManager::getInstance().get<Image>(imgFile);
+	    image = ResourceManager::getInstance().get<Image>(imgFile);
 	  }
 	else if (list[0] == "STEPNB")
 	  {
@@ -58,6 +61,37 @@ public:
 	else if (list[0] == "CYCLENB")
 	  {
 	    cycleNumber = std::atoi(list[1].c_str());
+	  }
+	else if (list[0] == "TIMESTEP")
+	  {
+	    std::string s = list[1];
+	    split(s, list,",");
+	    timeSteps = new double[list.size()];
+	    it = 0;
+	    while (it < list.size())
+	      {
+		timeSteps[it] = std::atof(list[it].c_str());
+		++it;
+	      }
+	  }
+	else if (list[0] == "COORDS")
+	  {
+	    std::string s = list[1];
+	    split(s, list,";,");
+	    coords = new Animation::Coords[list.size() / 4];
+	    it = 0;
+	    while (it < list.size())
+	      {
+		coords[it / 4].pos.x = std::atof(list[it].c_str());
+		coords[it / 4].pos.y = std::atof(list[it + 1].c_str());
+		coords[it / 4].dim.x = std::atof(list[it + 2].c_str());
+		coords[it / 4].dim.y = std::atof(list[it + 3].c_str());
+		std::cout << coords[it / 4].pos.x << " "
+			  << coords[it / 4].pos.y << " "
+			  << coords[it / 4].dim.x << " "
+			  << coords[it / 4].dim.y << std::endl;
+		it += 4;
+	      }
 	  }
 	(void)coords;
 	(void)timeSteps;
