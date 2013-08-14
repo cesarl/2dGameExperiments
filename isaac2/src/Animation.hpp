@@ -24,6 +24,7 @@ public:
   bool					reverse;
   int					cycleNumber;
   Coords				*coordinates;
+  GLuint				*displayList;
 
 public:
   Animation(ImagePtr img_,
@@ -42,7 +43,31 @@ public:
     cycleNumber(cycleNumber_),
     coordinates(coordinates_)
   {
-    
+    displayList = new GLuint[stepNumber]();
+
+    if (!displayList)
+      {
+	// todo throw error no memory
+      }
+    for (unsigned int i = 0; i < stepNumber; ++i)
+      {
+	displayList[i] = glGenLists(1);
+	glNewList(displayList[i], GL_COMPILE);
+	glBindTexture(GL_TEXTURE_2D, getTexture());
+
+	glBegin(GL_QUADS);
+
+	glTexCoord2f(coordinates[i].pos.x, coordinates[i].pos.y); // Top left hand corner
+	glVertex3f(0.0, 0.0, 0.0); // X,Y,Z
+	glTexCoord2f(coordinates[i].dim.x, coordinates[i].pos.y); // Bottom left hand corner
+	glVertex3f(1.0, 0.0, 0.0); // X,Y,Z
+	glTexCoord2f(coordinates[i].dim.x, coordinates[i].dim.y); // Bottom right hand corner
+	glVertex3f(1.0, 1.0, 0.0); // X,Y,Z
+	glTexCoord2f(coordinates[i].pos.x, coordinates[i].dim.y); // Top right hand corner
+	glVertex3f(0.0, 1.0, 0.0); // X,Y,Z
+	glEnd();
+	glEndList(); 
+      }
   }
 
   virtual void				operator=(Animation & o)
@@ -53,37 +78,16 @@ public:
     reverse = o.reverse;
     cycleNumber = o.cycleNumber;
     coordinates = o.coordinates;
+    displayList = o.displayList;
   }
 
   virtual ~Animation()
   {
   }
 
-  GLuint				getTexture()
+  inline GLuint				getTexture()
   {
     return img->getTexture();
-  }
-
-  unsigned int				getStepNumber() const
-  {
-    return stepNumber;
-  }
-
-  void					draw(unsigned int index)
-  {
-    glBindTexture(GL_TEXTURE_2D, getTexture());
-
-    glBegin(GL_QUADS);
-
-    glTexCoord2f(coordinates[index].pos.x, coordinates[index].pos.y); // Top left hand corner
-    glVertex3f(0.0, 0.0, 0.0); // X,Y,Z
-    glTexCoord2f(coordinates[index].dim.x, coordinates[index].pos.y); // Bottom left hand corner
-    glVertex3f(1.0, 0.0, 0.0); // X,Y,Z
-    glTexCoord2f(coordinates[index].dim.x, coordinates[index].dim.y); // Bottom right hand corner
-    glVertex3f(1.0, 1.0, 0.0); // X,Y,Z
-    glTexCoord2f(coordinates[index].pos.x, coordinates[index].dim.y); // Top right hand corner
-    glVertex3f(0.0, 1.0, 0.0); // X,Y,Z
-    glEnd();
   }
 
 };

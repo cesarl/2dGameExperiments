@@ -50,12 +50,12 @@ public:
 		 - rot->axe.z);
 
     glColor4f(color->r, color->g, color->b, color->a);
-    sprite->animation->draw(sprite->index);
+    glCallList(sprite->animation->displayList[sprite->index]);
 
     if ((sprite->timeCounter += time) >= sprite->animation->timeSteps[sprite->index])
       {
 	++sprite->index;
-	if (sprite->index >= sprite->animation->getStepNumber())
+	if (sprite->index >= sprite->animation->stepNumber)
 	  sprite->index = 0;
 	sprite->timeCounter = 0.0f;
       }
