@@ -3,6 +3,19 @@
 
 Experiments with 2D game architecture and mechanisms by a c++ beginner
 
-- I redact a simple blog where I write about discoveries / mistakes etc made during the development : [cesarl.github.com/2dGameExperiments](http://cesarl.github.com/2dGameExperiments/)
-- You can follow progress in branch ``dev``
+- Isaac 2 :
+  - Binding of Isaac like with entity component system
+  - Allegro5 + OpengGL
+  - IN PROGRESS
 
+- Tetris :
+  - Tetris implementation with kind of entity component system
+  - Naive architecture
+  - Allegro5
+  - ABANDONED
+
+- Isaac 1 :
+  - Binding of Isaac like with kind of entity component system
+  - Naive architecture
+  - Allegro5
+  - ABANDONED
