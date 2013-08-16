@@ -19,5 +19,7 @@
 #include			"Death.hpp"
 #include			"ColorEasing.hpp"
 #include			"Sprite.hpp"
+#include			"SmellPosition.hpp"
+#include			"CollidablePosition.hpp"
 
 #endif				// __COMPONENTS_HPP__

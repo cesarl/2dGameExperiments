@@ -1,0 +1,7 @@
+NAME          wallFront
+IMG           decor.png
+STEPNB        1
+TIMESTEP      -1
+REVERSE       false
+CYCLENB       -1
+COORDS        0,0.666667,0.25,0.8333333;

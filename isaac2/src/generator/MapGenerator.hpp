@@ -167,17 +167,17 @@ public:
 
 	e = EntityManager::getInstance().newEntity();
 	Position &posComponent = ComponentManager::getInstance().addComponent<Position>(e);
-	Img &imgComponent = ComponentManager::getInstance().addComponent<Img>(e);
 	Scale &scaleComponent = ComponentManager::getInstance().addComponent<Scale>(e);
-	Color &colorComponent = ComponentManager::getInstance().addComponent<Color>(e);
-	// RotationForce &rotForce = ComponentManager::getInstance().addComponent<RotationForce>(e);
-	// ComponentManager::getInstance().addComponent<Velocity>(e).velocity = Vector3d((float)(rand() % 30) / 10.0f - 1.5f, (float)(rand() % 30) / 10.0f - 1.5f, (float)(rand() % 30) / 10.0f - 1.5f);
+	ComponentManager::getInstance().addComponent<Color>(e);
 	ComponentManager::getInstance().addComponent<Rotation>(e);
-
+	Sprite &spriteC = ComponentManager::getInstance().addComponent<Sprite>(e);
 	if (!open_[i])
 	  {
+	    if (i < width)
+	      spriteC.animation = ResourceManager::getInstance().get<Animation>("wallFront.anim");
+	    else
+	      spriteC.animation = ResourceManager::getInstance().get<Animation>("wallPlain.anim");
 	    EntityManager::getInstance().getEntityData(e).setTag("Wall");
-	    colorComponent = (Color(1.0f, 0.0f, 1.0f, 1.0f));
 	    BoundingBox &bbComponent = ComponentManager::getInstance().addComponent<BoundingBox>(e);
 	    bbComponent.set(Vector3d(64.0f, 64.0f, 0.0f));
 	    Physic &phy = ComponentManager::getInstance().addComponent<Physic>(e);
@@ -185,10 +185,13 @@ public:
 	  }
 	else
 	  {
+	    if (i % 2)
+	      spriteC.animation = ResourceManager::getInstance().get<Animation>("floor1.anim");
+	    else
+	      spriteC.animation = ResourceManager::getInstance().get<Animation>("floor2.anim");
 	    EntityManager::getInstance().getEntityData(e).setTag("Ground");
 	  }
 	posComponent.position = Vector3d((float)(i % width_) * 64.0f, (float)(i / width_) * 64.0f, 0.0f);
-	imgComponent.img = ResourceManager::getInstance().get<Image>("stars.png");
 	scaleComponent.scale = Vector3d(64.0f, 64.0f, 0.0f);
 	// rotForce.force = Vector3d(0.0f, 0.0f, 25.0f);
 	this->entities_.push_back(e);
