@@ -1,7 +1,11 @@
 #include				"Logger.hpp"
+
 #include				"AnimationLoader.hpp"
 #include				"ImageLoader.hpp"
 #include				"SkyboxLoader.hpp"
+#include				"ShaderLoader.hpp"
+#include				"ShaderProgramLoader.hpp"
+
 #include				"MediaManager.hpp"
 #include				"ResourceManager.hpp"
 #include				"MainManager.hpp"
@@ -37,8 +41,11 @@ int					main()
   MediaManager::getInstance().registerLoader(new ImageLoader, ".jpg,.png,.jpeg");
   MediaManager::getInstance().registerLoader(new SkyboxLoader, ".skybox");
   MediaManager::getInstance().registerLoader(new AnimationLoader, ".anim");
+  MediaManager::getInstance().registerLoader(new ShaderLoader, ".vert,.pix");
+  MediaManager::getInstance().registerLoader(new ShaderProgramLoader, ".prgm");
   MediaManager::getInstance().addSearchPath("./assets/imgs/");
   MediaManager::getInstance().addSearchPath("./assets/animations/");
+  MediaManager::getInstance().addSearchPath("./assets/shaders/");
 
   SystemManager::getInstance().add<InputSystem>(0);
   SystemManager::getInstance().add<PistolSystem>(0);
@@ -115,6 +122,9 @@ int					main()
 
       MapGenerator g;
       g.generate(21, 11);
+
+      // ShaderProgramPtr p = ResourceManager::getInstance().get<ShaderProgram>("helloWorld.prgm");
+      // glUseProgram(p->getId());
 
       EventManager::getInstance().play();
     }

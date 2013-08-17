@@ -56,6 +56,20 @@ public:
     else
       return "";
   }
+
+  std::string				getFileContent() const
+  {
+    std::ifstream			stream(fullPath_.c_str());
+
+    if (!stream.is_open())
+      return "";
+    std::string				res;
+
+    res.assign(( std::istreambuf_iterator<char>(stream) ),
+	       ( std::istreambuf_iterator<char>()));
+
+    return res;
+  }
 private:
   std::string				fullPath_;
 };
