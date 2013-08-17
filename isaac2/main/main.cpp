@@ -18,55 +18,6 @@
 
 #include				"Components.hpp"
 
-static Camera<Orthographic, FlatCamera> camera;
-// static Camera<Perspective, FreeFly> camera;
-
-void					draw(float time, const ALLEGRO_EVENT &ev)
-{
-  static double				fps = 0;
-  static int				frames_done = 0;
-  static double				old_time = al_get_time();
-
-  camera.update(time, ev);
-  SystemManager::getInstance().draw(time, ev);
-
-  if(time - old_time >= 1.0)
-    {
-      fps = frames_done / (time - old_time);
-      frames_done = 0;
-      old_time = time;
-      std::cout << "FPS : " << fps << " || TIME : " << old_time << std::endl;
-    }
-  frames_done++;
-}
-
-void					update(float time, const ALLEGRO_EVENT &ev)
-{
-  static unsigned int tmp = 0;
-  SystemManager::getInstance().update(time, ev);
-
-  static MapGenerator g;
-  // if (ev.type == ALLEGRO_EVENT_KEY_DOWN && ev.keyboard.keycode == ALLEGRO_KEY_G)
-  if (tmp == 0)
-    g.generate(21, 11);
-  // if (tmp >= 2000)
-  //  exit(0);
-  if (tmp == 0) 
-    ++tmp;
-}
-
-
-void					key(float time, const ALLEGRO_EVENT &ev)
-{
-  camera.input(time, ev);
-
-  static MapGenerator g;
-  if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
-    g.generate(21, 11);
-
-  (void)time;
-}
-
 int					main()
 {
 
@@ -88,13 +39,6 @@ int					main()
   MediaManager::getInstance().registerLoader(new AnimationLoader, ".anim");
   MediaManager::getInstance().addSearchPath("./assets/imgs/");
   MediaManager::getInstance().addSearchPath("./assets/animations/");
-
-  EventManager::getInstance().setDrawLoop(draw);
-  EventManager::getInstance().setKeyLoop(key);
-  EventManager::getInstance().setUpdateLoop(update);
-
-  if (!camera.init())
-    return 0;
 
   SystemManager::getInstance().add<InputSystem>(0);
   SystemManager::getInstance().add<PistolSystem>(0);
@@ -168,6 +112,10 @@ int					main()
       phy.fixed = false;
 
       AnimationPtr ptr = ResourceManager::getInstance().get<Animation>("test.anim");
+
+      MapGenerator g;
+      g.generate(21, 11);
+
       EventManager::getInstance().play();
     }
   catch (const std::exception &e)

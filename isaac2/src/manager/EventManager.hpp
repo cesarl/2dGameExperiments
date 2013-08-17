@@ -4,11 +4,37 @@
 #include                                <allegro5/allegro.h>
 #include				"OptionManager.hpp"
 #include				"Singleton.hpp"
+#include				"Camera.hpp"
+#include				"SystemManager.hpp"
+
+static Camera<Orthographic, FlatCamera> camera;
+// static Camera<Perspective, FreeFly> camera;
 
 class					EventManager : public Singleton<EventManager>
 {
 public:
   ~EventManager();
+
+  void					draw(float time, const ALLEGRO_EVENT &ev)
+  {
+    static double			fps = 0;
+    static int				frames_done = 0;
+    static double			old_time = al_get_time();
+
+    camera.update(time, ev);
+    SystemManager::getInstance().draw(time, ev);
+
+    if(time - old_time >= 1.0)
+      {
+	fps = frames_done / (time - old_time);
+	frames_done = 0;
+	old_time = time;
+	std::cout << "FPS : " << fps << " || TIME : " << old_time << std::endl;
+      }
+    frames_done++;
+  }
+
+
   bool					init()
   {
     if (!al_install_keyboard())
@@ -22,6 +48,8 @@ public:
     if (!this->timer_)
       return false;
     if (!al_install_joystick())
+      return false;
+    if (!camera.init())
       return false;
     al_register_event_source(this->event_queue_, al_get_keyboard_event_source());
     // al_register_event_source(this->event_queue_, al_get_joystick_event_source());
@@ -45,28 +73,41 @@ public:
 
   void					play()
   {
-    bool				draw;
-    ALLEGRO_EVENT			 ev;
+    bool				canDraw;
+    ALLEGRO_EVENT			ev;
     float				time;
 
     this->run_->setValue(true);
-    draw = false;
+    canDraw = false;
     while (this->run_->getValue())
       {
 	time = al_get_time();
 	al_wait_for_event(this->event_queue_, &ev);
 	if (ev.type == ALLEGRO_EVENT_TIMER)
 	  {
-	    draw = true;
+	    canDraw = true;
 	  }
 	if (upt_)
-	  this->upt_(time, ev);
-	if (draw && al_is_event_queue_empty(this->event_queue_) && this->draw_)
+	  {
+	    this->upt_(time, ev);
+	  }
+	else
+	  {
+	    SystemManager::getInstance().update(time, ev);
+	  }
+	if (canDraw && al_is_event_queue_empty(this->event_queue_))
 	  {
 	    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	    this->draw_(time, ev);
+	    if (draw_)
+	      {
+		this->draw_(time, ev);
+	      }
+	    else
+	      {
+		draw(time, ev);
+	      }
 	    al_flip_display();
-	    draw = false;
+	    canDraw = false;
 	  }
 	if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
 	  {
@@ -88,22 +129,15 @@ public:
     this->draw_ = fun;
   }
 
-  void					setKeyLoop(void (fun)(float, const ALLEGRO_EVENT &))
-  {
-    this->key_ = fun;
-  }
-
 private:
   void					(*upt_)(float, const ALLEGRO_EVENT &ev);
   void					(*draw_)(float, const ALLEGRO_EVENT &ev);
-  void					(*key_)(float, const ALLEGRO_EVENT &ev);
   ALLEGRO_EVENT_QUEUE			*event_queue_;
   ALLEGRO_TIMER				*timer_;
   OptionValue<bool>			*run_;
   EventManager() :
     upt_(NULL),
     draw_(NULL),
-    key_(NULL),
     event_queue_(NULL),
     timer_(NULL),
     run_(NULL)

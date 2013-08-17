@@ -23,8 +23,6 @@ public:
 
   virtual void			update(EntityData &entity, float time, const ALLEGRO_EVENT &ev)
   {
-    if (ev.type != ALLEGRO_EVENT_TIMER)
-      return;
     Sprite			*sprite = ComponentManager::getInstance().getComponent<Sprite>(entity);
     Position			*pos = ComponentManager::getInstance().getComponent<Position>(entity);
     Rotation			*rot = ComponentManager::getInstance().getComponent<Rotation>(entity);
@@ -63,6 +61,7 @@ public:
     glPopMatrix();
     (void)color;
     (void)rot;
+    (void)ev;
   }
 
 private:

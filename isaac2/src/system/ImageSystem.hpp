@@ -23,8 +23,6 @@ public:
 
   virtual void			update(EntityData &entity, float, const ALLEGRO_EVENT &ev)
   {
-    if (ev.type != ALLEGRO_EVENT_TIMER)
-      return;
     Img				*img = ComponentManager::getInstance().getComponent<Img>(entity);
     Position			*pos = ComponentManager::getInstance().getComponent<Position>(entity);
     Rotation			*rot = ComponentManager::getInstance().getComponent<Rotation>(entity);
@@ -62,6 +60,7 @@ public:
     // glDisable(GL_TEXTURE_2D);
     (void)color;
     (void)rot;
+    (void)ev;
   }
 
 private:
