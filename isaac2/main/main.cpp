@@ -123,9 +123,10 @@ int					main()
       MapGenerator g;
       g.generate(21, 11);
 
-      ShaderProgramPtr p = ResourceManager::getInstance().get<ShaderProgram>("default.prgm");
-      glUseProgram(p->getId());
-
+      ShaderProgramPtr p = ResourceManager::getInstance().get<ShaderProgram>("test.prgm");
+      p->enable();
+      glUniform1i(p->getVarId("varTest"), 2);
+      // std::cout << "prout " << glGetUniformLocation(p->getId(), "varTest") << std::endl;
       EventManager::getInstance().play();
     }
   catch (const std::exception &e)

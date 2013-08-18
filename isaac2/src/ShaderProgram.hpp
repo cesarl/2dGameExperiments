@@ -48,6 +48,28 @@ public:
   {
     return id_;
   }
+
+  void					enable()
+  {
+    glUseProgram(id_);
+  }
+
+  void					disable()
+  {
+    glUseProgram(0);
+  }
+
+  GLint					getVarId(const std::string &name)
+  {
+    GLint				res;
+
+    res = glGetUniformLocation(id_, name.c_str());
+    if (res < 0)
+      {
+	throw UniformLocationUnknown(name, gluErrorString(glGetError()));
+      }
+    return res;
+  }
 private:
   GLuint				id_;
   GLuint				shaders_[2];
