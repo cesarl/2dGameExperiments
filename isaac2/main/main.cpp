@@ -123,8 +123,8 @@ int					main()
       MapGenerator g;
       g.generate(21, 11);
 
-      // ShaderProgramPtr p = ResourceManager::getInstance().get<ShaderProgram>("helloWorld.prgm");
-      // glUseProgram(p->getId());
+      ShaderProgramPtr p = ResourceManager::getInstance().get<ShaderProgram>("default.prgm");
+      glUseProgram(p->getId());
 
       EventManager::getInstance().play();
     }
