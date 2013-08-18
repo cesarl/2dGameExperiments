@@ -5,6 +5,7 @@
 #include				"SkyboxLoader.hpp"
 #include				"ShaderLoader.hpp"
 #include				"ShaderProgramLoader.hpp"
+#include				"ObjLoader.hpp"
 
 #include				"MediaManager.hpp"
 #include				"ResourceManager.hpp"
@@ -43,9 +44,11 @@ int					main()
   MediaManager::getInstance().registerLoader(new AnimationLoader, ".anim");
   MediaManager::getInstance().registerLoader(new ShaderLoader, ".vert,.pix");
   MediaManager::getInstance().registerLoader(new ShaderProgramLoader, ".prgm");
+  MediaManager::getInstance().registerLoader(new ObjLoader, ".obj");
   MediaManager::getInstance().addSearchPath("./assets/imgs/");
   MediaManager::getInstance().addSearchPath("./assets/animations/");
   MediaManager::getInstance().addSearchPath("./assets/shaders/");
+  MediaManager::getInstance().addSearchPath("./assets/models/");
 
   SystemManager::getInstance().add<InputSystem>(0);
   SystemManager::getInstance().add<PistolSystem>(0);
@@ -60,6 +63,7 @@ int					main()
   SystemManager::getInstance().add<ColorEasingSystem>(90);
   SystemManager::getInstance().add<ImageSystem>(100, true);
   SystemManager::getInstance().add<SpriteSystem>(100, true);
+  SystemManager::getInstance().add<ObjModelSystem>(100, true);
 
   std::cout << BoundingBox::getTypeId() << " "
 	    << Collision::getTypeId() << " "
@@ -108,25 +112,26 @@ int					main()
       ComponentManager::getInstance().addComponent<VelocityFriction>(e).friction = 0.99f;
       ComponentManager::getInstance().addComponent<Velocity>(e);
       ComponentManager::getInstance().addComponent<Pistol>(e);
+      Model &model = ComponentManager::getInstance().addComponent<Model>(e);
 
       colorC = Color(0.0f, 1.0f, 1.0f, 1.0f);
       bbC.set(Vector3d(50.0f, 45.0f, 0.0f));
-      posC.position = Vector3d(64.0f * 2.0f, 64.0f * 2.0f, 100.0f);
+      posC.position = Vector3d(64.0f * 2.0f, 64.0f * 2.0f, 0.1f);
       // imgC.img = ResourceManager::getInstance().get<Image>("heros.png")
       Sprite &spriteC = ComponentManager::getInstance().addComponent<Sprite>(e);
       spriteC.animation = ResourceManager::getInstance().get<Animation>("herosWalkSide.anim");
       scaleC.scale = Vector3d(50.0f, 45.0f, 0.0f);
       phy.fixed = false;
+      model.obj = ResourceManager::getInstance().get<ObjModel>("cube.obj");
 
-      AnimationPtr ptr = ResourceManager::getInstance().get<Animation>("test.anim");
 
       MapGenerator g;
       g.generate(21, 11);
 
-      ShaderProgramPtr p = ResourceManager::getInstance().get<ShaderProgram>("test.prgm");
-      p->enable();
-      glUniform1i(p->getVarId("varTest"), 2);
-      // std::cout << "prout " << glGetUniformLocation(p->getId(), "varTest") << std::endl;
+      // ShaderProgramPtr p = ResourceManager::getInstance().get<ShaderProgram>("test.prgm");
+      // p->enable();
+      // glUniform1i(p->getVarId("varTest"), 2);
+
       EventManager::getInstance().play();
     }
   catch (const std::exception &e)

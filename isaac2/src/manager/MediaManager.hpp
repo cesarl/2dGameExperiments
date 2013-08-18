@@ -18,9 +18,10 @@
 #include				"Animation.hpp"
 #include				"Shader.hpp"
 #include				"ShaderProgram.hpp"
+#include				"ObjModel.hpp"
 
 // todo definir la liste des medias pris en charge
-typedef					TYPELIST_5(Image, Skybox, Animation, Shader, ShaderProgram) MediaList;
+typedef					TYPELIST_6(Image, Skybox, Animation, Shader, ShaderProgram, ObjModel) MediaList;
 
 template				<class T>
 struct					MediaHolder

@@ -1,2 +1,2 @@
-VERTEX test.vert
+VERTEX model.vert
 PIXEL test.pix

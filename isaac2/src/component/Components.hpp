@@ -21,5 +21,6 @@
 #include			"Sprite.hpp"
 #include			"SmellPosition.hpp"
 #include			"CollidablePosition.hpp"
+#include			"Model.hpp"
 
 #endif				// __COMPONENTS_HPP__

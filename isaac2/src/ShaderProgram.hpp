@@ -22,7 +22,9 @@ public:
 
   virtual void				operator=(ShaderProgram & o)
   {
-    (void)o;
+    id_ = o.id_;
+    shaders_[0] = o.shaders_[0];
+    shaders_[1] = o.shaders_[1];
   }
 
   virtual ~ShaderProgram()

@@ -15,5 +15,6 @@
 #include			"ColorEasingSystem.hpp"
 #include			"SpriteSystem.hpp"
 #include			"PositionRegister.hpp"
+#include			"ObjModelSystem.hpp"
 
 #endif				// __SYSTEMS_HPP__

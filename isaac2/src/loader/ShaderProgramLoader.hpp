@@ -39,7 +39,7 @@ ShaderProgram				*program;
     if (id == 0)
       throw LoadingFailed(file.getFullName(), "ShaderProgramLoader failed to create shader.");
 
-program = new ShaderProgram(id, file.getFileName(), force);
+    program = new ShaderProgram(id, file.getFileName(), force);
 
     while (myfile.good())
       {
@@ -50,12 +50,12 @@ program = new ShaderProgram(id, file.getFileName(), force);
 	if (list[0] == "VERTEX" || list[0] == "PIXEL")
 	  {
 	    shader = ResourceManager::getInstance().get<Shader>(list[1]);
-glAttachShader(id, shader->getId());
-program->add(shader->getId());
+	    glAttachShader(id, shader->getId());
+	    program->add(shader->getId());
 	  }
       }    
 
-glLinkProgram(id);
+    glLinkProgram(id);
 
     if (linkStatus != GL_TRUE)
       {

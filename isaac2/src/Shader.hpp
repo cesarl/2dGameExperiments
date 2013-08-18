@@ -20,7 +20,7 @@ public:
 
   virtual void				operator=(Shader & o)
   {
-    (void)o;
+    id_ = o.id_;
   }
 
   virtual ~Shader()

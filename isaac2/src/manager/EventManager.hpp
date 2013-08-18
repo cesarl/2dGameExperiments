@@ -7,8 +7,8 @@
 #include				"Camera.hpp"
 #include				"SystemManager.hpp"
 
-static Camera<Orthographic, FlatCamera> camera;
-// static Camera<Perspective, FreeFly> camera;
+//static Camera<Orthographic, FlatCamera> camera;
+static Camera<Perspective, FreeFly> camera;
 
 class					EventManager : public Singleton<EventManager>
 {
@@ -94,6 +94,7 @@ public:
 	else
 	  {
 	    SystemManager::getInstance().update(time, ev);
+	    camera.input(time, ev);
 	  }
 	if (canDraw && al_is_event_queue_empty(this->event_queue_))
 	  {
