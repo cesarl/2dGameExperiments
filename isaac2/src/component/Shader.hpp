@@ -48,10 +48,8 @@ struct				Shader : public Component<Shader>
     while (it != textures_.end())
       {
 	glBindBuffer(GL_ARRAY_BUFFER, it->second->getBufferId());
-	glVertexAttribPointer(i,                  // attribute
-			      2,                  // size
+	glTexCoordPointer(    2,                  // size
 			      GL_FLOAT,           // type
-			      GL_FALSE,           // normalized?
 			      0,                  // stride
 			      (void*)0            // array buffer offset
 			      );
@@ -75,6 +73,11 @@ struct				Shader : public Component<Shader>
 	++it;
 	++i;
       }
+  }
+
+  TextureMediaPtr		&getFirstTexture()
+  {
+    return textures_.begin()->second;
   }
 
   void				drawTexturesBuffers()
