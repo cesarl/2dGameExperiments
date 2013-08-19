@@ -1,3 +1,3 @@
 VERTEX       test.vert
 PIXEL        test.pix
-TEXTURES     mainTexture:crate.text
+TEXTURES     mainTexture:crate.text,secondText:cube.text

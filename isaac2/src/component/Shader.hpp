@@ -80,6 +80,14 @@ struct				Shader : public Component<Shader>
     return textures_.begin()->second;
   }
 
+  TextureMediaPtr		&getSecondTexture()
+  {
+    std::map<std::string, TextureMediaPtr>::iterator it;
+    it = textures_.begin();
+    ++it;
+    return it->second;
+  }
+
   void				drawTexturesBuffers()
   {
     std::map<std::string, TextureMediaPtr>::iterator it;

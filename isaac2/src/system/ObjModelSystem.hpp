@@ -34,11 +34,26 @@ public:
     // enable shader
     glUseProgram(shader->getProgram()->getId());
 
+    glUniform1i(shader->getProgram()->getVarId("mainTexture"), 0);
+    glUniform1i(shader->getProgram()->getVarId("secondText"), 1);
+
+    glEnable(GL_TEXTURE_2D);
+    glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, shader->getFirstTexture()->getImage()->getTexture());
+    glDisable(GL_TEXTURE_2D);
+
+    glEnable(GL_TEXTURE_2D);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, shader->getSecondTexture()->getImage()->getTexture());    
+    glDisable(GL_TEXTURE_2D);
+    glActiveTexture(GL_TEXTURE0);
+    // first
 
     glBindBuffer(GL_ARRAY_BUFFER, model->obj->getVertexBuffer());    
     glVertexPointer(3, GL_FLOAT, 0, (void*)(0));
     glBindBuffer(GL_ARRAY_BUFFER, shader->getFirstTexture()->getBufferId());
+    glTexCoordPointer(2, GL_FLOAT, 0, (void*)(0));
+    glBindBuffer(GL_ARRAY_BUFFER, shader->getSecondTexture()->getBufferId());
     glTexCoordPointer(2, GL_FLOAT, 0, (void*)(0));
 
     glEnableClientState(GL_VERTEX_ARRAY);
@@ -49,40 +64,11 @@ public:
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     glDisableClientState(GL_VERTEX_ARRAY);
     
-
-    // // apply vertex buffer
-    // glBindBuffer(GL_ARRAY_BUFFER, model->obj->getVertexBuffer());
-    // glVertexAttribPointer(0,                  // attribute
-    // 			  3,                  // size
-    // 			  GL_FLOAT,           // type
-    // 			  GL_FALSE,           // normalized?
-    // 			  0,                  // stride
-    // 			  (void*)0            // array buffer offset
-    // 			  );
-    // glEnableVertexAttribArray(0);
-
-    // // bind textures buffers
-    // shader->bindTexturesBuffers();
-
-    // // unbind buffers
-    // glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-    // // bind textures
-    // shader->bindTextures();
-    // glEnableClientState (GL_VERTEX_ARRAY);
-    // glEnableClientState (GL_ELEMENT_ARRAY_BUFFER);
-    // glDrawArrays(GL_TRIANGLES, 0, model->obj->getVerticesNumber());
-    // glDisableClientState (GL_VERTEX_ARRAY);
-    // glDisableClientState (GL_ELEMENT_ARRAY_BUFFER);
-    
-    // // shader->drawTexturesBuffers();
-
-    // glBindTexture(GL_TEXTURE_2D, 0);
-    // glDisableVertexAttribArray(0);
-    // glDisableVertexAttribArray(1);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     // disable shader
     glUseProgram(0);
+
     glPopMatrix();
 
     (void)ev;

@@ -1,26 +1,27 @@
-/* // Uniform */
-
-/* uniform sampler2D mainTexture; */
-
-
-/* // Sortie */
-
-/* out vec4 out_Color; */
-
-
-/* // Fonction main */
-
-/* void main() */
-/* { */
-/*     // Couleur du pixel */
-
-/*     gl_FragColor = texture2D(mainTexture, gl_TexCoord[0].st); */
-/* } */
+// Uniform
 
 uniform sampler2D mainTexture;
+uniform sampler2D secondText;
+
+
+// Sortie
+
+out vec4 out_Color;
+
+
+// Fonction main
 
 void main()
 {
-  /* gl_FragColor = gl_Color; */
-  gl_FragColor = texture2D(mainTexture, gl_TexCoord[0].st);
+    // Couleur du pixel
+
+    gl_FragColor = texture2D(secondText, gl_TexCoord[0].st) + texture2D(mainTexture, gl_TexCoord[0].st); 
 }
+
+/* uniform sampler2D mainTexture; */
+
+/* void main() */
+/* { */
+/*   /\* gl_FragColor = gl_Color; *\/ */
+/*   gl_FragColor = texture2D(mainTexture, gl_TexCoord[0].st); */
+/* } */
