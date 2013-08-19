@@ -6,6 +6,7 @@
 #include				"ShaderLoader.hpp"
 #include				"ShaderProgramLoader.hpp"
 #include				"ObjLoader.hpp"
+#include				"TextureLoader.hpp"
 
 #include				"MediaManager.hpp"
 #include				"ResourceManager.hpp"
@@ -45,10 +46,12 @@ int					main()
   MediaManager::getInstance().registerLoader(new ShaderLoader, ".vert,.pix");
   MediaManager::getInstance().registerLoader(new ShaderProgramLoader, ".prgm");
   MediaManager::getInstance().registerLoader(new ObjLoader, ".obj");
+  MediaManager::getInstance().registerLoader(new TextureLoader, ".text");
   MediaManager::getInstance().addSearchPath("./assets/imgs/");
   MediaManager::getInstance().addSearchPath("./assets/animations/");
   MediaManager::getInstance().addSearchPath("./assets/shaders/");
   MediaManager::getInstance().addSearchPath("./assets/models/");
+  MediaManager::getInstance().addSearchPath("./assets/textures/");
 
   SystemManager::getInstance().add<InputSystem>(0);
   SystemManager::getInstance().add<PistolSystem>(0);
@@ -131,6 +134,8 @@ int					main()
       // ShaderProgramPtr p = ResourceManager::getInstance().get<ShaderProgram>("test.prgm");
       // p->enable();
       // glUniform1i(p->getVarId("varTest"), 2);
+
+      ResourceManager::getInstance().get<TextureMedia>("crate.text");
 
       EventManager::getInstance().play();
     }

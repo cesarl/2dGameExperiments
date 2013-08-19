@@ -19,14 +19,16 @@
 #include				"ShaderMedia.hpp"
 #include				"ShaderProgramMedia.hpp"
 #include				"ObjModelMedia.hpp"
+#include				"TextureMedia.hpp"
 
 // todo definir la liste des medias pris en charge
-typedef					TYPELIST_6(ImageMedia,
-						   SkyboxMedia,
-						   AnimationMedia,
-						   ShaderMedia,
-						   ShaderProgramMedia,
-						   ObjModelMedia) MediaList;
+typedef					TYPELIST_7(ImageMedia,
+						     SkyboxMedia,
+						     AnimationMedia,
+						     ShaderMedia,
+						     ShaderProgramMedia,
+						     ObjModelMedia,
+						     TextureMedia) MediaList;
 
 template				<class T>
 struct					MediaHolder
