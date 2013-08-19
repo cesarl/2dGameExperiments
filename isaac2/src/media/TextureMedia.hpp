@@ -36,7 +36,7 @@ public:
     glDeleteBuffers(1, &bufferId_);
   }
 
-  GLuint				bufferId() const
+  GLuint				getBufferId() const
   {
     return bufferId_;
   }

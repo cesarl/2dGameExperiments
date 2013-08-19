@@ -27,7 +27,7 @@ public:
     std::vector<std::string>		list;
     ImageMediaPtr			image;
     GLuint				bufferId;
-std::vector<glm::vec3>			coords;
+    std::vector<glm::vec2>		coords;
 
     if (!myfile.is_open())
       {
@@ -44,9 +44,15 @@ std::vector<glm::vec3>			coords;
 	  }
 	else if (list[0] == "C" && list.size() == 4)
 	  {
-coords.push_back(glm::vec3(std::atof(list[1].c_str()),
-			     std::atof(list[2].c_str()),
-			     std::atof(list[3].c_str())));
+	    for (unsigned int i = 1; i < 4; ++i)
+	      {
+		std::vector<std::string>	sub;
+		split(list[i], sub, ",");
+		if (sub.size() < 2)
+		  throw LoadingFailed(file.getFullName(), "TextureLoader error, coords size is not correct.");
+		coords.push_back(glm::vec2(std::atof(sub[0].c_str()),
+					   std::atof(sub[1].c_str())));
+	      }
 	  }
       }    
 
@@ -57,10 +63,10 @@ coords.push_back(glm::vec3(std::atof(list[1].c_str()),
 
     glGenBuffers(1, &bufferId);
     glBindBuffer(GL_ARRAY_BUFFER, bufferId);
-glBufferData(GL_ARRAY_BUFFER, coords.size() * sizeof(glm::vec3), &coords[0], GL_STATIC_DRAW);
-glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBufferData(GL_ARRAY_BUFFER, coords.size() * sizeof(glm::vec2), &coords[0], GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-return new TextureMedia(bufferId, coords.size(), image, file.getFileName(), force);
+    return new TextureMedia(bufferId, coords.size(), image, file.getFileName(), force);
   }
   virtual void				save(const TextureMedia *, const std::string &name)
   {
