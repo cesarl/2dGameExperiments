@@ -1,5 +1,5 @@
-#ifndef					__IMAGE_HH__
-# define				__IMAGE_HH__
+#ifndef					__IMAGE_MEDIA_HH__
+# define				__IMAGE_MEDIA_HH__
 
 #include				<allegro5/allegro.h>
 #include				<allegro5/allegro_opengl.h>
@@ -9,10 +9,10 @@
 #include				"SmartPointerPolicies.hpp"
 #include				"Vector3d.hh"
 
-class					Image : public Resource
+class					ImageMedia : public Resource
 {
 public:
-  Image(ALLEGRO_BITMAP *bmp, GLuint tex, std::string const & name, bool force) :
+  ImageMedia(ALLEGRO_BITMAP *bmp, GLuint tex, std::string const & name, bool force) :
     Resource(name, force),
     bmp_(bmp),
     tex_(tex)
@@ -35,7 +35,7 @@ public:
     glEndList();
   };
 
-  virtual void				operator=(Image & o)
+  virtual void				operator=(ImageMedia & o)
   {
     if (this->bmp_)
       al_destroy_bitmap(this->bmp_);
@@ -44,7 +44,7 @@ public:
     this->displayList_ = o.displayList_;
   }
 
-  virtual ~Image()
+  virtual ~ImageMedia()
   {
     if (this->bmp_)
       al_destroy_bitmap(this->bmp_);
@@ -72,6 +72,6 @@ private:
   GLuint				displayList_;
 };
 
-typedef					SmartPtr<Image, InternalRef> ImagePtr;
+typedef					SmartPtr<ImageMedia, InternalRef> ImageMediaPtr;
 
-#endif					// __IMAGE_HH__
+#endif					// __IMAGE_MEDIA_HH__

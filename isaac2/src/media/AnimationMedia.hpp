@@ -1,14 +1,14 @@
-#ifndef					__ANIMATION_HH__
-# define				__ANIMATION_HH__
+#ifndef					__ANIMATION_MEDIA_HH__
+# define				__ANIMATION_MEDIA_HH__
 
 #include	                        <glm/glm.hpp>
-#include				"Image.hpp"
+#include				"ImageMedia.hpp"
 #include				"Resource.hh"
 #include				"SmartPointer.hpp"
 #include				"SmartPointerPolicies.hpp"
 
 
-class					Animation : public Resource
+class					AnimationMedia : public Resource
 {
 public:
   struct				Coords
@@ -18,7 +18,7 @@ public:
   };
 
 public:
-  ImagePtr				img;
+  ImageMediaPtr				img;
   double				*timeSteps;
   unsigned int				stepNumber;
   bool					reverse;
@@ -27,7 +27,7 @@ public:
   GLuint				*displayList;
 
 public:
-  Animation(ImagePtr img_,
+  AnimationMedia(ImageMediaPtr img_,
 	    double *timeSteps_,
 	    unsigned int stepNumber_,
 	    bool reverse_,
@@ -70,7 +70,7 @@ public:
       }
   }
 
-  virtual void				operator=(Animation & o)
+  virtual void				operator=(AnimationMedia & o)
   {
     img = o.img;
     timeSteps = o.timeSteps;
@@ -81,7 +81,7 @@ public:
     displayList = o.displayList;
   }
 
-  virtual ~Animation()
+  virtual ~AnimationMedia()
   {
   }
 
@@ -92,6 +92,6 @@ public:
 
 };
 
-typedef					SmartPtr<Animation, InternalRef> AnimationPtr;
+typedef					SmartPtr<AnimationMedia, InternalRef> AnimationMediaPtr;
 
-#endif					// __ANIMATION_HH__
+#endif					// __ANIMATION_MEDIA_HH__

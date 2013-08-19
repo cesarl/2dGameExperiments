@@ -5,15 +5,15 @@
 #include				<allegro5/allegro_opengl.h>
 #include				<map>
 #include				"Loader.hpp"
-#include				"Image.hpp"
-#include				"Skybox.hpp"
+#include				"ImageMedia.hpp"
+#include				"SkyboxMedia.hpp"
 
-class					SkyboxLoader : public Loader<Skybox>
+class					SkyboxLoader : public Loader<SkyboxMedia>
 {
 public:
   virtual ~SkyboxLoader()
   {}
-  virtual Skybox			*load(const File &file, bool force = false)
+  virtual SkyboxMedia			*load(const File &file, bool force = false)
   {
 
     //
@@ -99,10 +99,10 @@ public:
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP);
 
-    return new Skybox(cube_map_texture_ID, bmps, file.getFileName(), force);
+    return new SkyboxMedia(cube_map_texture_ID, bmps, file.getFileName(), force);
   }
 
-  virtual void				save(const Skybox *, const std::string &name)
+  virtual void				save(const SkyboxMedia *, const std::string &name)
   {
     throw LoadingFailed(name, "SkyboxLoader doesn't support SAVE.");
   }

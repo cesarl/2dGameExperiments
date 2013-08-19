@@ -174,9 +174,9 @@ public:
 	if (!open_[i])
 	  {
 	    if (i < width)
-	      spriteC.animation = ResourceManager::getInstance().get<Animation>("wallFront.anim");
+	      spriteC.animation = ResourceManager::getInstance().get<AnimationMedia>("wallFront.anim");
 	    else
-	      spriteC.animation = ResourceManager::getInstance().get<Animation>("wallPlain.anim");
+	      spriteC.animation = ResourceManager::getInstance().get<AnimationMedia>("wallPlain.anim");
 	    EntityManager::getInstance().getEntityData(e).setTag("Wall");
 	    BoundingBox &bbComponent = ComponentManager::getInstance().addComponent<BoundingBox>(e);
 	    bbComponent.set(Vector3d(64.0f, 64.0f, 0.0f));
@@ -186,9 +186,9 @@ public:
 	else
 	  {
 	    if (i % 2)
-	      spriteC.animation = ResourceManager::getInstance().get<Animation>("floor1.anim");
+	      spriteC.animation = ResourceManager::getInstance().get<AnimationMedia>("floor1.anim");
 	    else
-	      spriteC.animation = ResourceManager::getInstance().get<Animation>("floor2.anim");
+	      spriteC.animation = ResourceManager::getInstance().get<AnimationMedia>("floor2.anim");
 	    EntityManager::getInstance().getEntityData(e).setTag("Ground");
 	  }
 	posComponent.position = Vector3d((float)(i % width_) * 64.0f, (float)(i / width_) * 64.0f, 0.0f);

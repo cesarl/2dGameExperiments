@@ -9,7 +9,6 @@
 
 #include			"Singleton.hpp"
 #include			"ComponentTypeManager.hpp"
-#include			"Image.hpp"
 #include			"EntityData.hpp"
 #include			"EntityManager.hpp"
 #include			"SystemManager.hpp"

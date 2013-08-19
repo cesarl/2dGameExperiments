@@ -1,2 +1,3 @@
 VERTEX model.vert
 PIXEL test.pix
+IMAGE first,second,third

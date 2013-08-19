@@ -2,11 +2,11 @@
 # define			__MODEL_COMPONENT_HPP__
 
 #include			"Component.hpp"
-#include			"ObjModel.hpp"
+#include			"ObjModelMedia.hpp"
 
 struct				Model : public Component<Model>
 {
-  ObjModelPtr			obj;
+  ObjModelMediaPtr		obj;
 
   Model				&operator=(const Model &o)
   {

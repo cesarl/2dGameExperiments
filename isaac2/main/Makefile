@@ -16,6 +16,7 @@ CPPFLAGS	+=	-I. -I/usr/include/allegro5 \
 			-I../src/loader \
 			-I../src/system \
 			-I../src/generator \
+			-I../src/media \
 			-I../src
 
 SRCS		=	../src/debug/ILogger.cpp \

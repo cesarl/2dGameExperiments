@@ -38,24 +38,24 @@ public:
     if (sys->isDown(ALLEGRO_KEY_W))
       {
 	vel->velocity.y += input->speed * time;
-	sprite->animation = ResourceManager::getInstance().get<Animation>("herosWalkFront.anim");
+	sprite->animation = ResourceManager::getInstance().get<AnimationMedia>("herosWalkFront.anim");
       }
     if (sys->isDown(ALLEGRO_KEY_S))
       {
 	vel->velocity.y -= input->speed * time;
-	sprite->animation = ResourceManager::getInstance().get<Animation>("herosWalkBack.anim");
+	sprite->animation = ResourceManager::getInstance().get<AnimationMedia>("herosWalkBack.anim");
       }
     if (sys->isDown(ALLEGRO_KEY_A))
       {
 	vel->velocity.x -= input->speed * time;
 	rotation->rotation.y = 0.0f;
-	sprite->animation = ResourceManager::getInstance().get<Animation>("herosWalkSide.anim");
+	sprite->animation = ResourceManager::getInstance().get<AnimationMedia>("herosWalkSide.anim");
       }
     if (sys->isDown(ALLEGRO_KEY_D))
       {
 	vel->velocity.x += input->speed * time;
 	rotation->rotation.y = -180.0f;
-	sprite->animation = ResourceManager::getInstance().get<Animation>("herosWalkSide.anim");
+	sprite->animation = ResourceManager::getInstance().get<AnimationMedia>("herosWalkSide.anim");
       }
     
   }

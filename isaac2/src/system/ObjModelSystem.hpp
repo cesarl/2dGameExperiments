@@ -60,15 +60,15 @@ public:
 			  );
     glEnableVertexAttribArray(0);
 
-    // glBindBuffer(GL_ARRAY_BUFFER, model->obj->getUvBuffer());
-    // glVertexAttribPointer(1,                  // attribute
-    // 			  2,                  // size
-    // 			  GL_FLOAT,           // type
-    // 			  GL_FALSE,           // normalized?
-    // 			  0,                  // stride
-    // 			  (void*)0            // array buffer offset
-    // 			  );
-    // glEnableVertexAttribArray(1);
+    glBindBuffer(GL_ARRAY_BUFFER, model->obj->getUvBuffer());
+    glVertexAttribPointer(1,                  // attribute
+			  2,                  // size
+			  GL_FLOAT,           // type
+			  GL_FALSE,           // normalized?
+			  0,                  // stride
+			  (void*)0            // array buffer offset
+			  );
+    glEnableVertexAttribArray(1);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     glDrawArrays(GL_TRIANGLES, 0, model->obj->getVerticesNumber());

@@ -13,15 +13,20 @@
 #include				"Exception.hh"
 #include				"File.hpp"
 #include				"Singleton.hpp"
-#include				"Image.hpp"
-#include				"Skybox.hpp"
-#include				"Animation.hpp"
-#include				"Shader.hpp"
-#include				"ShaderProgram.hpp"
-#include				"ObjModel.hpp"
+#include				"ImageMedia.hpp"
+#include				"SkyboxMedia.hpp"
+#include				"AnimationMedia.hpp"
+#include				"ShaderMedia.hpp"
+#include				"ShaderProgramMedia.hpp"
+#include				"ObjModelMedia.hpp"
 
 // todo definir la liste des medias pris en charge
-typedef					TYPELIST_6(Image, Skybox, Animation, Shader, ShaderProgram, ObjModel) MediaList;
+typedef					TYPELIST_6(ImageMedia,
+						   SkyboxMedia,
+						   AnimationMedia,
+						   ShaderMedia,
+						   ShaderProgramMedia,
+						   ObjModelMedia) MediaList;
 
 template				<class T>
 struct					MediaHolder

@@ -8,7 +8,7 @@ struct				Sprite : public Component<Sprite>
   unsigned int			index;
   int				cycleCounter;
   double			timeCounter;
-  AnimationPtr			animation;
+  AnimationMediaPtr		animation;
 
   Sprite() :
     index(0),

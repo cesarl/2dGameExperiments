@@ -9,18 +9,18 @@
 #include				<allegro5/allegro_opengl.h>
 #include				<glm/glm.hpp>
 #include				"Loader.hpp"
-#include				"ObjModel.hpp"
+#include				"ObjModelMedia.hpp"
 
-class					ObjLoader : public Loader<ObjModel>
+class					ObjLoader : public Loader<ObjModelMedia>
 {
 public:
-  ObjLoader() : Loader<ObjModel>()
+  ObjLoader() : Loader<ObjModelMedia>()
   {}
 
   virtual ~ObjLoader()
   {}
 
-  virtual ObjModel			*load(const File &file, bool force = false)
+  virtual ObjModelMedia			*load(const File &file, bool force = false)
   {
     std::vector<unsigned int>		vertexI;
     std::vector<unsigned int>		uvI;
@@ -119,9 +119,9 @@ public:
     glBindBuffer(GL_ARRAY_BUFFER, uvBuffer);
     glBufferData(GL_ARRAY_BUFFER, resUvs.size() * sizeof(glm::vec2), &resUvs[0], GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-    return new ObjModel(vertexBuffer, uvBuffer, resVertices.size(), file.getFileName(), force);
+    return new ObjModelMedia(vertexBuffer, uvBuffer, resVertices.size(), file.getFileName(), force);
   }
-  virtual void				save(const ObjModel *, const std::string &name)
+  virtual void				save(const ObjModelMedia *, const std::string &name)
   {
     throw LoadingFailed(name, "ObjLoader doesn't support SAVE.");
   }

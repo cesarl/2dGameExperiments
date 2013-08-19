@@ -5,7 +5,7 @@
 
 struct				Img : public Component<Img>
 {
-  ImagePtr			img;
+  ImageMediaPtr			img;
 
   Img				&operator=(const Img &o )
   {

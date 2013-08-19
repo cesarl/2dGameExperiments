@@ -8,26 +8,26 @@
 #include				<allegro5/allegro.h>
 #include				<allegro5/allegro_opengl.h>
 #include				"Loader.hpp"
-#include				"Shader.hpp"
-#include				"ShaderProgram.hpp"
+#include				"ShaderMedia.hpp"
+#include				"ShaderProgramMedia.hpp"
 
-class					ShaderProgramLoader : public Loader<ShaderProgram>
+class					ShaderProgramLoader : public Loader<ShaderProgramMedia>
 {
 public:
-  ShaderProgramLoader() : Loader<ShaderProgram>()
+  ShaderProgramLoader() : Loader<ShaderProgramMedia>()
   {}
 
   virtual ~ShaderProgramLoader()
   {}
 
-  virtual ShaderProgram			*load(const File &file, bool force = false)
+  virtual ShaderProgramMedia		*load(const File &file, bool force = false)
   {
     GLuint				id;
     std::string				line;
     std::ifstream			myfile(file.getFullName().c_str());
     std::vector<std::string>		list;
-    ShaderPtr shader;
-ShaderProgram				*program;
+    ShaderMediaPtr shader;
+    ShaderProgramMedia			*program;
     GLint				linkStatus = GL_TRUE;
 
     if (!myfile.is_open())
@@ -39,7 +39,7 @@ ShaderProgram				*program;
     if (id == 0)
       throw LoadingFailed(file.getFullName(), "ShaderProgramLoader failed to create shader.");
 
-    program = new ShaderProgram(id, file.getFileName(), force);
+    program = new ShaderProgramMedia(id, file.getFileName(), force);
 
     while (myfile.good())
       {
@@ -49,7 +49,7 @@ ShaderProgram				*program;
 	  continue;
 	if (list[0] == "VERTEX" || list[0] == "PIXEL")
 	  {
-	    shader = ResourceManager::getInstance().get<Shader>(list[1]);
+	    shader = ResourceManager::getInstance().get<ShaderMedia>(list[1]);
 	    glAttachShader(id, shader->getId());
 	    program->add(shader->getId());
 	  }
@@ -70,7 +70,7 @@ ShaderProgram				*program;
 
 return program;
   }
-  virtual void				save(const ShaderProgram *, const std::string &name)
+  virtual void				save(const ShaderProgramMedia *, const std::string &name)
   {
     throw LoadingFailed(name, "ShaderProgramLoader doesn't support SAVE.");
   }

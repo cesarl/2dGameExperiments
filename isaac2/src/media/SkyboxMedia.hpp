@@ -1,5 +1,5 @@
-#ifndef					__SKYBOX_HPP__
-# define				__SKYBOX_HPP__
+#ifndef					__SKYBOX_MEDIA_HPP__
+# define				__SKYBOX_MEDIA_HPP__
 
 #include				<allegro5/allegro.h>
 #include				<allegro5/allegro_opengl.h>
@@ -9,16 +9,16 @@
 #include				"SmartPointer.hpp"
 #include				"SmartPointerPolicies.hpp"
 
-class					Skybox : public Resource
+class					SkyboxMedia : public Resource
 {
 public:
-  Skybox(GLuint tex, ALLEGRO_BITMAP **bmp, std::string const & name, bool force) :
+  SkyboxMedia(GLuint tex, ALLEGRO_BITMAP **bmp, std::string const & name, bool force) :
     Resource(name, force),
     tex_(tex),
     bmp_(bmp)
   {};
 
-  virtual void				operator=(Skybox & o)
+  virtual void				operator=(SkyboxMedia & o)
   {
     this->tex_ = o.tex_;
   }
@@ -101,7 +101,7 @@ public:
 
   }
 
-  virtual ~Skybox()
+  virtual ~SkyboxMedia()
   {
     for (int i = 0; i < 6; ++i)
       {
@@ -116,6 +116,6 @@ private:
   ALLEGRO_BITMAP			**bmp_;
 };
 
-typedef					SmartPtr<Skybox, InternalRef> SkyboxPtr;
+typedef					SmartPtr<SkyboxMedia, InternalRef> SkyboxMediaPtr;
 
-#endif					// __SKYBOX_HPP__
+#endif					// __SKYBOX_MEDIA_HPP__

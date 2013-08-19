@@ -4,19 +4,19 @@
 #include				<allegro5/allegro.h>
 #include				<allegro5/allegro_opengl.h>
 #include				"Loader.hpp"
-#include				"Image.hpp"
+#include				"ImageMedia.hpp"
 
-class					ImageLoader : public Loader<Image>
+class					ImageLoader : public Loader<ImageMedia>
 {
 public:
-  ImageLoader() : Loader<Image>()
+  ImageLoader() : Loader<ImageMedia>()
   {
     // al_set_new_bitmap_flags(ALLEGRO_NO_PREMULTIPLIED_ALPHA);
   }
 
   virtual ~ImageLoader()
   {}
-  virtual Image				*load(const File &file, bool force = false)
+  virtual ImageMedia			*load(const File &file, bool force = false)
   {
     ALLEGRO_BITMAP			*bmp;
     GLuint				tex;
@@ -28,9 +28,9 @@ public:
     tex = al_get_opengl_texture(bmp);
     if (tex == 0)
       throw LoadingFailed(file.getFullName(), "ImageLoader failed to load texture.");
-    return new Image(bmp, tex, file.getFileName(), force);
+    return new ImageMedia(bmp, tex, file.getFileName(), force);
   }
-  virtual void				save(const Image *, const std::string &name)
+  virtual void				save(const ImageMedia *, const std::string &name)
   {
     throw LoadingFailed(name, "ImageLoader doesn't support SAVE.");
   }

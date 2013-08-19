@@ -4,21 +4,21 @@
 #include				<iostream>
 #include				<fstream>
 #include				<string>
-#include				"Animation.hpp"
+#include				"AnimationMedia.hpp"
 #include				"strUtil.hpp"
 #include				"Loader.hpp"
 #include				"ResourceManager.hpp"
 
-class					AnimationLoader : public Loader<Animation>
+class					AnimationLoader : public Loader<AnimationMedia>
 {
 public:
-  AnimationLoader() : Loader<Animation>()
+  AnimationLoader() : Loader<AnimationMedia>()
   {}
 
   virtual ~AnimationLoader()
   {}
 
-  virtual Animation			*load(const File &file, bool force = false)
+  virtual AnimationMedia		*load(const File &file, bool force = false)
   {
     std::string				line;
     std::ifstream			myfile(file.getFullName().c_str());
@@ -33,8 +33,8 @@ public:
     double				*timeSteps = NULL;
     bool				reverse = false;
     int					cycleNumber = 0;
-    Animation::Coords			*coords = NULL;
-    ImagePtr				image;
+    AnimationMedia::Coords		*coords = NULL;
+    ImageMediaPtr			image;
     unsigned int			it = 0;
     std::vector<std::string>		list;
 
@@ -48,7 +48,7 @@ public:
 	else if (list[0] == "IMG")
 	  {
 	    imgFile = list[1];
-	    image = ResourceManager::getInstance().get<Image>(imgFile);
+	    image = ResourceManager::getInstance().get<ImageMedia>(imgFile);
 	  }
 	else if (list[0] == "STEPNB")
 	  {
@@ -78,7 +78,7 @@ public:
 	  {
 	    std::string s = list[1];
 	    split(s, list,";,");
-	    coords = new Animation::Coords[list.size() / 4];
+	    coords = new AnimationMedia::Coords[list.size() / 4];
 	    it = 0;
 	    while (it < list.size())
 	      {
@@ -98,10 +98,10 @@ public:
 	(void)force;
       }
     std::cout << file.getFileName() << " " << imgFile << " " << stepNumber << " " << reverse << " " << cycleNumber << std::endl;	myfile.close();
-    return new Animation(image, timeSteps, stepNumber, reverse, cycleNumber, coords, file.getFileName(), force);
+    return new AnimationMedia(image, timeSteps, stepNumber, reverse, cycleNumber, coords, file.getFileName(), force);
   }
 
-  virtual void				save(const Animation *, const std::string &name)
+  virtual void				save(const AnimationMedia *, const std::string &name)
   {
     throw LoadingFailed(name, "AnimationLoader doesn't support SAVE.");
   }

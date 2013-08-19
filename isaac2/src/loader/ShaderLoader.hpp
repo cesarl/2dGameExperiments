@@ -4,18 +4,18 @@
 #include				<allegro5/allegro.h>
 #include				<allegro5/allegro_opengl.h>
 #include				"Loader.hpp"
-#include				"Shader.hpp"
+#include				"ShaderMedia.hpp"
 
-class					ShaderLoader : public Loader<Shader>
+class					ShaderLoader : public Loader<ShaderMedia>
 {
 public:
-  ShaderLoader() : Loader<Shader>()
+  ShaderLoader() : Loader<ShaderMedia>()
   {}
 
   virtual ~ShaderLoader()
   {}
 
-  virtual Shader			*load(const File &file, bool force = false)
+  virtual ShaderMedia			*load(const File &file, bool force = false)
   {
     GLuint				id = 0;
     GLint				compileStatus = GL_TRUE;
@@ -45,9 +45,9 @@ public:
 	throw LoadingFailed(file.getFullName(), "ShaderLoader failed to compile shader.\n");
       }
 
-    return new Shader(id, file.getFileName(), force);
+    return new ShaderMedia(id, file.getFileName(), force);
   }
-  virtual void				save(const Shader *, const std::string &name)
+  virtual void				save(const ShaderMedia *, const std::string &name)
   {
     throw LoadingFailed(name, "ShaderLoader doesn't support SAVE.");
   }

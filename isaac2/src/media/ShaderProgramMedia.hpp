@@ -1,5 +1,5 @@
-#ifndef					__SHADER_PROGRAM_HH__
-# define				__SHADER_PROGRAM_HH__
+#ifndef					__SHADER_PROGRAM_MEDIA_HH__
+# define				__SHADER_PROGRAM_MEDIA_HH__
 
 #include				<allegro5/allegro.h>
 #include				<allegro5/allegro_opengl.h>
@@ -9,10 +9,10 @@
 #include				"SmartPointerPolicies.hpp"
 #include				"Vector3d.hh"
 
-class					ShaderProgram : public Resource
+class					ShaderProgramMedia : public Resource
 {
 public:
-  ShaderProgram(GLuint id, std::string const & name, bool force) :
+  ShaderProgramMedia(GLuint id, std::string const & name, bool force) :
     Resource(name, force),
     id_(id)
   {
@@ -20,14 +20,14 @@ public:
     shaders_[1] = 0;
   }
 
-  virtual void				operator=(ShaderProgram & o)
+  virtual void				operator=(ShaderProgramMedia & o)
   {
     id_ = o.id_;
     shaders_[0] = o.shaders_[0];
     shaders_[1] = o.shaders_[1];
   }
 
-  virtual ~ShaderProgram()
+  virtual ~ShaderProgramMedia()
   {
     if (id_ != 0)
       glDeleteProgram(id_);
@@ -77,6 +77,6 @@ private:
   GLuint				shaders_[2];
 };
 
-typedef					SmartPtr<ShaderProgram, InternalRef> ShaderProgramPtr;
+typedef					SmartPtr<ShaderProgramMedia, InternalRef> ShaderProgramMediaPtr;
 
-#endif					// __SHADER_PROGRAM_HH__
+#endif					// __SHADER_PROGRAM_MEDIA_HH__
