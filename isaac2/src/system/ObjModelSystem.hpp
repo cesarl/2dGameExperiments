@@ -16,7 +16,7 @@ public:
   {
     require<Model>();
     require<Position>();
-    require<Texture>();
+    require<Shader>();
     // require<Rotation>();
     // require<Scale>();
     // require<Color>();
@@ -26,13 +26,16 @@ public:
   {
     Model			*model = ComponentManager::getInstance().getComponent<Model>(entity);
     Position			*pos = ComponentManager::getInstance().getComponent<Position>(entity);
-    Texture			*texture = ComponentManager::getInstance().getComponent<Texture>(entity);
+    Shader			*shader = ComponentManager::getInstance().getComponent<Shader>(entity);
 
     glPushMatrix();
     
     glTranslatef(pos->position.x, pos->position.y, pos->position.z);
 
-    // here
+    // enable shader
+    glUseProgram(shader->getProgram()->getId());
+
+    // apply vertex buffer
     glBindBuffer(GL_ARRAY_BUFFER, model->obj->getVertexBuffer());
     glVertexAttribPointer(0,                  // attribute
 			  3,                  // size
@@ -43,20 +46,45 @@ public:
 			  );
     glEnableVertexAttribArray(0);
 
-    glBindBuffer(GL_ARRAY_BUFFER, texture->texture->getBufferId());
-    glVertexAttribPointer(1,                  // attribute
-			  2,                  // size
-			  GL_FLOAT,           // type
-			  GL_FALSE,           // normalized?
-			  0,                  // stride
-			  (void*)0            // array buffer offset
-			  );
-    glEnableVertexAttribArray(1);
+    // bind textures buffers
+    shader->bindTexturesBuffers();
+
+    // unbind buffers
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindTexture(GL_TEXTURE_2D, texture->texture->getImage()->getTexture());
+
+    // pass textures to shaders
+    shader->bindTextures();
+    // texLoc = glGetUniformLocation(ShaderID, "BaseMap");
+    // glUniform1i(texLoc, 0);
+
+    // texLoc = glGetUniformLocation(ShaderID, "ReflectMap");
+    // glUniform1i(texLoc, 1);
+
+    // texLoc = glGetUniformLocation(ShaderID, "RefractMap");
+    // glUniform1i(texLoc, 2);
+
+
+    // glActiveTexture(GL_TEXTURE0);
+    // glBindTexture(GL_TEXTURE_2D, Base);
+
+    // glActiveTexture(GL_TEXTURE1);
+    // glBindTexture(GL_TEXTURE_2D, Reflection);
+
+    // glActiveTexture(GL_TEXTURE2);
+    // glBindTexture(GL_TEXTURE_2D, Refraction);
+
+
+    // glBindTexture(GL_TEXTURE_2D, texture->texture->getImage()->getTexture());
+
     glDrawArrays(GL_TRIANGLES, 0, model->obj->getVerticesNumber());
+    shader->drawTexturesBuffers();
+
+    glBindTexture(GL_TEXTURE_2D, 0);
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
+
+    // disable shader
+    glUseProgram(0);
     glPopMatrix();
 
     (void)ev;

@@ -25,6 +25,7 @@ public:
     id_ = o.id_;
     shaders_[0] = o.shaders_[0];
     shaders_[1] = o.shaders_[1];
+    textures_ = o.textures_;
   }
 
   virtual ~ShaderProgramMedia()
@@ -61,20 +62,32 @@ public:
     glUseProgram(0);
   }
 
-  GLint					getVarId(const std::string &name)
+  int					getVarId(const std::string &name)
   {
-    GLint				res;
+    int					res;
 
-    res = glGetUniformLocation(id_, name.c_str());
+    return glGetUniformLocation(id_, name.c_str());
     if (res < 0)
       {
 	throw UniformLocationUnknown(name, gluErrorString(glGetError()));
       }
     return res;
   }
+
+  void					setTextures(const std::map<std::string, std::string> & textures)
+  {
+    textures_ = textures;
+  }
+
+  std::map<std::string, std::string>	&getTextures()
+  {
+    return textures_;
+  }
+
 private:
   GLuint				id_;
   GLuint				shaders_[2];
+  std::map<std::string, std::string> textures_;
 };
 
 typedef					SmartPtr<ShaderProgramMedia, InternalRef> ShaderProgramMediaPtr;

@@ -140,6 +140,8 @@ int					main()
       ComponentManager::getInstance().addComponent<Texture>(e).setTexture("crate.text");
       ComponentManager::getInstance().addComponent<Position>(e).position = Vector3d(64.0f * 2.0f, 64.0f * 2.0f, 0.1f);
       ComponentManager::getInstance().addComponent<Model>(e).obj = ResourceManager::getInstance().get<ObjModelMedia>("cube.obj");
+      Shader &shader = ComponentManager::getInstance().addComponent<Shader>(e);
+      shader.setShader("test.prgm");
       EventManager::getInstance().play();
     }
   catch (const std::exception &e)

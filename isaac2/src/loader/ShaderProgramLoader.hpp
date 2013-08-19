@@ -5,6 +5,7 @@
 #include				<fstream>
 #include				<string>
 #include				<vector>
+#include				<map>
 #include				<allegro5/allegro.h>
 #include				<allegro5/allegro_opengl.h>
 #include				"Loader.hpp"
@@ -26,13 +27,14 @@ public:
     std::string				line;
     std::ifstream			myfile(file.getFullName().c_str());
     std::vector<std::string>		list;
+std::map<std::string, std::string>	textures;
     ShaderMediaPtr shader;
     ShaderProgramMedia			*program;
     GLint				linkStatus = GL_TRUE;
 
     if (!myfile.is_open())
       {
-	throw LoadingFailed(file.getFullName(), "AnimationLoader failed to load animation.");
+	throw LoadingFailed(file.getFullName(), "ShaderProgramLoader failed to load shader.");
       }
 
     id = glCreateProgram();
@@ -53,7 +55,23 @@ public:
 	    glAttachShader(id, shader->getId());
 	    program->add(shader->getId());
 	  }
+	else if (list[0] == "TEXTURES" && list.size() == 2)
+	  {
+	    std::vector<std::string>	sub;
+
+	    split(list[1], sub, ",");
+	    for (unsigned int i = 0; i < sub.size(); ++i)
+	      {
+		std::vector<std::string>	val;
+		split(sub[i], val, ":");
+		if (val.size() <= 1)
+		  continue;
+textures.insert(std::pair<std::string, std::string>(val[0], val[1]));
+	      }
+	  }
       }    
+
+program->setTextures(textures);
 
     glLinkProgram(id);
 
@@ -66,9 +84,7 @@ public:
 	std::cout << std::endl << log;
 	throw LoadingFailed(file.getFullName(), "ShaderProgramLoader failed to link program.\n");
       }
-
-
-return program;
+    return program;
   }
   virtual void				save(const ShaderProgramMedia *, const std::string &name)
   {

@@ -50,6 +50,7 @@ public:
   {
     return img_;
   }
+
 private:
   GLuint			bufferId_;
   unsigned int			bufferSize_;
