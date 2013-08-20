@@ -22,7 +22,6 @@
 #include			"SmellPosition.hpp"
 #include			"CollidablePosition.hpp"
 #include			"Model.hpp"
-#include			"Texture.hpp"
 #include			"Shader.hpp"
 
 #endif				// __COMPONENTS_HPP__
