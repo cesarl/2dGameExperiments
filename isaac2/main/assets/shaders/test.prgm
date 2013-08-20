@@ -1,3 +1,0 @@
-VERTEX       test.vert
-PIXEL        test.pix
-TEXTURES     mainTexture:null,secondText:cube.text,thirdTexture:crate.text

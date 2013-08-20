@@ -9,6 +9,7 @@ CPPFLAGS	=	-W -Wextra -Wall -Werror -MMD -g -fno-omit-frame-pointer #-O2
 LDFLAGS		=	-L/usr/lib -lallegro -lallegro_dialog -lallegro_primitives -lallegro_ttf -lallegro_font -lallegro_image -lGLU
 
 CPPFLAGS	+=	-I. -I/usr/include/allegro5 \
+			-I../vendors \
 			-I../src/debug \
 			-I../src/manager \
 			-I../src/utilities \
@@ -26,6 +27,7 @@ SRCS		=	../src/debug/ILogger.cpp \
 			../src/manager/ComponentManager.cpp \
 			../src/manager/EntityManager.cpp \
 			../src/manager/SystemManager.cpp \
+			../vendors/tiny_obj_loader.cpp \
 			main.cpp
 
 

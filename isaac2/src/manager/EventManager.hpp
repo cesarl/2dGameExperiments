@@ -7,8 +7,8 @@
 #include				"Camera.hpp"
 #include				"SystemManager.hpp"
 
-//static Camera<Orthographic, FlatCamera> camera;
-static Camera<Perspective, FreeFly> camera;
+static Camera<Orthographic, FlatCamera> camera;
+//static Camera<Perspective, FreeFly> camera;
 
 class					EventManager : public Singleton<EventManager>
 {

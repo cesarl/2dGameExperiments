@@ -1,6 +1,6 @@
 # This file uses centimeters as units for non-parametric coordinates.
 
-mtllib MedievalBarrel_OBJ.mtl
+# mtllib assets/models/MedievalBarrel_OBJ.mtl
 g default
 v 1.767015 0.000000 -0.473470
 v 1.584262 0.000000 -0.914674

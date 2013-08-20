@@ -137,14 +137,28 @@ int					main()
       /////////////////////////////////////
 
       e = EntityManager::getInstance().newEntity();
-      ComponentManager::getInstance().addComponent<Position>(e).position = glm::vec3(64.0f * 2.0f, 64.0f * 2.0f, 0.1f);
+      ComponentManager::getInstance().addComponent<Position>(e).position = glm::vec3(64.0f * 2.0f, 64.0f * 2.0f, 50.0f);
       ComponentManager::getInstance().addComponent<Model>(e).obj = ResourceManager::getInstance().get<ObjModelMedia>("cube.obj");
       ComponentManager::getInstance().addComponent<Scale>(e).scale = glm::vec3(50.0f, 50.0f, 50.0f);
       ComponentManager::getInstance().addComponent<Rotation>(e).rotation = glm::vec3(45.0f,0.0f,0.0f);
-      ComponentManager::getInstance().addComponent<Color>(e) = Color(1.0f, 0.0f, 0.0f, 1.0f);
+      ComponentManager::getInstance().addComponent<Color>(e) = Color(0.0f, 0.0f, 1.0f, 1.0f);
+      ComponentManager::getInstance().addComponent<RotationForce>(e).force = glm::vec3(10.0f,15.0f,6.0f);
 
       Shader &shader = ComponentManager::getInstance().addComponent<Shader>(e);
-      shader.setShader("test.prgm");
+      shader.setShader("cube.prgm");
+
+
+      e = EntityManager::getInstance().newEntity();
+      ComponentManager::getInstance().addComponent<Position>(e).position = glm::vec3(64.0f * 4.0f, 64.0f * 2.0f, 50.0f);
+      ComponentManager::getInstance().addComponent<Model>(e).obj = ResourceManager::getInstance().get<ObjModelMedia>("plane.obj");
+      ComponentManager::getInstance().addComponent<Scale>(e).scale = glm::vec3(30.0f, 30.0f, 30.0f);
+      ComponentManager::getInstance().addComponent<Rotation>(e).rotation = glm::vec3(45.0f,0.0f,0.0f);
+      ComponentManager::getInstance().addComponent<Color>(e) = Color(0.0f, 1.0f, 0.0f, 1.0f);
+      ComponentManager::getInstance().addComponent<RotationForce>(e).force = glm::vec3(10.0f,15.0f,6.0f);
+
+      Shader &shader2 = ComponentManager::getInstance().addComponent<Shader>(e);
+      shader2.setShader("plane.prgm");
+
       EventManager::getInstance().play();
     }
   catch (const std::exception &e)
