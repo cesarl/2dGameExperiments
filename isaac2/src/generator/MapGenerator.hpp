@@ -179,7 +179,7 @@ public:
 	      spriteC.animation = ResourceManager::getInstance().get<AnimationMedia>("wallPlain.anim");
 	    EntityManager::getInstance().getEntityData(e).setTag("Wall");
 	    BoundingBox &bbComponent = ComponentManager::getInstance().addComponent<BoundingBox>(e);
-	    bbComponent.set(Vector3d(64.0f, 64.0f, 0.0f));
+	    bbComponent.set(glm::vec3(64.0f, 64.0f, 0.0f));
 	    Physic &phy = ComponentManager::getInstance().addComponent<Physic>(e);
 	    phy.fixed = true;
 	  }
@@ -191,9 +191,9 @@ public:
 	      spriteC.animation = ResourceManager::getInstance().get<AnimationMedia>("floor2.anim");
 	    EntityManager::getInstance().getEntityData(e).setTag("Ground");
 	  }
-	posComponent.position = Vector3d((float)(i % width_) * 64.0f, (float)(i / width_) * 64.0f, 0.0f);
-	scaleComponent.scale = Vector3d(64.0f, 64.0f, 0.0f);
-	// rotForce.force = Vector3d(0.0f, 0.0f, 25.0f);
+	posComponent.position = glm::vec3((float)(i % width_) * 64.0f, (float)(i / width_) * 64.0f, 0.0f);
+	scaleComponent.scale = glm::vec3(64.0f, 64.0f, 0.0f);
+	// rotForce.force = glm::vec3(0.0f, 0.0f, 25.0f);
 	this->entities_.push_back(e);
       }
   }

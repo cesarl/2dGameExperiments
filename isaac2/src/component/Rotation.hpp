@@ -1,16 +1,17 @@
 #ifndef				__ROTATION_COMPONENT_HPP__
 # define			__ROTATION_COMPONENT_HPP__
 
+#include			<glm/glm.hpp>
 #include			"Component.hpp"
 
 struct				Rotation : public Component<Rotation>
 {
-  Vector3d			rotation;
-  Vector3d			axe;
+  glm::vec3			rotation;
+  glm::vec3			axe;
 
   Rotation()
   {
-    axe = Vector3d(0.5f, 0.5f, 0.5f);
+    axe = glm::vec3(0.5f, 0.5f, 0.5f);
   }
 };
 

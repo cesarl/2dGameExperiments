@@ -23,7 +23,7 @@ public:
     Position			*pos = ComponentManager::getInstance().getComponent<Position>(entity);
     Velocity			*vel = ComponentManager::getInstance().getComponent<Velocity>(entity);
 
-    Vector3d inc = vel->velocity;
+    glm::vec3 inc = vel->velocity;
     inc *= time;
     pos->position += inc;
   }

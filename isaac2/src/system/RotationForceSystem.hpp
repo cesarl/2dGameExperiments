@@ -26,7 +26,7 @@ public:
     Rotation			*rot = ComponentManager::getInstance().getComponent<Rotation>(entity);
     RotationForce		*force = ComponentManager::getInstance().getComponent<RotationForce>(entity);
 
-    Vector3d inc = force->force;
+    glm::vec3 inc = force->force;
     inc *= time;
     rot->rotation += inc;
   }

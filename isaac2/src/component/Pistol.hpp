@@ -1,6 +1,7 @@
 #ifndef				__PISTOL_COMPONENT_HPP__
 # define			__PISTOL_COMPONENT_HPP__
 
+#include			<glm/glm.hpp>
 #include			"Component.hpp"
 
 struct				Pistol : public Component<Pistol>
@@ -9,7 +10,7 @@ struct				Pistol : public Component<Pistol>
   float				fireRateCache;
   float				fireForce;
   int				fireType; // le type ne sert a rien pour le moment - il servira a changer de type de projectile
-  Vector3d			relativePosition;
+  glm::vec3			relativePosition;
 
   Pistol()
   {
@@ -17,7 +18,7 @@ struct				Pistol : public Component<Pistol>
     fireRateCache = 0.0f;
     fireForce = 1.0f;
     fireType = 1.0f;
-    relativePosition = Vector3d(0.0f, 0.0f, 0.0f);
+    relativePosition = glm::vec3(0.0f, 0.0f, 0.0f);
   };
 };
 

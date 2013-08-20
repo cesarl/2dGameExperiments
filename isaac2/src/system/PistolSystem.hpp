@@ -22,7 +22,7 @@ public:
   }
 
 
-  unsigned int			createBullet(const Vector3d & position, const Vector3d & dir, EntityData &entity)
+  unsigned int			createBullet(const glm::vec3 & position, const glm::vec3 & dir, EntityData &entity)
   {
     unsigned int		e;
     static ComponentManager	&c = ComponentManager::getInstance();
@@ -43,7 +43,7 @@ public:
     Lifetime &life = c.addComponent<Lifetime>(e);
 
     c.addComponent<VelocityFriction>(e).friction = 0.9999f;
-    bbComponent.set(Vector3d(32.0f, 32.0f, 0.0f));
+    bbComponent.set(glm::vec3(32.0f, 32.0f, 0.0f));
     phy.fixed = false;
     vel.velocity = dir;
     vel.velocity *= 700.0f;
@@ -56,8 +56,8 @@ public:
     posComponent.position = position;
     posComponent.position.z = 1000;
     spriteComponent.animation = ResourceManager::getInstance().get<AnimationMedia>("test.anim");
-    scaleComponent.scale = Vector3d(32.0f, 32.0f, 0.0f);
-    rotForce.force = Vector3d(0.0f, 0.0f, 25.0f);
+    scaleComponent.scale = glm::vec3(32.0f, 32.0f, 0.0f);
+    rotForce.force = glm::vec3(0.0f, 0.0f, 25.0f);
     colorComponent = (Color(1.0f, 1.0f, 1.0f, 1.0f));
     life.time = 3.0f;
 
@@ -80,44 +80,44 @@ public:
       }
 
     unsigned int b = 0;
-    Vector3d dir;
+    glm::vec3 dir;
     Position			*position = ComponentManager::getInstance().getComponent<Position>(entity);
 
     if (sys->isDown(ALLEGRO_KEY_LEFT)
 	&& sys->isDown(ALLEGRO_KEY_UP)) // left up
       {
-	b = createBullet(position->position, Vector3d(-1, 1, 0), entity);
+	b = createBullet(position->position, glm::vec3(-1, 1, 0), entity);
       }
     else if (sys->isDown(ALLEGRO_KEY_LEFT)
 	     && sys->isDown(ALLEGRO_KEY_DOWN)) // left down
       {
-	b = createBullet(position->position, Vector3d(-1, -1, 0), entity);
+	b = createBullet(position->position, glm::vec3(-1, -1, 0), entity);
       }
     else if (sys->isDown(ALLEGRO_KEY_RIGHT)
 	     && sys->isDown(ALLEGRO_KEY_UP)) // right up
       {
-	b = createBullet(position->position, Vector3d(1, 1, 0), entity);
+	b = createBullet(position->position, glm::vec3(1, 1, 0), entity);
       }
     else if (sys->isDown(ALLEGRO_KEY_RIGHT)
 	     && sys->isDown(ALLEGRO_KEY_DOWN)) // right down
       {
-	b = createBullet(position->position, Vector3d(1, -1, 0), entity);
+	b = createBullet(position->position, glm::vec3(1, -1, 0), entity);
       }
     else if (sys->isDown(ALLEGRO_KEY_LEFT)) // left
       {
-	b = createBullet(position->position, Vector3d(-1, 0, 0), entity);
+	b = createBullet(position->position, glm::vec3(-1, 0, 0), entity);
       }
     else if (sys->isDown(ALLEGRO_KEY_RIGHT)) // right
       {
-	b = createBullet(position->position, Vector3d(1, 0, 0), entity);
+	b = createBullet(position->position, glm::vec3(1, 0, 0), entity);
       }
     else if (sys->isDown(ALLEGRO_KEY_UP)) // up
       {
-	b = createBullet(position->position, Vector3d(0, 1, 0), entity);
+	b = createBullet(position->position, glm::vec3(0, 1, 0), entity);
       }
     else if (sys->isDown(ALLEGRO_KEY_DOWN)) // down
       {
-	b = createBullet(position->position, Vector3d(0, -1, 0), entity);
+	b = createBullet(position->position, glm::vec3(0, -1, 0), entity);
       }
 
     if (b == 0)

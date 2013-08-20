@@ -17,9 +17,9 @@ public:
     require<Model>();
     require<Position>();
     require<Shader>();
-    // require<Rotation>();
+    require<Rotation>();
     require<Scale>();
-    // require<Color>();
+    require<Color>();
   }
 
   virtual void			update(EntityData &entity, float, const ALLEGRO_EVENT &ev)
@@ -28,6 +28,8 @@ public:
     Position			*pos = ComponentManager::getInstance().getComponent<Position>(entity);
     Shader			*shader = ComponentManager::getInstance().getComponent<Shader>(entity);
     Scale			*scale = ComponentManager::getInstance().getComponent<Scale>(entity);
+    Rotation			*rot = ComponentManager::getInstance().getComponent<Rotation>(entity);
+    Color			*color = ComponentManager::getInstance().getComponent<Color>(entity);
 
     glPushMatrix();
 
@@ -36,9 +38,21 @@ public:
     
     glTranslatef(pos->position.x, pos->position.y, pos->position.z);
 
-    // glScalef(scale->scale.x, scale->scale.y, scale->scale.z);
-    (void)scale;
-    // glUniform1i(program_->getVarId(it->first), i);
+    glUniform3f(shader->getProgram()->getVarId("scale"), scale->scale.x, scale->scale.y, scale->scale.z);
+
+    glColor4f(color->r, color->g, color->b, color->a);
+
+    glTranslatef(rot->axe.x,
+		 rot->axe.y,
+		 rot->axe.z);
+
+    glRotatef(rot->rotation.x, 1.0f, 0.0f, 0.0f);
+    glRotatef(rot->rotation.y, 0.0f, 1.0f, 0.0f);
+    glRotatef(rot->rotation.z, 0.0f, 0.0f, 1.0f);
+
+    glTranslatef(- rot->axe.x,
+		 - rot->axe.y,
+		 - rot->axe.z);
 
     shader->bindTextures();
     glBindBuffer(GL_ARRAY_BUFFER, model->obj->getVertexBuffer());    

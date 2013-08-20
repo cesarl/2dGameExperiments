@@ -1,13 +1,14 @@
 #ifndef				__SCALE_COMPONENT_HPP__
 # define			__SCALE_COMPONENT_HPP__
 
+#include			<glm/glm.hpp>
 #include			"Component.hpp"
 
 struct				Scale : public Component<Scale>
 {
-  Vector3d			scale;
+  glm::vec3			scale;
 
-  Scale() : scale(Vector3d(1.0f, 1.0f, 1.0f))
+  Scale() : scale(glm::vec3(1.0f, 1.0f, 1.0f))
   {}
 };
 

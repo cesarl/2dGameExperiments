@@ -55,7 +55,7 @@ public:
     if (ComponentManager::getInstance().hasComponent<Velocity>(entity))
       {
 	Velocity		*vel = ComponentManager::getInstance().getComponent<Velocity>(entity);
-	Vector3d		v = vel->velocity;
+	glm::vec3		v = vel->velocity;
 	v *= time;
 	bb->from +=  v;
       }
@@ -79,10 +79,10 @@ public:
     // 	ComponentManager::getInstance().removeComponent<Collision>(entity);
     //   }
 
-    Vector3d from = bb->from;
-    from /= Vector3d(side_, side_, 0);
-    Vector3d to = bb->to;
-    to /= Vector3d(side_, side_, 0);
+    glm::vec3 from = bb->from;
+    from /= glm::vec3(side_, side_, 0);
+    glm::vec3 to = bb->to;
+    to /= glm::vec3(side_, side_, 0);
 
     for (int i = from.x; i <= to.x; ++i)
       {

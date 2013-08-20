@@ -117,11 +117,11 @@ int					main()
       ComponentManager::getInstance().addComponent<Pistol>(e);
 
       colorC = Color(1.0f, 0.0f, 0.0f, 1.0f);
-      bbC.set(Vector3d(50.0f, 45.0f, 0.0f));
-      posC.position = Vector3d(64.0f * 2.0f, 64.0f * 2.0f, 0.1f);
+      bbC.set(glm::vec3(50.0f, 45.0f, 0.0f));
+      posC.position = glm::vec3(64.0f * 2.0f, 64.0f * 2.0f, 0.1f);
       Sprite &spriteC = ComponentManager::getInstance().addComponent<Sprite>(e);
       spriteC.animation = ResourceManager::getInstance().get<AnimationMedia>("herosWalkSide.anim");
-      scaleC.scale = Vector3d(50.0f, 45.0f, 0.0f);
+      scaleC.scale = glm::vec3(50.0f, 45.0f, 0.0f);
       phy.fixed = false;
 
 
@@ -138,9 +138,11 @@ int					main()
 
       e = EntityManager::getInstance().newEntity();
       ComponentManager::getInstance().addComponent<Texture>(e).setTexture("crate.text");
-      ComponentManager::getInstance().addComponent<Position>(e).position = Vector3d(64.0f * 2.0f, 64.0f * 2.0f, 0.1f);
+      ComponentManager::getInstance().addComponent<Position>(e).position = glm::vec3(64.0f * 2.0f, 64.0f * 2.0f, 0.1f);
       ComponentManager::getInstance().addComponent<Model>(e).obj = ResourceManager::getInstance().get<ObjModelMedia>("cube.obj");
-      ComponentManager::getInstance().addComponent<Scale>(e).scale = Vector3d(50.0f, 45.0f, 0.0f);
+      ComponentManager::getInstance().addComponent<Scale>(e).scale = glm::vec3(50.0f, 50.0f, 50.0f);
+      ComponentManager::getInstance().addComponent<Rotation>(e).rotation = glm::vec3(45.0f,0.0f,0.0f);
+      ComponentManager::getInstance().addComponent<Color>(e) = Color(1.0f, 0.0f, 0.0f, 1.0f);
       Shader &shader = ComponentManager::getInstance().addComponent<Shader>(e);
       shader.setShader("test.prgm");
       EventManager::getInstance().play();

@@ -1,17 +1,17 @@
 #ifndef					__CAMERA_HPP__
 # define				__CAMERA_HPP__
 
+#include				<glm/glm.hpp>
 #include                                <allegro5/allegro.h>
 #include				<GL/glu.h>
 #include				<cmath>
-#include				"Vector3d.hh"
 
 class					FlatCamera
 {
 public:
   explicit				FlatCamera() throw() :
-    position_(Vector3d(0.0f, 0.0f, 0.0f)),
-    rotation_(Vector3d(0.0f, 0.0f, 0.0f)),
+    position_(glm::vec3(0.0f, 0.0f, 0.0f)),
+    rotation_(glm::vec3(0.0f, 0.0f, 0.0f)),
     speed_(30.0f)
   {}
 
@@ -36,8 +36,8 @@ public:
     // static float			lastTime = -1;
     // ALLEGRO_KEYBOARD_STATE		k;
     // float				speed;
-    // Vector3d				direction;
-    // Vector3d				angle;
+    // glm::vec3				direction;
+    // glm::vec3				angle;
 
     // al_get_keyboard_state(&k);
 
@@ -45,40 +45,40 @@ public:
     //   lastTime = al_get_time();
     // speed = (time - lastTime) * this->speed_;
 
-    // direction = Vector3d(0,0,0);
-    // angle = Vector3d(0,0,0);
+    // direction = glm::vec3(0,0,0);
+    // angle = glm::vec3(0,0,0);
 
     // if (al_key_down(&k, ALLEGRO_KEY_W))
     //   {
-    // 	direction += Vector3d(0, 1, 0);// * Vector3d(speed, speed, speed);
+    // 	direction += glm::vec3(0, 1, 0);// * glm::vec3(speed, speed, speed);
     //   }
     // if (al_key_down(&k, ALLEGRO_KEY_S))
     //   {
-    // 	direction -= Vector3d(0, 1, 0);
+    // 	direction -= glm::vec3(0, 1, 0);
     //   }
     // if (al_key_down(&k, ALLEGRO_KEY_A))
     //   {
-    // 	direction += Vector3d(1, 0, 0);
+    // 	direction += glm::vec3(1, 0, 0);
     //   }
     // if (al_key_down(&k, ALLEGRO_KEY_D))
     //   {
-    // 	direction -= Vector3d(1, 0, 0);
+    // 	direction -= glm::vec3(1, 0, 0);
     //   }
     // if (al_key_down(&k, ALLEGRO_KEY_Q))
     //   {
-    // 	angle -= Vector3d(0, 1, 0);
+    // 	angle -= glm::vec3(0, 1, 0);
     //   }
     // if (al_key_down(&k, ALLEGRO_KEY_E))
     //   {
-    // 	angle += Vector3d(0, 1, 0);
+    // 	angle += glm::vec3(0, 1, 0);
     //   }
     // if (al_key_down(&k, ALLEGRO_KEY_Z))
     //   {
-    // 	angle -= Vector3d(1, 0, 0);
+    // 	angle -= glm::vec3(1, 0, 0);
     //   }
     // if (al_key_down(&k, ALLEGRO_KEY_X))
     //   {
-    // 	angle += Vector3d(1, 0, 0);
+    // 	angle += glm::vec3(1, 0, 0);
     //   }
 
     // angle *= speed;
@@ -91,18 +91,18 @@ public:
     (void)time;
   }
 
-  inline const Vector3d			&getPosition() const throw()
+  inline const glm::vec3			&getPosition() const throw()
   {
     return this->position_;
   }
 
-  inline const Vector3d			&getRotation() const throw()
+  inline const glm::vec3			&getRotation() const throw()
   {
     return this->rotation_;
   }
 private:
-  Vector3d				position_;
-  Vector3d				rotation_;
+  glm::vec3				position_;
+  glm::vec3				rotation_;
   float					speed_;
 };
 
@@ -110,9 +110,9 @@ class					FreeFly
 {
 public:
   explicit				FreeFly() throw() :
-    position_(Vector3d(0.0f, 0.0f, 200.0f)),
-    forward_(Vector3d(0.0f, 0.0f, 0.0f)),
-    focus_(Vector3d(0.0f, 0.0f, 0.0f)),
+    position_(glm::vec3(0.0f, 0.0f, 200.0f)),
+    forward_(glm::vec3(0.0f, 0.0f, 0.0f)),
+    focus_(glm::vec3(0.0f, 0.0f, 0.0f)),
     theta_(0.0f),
     phi_(0.0f),
     sensitivity_(1.0f),
@@ -125,13 +125,13 @@ public:
   inline bool				initBehavior() throw()
   {
     ALLEGRO_DISPLAY			*d;
-    Vector3d				pos;
-    Vector3d				center;
+    glm::vec3				pos;
+    glm::vec3				center;
 
     d = al_get_current_display();
     if (!d)
       return false;
-    center = Vector3d(al_get_display_width(d) / 2.0f, al_get_display_height(d) / 2.0f, 0.0f);
+    center = glm::vec3(al_get_display_width(d) / 2.0f, al_get_display_height(d) / 2.0f, 0.0f);
     // al_set_mouse_xy(d, center.x, center.y);
     // al_grab_mouse(d);
 
@@ -147,10 +147,10 @@ public:
 
   {
     ALLEGRO_MOUSE_STATE			state;
-    Vector3d				pos;
+    glm::vec3				pos;
 
     al_get_mouse_state(&state);
-    pos = Vector3d(state.x, state.y, 0.0f);
+    pos = glm::vec3(state.x, state.y, 0.0f);
     this->focus_ -= pos;
 
     this->theta_ -= (float)this->focus_.x * this->sensitivity_;
@@ -163,7 +163,7 @@ public:
     glRotatef(this->phi_, 1.0f, 0.0f, 0.0f);
     glRotatef(this->theta_, 0.0f, 1.0f, 0.0f);
     glTranslatef(-this->position_.x, -this->position_.y, -this->position_.z);
-    this->rotation_ = Vector3d(this->phi_, this->theta_, 0.0f);
+    this->rotation_ = glm::vec3(this->phi_, this->theta_, 0.0f);
   }
 
   inline void				inputBehavior(float time, const ALLEGRO_EVENT &ev)
@@ -179,31 +179,31 @@ public:
 
     if (al_key_down(&k, ALLEGRO_KEY_W))
       {
-	this->position_ += this->forward_ * Vector3d(speed, speed, speed);
+	this->position_ += this->forward_ * glm::vec3(speed, speed, speed);
       }
     if (al_key_down(&k, ALLEGRO_KEY_S))
       {
-	this->position_ -= this->forward_ * Vector3d(speed, speed, speed);
+	this->position_ -= this->forward_ * glm::vec3(speed, speed, speed);
       }
     if (al_key_down(&k, ALLEGRO_KEY_A))
       {
-	Vector3d up(0.0f, 1.0f, 0.0f);
-	Vector3d left = up.crossProduct(this->forward_);
-	this->position_ += left.normal();
+	glm::vec3 up(0.0f, 1.0f, 0.0f);
+	glm::vec3 left = glm::cross(up, forward_);
+	this->position_ += glm::normalize(left);
       }
     if (al_key_down(&k, ALLEGRO_KEY_D))
       {
-	Vector3d up(0.0f, 1.0f, 0.0f);
-	Vector3d left = up.crossProduct(this->forward_);
-	this->position_ -= left.normal();
+	glm::vec3 up(0.0f, 1.0f, 0.0f);
+	glm::vec3 left = glm::cross(up, forward_);
+	this->position_ -= glm::normalize(left);
       }
     if (al_key_down(&k, ALLEGRO_KEY_Q))
       {
-	this->position_ += Vector3d(0.0f, speed / 20.0f, 0.0f);
+	this->position_ += glm::vec3(0.0f, speed / 20.0f, 0.0f);
       }
     if (al_key_down(&k, ALLEGRO_KEY_E))
       {
-	this->position_ -= Vector3d(0.0f, speed / 20.0f, 0.0f);
+	this->position_ -= glm::vec3(0.0f, speed / 20.0f, 0.0f);
       }
 
     lastTime = time;
@@ -211,12 +211,12 @@ public:
     (void)time;
   }
 
-  inline const Vector3d			&getPosition() const throw()
+  inline const glm::vec3			&getPosition() const throw()
   {
     return this->position_;
   }
 
-  inline const Vector3d			&getRotation() const throw()
+  inline const glm::vec3			&getRotation() const throw()
   {
     return this->rotation_;
   }
@@ -251,21 +251,21 @@ private:
     this->forward_.z = r * cos(this->theta_ * M_PI / 180.0f) * -1.0f * cos(this->phi_ * M_PI / 180.0f);
   }
 private:
-  Vector3d				position_;
-  Vector3d				forward_;
-  Vector3d				focus_;
+  glm::vec3				position_;
+  glm::vec3				forward_;
+  glm::vec3				focus_;
   double				theta_;
   double				phi_;
   float					sensitivity_;
   float					speed_;
-  Vector3d				rotation_;
+  glm::vec3				rotation_;
 };
 
 class					Perspective
 {
 public:
   explicit Perspective() throw() :
-    center_(Vector3d(0.0f, 0.0f, 0.0f))
+    center_(glm::vec3(0.0f, 0.0f, 0.0f))
   {}
 
   virtual ~Perspective()
@@ -274,16 +274,16 @@ public:
   inline bool				initRender() throw()
   {
     ALLEGRO_DISPLAY			*d;
-    Vector3d				pos;
+    glm::vec3				pos;
 
     d = al_get_current_display();
     if (!d)
       return false;
-    this->center_ = Vector3d(al_get_display_width(d) / 2.0f, al_get_display_height(d) / 2.0f, 0.0f);
+    this->center_ = glm::vec3(al_get_display_width(d) / 2.0f, al_get_display_height(d) / 2.0f, 0.0f);
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(60.0, (double)((this->center_.getX() * 2.0f) / (this->center_.getY() * 2.0f)), 1.0, 1000.0);
+    gluPerspective(60.0, (double)((this->center_.x * 2.0f) / (this->center_.y * 2.0f)), 1.0, 1000.0);
     return true;
   }
 
@@ -297,17 +297,17 @@ public:
   {}
 
 private:
-  Vector3d				center_;
+  glm::vec3				center_;
 };
 
 class					Orthographic
 {
 public:
   explicit Orthographic() throw() :
-    min_(Vector3d(0.0f, 0.0f, 0.0f)),
-    max_(Vector3d(0.0f, 0.0f, 0.0f)),
-    size_(Vector3d(0.0f, 0.0f, 0.0f)),
-    center_(Vector3d(0.0f, 0.0f, 0.0f)),
+    min_(glm::vec3(0.0f, 0.0f, 0.0f)),
+    max_(glm::vec3(0.0f, 0.0f, 0.0f)),
+    size_(glm::vec3(0.0f, 0.0f, 0.0f)),
+    center_(glm::vec3(0.0f, 0.0f, 0.0f)),
     zoom_(1.0f)
   {}
 
@@ -317,13 +317,13 @@ public:
   inline bool				initRender() throw()
   {
     ALLEGRO_DISPLAY			*d;
-    Vector3d				pos;
+    glm::vec3				pos;
 
     d = al_get_current_display();
     if (!d)
       return false;
-    this->size_ = Vector3d(al_get_display_width(d), al_get_display_height(d), 0.0f);
-    this->center_ = Vector3d(this->size_.x / 2.0f, this->size_.y / 2.0f, 0.0f);
+    this->size_ = glm::vec3(al_get_display_width(d), al_get_display_height(d), 0.0f);
+    this->center_ = glm::vec3(this->size_.x / 2.0f, this->size_.y / 2.0f, 0.0f);
     this->max_ = this->min_;
     this->max_ += this->size_;
 
@@ -355,10 +355,10 @@ public:
   }
 
 private:
-  Vector3d				min_;
-  Vector3d				max_;
-  Vector3d				size_;
-  Vector3d				center_;
+  glm::vec3				min_;
+  glm::vec3				max_;
+  glm::vec3				size_;
+  glm::vec3				center_;
   float					zoom_;
 };
 
