@@ -1,2 +1,0 @@
-il faut continuer le travail dans le system model displayer
-attention le multi texturing ne prend qu un seul mappage de texture, il faut que ce soit le shader qui set la texture et non pas le vbo 

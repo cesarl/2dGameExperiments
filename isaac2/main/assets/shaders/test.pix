@@ -2,6 +2,7 @@
 
 uniform sampler2D mainTexture;
 uniform sampler2D secondText;
+uniform sampler2D thirdTexture;
 
 
 // Sortie
@@ -15,7 +16,9 @@ void main()
 {
     // Couleur du pixel
 
-    gl_FragColor = texture2D(secondText, gl_TexCoord[0].st) + texture2D(mainTexture, gl_TexCoord[0].st); 
+    gl_FragColor = texture2D(mainTexture, gl_TexCoord[0].st)
+      + texture2D(secondText, gl_TexCoord[0].st)
+      + texture2D(thirdTexture, gl_TexCoord[0].st); 
 }
 
 /* uniform sampler2D mainTexture; */

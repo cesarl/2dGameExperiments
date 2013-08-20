@@ -39,27 +39,6 @@ struct				Shader : public Component<Shader>
       }
   }
 
-  void				bindTexturesBuffers()
-  {
-    std::map<std::string, TextureMediaPtr>::iterator it;
-    unsigned int i = 1;
-
-    it = textures_.begin();
-    while (it != textures_.end())
-      {
-	glBindBuffer(GL_ARRAY_BUFFER, it->second->getBufferId());
-	glTexCoordPointer(    2,                  // size
-			      GL_FLOAT,           // type
-			      0,                  // stride
-			      (void*)0            // array buffer offset
-			      );
-	glEnableVertexAttribArray(i);
-	glUniform1i(program_->getVarId(it->first), i - 1);
-	++i;
-	++it;
-      }
-  }
-
   void				bindTextures()
   {
     std::map<std::string, TextureMediaPtr>::iterator it;
@@ -68,10 +47,45 @@ struct				Shader : public Component<Shader>
     it = textures_.begin();
     while (it != textures_.end())
       {
-	glActiveTexture(GL_TEXTURE0 + i);
-	glBindTexture(GL_TEXTURE_2D, it->second->getImage()->getTexture());
+	glUniform1i(program_->getVarId(it->first), i);
 	++it;
 	++i;
+      }
+
+    it = textures_.begin();
+    i = 0;
+    while (it != textures_.end())
+      {
+	glEnable(GL_TEXTURE_2D);
+	glActiveTexture(GL_TEXTURE0 + i);
+	if (!it->second.hasDataSet())
+	  {
+	    ++it;
+	    continue;
+	  }
+	glBindTexture(GL_TEXTURE_2D, it->second->getImage()->getTexture());
+	glDisable(GL_TEXTURE_2D);
+	++it;
+	++i;
+      }
+    glActiveTexture(GL_TEXTURE0);
+  }
+
+  void				applyTexturesCoordinates()
+  {
+    std::map<std::string, TextureMediaPtr>::iterator it;
+
+    it = textures_.begin();
+    while (it != textures_.end())
+      {
+	if (!it->second.hasDataSet())
+	  {
+	    ++it;
+	    continue;
+	  }
+	glBindBuffer(GL_ARRAY_BUFFER, it->second->getBufferId());
+	glTexCoordPointer(2, GL_FLOAT, 0, (void*)(0));
+	++it;
       }
   }
 

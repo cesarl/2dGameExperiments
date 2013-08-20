@@ -18,7 +18,7 @@ public:
     require<Position>();
     require<Shader>();
     // require<Rotation>();
-    // require<Scale>();
+    require<Scale>();
     // require<Color>();
   }
 
@@ -27,34 +27,23 @@ public:
     Model			*model = ComponentManager::getInstance().getComponent<Model>(entity);
     Position			*pos = ComponentManager::getInstance().getComponent<Position>(entity);
     Shader			*shader = ComponentManager::getInstance().getComponent<Shader>(entity);
+    Scale			*scale = ComponentManager::getInstance().getComponent<Scale>(entity);
+
     glPushMatrix();
-    
-    glTranslatef(pos->position.x, pos->position.y, pos->position.z);
 
     // enable shader
     glUseProgram(shader->getProgram()->getId());
+    
+    glTranslatef(pos->position.x, pos->position.y, pos->position.z);
 
-    glUniform1i(shader->getProgram()->getVarId("mainTexture"), 0);
-    glUniform1i(shader->getProgram()->getVarId("secondText"), 1);
+    // glScalef(scale->scale.x, scale->scale.y, scale->scale.z);
+    (void)scale;
+    // glUniform1i(program_->getVarId(it->first), i);
 
-    glEnable(GL_TEXTURE_2D);
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, shader->getFirstTexture()->getImage()->getTexture());
-    glDisable(GL_TEXTURE_2D);
-
-    glEnable(GL_TEXTURE_2D);
-    glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, shader->getSecondTexture()->getImage()->getTexture());    
-    glDisable(GL_TEXTURE_2D);
-    glActiveTexture(GL_TEXTURE0);
-    // first
-
+    shader->bindTextures();
     glBindBuffer(GL_ARRAY_BUFFER, model->obj->getVertexBuffer());    
     glVertexPointer(3, GL_FLOAT, 0, (void*)(0));
-    glBindBuffer(GL_ARRAY_BUFFER, shader->getFirstTexture()->getBufferId());
-    glTexCoordPointer(2, GL_FLOAT, 0, (void*)(0));
-    glBindBuffer(GL_ARRAY_BUFFER, shader->getSecondTexture()->getBufferId());
-    glTexCoordPointer(2, GL_FLOAT, 0, (void*)(0));
+    shader->applyTexturesCoordinates();
 
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);

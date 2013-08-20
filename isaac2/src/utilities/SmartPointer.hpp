@@ -48,6 +48,11 @@ public:
     return this->data_;
   }
 
+  bool					hasDataSet()
+  {
+    return (data_ != NULL);
+  }
+
   const SmartPtr<T, Ownership>		&operator =(SmartPtr<T, Ownership> &ptr)
   {
     SmartPtr<T, Ownership>(ptr).swap(*this);
