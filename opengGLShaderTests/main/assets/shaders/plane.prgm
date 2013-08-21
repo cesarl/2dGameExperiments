@@ -1,3 +1,0 @@
-VERTEX       plane.vert
-PIXEL        plane.pix
-TEXTURES     mainTexture:plane.text

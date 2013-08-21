@@ -25,6 +25,8 @@ void					update(float time, const ALLEGRO_EVENT &ev)
 void					draw(float time, const ALLEGRO_EVENT &ev)
 {
   camera.update(time, ev);
+
+  glUseProgram(ResourceManager::getInstance().get<ShaderProgramMedia>("basic.prgm")->getId());
   glPushMatrix();
   glTranslatef(0.0f, 0.0f, 0.0f);
   glScalef(30.0f, 30.0f, 30.0f);
@@ -75,8 +77,8 @@ void					draw(float time, const ALLEGRO_EVENT &ev)
   glVertex3f(1.0f, -1.0f,  1.0f);
   glVertex3f(1.0f, -1.0f, -1.0f);
   glEnd();  // End of drawing color-cube
-
   glPopMatrix();
+  glUseProgram(0);
 }
 
 int					main()

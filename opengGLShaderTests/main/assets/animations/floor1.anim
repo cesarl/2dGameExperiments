@@ -1,7 +1,0 @@
-NAME          floor1
-IMG           decor.png
-STEPNB        1
-TIMESTEP      -1
-REVERSE       false
-CYCLENB       -1
-COORDS        0,1,0.25,0.8333333;

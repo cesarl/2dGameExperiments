@@ -66,12 +66,12 @@ std::map<std::string, std::string>	textures;
 		split(sub[i], val, ":");
 		if (val.size() <= 1)
 		  continue;
-textures.insert(std::pair<std::string, std::string>(val[0], val[1]));
+		textures.insert(std::pair<std::string, std::string>(val[0], val[1]));
 	      }
 	  }
       }    
 
-program->setTextures(textures);
+    program->setTextures(textures);
 
     glLinkProgram(id);
 
