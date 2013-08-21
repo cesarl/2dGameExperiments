@@ -62,7 +62,7 @@ public:
     glUseProgram(0);
   }
 
-  int					getVarId(const std::string &name)
+  int					getUniformId(const std::string &name)
   {
     int					res;
 
@@ -73,6 +73,19 @@ public:
       }
     return res;
   }
+
+  int					getAttribId(const std::string &name)
+  {
+    int					res;
+
+    return glGetAttribLocation(id_, name.c_str());
+    if (res < 0)
+      {
+	throw AttribLocationUnknown(name, gluErrorString(glGetError()));
+      }
+    return res;
+  }
+
 
   void					setTextures(const std::map<std::string, std::string> & textures)
   {

@@ -76,3 +76,15 @@ UniformLocationUnknown::UniformLocationUnknown(const std::string &name, const un
     << std::endl;
   this->message_ = f.str();
 }
+
+AttribLocationUnknown::AttribLocationUnknown(const std::string &name, const unsigned char *err)
+{
+  std::ostringstream			f;
+
+  f << "Attrib location problem for var "
+    << name
+    << std::endl
+    << err
+    << std::endl;
+  this->message_ = f.str();
+}

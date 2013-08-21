@@ -14,6 +14,40 @@
 #include				"Camera.hpp"
 #include				<exception>
 
+GLfloat cubeVertices[] =
+  {
+    1,1,1,
+    -1,1,1,
+    -1,-1,1,
+    1,-1,1,
+    1, 1, -1,
+    -1, 1, -1,
+    -1, -1, -1,
+    1, -1, -1,
+  };
+
+GLfloat cubeColours[] =
+  {
+    1, 0, 0,
+    0, 1, 0,
+    0, 1, 0,
+    1, 0, 0,
+    0, 0, 1,
+    1, 1, 0,
+    1, 1, 0,
+    0, 0, 1,
+  };
+
+GLubyte cubeIndices[] =
+  {
+    0, 1, 2, 3,
+    0, 4, 7, 3,
+    4, 5, 6, 7,
+    1, 2, 6, 5,
+    2, 3, 7, 6,
+    0, 1, 5, 4
+  };
+
 glm::vec3 rotation;
 
 void					update(float time, const ALLEGRO_EVENT &ev)
@@ -29,11 +63,15 @@ void					draw(float time, const ALLEGRO_EVENT &ev)
   ShaderProgramMediaPtr s = ResourceManager::getInstance().get<ShaderProgramMedia>("basic.prgm");
   glUseProgram(s->getId());
 
-  static float blue = 0.0f;
-  glUniform1f(s->getVarId("myBlueTint"), blue);
-  blue += 0.001f;
-  if (blue > 1.0f)
-    blue = 0.0f;
+  ////////////////////////////
+  // myBlueTintUniform code //
+  ////////////////////////////
+
+  // static float blue = 0.0f;
+  // glUniform1f(s->getUniformId("myBlueTint"), blue);
+  // blue += 0.001f;
+  // if (blue > 1.0f)
+  //   blue = 0.0f;
 
   glPushMatrix();
   glTranslatef(0.0f, 0.0f, 0.0f);
@@ -41,50 +79,19 @@ void					draw(float time, const ALLEGRO_EVENT &ev)
   glRotatef(rotation.x, 1.0f, 0.0f, 0.0f);
   glRotatef(rotation.y, 0.0f, 1.0f, 0.0f);
   glRotatef(rotation.z, 0.0f, 0.0f, 1.0f);
-  glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
-  // Top face (y = 1.0f)
-  // Define vertices in counter-clockwise (CCW) order with normal pointing out
-  glColor3f(0.0f, 1.0f, 0.0f);     // Green
-  glVertex3f( 1.0f, 1.0f, -1.0f);
-  glVertex3f(-1.0f, 1.0f, -1.0f);
-  glVertex3f(-1.0f, 1.0f,  1.0f);
-  glVertex3f( 1.0f, 1.0f,  1.0f);
- 
-  // Bottom face (y = -1.0f)
-  glColor3f(1.0f, 0.5f, 0.0f);     // Orange
-  glVertex3f( 1.0f, -1.0f,  1.0f);
-  glVertex3f(-1.0f, -1.0f,  1.0f);
-  glVertex3f(-1.0f, -1.0f, -1.0f);
-  glVertex3f( 1.0f, -1.0f, -1.0f);
- 
-  // Front face  (z = 1.0f)
-  glColor3f(1.0f, 0.0f, 0.0f);     // Red
-  glVertex3f( 1.0f,  1.0f, 1.0f);
-  glVertex3f(-1.0f,  1.0f, 1.0f);
-  glVertex3f(-1.0f, -1.0f, 1.0f);
-  glVertex3f( 1.0f, -1.0f, 1.0f);
- 
-  // Back face (z = -1.0f)
-  glColor3f(1.0f, 1.0f, 0.0f);     // Yellow
-  glVertex3f( 1.0f, -1.0f, -1.0f);
-  glVertex3f(-1.0f, -1.0f, -1.0f);
-  glVertex3f(-1.0f,  1.0f, -1.0f);
-  glVertex3f( 1.0f,  1.0f, -1.0f);
- 
-  // Left face (x = -1.0f)
-  glColor3f(0.0f, 0.0f, 1.0f);     // Blue
-  glVertex3f(-1.0f,  1.0f,  1.0f);
-  glVertex3f(-1.0f,  1.0f, -1.0f);
-  glVertex3f(-1.0f, -1.0f, -1.0f);
-  glVertex3f(-1.0f, -1.0f,  1.0f);
- 
-  // Right face (x = 1.0f)
-  glColor3f(1.0f, 0.0f, 1.0f);     // Magenta
-  glVertex3f(1.0f,  1.0f, -1.0f);
-  glVertex3f(1.0f,  1.0f,  1.0f);
-  glVertex3f(1.0f, -1.0f,  1.0f);
-  glVertex3f(1.0f, -1.0f, -1.0f);
-  glEnd();  // End of drawing color-cube
+
+  glEnableVertexAttribArray(s->getAttribId("myColor"));
+  glVertexAttribPointer(s->getAttribId("myColor"),
+		      3,
+		      GL_FLOAT,
+		      GL_TRUE,
+		      0,
+		      cubeColours);
+
+  glDrawElements(GL_QUADS, 24, GL_UNSIGNED_BYTE, cubeIndices);
+
+  glDisableVertexAttribArray(s->getAttribId("myColor"));
+
   glPopMatrix();
   glUseProgram(0);
 }
@@ -119,7 +126,21 @@ int					main()
 
   try
     {
+
+      //////////////////////////////////////////////////////////////////////////////////
+      // uncomment that 3 lines if you dont want to pass color as attribute to shader //
+      //////////////////////////////////////////////////////////////////////////////////
+
+      glEnableClientState(GL_VERTEX_ARRAY);
+      // glEnableClientState(GL_COLOR_ARRAY);
+
+      glVertexPointer(3, GL_FLOAT, 0, cubeVertices);
+      // glColorPointer(3, GL_FLOAT, 0, cubeColours);
+
       EventManager::getInstance().play();
+
+      // glDisableClientState(GL_COLOR_ARRAY);
+      glDisableClientState(GL_VERTEX_ARRAY);
     }
   catch (const std::exception &e)
     {

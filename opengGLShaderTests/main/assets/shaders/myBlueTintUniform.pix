@@ -2,5 +2,5 @@ uniform float myBlueTint = 0.0f;
 
 void		main()
 {
-  gl_FragColor = vec4(gl_Color.xy, myBlueTint, 1.0f);
+  gl_FragColor = vec4(gl_Color.rg, myBlueTint, 1.0f);
 }

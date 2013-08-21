@@ -48,6 +48,12 @@ struct UniformLocationUnknown : public Exception
   UniformLocationUnknown(const std::string &name, const unsigned char *err);
 };
 
+struct AttribLocationUnknown : public Exception
+{
+  AttribLocationUnknown(const std::string &name, const unsigned char *err);
+};
+
+
 # ifdef					_DEBUG
 #  define				Assert(condition) if (!(condition)) \
     throw AssertException(__FILE__, __LINE__, "Unsatisfied condition\n\n" #condition)

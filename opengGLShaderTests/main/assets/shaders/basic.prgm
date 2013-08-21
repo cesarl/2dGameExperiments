@@ -1,2 +1,2 @@
-//VERTEX       mini.vert
-PIXEL          myBlueTintUniform.pix
+VERTEX       colorAttrib.vert
+//PIXEL
