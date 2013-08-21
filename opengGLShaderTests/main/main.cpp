@@ -26,7 +26,15 @@ void					draw(float time, const ALLEGRO_EVENT &ev)
 {
   camera.update(time, ev);
 
-  glUseProgram(ResourceManager::getInstance().get<ShaderProgramMedia>("basic.prgm")->getId());
+  ShaderProgramMediaPtr s = ResourceManager::getInstance().get<ShaderProgramMedia>("basic.prgm");
+  glUseProgram(s->getId());
+
+  static float blue = 0.0f;
+  glUniform1f(s->getVarId("myBlueTint"), blue);
+  blue += 0.001f;
+  if (blue > 1.0f)
+    blue = 0.0f;
+
   glPushMatrix();
   glTranslatef(0.0f, 0.0f, 0.0f);
   glScalef(30.0f, 30.0f, 30.0f);
