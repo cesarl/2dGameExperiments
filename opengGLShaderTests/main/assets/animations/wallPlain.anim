@@ -1,0 +1,7 @@
+NAME          wallPlain
+IMG           decor.png
+STEPNB        1
+TIMESTEP      -1
+REVERSE       false
+CYCLENB       -1
+COORDS        0,0.5,0.25,0.666667;

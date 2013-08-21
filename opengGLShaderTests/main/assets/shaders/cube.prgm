@@ -1,0 +1,3 @@
+VERTEX       cube.vert
+PIXEL        cube.pix
+TEXTURES     mainTexture:cube2.text,secondTexture:null,thirdTexture:cube.text

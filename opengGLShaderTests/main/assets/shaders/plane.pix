@@ -1,0 +1,14 @@
+// Uniform
+
+uniform sampler2D mainTexture;
+
+uniform bool mainTextureSet = false;
+
+void main()
+{
+    // Couleur du pixel
+    vec4 color;
+    if (mainTextureSet)
+      color += texture2D(mainTexture, gl_TexCoord[0].st);
+    gl_FragColor = color + gl_Color; 
+}

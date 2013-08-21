@@ -24,9 +24,6 @@ SRCS		=	../src/debug/ILogger.cpp \
 			../src/debug/Exception.cpp \
 			../src/manager/Resource.cpp \
 			../src/utilities/Vector3d.cpp \
-			../src/manager/ComponentManager.cpp \
-			../src/manager/EntityManager.cpp \
-			../src/manager/SystemManager.cpp \
 			../vendors/tiny_obj_loader.cpp \
 			main.cpp
 
