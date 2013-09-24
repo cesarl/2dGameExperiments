@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{2D797E1E-E69B-4D8D-9C12-D4277ABE14E2}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\vendors;C:\Libs\glm;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\utilities;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\system;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\media;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\manager;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\loader;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\generator;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\debug;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\component;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src;C:\Libs\Allegro5.0.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <SDLCheck>false</SDLCheck>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalLibraryDirectories>C:\Libs\Allegro5.0.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>allegro-5.0.10-monolith-md-debug.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalIncludeDirectories>C:\Libs\Allegro5.0.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>C:\Libs\Allegro5.0.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;allegro-5.0.10-monolith-md.dll;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="main\main.cpp" />
+    <ClCompile Include="src\buggy\MemoryManager.cpp" />
+    <ClCompile Include="src\debug\Exception.cpp" />
+    <ClCompile Include="src\debug\ILogger.cpp" />
+    <ClCompile Include="src\manager\ComponentManager.cpp" />
+    <ClCompile Include="src\manager\EntityManager.cpp" />
+    <ClCompile Include="src\manager\Resource.cpp" />
+    <ClCompile Include="src\manager\SystemManager.cpp" />
+    <ClCompile Include="vendors\tiny_obj_loader.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\buggy\Memory.hpp" />
+    <ClInclude Include="src\buggy\MemoryManager.hpp" />
+    <ClInclude Include="src\Camera.hpp" />
+    <ClInclude Include="src\component\BoundingBox.hpp" />
+    <ClInclude Include="src\component\CollidablePosition.hpp" />
+    <ClInclude Include="src\component\Collision.hpp" />
+    <ClInclude Include="src\component\Color.hpp" />
+    <ClInclude Include="src\component\ColorEasing.hpp" />
+    <ClInclude Include="src\component\Component.hpp" />
+    <ClInclude Include="src\component\Components.hpp" />
+    <ClInclude Include="src\component\Death.hpp" />
+    <ClInclude Include="src\component\Img.hpp" />
+    <ClInclude Include="src\component\InputMovement.hpp" />
+    <ClInclude Include="src\component\Lifetime.hpp" />
+    <ClInclude Include="src\component\Model.hpp" />
+    <ClInclude Include="src\component\NullCpt.hpp" />
+    <ClInclude Include="src\component\Physic.hpp" />
+    <ClInclude Include="src\component\Pistol.hpp" />
+    <ClInclude Include="src\component\Position.hpp" />
+    <ClInclude Include="src\component\Rotation.hpp" />
+    <ClInclude Include="src\component\RotationForce.hpp" />
+    <ClInclude Include="src\component\Scale.hpp" />
+    <ClInclude Include="src\component\Shader.hpp" />
+    <ClInclude Include="src\component\SmellPosition.hpp" />
+    <ClInclude Include="src\component\Sprite.hpp" />
+    <ClInclude Include="src\component\Velocity.hpp" />
+    <ClInclude Include="src\component\VelocityFriction.hpp" />
+    <ClInclude Include="src\debug\Logger.hpp" />
+    <ClInclude Include="src\EntityData.hpp" />
+    <ClInclude Include="src\generator\BulletGenerator.hpp" />
+    <ClInclude Include="src\generator\MapGenerator.hpp" />
+    <ClInclude Include="src\loader\AnimationLoader.hpp" />
+    <ClInclude Include="src\loader\ImageLoader.hpp" />
+    <ClInclude Include="src\loader\ObjLoader.hpp" />
+    <ClInclude Include="src\loader\ShaderLoader.hpp" />
+    <ClInclude Include="src\loader\ShaderProgramLoader.hpp" />
+    <ClInclude Include="src\loader\SkyboxLoader.hpp" />
+    <ClInclude Include="src\loader\TextureLoader.hpp" />
+    <ClInclude Include="src\manager\ComponentManager.hpp" />
+    <ClInclude Include="src\manager\ComponentTypeManager.hpp" />
+    <ClInclude Include="src\manager\EntityManager.hpp" />
+    <ClInclude Include="src\manager\EventManager.hpp" />
+    <ClInclude Include="src\manager\Loader.hpp" />
+    <ClInclude Include="src\manager\MainManager.hpp" />
+    <ClInclude Include="src\manager\MediaManager.hpp" />
+    <ClInclude Include="src\manager\Option.hpp" />
+    <ClInclude Include="src\manager\OptionManager.hpp" />
+    <ClInclude Include="src\manager\OptionValue.hpp" />
+    <ClInclude Include="src\manager\ResourceManager.hpp" />
+    <ClInclude Include="src\manager\SystemManager.hpp" />
+    <ClInclude Include="src\manager\TagIdManager.hpp" />
+    <ClInclude Include="src\manager\VisualManager.hpp" />
+    <ClInclude Include="src\media\AnimationMedia.hpp" />
+    <ClInclude Include="src\media\ImageMedia.hpp" />
+    <ClInclude Include="src\media\ObjModelMedia.hpp" />
+    <ClInclude Include="src\media\ShaderMedia.hpp" />
+    <ClInclude Include="src\media\ShaderProgramMedia.hpp" />
+    <ClInclude Include="src\media\SkyboxMedia.hpp" />
+    <ClInclude Include="src\media\TextureMedia.hpp" />
+    <ClInclude Include="src\system\BoundingBoxSystem.hpp" />
+    <ClInclude Include="src\system\BulletSystem.hpp" />
+    <ClInclude Include="src\system\ColorEasingSystem.hpp" />
+    <ClInclude Include="src\system\ImageSystem.hpp" />
+    <ClInclude Include="src\system\InputMovementSystem.hpp" />
+    <ClInclude Include="src\system\InputSystem.hpp" />
+    <ClInclude Include="src\system\LifetimeSystem.hpp" />
+    <ClInclude Include="src\system\ObjModelSystem.hpp" />
+    <ClInclude Include="src\system\PhysicSystem.hpp" />
+    <ClInclude Include="src\system\PistolSystem.hpp" />
+    <ClInclude Include="src\system\PositionRegister.hpp" />
+    <ClInclude Include="src\system\RotationForceSystem.hpp" />
+    <ClInclude Include="src\system\SpriteSystem.hpp" />
+    <ClInclude Include="src\system\System.hpp" />
+    <ClInclude Include="src\system\Systems.hpp" />
+    <ClInclude Include="src\system\VelocityFrictionSystem.hpp" />
+    <ClInclude Include="src\system\VelocitySystem.hpp" />
+    <ClInclude Include="src\utilities\File.hpp" />
+    <ClInclude Include="src\utilities\GenHierarchies.hpp" />
+    <ClInclude Include="src\utilities\lerp.hpp" />
+    <ClInclude Include="src\utilities\Singleton.hpp" />
+    <ClInclude Include="src\utilities\SmartPointer.hpp" />
+    <ClInclude Include="src\utilities\SmartPointerPolicies.hpp" />
+    <ClInclude Include="src\utilities\strUtil.hpp" />
+    <ClInclude Include="src\utilities\Typelist.hpp" />
+    <ClInclude Include="vendors\tiny_obj_loader.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

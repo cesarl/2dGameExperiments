@@ -1,10 +1,13 @@
 #ifndef					__CAMERA_HPP__
 # define				__CAMERA_HPP__
 
+#define                 _USE_MATH_DEFINES
+// strange behavior on VS2012 -> we have to define math.h and
+// not cmath if we want M_PI to be defined
+#include				<math.h>
 #include				<glm/glm.hpp>
-#include                                <allegro5/allegro.h>
+#include                <allegro5/allegro.h>
 #include				<GL/glu.h>
-#include				<cmath>
 
 class					FlatCamera
 {
