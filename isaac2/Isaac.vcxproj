@@ -37,6 +37,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>true</LinkIncremental>
@@ -51,6 +52,7 @@
       <AdditionalIncludeDirectories>C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\vendors;C:\Libs\glm;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\utilities;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\system;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\media;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\manager;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\loader;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\generator;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\debug;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\component;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src;C:\Libs\Allegro5.0.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
       <MultiProcessorCompilation>false</MultiProcessorCompilation>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <Link>
       <TargetMachine>MachineX86</TargetMachine>
@@ -91,7 +93,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\buggy\Memory.hpp" />
-    <ClInclude Include="src\buggy\MemoryManager.hpp" />
     <ClInclude Include="src\Camera.hpp" />
     <ClInclude Include="src\component\BoundingBox.hpp" />
     <ClInclude Include="src\component\CollidablePosition.hpp" />
