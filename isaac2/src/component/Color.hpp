@@ -154,13 +154,13 @@ template			<typename T>
     return (tmp);
   }
 
-template			<typename T>
-  Color				operator/(const Color& left, T right)
-  {
-    Color			tmp(left);
-
-    tmp /= right;
-    return (tmp);
-  }
+//template			<typename T>
+//  Color				operator/(const Color& left, T right)
+//  {
+//    Color			tmp(left);
+//
+//    tmp /= right;
+//    return (tmp);
+//  }
 
 #endif				// __COLOR_COMPONENT_HPP__
