@@ -31,30 +31,32 @@ public:
 
     if (!myfile.is_open())
       {
-	throw LoadingFailed(file.getFullName(), "TextureLoader failed to load texture.");
+		  throw LoadingFailed(file.getFullName(), "TextureLoader failed to load texture.");
       }
 
     while (myfile.good())
-      {
-	std::getline(myfile, line);
-	split(line, list, " ");
-	if (list[0] == "IMG" && list.size() == 2)
-	  {
-	    image = ResourceManager::getInstance().get<ImageMedia>(list[1]);
-	  }
-	else if (list[0] == "C" && list.size() == 4)
-	  {
-	    for (unsigned int i = 1; i < 4; ++i)
-	      {
-		std::vector<std::string>	sub;
-		split(list[i], sub, ",");
-		if (sub.size() < 2)
-		  throw LoadingFailed(file.getFullName(), "TextureLoader error, coords size is not correct.");
-		coords.push_back(glm::vec2(std::atof(sub[0].c_str()),
-					   std::atof(sub[1].c_str())));
-	      }
-	  }
-      }    
+	{
+		std::getline(myfile, line);
+		split(line, list, " ");
+		if (list.empty())
+			break;
+		if (list[0] == "IMG" && list.size() == 2)
+		{
+			image = ResourceManager::getInstance().get<ImageMedia>(list[1]);
+		}
+		else if (list[0] == "C" && list.size() == 4)
+		{
+			for (unsigned int i = 1; i < 4; ++i)
+			{
+				std::vector<std::string>	sub;
+				split(list[i], sub, ",");
+				if (sub.size() < 2)
+					throw LoadingFailed(file.getFullName(), "TextureLoader error, coords size is not correct.");
+				coords.push_back(glm::vec2(std::atof(sub[0].c_str()),
+					std::atof(sub[1].c_str())));
+			}
+		}
+	}
 
     if (coords.size() == 0 || (coords.size() % 3) != 0)
       {

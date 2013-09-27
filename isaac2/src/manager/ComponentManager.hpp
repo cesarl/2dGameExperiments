@@ -56,13 +56,13 @@ public:
   {
     EntityData			&data = EntityManager::getInstance().getEntityData(entity);
 
-    if (std::string(typeid(T).name()) != "9Collision")
-      {
-	std::cout << "BEFORE " << entity << " " << data.id << " -> " << data.components << std::endl;
-      }
+    //if (std::string(typeid(T).name()) != "9Collision")
+      //{
+	//std::cout << "BEFORE " << entity << " " << data.id << " -> " << data.components << std::endl;
+//      }
     data.components[T::getTypeId()] = 0;
-    if (std::string(typeid(T).name()) != "9Collision")
-      std::cout << "AFTERE " << entity << " " << data.id << " -> " << data.components << std::endl;
+    //if (std::string(typeid(T).name()) != "9Collision")
+      //std::cout << "AFTER " << entity << " " << data.id << " -> " << data.components << std::endl;
     // todo resseter les valeurs par defauts
   }
 

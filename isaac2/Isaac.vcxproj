@@ -53,6 +53,7 @@
       <SDLCheck>false</SDLCheck>
       <MultiProcessorCompilation>false</MultiProcessorCompilation>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <OmitFramePointers>true</OmitFramePointers>
     </ClCompile>
     <Link>
       <TargetMachine>MachineX86</TargetMachine>

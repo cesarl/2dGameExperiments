@@ -136,7 +136,7 @@ int					main()
       // test new graphic implementation //
       /////////////////////////////////////
 
-      e = EntityManager::getInstance().newEntity();
+      /*e = EntityManager::getInstance().newEntity();
       ComponentManager::getInstance().addComponent<Position>(e).position = glm::vec3(64.0f * 2.0f, 64.0f * 2.0f, 50.0f);
       ComponentManager::getInstance().addComponent<Model>(e).obj = ResourceManager::getInstance().get<ObjModelMedia>("cube.obj");
       ComponentManager::getInstance().addComponent<Scale>(e).scale = glm::vec3(50.0f, 50.0f, 50.0f);
@@ -157,7 +157,7 @@ int					main()
       ComponentManager::getInstance().addComponent<RotationForce>(e).force = glm::vec3(10.0f,15.0f,6.0f);
 
       Shader &shader2 = ComponentManager::getInstance().addComponent<Shader>(e);
-      shader2.setShader("plane.prgm");
+      shader2.setShader("plane.prgm");*/
 
       EventManager::getInstance().play();
     }
