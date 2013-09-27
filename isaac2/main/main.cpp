@@ -47,11 +47,11 @@ int					main()
   MediaManager::getInstance().registerLoader(new ShaderProgramLoader, ".prgm");
   MediaManager::getInstance().registerLoader(new ObjLoader, ".obj");
   MediaManager::getInstance().registerLoader(new TextureLoader, ".text");
-  MediaManager::getInstance().addSearchPath("./assets/imgs/");
-  MediaManager::getInstance().addSearchPath("./assets/animations/");
-  MediaManager::getInstance().addSearchPath("./assets/shaders/");
-  MediaManager::getInstance().addSearchPath("./assets/models/");
-  MediaManager::getInstance().addSearchPath("./assets/textures/");
+  MediaManager::getInstance().addSearchPath("./main/assets/imgs/");
+  MediaManager::getInstance().addSearchPath("./main/assets/animations/");
+  MediaManager::getInstance().addSearchPath("./main/assets/shaders/");
+  MediaManager::getInstance().addSearchPath("./main/assets/models/");
+  MediaManager::getInstance().addSearchPath("./main/assets/textures/");
 
   SystemManager::getInstance().add<InputSystem>(0);
   SystemManager::getInstance().add<PistolSystem>(0);
@@ -90,7 +90,7 @@ int					main()
     {
       BoundingBoxSystem *s = SystemManager::getInstance().getSystem<BoundingBoxSystem>();
       if (s)
-	s->addException("Good", "Good");
+		  s->addException("Good", "Good");
 
 
       ////////////////////

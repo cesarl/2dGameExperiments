@@ -19,15 +19,16 @@ public:
     if (!al_init_image_addon())
       return false;
     ILogger::setLogger(new ConsoleLogger);
-    al_set_new_bitmap_flags(ALLEGRO_MIPMAP | ALLEGRO_MIN_LINEAR);
+	al_set_new_bitmap_flags(ALLEGRO_MIPMAP | ALLEGRO_MIN_LINEAR);
     return true;
   }
 
   bool					launch(int width, int height)
   {
-    al_set_new_display_flags(ALLEGRO_OPENGL_3_0);
+	  al_set_new_display_flags(ALLEGRO_OPENGL_3_0 | ALLEGRO_OPENGL);
     if (!al_create_display(width, height))
       return false;
+	al_set_current_opengl_context(al_get_current_display());
     glEnable(GL_TEXTURE_2D);
     // glEnable(GL_CULL_FACE);
     glEnable(GL_DEPTH_TEST);

@@ -18,8 +18,8 @@ public:
   {}
   virtual ImageMedia			*load(const File &file, bool force = false)
   {
-    ALLEGRO_BITMAP			*bmp;
-    GLuint				tex;
+    ALLEGRO_BITMAP			*bmp = NULL;
+    GLuint				tex = 0;
 
     bmp = al_load_bitmap(file.getFullName().c_str());
     if (!bmp)
@@ -27,7 +27,10 @@ public:
     // al_convert_mask_to_alpha(bmp, al_map_rgb(255, 0, 0));
     tex = al_get_opengl_texture(bmp);
     if (tex == 0)
+	{
+	  al_destroy_bitmap(bmp);
       throw LoadingFailed(file.getFullName(), "ImageLoader failed to load texture.");
+	}
     return new ImageMedia(bmp, tex, file.getFileName(), force);
   }
   virtual void				save(const ImageMedia *, const std::string &name)

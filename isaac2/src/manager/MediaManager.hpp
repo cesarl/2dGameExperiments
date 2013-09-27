@@ -122,6 +122,7 @@ private:
     std::set<std::string>::const_iterator	it;
 
     it = this->paths_.begin();
+
     while (it != this->paths_.end())
       {
 	File				f;
@@ -129,6 +130,7 @@ private:
 	f = *it + file.getFileName();
 	if (f.exists())
 	  return f;
+	std::cout << f.getFullName() << std::endl;	
 	++it;
       }
     throw LoadingFailed(file.getFullName(), "File cannot be found.");

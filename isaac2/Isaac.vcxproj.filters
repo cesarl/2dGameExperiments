@@ -13,22 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
-    <Filter Include="Resource Files\assets">
-      <UniqueIdentifier>{2667bbcf-71a8-4892-a139-1739d08d9347}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\assets\imgs">
-      <UniqueIdentifier>{396e7837-d596-4700-b3b9-af0c0a64b2aa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\assets\models">
-      <UniqueIdentifier>{e30e528a-f684-48bb-9b6b-cb31189e475a}</UniqueIdentifier>
-      <ParseFiles>true</ParseFiles>
-    </Filter>
-    <Filter Include="Resource Files\assets\shaders">
-      <UniqueIdentifier>{b1cb0e97-4e7a-4f9a-b0b0-6fde0737af53}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\assets\textures">
-      <UniqueIdentifier>{1009b0bb-c4de-40f9-84dc-930952d8b49c}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
@@ -312,66 +296,5 @@
     <ClInclude Include="vendors\tiny_obj_loader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="main\assets\imgs\crate.jpg">
-      <Filter>Resource Files\assets\imgs</Filter>
-    </Image>
-    <Image Include="main\assets\imgs\decor.png">
-      <Filter>Resource Files\assets\imgs</Filter>
-    </Image>
-    <Image Include="main\assets\imgs\heros.png">
-      <Filter>Resource Files\assets\imgs</Filter>
-    </Image>
-    <Image Include="main\assets\imgs\kitty.jpg">
-      <Filter>Resource Files\assets\imgs</Filter>
-    </Image>
-    <Image Include="main\assets\imgs\stars.png">
-      <Filter>Resource Files\assets\imgs</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="main\assets\shaders\cube.pix">
-      <Filter>Resource Files\assets\shaders</Filter>
-    </None>
-    <None Include="main\assets\shaders\cube.prgm">
-      <Filter>Resource Files\assets\shaders</Filter>
-    </None>
-    <None Include="main\assets\shaders\cube.vert">
-      <Filter>Resource Files\assets\shaders</Filter>
-    </None>
-    <None Include="main\assets\shaders\default.pix">
-      <Filter>Resource Files\assets\shaders</Filter>
-    </None>
-    <None Include="main\assets\shaders\default.prgm">
-      <Filter>Resource Files\assets\shaders</Filter>
-    </None>
-    <None Include="main\assets\shaders\default.vert">
-      <Filter>Resource Files\assets\shaders</Filter>
-    </None>
-    <None Include="main\assets\shaders\model.vert">
-      <Filter>Resource Files\assets\shaders</Filter>
-    </None>
-    <None Include="main\assets\shaders\plane.pix">
-      <Filter>Resource Files\assets\shaders</Filter>
-    </None>
-    <None Include="main\assets\shaders\plane.prgm">
-      <Filter>Resource Files\assets\shaders</Filter>
-    </None>
-    <None Include="main\assets\shaders\plane.vert">
-      <Filter>Resource Files\assets\shaders</Filter>
-    </None>
-    <None Include="main\assets\textures\crate.text">
-      <Filter>Resource Files\assets\textures</Filter>
-    </None>
-    <None Include="main\assets\textures\cube.text">
-      <Filter>Resource Files\assets\textures</Filter>
-    </None>
-    <None Include="main\assets\textures\cube2.text">
-      <Filter>Resource Files\assets\textures</Filter>
-    </None>
-    <None Include="main\assets\textures\plane.text">
-      <Filter>Resource Files\assets\textures</Filter>
-    </None>
   </ItemGroup>
 </Project>
