@@ -15,16 +15,15 @@ void				SystemManager::update(float time, const ALLEGRO_EVENT &ev)
     {
       i->second->updateBegin(time, ev);
 
-      for (unsigned int it = 0, mit = EntityManager::getInstance().end(); it < mit; ++it)
-	{
-	  EntityData e = list[it];
-	  // // if (!e.active)
-	  // //   continue;
-	  if (i->second->match(e))
-	    i->second->update(list[it], difTime, ev);
-	}
-      i->second->updateEnd(time, ev);
-      ++i;
+	  for (auto &e  : list)
+	  {
+		  // // if (!e.active)
+		  // //   continue;
+		  if (i->second->match(e))
+			  i->second->update(e, difTime, ev);
+	  }
+	  i->second->updateEnd(time, ev);
+	  ++i;
     }
   lastTime = time;
   (void)time;

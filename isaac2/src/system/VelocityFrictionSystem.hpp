@@ -20,8 +20,8 @@ public:
 
   virtual void			update(EntityData &entity, float time, const ALLEGRO_EVENT &)
   {
-    VelocityFriction		*fri = ComponentManager::getInstance().getComponent<VelocityFriction>(entity);
-    Velocity			*vel = ComponentManager::getInstance().getComponent<Velocity>(entity);
+    VelocityFriction *fri = ComponentManager::getInstance().getComponent<VelocityFriction>(entity);
+    Velocity *vel = ComponentManager::getInstance().getComponent<Velocity>(entity);
 
     float t = fri->friction;
 

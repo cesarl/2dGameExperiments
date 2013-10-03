@@ -48,12 +48,13 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <Optimization>Disabled</Optimization>
+      <Optimization>MaxSpeed</Optimization>
       <AdditionalIncludeDirectories>C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\vendors;C:\Libs\glm;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\utilities;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\system;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\media;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\manager;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\loader;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\generator;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\debug;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\component;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
       <MultiProcessorCompilation>false</MultiProcessorCompilation>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <OmitFramePointers>true</OmitFramePointers>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
     </ClCompile>
     <Link>
       <TargetMachine>MachineX86</TargetMachine>
@@ -61,7 +62,7 @@
       <SubSystem>Console</SubSystem>
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
-      <AdditionalDependencies>freeglut.lib;glew32.lib;opengl32.lib;glu32.lib;allegro-5.0.10-monolith-md-debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freeglut.lib;glew32.lib;opengl32.lib;glu32.lib;allegro-5.0.10-monolith-md-debug.lib;VCOMP.LIB;VCOMPD.LIB;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
