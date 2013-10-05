@@ -2,8 +2,7 @@
 # define			__BB_SYSTEM_HPP__
 
 #include			"System.hpp"
-#include			"ComponentManager.hpp"
-#include			"Components.hpp"
+#include			"EntityData.hpp"
 #include			"TagIdManager.hpp"
 
 class				BoundingBoxSystem : public System
@@ -42,8 +41,8 @@ public:
 
   static void			updateBoundingBox(const EntityData &entity, float time)
   {
-    BoundingBox			*bb = ComponentManager::getInstance().getComponent<BoundingBox>(entity);
-    Position			*pos = ComponentManager::getInstance().getComponent<Position>(entity);
+    BoundingBox			*bb = entity.getComponent<BoundingBox>();
+    Position			*pos = entity.getComponent<Position>();
 
     bb->from = pos->position;
     bb->from += bb->offset;
@@ -52,9 +51,9 @@ public:
     bb->pastTo = bb->from;
     bb->pastTo += bb->size;
 
-    if (ComponentManager::getInstance().hasComponent<Velocity>(entity))
+    if (entity.hasComponent<Velocity>())
       {
-	Velocity		*vel = ComponentManager::getInstance().getComponent<Velocity>(entity);
+	Velocity		*vel = entity.getComponent<Velocity>();
 	glm::vec3		v = vel->velocity;
 	v *= time;
 	bb->from +=  v;
@@ -69,14 +68,14 @@ public:
     if (ev.type != ALLEGRO_EVENT_TIMER)
       return;
 
-    BoundingBox			*bb = ComponentManager::getInstance().getComponent<BoundingBox>(entity);
+    BoundingBox			*bb = entity.getComponent<BoundingBox>();
 
     updateBoundingBox(entity, time);
 
     // if (col)
     //   {
     // 	col->list.clear();
-    // 	ComponentManager::getInstance().removeComponent<Collision>(entity);
+    // 	entity.removeComponent<Collision>();
     //   }
 
     glm::vec3 from = bb->from;
@@ -116,12 +115,12 @@ public:
 
 	while (it2 != it->second.end())
 	  {
-	    Collision		*col = ComponentManager::getInstance().getComponent<Collision>(*it2);
+	    Collision		*col = EntityManager::getInstance().getEntityData(*it2).getComponent<Collision>();
 
 	    if (col)
 	      {
 		col->list.clear();
-		ComponentManager::getInstance().removeComponent<Collision>(*it2);
+		EntityManager::getInstance().getEntityData(*it2).removeComponent<Collision>();
 	      }
 	    ++it2;
 	  }
@@ -132,8 +131,8 @@ public:
   
   static bool			collide(const EntityData &e1, const EntityData &e2)
   {
-    BoundingBox			*bb1 = ComponentManager::getInstance().getComponent<BoundingBox>(e1);
-    BoundingBox			*bb2 = ComponentManager::getInstance().getComponent<BoundingBox>(e2);
+    BoundingBox			*bb1 = e1.getComponent<BoundingBox>();
+    BoundingBox			*bb2 = e2.getComponent<BoundingBox>();
 
     if (!bb1 || !bb2)
       return false;
@@ -148,18 +147,15 @@ public:
 
   void				addCollisionComponent(unsigned int e1, unsigned int e2)
   {
-    Collision			*c1 = ComponentManager::getInstance().getComponent<Collision>(e1);
-    Collision			*c2 = ComponentManager::getInstance().getComponent<Collision>(e2);
+    Collision			*c1 = EntityManager::getInstance().getEntityData(e1).getComponent<Collision>();
+    Collision			*c2 = EntityManager::getInstance().getEntityData(e2).getComponent<Collision>();
     // Position			*p1 = ComponentManager::getInstance().getComponent<Position>(e1);
     // Position			*p2 = ComponentManager::getInstance().getComponent<Position>(e2);
 
     if (!c1)
-      ComponentManager::getInstance().addComponent<Collision>(e1);
+      c1 = EntityManager::getInstance().getEntityData(e1).addComponent<Collision>();
     if (!c2)
-      ComponentManager::getInstance().addComponent<Collision>(e2);
-
-    c1 = ComponentManager::getInstance().getComponent<Collision>(e1);
-    c2 = ComponentManager::getInstance().getComponent<Collision>(e2);
+     c2 = EntityManager::getInstance().getEntityData(e2).addComponent<Collision>();
 
     c1->list.push_back(e2);
     c2->list.push_back(e1);

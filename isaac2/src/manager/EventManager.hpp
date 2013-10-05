@@ -1,7 +1,7 @@
 #ifndef					__EVENT_MANAGER_HH__
 # define				__EVENT_MANAGER_HH__
 
-#include                                <allegro5/allegro.h>
+#include                <allegro5/allegro.h>
 #include				"OptionManager.hpp"
 #include				"Singleton.hpp"
 #include				"Camera.hpp"

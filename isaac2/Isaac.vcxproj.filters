@@ -27,9 +27,6 @@
     <ClCompile Include="src\debug\ILogger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\manager\ComponentManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\manager\EntityManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

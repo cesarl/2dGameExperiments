@@ -2,7 +2,6 @@
 # define			__IPT_MOVEMENT_SYSTEM_HPP__
 
 #include			"System.hpp"
-#include			"ComponentManager.hpp"
 #include			"Components.hpp"
 #include			"InputSystem.hpp"
 
@@ -26,10 +25,10 @@ public:
 
   virtual void			update(EntityData &entity, float time, const ALLEGRO_EVENT &)
   {
-    InputMovement		*input = ComponentManager::getInstance().getComponent<InputMovement>(entity);
-    Velocity			*vel = ComponentManager::getInstance().getComponent<Velocity>(entity);
-    Rotation			*rotation = ComponentManager::getInstance().getComponent<Rotation>(entity);
-    Sprite			*sprite = ComponentManager::getInstance().getComponent<Sprite>(entity);
+	InputMovement		*input = entity.getComponent<InputMovement>();
+    Velocity			*vel = entity.getComponent<Velocity>();
+    Rotation			*rotation = entity.getComponent<Rotation>();
+    Sprite  			*sprite = entity.getComponent<Sprite>();
     InputSystem			*sys = SystemManager::getInstance().getSystem<InputSystem>();
 
     if (!sys)

@@ -15,6 +15,9 @@ struct				Component
     static unsigned int		 id = uniqueId();
     return id;
   }
+
+  Component() {}
+  virtual ~Component() {}
 };
 
 

@@ -7,12 +7,35 @@
 #include			"Singleton.hpp"
 #include			"EntityData.hpp"
 
+#define				RESERVE_ENTITY (10000)
+
 class				EntityManager : public Singleton<EntityManager>
 {
 public:
   typedef std::vector<EntityData>::iterator iterator;
 
-  unsigned int			newEntity();
+EntityData			    &newEntity()
+{
+	unsigned int		res;
+
+	if (freeIds_.empty())
+	{
+		if (list_.size() <= idCounter_)
+		{
+			std::cout << "Resize list of size " << list_.size() << " -> " << idCounter_ + RESERVE_ENTITY << std::endl;
+			list_.resize(idCounter_ + RESERVE_ENTITY);
+		}
+		list_[idCounter_] = EntityData(idCounter_, true);
+		res = idCounter_;
+		++idCounter_;
+		return list_[res];
+	}
+	res = freeIds_.back();
+	freeIds_.pop_back();
+	list_[res] = EntityData(res, true);
+	return list_[res];
+}
+
   inline void			eraseEntity(unsigned int id)
   {
     list_[id].components.reset();

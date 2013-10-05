@@ -2,7 +2,6 @@
 # define			__COLOR_EASING_COMPONENT_HPP__
 
 #include			"Color.hpp"
-#include			"ComponentManager.hpp"
 #include			"Component.hpp"
 
 struct				ColorEasing : public Component<ColorEasing>
@@ -19,7 +18,7 @@ public:
     color = c;
     time = 0.0f;
     duration = _time;
-    colorOrigin = *(ComponentManager::getInstance().getComponent<Color>(entity));
+    colorOrigin = *(entity.getComponent<Color>());
   }
 
 };

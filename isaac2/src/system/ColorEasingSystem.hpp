@@ -2,7 +2,6 @@
 # define			__COLOR_EASING_SYSTEM_HPP__
 
 #include			"System.hpp"
-#include			"ComponentManager.hpp"
 #include			"Components.hpp"
 #include			"lerp.hpp"
 
@@ -21,15 +20,15 @@ public:
 
   virtual void			update(EntityData &entity, float time, const ALLEGRO_EVENT &)
   {
-    ColorEasing			*eas = ComponentManager::getInstance().getComponent<ColorEasing>(entity);
-    Color			*color = ComponentManager::getInstance().getComponent<Color>(entity);
+    ColorEasing			*eas = entity.getComponent<ColorEasing>();
+    Color			*color = entity.getComponent<Color>();
 
     *color = Utils::lerp<Color>(eas->colorOrigin, eas->color, eas->duration, eas->time);
 
     eas->time = (float)eas->time + time;
 
     if (eas->time >= eas->duration)
-      ComponentManager::getInstance().removeComponent<ColorEasing>(entity);
+      entity.removeComponent<ColorEasing>();
   }
 
 private:

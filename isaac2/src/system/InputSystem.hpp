@@ -3,7 +3,6 @@
 
 #include			<map>
 #include			"System.hpp"
-#include			"ComponentManager.hpp"
 #include			"Components.hpp"
 
 class				InputSystem : public System
