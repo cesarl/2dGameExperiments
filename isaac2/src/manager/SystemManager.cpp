@@ -49,15 +49,14 @@ void				SystemManager::draw(float time, const ALLEGRO_EVENT &ev)
 
   for (unsigned int	it = 0, mit = em.end(); it < mit; ++it)
     {
-      EntityData		e = list[it];
+      EntityData		&e = list[it];
 
       i = drawList_.begin();  
       while (i != drawList_.end())
 	  {
 		  if (i->second->match(e))
 		  {
-			  EntityData &ent = EntityManager::getInstance().getEntityData(it);
-			  i->second->update(ent, time - lastTime, ev);
+			  i->second->update(e, time - lastTime, ev);
 		  }
 		  ++i;
 	  }
