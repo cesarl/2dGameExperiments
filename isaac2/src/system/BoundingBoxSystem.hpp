@@ -1,6 +1,7 @@
 #ifndef				__BB_SYSTEM_HPP__
 # define			__BB_SYSTEM_HPP__
 
+#include            <unordered_set>
 #include			"System.hpp"
 #include			"EntityData.hpp"
 #include			"TagIdManager.hpp"
@@ -29,12 +30,12 @@ public:
 
   bool				isLayerCollidable(EntityData &e1, EntityData &e2)
   {
-    unsigned int al = e1.getLayer();
+	  unsigned int al = e1.getLayer();
     unsigned int bl = e2.getLayer();
 
     unsigned int s = al < bl ? al * 1000 + bl : bl * 1000 + al;
 
-    std::set<unsigned int>::iterator it;
+    std::unordered_set<unsigned int>::iterator it;
     it = exceptions_.find(s);
     return (it == exceptions_.end());
   }
@@ -190,7 +191,7 @@ public:
 private:
   unsigned int			side_;
   std::map<int, std::list<unsigned int> > list_;
-  std::set<unsigned int>	exceptions_;
+  std::unordered_set<unsigned int>	exceptions_;
 };
 
 #endif				// __BB_SYSTEM_HPP__

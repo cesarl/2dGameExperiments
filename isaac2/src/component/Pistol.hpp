@@ -14,7 +14,7 @@ struct				Pistol : public Component<Pistol>
 
   Pistol()
   {
-    fireRate = 0.01f;
+    fireRate = 0.001f;
     fireRateCache = 0.0f;
     fireForce = 1.0f;
     fireType = 1.0f;
