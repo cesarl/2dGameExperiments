@@ -7,6 +7,7 @@
 #include			"Exception.hh"
 #include			"TagIdManager.hpp"
 #include            "Component.hpp"
+#include            "Components.hpp"
 
 #define				TAG_LENGTH (32)
 #define				LAYER_LENGTH (32)
@@ -17,7 +18,7 @@
 struct				EntityData
 {
 	std::bitset<COMPONENT_MAX_NUMBER>		components;
-	std::vector<Component*>                 componentsPtr;
+	std::vector<AComponent*>                componentsPtr;
 	unsigned int			id;
 	bool  				active;
 private:
@@ -32,7 +33,7 @@ public:
 	{
 		components.reset();
 		componentsPtr.resize(COMPONENT_MAX_NUMBER);
-		std::fill(std::begin(componentsPtr), std::end(componentsPtr), NULL);
+		//std::fill(std::begin(componentsPtr), std::end(componentsPtr), NULL);
 		id = entityId;
 		active = active;
 		if (tag.size() > TAG_LENGTH)
@@ -82,7 +83,7 @@ public:
 	T    				*addComponent()
 	{
 		if (hasComponent<T>())
-			return componentsPtr[T::getTypeId()];
+			return getComponent<T>();
 
 		T *tmp = new T;
 		// todo assert on new T failed
@@ -120,16 +121,16 @@ public:
 	}
 
 	template			<class T>
-	inline T			*getComponent()
+	inline T			*getComponent() const
 	{
 		// we don't have to check if component exists
 		//		if (!hasComponent())
 		//			return NULL;
-		return componentsPtr[T::getTypeId()];
+		return static_cast<T*>(componentsPtr[T::getTypeId()]);
 	}
 
 	template			<class T>
-	bool				hasComponent()
+	bool				hasComponent() const
 	{
 		return (components[T::getTypeId()] != 0);
 	}

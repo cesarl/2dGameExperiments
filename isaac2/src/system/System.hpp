@@ -2,42 +2,43 @@
 #define				__SYSTEM_HPP__
 
 #include			<set>
+#include            "EntityData.hpp"
 
 class				SystemManager;
 
 class				System
 {
-  friend class			SystemManager;
+	friend class			SystemManager;
 
 public:
-  typedef std::set<unsigned int>::iterator systemIterator;
+	typedef std::set<unsigned int>::iterator systemIterator;
 
-  System(){}
-  virtual ~System(){}
-  virtual void			update(EntityData & e, float, const ALLEGRO_EVENT &) = 0;
-  virtual void			updateBegin(float, const ALLEGRO_EVENT &){};
-  virtual void			updateEnd(float, const ALLEGRO_EVENT &){};
-  virtual void			init() = 0;
+	System(){}
+	virtual ~System(){}
+	virtual void			update(EntityData & e, float, const ALLEGRO_EVENT &) = 0;
+	virtual void			updateBegin(float, const ALLEGRO_EVENT &){};
+	virtual void			updateEnd(float, const ALLEGRO_EVENT &){};
+	virtual void			init() = 0;
 
-  template			<class T>
-  inline void			require()
-  {
-    componentsRequired_[T::getTypeId()] = 1;
-  }
+	template			<class T>
+	inline void			require()
+	{
+		componentsRequired_[T::getTypeId()] = 1;
+	}
 
-  bool				match(const EntityData &entity)
-  {
-    if (componentsRequired_.none())
-      {
-	throw SystemWithoutComponentRequired("System is empty : ", typeid(*this).name());
-      }
-    if ((entity.components & componentsRequired_) == componentsRequired_)
-      return true;
-    return false;
-  }
+	bool				match(const EntityData &entity)
+	{
+		if (componentsRequired_.none())
+		{
+			throw SystemWithoutComponentRequired("System is empty : ", typeid(*this).name());
+		}
+		if ((entity.components & componentsRequired_) == componentsRequired_)
+			return true;
+		return false;
+	}
 
 protected:
-  std::bitset<64>		componentsRequired_;
+	std::bitset<64>		componentsRequired_;
 private:
 };
 

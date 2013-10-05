@@ -2,7 +2,6 @@
 # define			__ROTATION_FORCE_SYSTEM_HPP__
 
 #include			"System.hpp"
-#include			"ComponentManager.hpp"
 #include			"Components.hpp"
 
 class				RotationForceSystem : public System
@@ -23,8 +22,8 @@ public:
 
   virtual void			update(EntityData &entity, float time, const ALLEGRO_EVENT &)
   {
-    Rotation			*rot = ComponentManager::getInstance().getComponent<Rotation>(entity);
-    RotationForce		*force = ComponentManager::getInstance().getComponent<RotationForce>(entity);
+    Rotation			*rot = entity.getComponent<Rotation>();
+    RotationForce		*force = entity.getComponent<RotationForce>();
 
     glm::vec3 inc = force->force;
     inc *= time;

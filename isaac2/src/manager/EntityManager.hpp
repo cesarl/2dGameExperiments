@@ -4,6 +4,7 @@
 #include			<vector>
 #include			<bitset>
 #include			<allegro5/allegro.h>
+#include            <iostream>
 #include			"Singleton.hpp"
 #include			"EntityData.hpp"
 

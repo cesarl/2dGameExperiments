@@ -31,7 +31,7 @@ public:
 		unsigned int tag = EntityManager::getInstance().getEntityData(col->list.front()).getTag();
 		if (tag == wallTag)
 		{
-			entity.getComponent<Position>(entity)->position.z = 3;
+			entity.getComponent<Position>()->position.z = 3;
 			entity.removeComponent<RotationForce>();
 			entity.removeComponent<BoundingBox>();
 			entity.removeComponent<Velocity>();

@@ -7,17 +7,20 @@ static				int uniqueId()
   return id++;
 }
 
+struct              AComponent
+{
+//	AComponent() {}
+//	virtual ~AComponent() {}
+};
+
 template			<class T>
-struct				Component
+struct				Component : public AComponent
 {
   static unsigned int		getTypeId()
   {
     static unsigned int		 id = uniqueId();
     return id;
   }
-
-  Component() {}
-  virtual ~Component() {}
 };
 
 

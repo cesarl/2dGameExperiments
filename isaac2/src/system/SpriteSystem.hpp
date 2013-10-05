@@ -2,7 +2,6 @@
 # define			__SPRITE_SYSTEM_HPP__
 
 #include			"System.hpp"
-#include			"ComponentManager.hpp"
 #include			"Components.hpp"
 
 class				SpriteSystem : public System
@@ -23,11 +22,11 @@ public:
 
   virtual void			update(EntityData &entity, float time, const ALLEGRO_EVENT &ev)
   {
-    Sprite			*sprite = ComponentManager::getInstance().getComponent<Sprite>(entity);
-    Position			*pos = ComponentManager::getInstance().getComponent<Position>(entity);
-    Rotation			*rot = ComponentManager::getInstance().getComponent<Rotation>(entity);
-    Scale			*scale = ComponentManager::getInstance().getComponent<Scale>(entity);
-    Color			*color = ComponentManager::getInstance().getComponent<Color>(entity);
+    Sprite			*sprite = entity.getComponent<Sprite>();
+    Position			*pos = entity.getComponent<Position>();
+    Rotation			*rot = entity.getComponent<Rotation>();
+    Scale			*scale = entity.getComponent<Scale>();
+    Color			*color = entity.getComponent<Color>();
 
     glPushMatrix();
     

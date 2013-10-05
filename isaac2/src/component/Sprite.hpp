@@ -2,6 +2,7 @@
 # define			__SPRITE_COMPONENT_HPP__
 
 #include			"Component.hpp"
+#include            "MediaManager.hpp"
 
 struct				Sprite : public Component<Sprite>
 {

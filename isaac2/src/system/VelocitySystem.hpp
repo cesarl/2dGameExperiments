@@ -2,7 +2,6 @@
 # define			__VELOCITY_SYSTEM_HPP__
 
 #include			"System.hpp"
-#include			"ComponentManager.hpp"
 #include			"Components.hpp"
 
 class				VelocitySystem : public System
@@ -20,8 +19,8 @@ public:
 
   virtual void			update(EntityData &entity, float time, const ALLEGRO_EVENT &)
   {
-    Position			*pos = ComponentManager::getInstance().getComponent<Position>(entity);
-    Velocity			*vel = ComponentManager::getInstance().getComponent<Velocity>(entity);
+    Position			*pos = entity.getComponent<Position>();
+    Velocity			*vel = entity.getComponent<Velocity>();
 
     glm::vec3 inc = vel->velocity;
     inc *= time;

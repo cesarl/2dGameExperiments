@@ -3,6 +3,7 @@
 
 #include			"Component.hpp"
 #include			"ObjModelMedia.hpp"
+#include            "ResourceManager.hpp"
 
 struct				Shader : public Component<Shader>
 {

@@ -87,6 +87,7 @@
   <ItemGroup>
     <ClCompile Include="main\main.cpp" />
     <ClCompile Include="src\buggy\MemoryManager.cpp" />
+    <ClCompile Include="src\component\ColorEasing.cpp" />
     <ClCompile Include="src\debug\Exception.cpp" />
     <ClCompile Include="src\debug\ILogger.cpp" />
     <ClCompile Include="src\manager\EntityManager.cpp" />

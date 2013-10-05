@@ -2,6 +2,7 @@
 # define			__IMG_COMPONENT_HPP__
 
 #include			"Component.hpp"
+#include            "ImageMedia.hpp"
 
 struct				Img : public Component<Img>
 {

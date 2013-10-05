@@ -2,80 +2,79 @@
 # define			__OBJ_MODEL_SYSTEM_HPP__
 
 #include			"System.hpp"
-#include			"ComponentManager.hpp"
 #include			"Components.hpp"
 
 class				ObjModelSystem : public System
 {
 public:
-  virtual ~ObjModelSystem(){};
-  ObjModelSystem() : System()
-  {}
+	virtual ~ObjModelSystem(){};
+	ObjModelSystem() : System()
+	{}
 
-  virtual void			init()
-  {
-    require<Model>();
-    require<Position>();
-    require<Shader>();
-    require<Rotation>();
-    require<Scale>();
-    require<Color>();
-  }
+	virtual void			init()
+	{
+		require<Model>();
+		require<Position>();
+		require<Shader>();
+		require<Rotation>();
+		require<Scale>();
+		require<Color>();
+	}
 
-  virtual void			update(EntityData &entity, float, const ALLEGRO_EVENT &ev)
-  {
-    Model			*model = ComponentManager::getInstance().getComponent<Model>(entity);
-    Position			*pos = ComponentManager::getInstance().getComponent<Position>(entity);
-    Shader			*shader = ComponentManager::getInstance().getComponent<Shader>(entity);
-    Scale			*scale = ComponentManager::getInstance().getComponent<Scale>(entity);
-    Rotation			*rot = ComponentManager::getInstance().getComponent<Rotation>(entity);
-    Color			*color = ComponentManager::getInstance().getComponent<Color>(entity);
+	virtual void			update(EntityData &entity, float, const ALLEGRO_EVENT &ev)
+	{
+		Model	        *model = entity.getComponent<Model>();
+		Position		*pos = entity.getComponent<Position>();
+		Shader			*shader = entity.getComponent<Shader>();
+		Scale			*scale = entity.getComponent<Scale>();
+		Rotation		*rot = entity.getComponent<Rotation>();
+		Color			*color = entity.getComponent<Color>();
 
-    glPushMatrix();
+		glPushMatrix();
 
-    // enable shader
-    glUseProgram(shader->getProgram()->getId());
-    
-    glTranslatef(pos->position.x, pos->position.y, pos->position.z);
+		// enable shader
+		glUseProgram(shader->getProgram()->getId());
 
-    glUniform3f(shader->getProgram()->getVarId("scale"), scale->scale.x, scale->scale.y, scale->scale.z);
+		glTranslatef(pos->position.x, pos->position.y, pos->position.z);
 
-    glColor4f(color->r, color->g, color->b, color->a);
+		glUniform3f(shader->getProgram()->getVarId("scale"), scale->scale.x, scale->scale.y, scale->scale.z);
 
-    glTranslatef(rot->axe.x,
-		 rot->axe.y,
-		 rot->axe.z);
+		glColor4f(color->r, color->g, color->b, color->a);
 
-    glRotatef(rot->rotation.x, 1.0f, 0.0f, 0.0f);
-    glRotatef(rot->rotation.y, 0.0f, 1.0f, 0.0f);
-    glRotatef(rot->rotation.z, 0.0f, 0.0f, 1.0f);
+		glTranslatef(rot->axe.x,
+			rot->axe.y,
+			rot->axe.z);
 
-    glTranslatef(- rot->axe.x,
-		 - rot->axe.y,
-		 - rot->axe.z);
+		glRotatef(rot->rotation.x, 1.0f, 0.0f, 0.0f);
+		glRotatef(rot->rotation.y, 0.0f, 1.0f, 0.0f);
+		glRotatef(rot->rotation.z, 0.0f, 0.0f, 1.0f);
 
-    shader->bindTextures();
-    glBindBuffer(GL_ARRAY_BUFFER, model->obj->getVertexBuffer());    
-    glVertexPointer(3, GL_FLOAT, 0, (void*)(0));
-    shader->applyTexturesCoordinates();
+		glTranslatef(- rot->axe.x,
+			- rot->axe.y,
+			- rot->axe.z);
 
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		shader->bindTextures();
+		glBindBuffer(GL_ARRAY_BUFFER, model->obj->getVertexBuffer());    
+		glVertexPointer(3, GL_FLOAT, 0, (void*)(0));
+		shader->applyTexturesCoordinates();
 
-    glDrawArrays(GL_TRIANGLES, 0, model->obj->getVerticesNumber());
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-    glDisableClientState(GL_VERTEX_ARRAY);
-    
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glDrawArrays(GL_TRIANGLES, 0, model->obj->getVerticesNumber());
 
-    // disable shader
-    glUseProgram(0);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		glDisableClientState(GL_VERTEX_ARRAY);
 
-    glPopMatrix();
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-    (void)ev;
-  }
+		// disable shader
+		glUseProgram(0);
+
+		glPopMatrix();
+
+		(void)ev;
+	}
 
 private:
 };

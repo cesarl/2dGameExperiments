@@ -2,7 +2,6 @@
 # define			__VELOCITY_FRICTION_SYSTEM_HPP__
 
 #include			"System.hpp"
-#include			"ComponentManager.hpp"
 #include			"Components.hpp"
 
 class				VelocityFrictionSystem : public System
@@ -20,8 +19,8 @@ public:
 
   virtual void			update(EntityData &entity, float time, const ALLEGRO_EVENT &)
   {
-    VelocityFriction *fri = ComponentManager::getInstance().getComponent<VelocityFriction>(entity);
-    Velocity *vel = ComponentManager::getInstance().getComponent<Velocity>(entity);
+    VelocityFriction *fri = entity.getComponent<VelocityFriction>();
+    Velocity *vel = entity.getComponent<Velocity>();
 
     float t = fri->friction;
 

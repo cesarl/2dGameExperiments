@@ -4,7 +4,6 @@
 #include			<map>
 #include			<string>
 #include			"Singleton.hpp"
-#include			"EntityData.hpp"
 
 class				TagIdManager : public Singleton<TagIdManager>
 {

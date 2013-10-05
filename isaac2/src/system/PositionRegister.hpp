@@ -1,7 +1,6 @@
 #ifndef				__POSITION_REGISTER_SYSTEM_HPP__
 # define			__POSITION_REGISTER_SYSTEM_HPP__
 
-#include			"ComponentManager.hpp"
 #include			"Components.hpp"
 
 // this system don't heritate form System class,

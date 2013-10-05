@@ -2,6 +2,7 @@
 # define			__COLOR_COMPONENT_HPP__
 
 #include			"Component.hpp"
+#include            "EntityData.hpp"
 
 struct				Color : public Component<Color>
 {

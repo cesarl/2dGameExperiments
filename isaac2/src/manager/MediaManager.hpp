@@ -5,6 +5,7 @@
 #include				<set>
 #include				<vector>
 #include				<string>
+#include                <iostream>
 #include				"Typelist.hpp"
 #include				"GenHierarchies.hpp"
 #include				"SmartPointer.hpp"

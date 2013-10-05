@@ -24,50 +24,48 @@ public:
 
   unsigned int			createBullet(const glm::vec3 & position, const glm::vec3 & dir, EntityData &entity)
   {
-    unsigned int		e;
-    static ComponentManager	&c = ComponentManager::getInstance();
+    EntityData   		&e = EntityManager::getInstance().newEntity();
 
-    e = EntityManager::getInstance().newEntity();
-    EntityManager::getInstance().getEntityData(e).setLayer("Good");
+    e.setLayer("Good");
 
-    Position &posComponent = c.addComponent<Position>(e);
+    Position *posComponent = e.addComponent<Position>();
     // Img &imgComponent = c.addComponent<Img>(e);
-    Sprite &spriteComponent = c.addComponent<Sprite>(e);
-    Scale &scaleComponent = c.addComponent<Scale>(e);
-    Color &colorComponent = c.addComponent<Color>(e);
-    RotationForce &rotForce = c.addComponent<RotationForce>(e);
-    Velocity &vel = c.addComponent<Velocity>(e);
-    Rotation &rot = c.addComponent<Rotation>(e);
-    BoundingBox &bbComponent = c.addComponent<BoundingBox>(e);
-    Physic &phy = c.addComponent<Physic>(e);
-    Lifetime &life = c.addComponent<Lifetime>(e);
+    Sprite *spriteComponent = e.addComponent<Sprite>();
+    Scale *scaleComponent = e.addComponent<Scale>();
+    Color *colorComponent = e.addComponent<Color>();
+    RotationForce *rotForce = e.addComponent<RotationForce>();
+    Velocity *vel = e.addComponent<Velocity>();
+    Rotation *rot = e.addComponent<Rotation>();
+    BoundingBox *bbComponent = e.addComponent<BoundingBox>();
+    Physic *phy = e.addComponent<Physic>();
+    Lifetime *life = e.addComponent<Lifetime>();
 
-    c.addComponent<VelocityFriction>(e).friction = 0.9999f;
-    bbComponent.set(glm::vec3(32.0f, 32.0f, 0.0f));
-    phy.fixed = false;
-    vel.velocity = dir;
-    vel.velocity *= 700.0f;
-    Velocity *v = ComponentManager::getInstance().getComponent<Velocity>(entity);
+    e.addComponent<VelocityFriction>()->friction = 0.9999f;
+    bbComponent->set(glm::vec3(32.0f, 32.0f, 0.0f));
+    phy->fixed = false;
+    vel->velocity = dir;
+    vel->velocity *= 700.0f;
+    Velocity *v = entity.getComponent<Velocity>();
     if (!v)
       std::cout << "YA PAS DE VELOCITY !!!! WTF !!!" << std::endl;
     else
-      vel.velocity += v->velocity;
-    (void)entity;
-    posComponent.position = position;
-    posComponent.position.z = 1000;
-    spriteComponent.animation = ResourceManager::getInstance().get<AnimationMedia>("test.anim");
-    scaleComponent.scale = glm::vec3(32.0f, 32.0f, 0.0f);
-    rotForce.force = glm::vec3(0.0f, 0.0f, 25.0f);
-    colorComponent = (Color(1.0f, 1.0f, 1.0f, 1.0f));
-    life.time = 3.0f;
+      vel->velocity += v->velocity;
+
+    posComponent->position = position;
+    posComponent->position.z = 1000;
+    spriteComponent->animation = ResourceManager::getInstance().get<AnimationMedia>("test.anim");
+    scaleComponent->scale = glm::vec3(32.0f, 32.0f, 0.0f);
+    rotForce->force = glm::vec3(0.0f, 0.0f, 25.0f);
+    *colorComponent = (Color(1.0f, 1.0f, 1.0f, 1.0f));
+    life->time = 3.0f;
 
     (void)rot;
-    return e;
+    return e.id;
   }
 
   virtual void			update(EntityData &entity, float time, const ALLEGRO_EVENT &)
   {
-    Pistol			*pistol = ComponentManager::getInstance().getComponent<Pistol>(entity);
+    Pistol			*pistol = entity.getComponent<Pistol>();
     static InputSystem		*sys = SystemManager::getInstance().getSystem<InputSystem>();
  
     if (!pistol)
@@ -81,7 +79,7 @@ public:
 
     unsigned int b = 0;
     glm::vec3 dir;
-    Position			*position = ComponentManager::getInstance().getComponent<Position>(entity);
+    Position			*position = entity.getComponent<Position>();
 
     if (sys->isDown(ALLEGRO_KEY_LEFT)
 	&& sys->isDown(ALLEGRO_KEY_UP)) // left up
