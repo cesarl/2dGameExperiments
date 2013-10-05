@@ -3,7 +3,6 @@
 
 #include			<limits>
 #include			"System.hpp"
-#include			"ComponentManager.hpp"
 #include			"Components.hpp"
 #include            "EntityData.hpp"
 

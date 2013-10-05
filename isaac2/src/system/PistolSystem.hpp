@@ -2,7 +2,6 @@
 # define			__PISTOL_SYSTEM_HPP__
 
 #include			"System.hpp"
-#include			"ComponentManager.hpp"
 #include			"Components.hpp"
 
 class				PistolSystem : public System

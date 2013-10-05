@@ -1,6 +1,5 @@
 #include			"SystemManager.hpp"
 #include			"EntityManager.hpp"
-#include			"ComponentManager.hpp"
 
 void				SystemManager::update(float time, const ALLEGRO_EVENT &ev)
 {

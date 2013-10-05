@@ -135,7 +135,6 @@
     <ClInclude Include="src\loader\ShaderProgramLoader.hpp" />
     <ClInclude Include="src\loader\SkyboxLoader.hpp" />
     <ClInclude Include="src\loader\TextureLoader.hpp" />
-    <ClInclude Include="src\manager\ComponentManager.hpp" />
     <ClInclude Include="src\manager\ComponentTypeManager.hpp" />
     <ClInclude Include="src\manager\EntityManager.hpp" />
     <ClInclude Include="src\manager\EventManager.hpp" />

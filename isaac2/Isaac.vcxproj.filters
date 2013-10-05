@@ -155,9 +155,6 @@
     <ClInclude Include="src\loader\TextureLoader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\manager\ComponentManager.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\manager\ComponentTypeManager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
