@@ -29,24 +29,7 @@ public:
 	EntityData(unsigned int entityId = 0,
 		bool active = false,
 		const std::string & tag = DEFAULT_TAG,
-		const std::string & layer = DEFAULT_LAYER)
-	{
-		components.reset();
-		componentsPtr.resize(COMPONENT_MAX_NUMBER);
-		//std::fill(std::begin(componentsPtr), std::end(componentsPtr), NULL);
-		id = entityId;
-		active = active;
-		if (tag.size() > TAG_LENGTH)
-		{
-			throw TagToLong(entityId, tag, true);    
-		}
-		tag_ = TagIdManager::getInstance().getTagId(tag);
-		if (layer.size() > LAYER_LENGTH)
-		{
-			throw TagToLong(entityId, layer, false);    
-		}
-		layer_ = TagIdManager::getInstance().getTagId(layer);
-	}
+		const std::string & layer = DEFAULT_LAYER);
 
 	EntityData			&operator=(const EntityData &o)
 	{
@@ -57,6 +40,11 @@ public:
 		tag_ = o.tag_;
 		layer_ = o.layer_;
 		return *this;
+	}
+
+	EntityData(const EntityData &o)
+	{
+		*this = o;
 	}
 
 	unsigned int			&getTag()
@@ -126,6 +114,12 @@ public:
 		// we don't have to check if component exists
 		//		if (!hasComponent())
 		//			return NULL;
+		if (T::getTypeId() > componentsPtr.size())
+		{
+			unsigned int lol = T::getTypeId();
+ 			unsigned int prout = componentsPtr.size();
+			std::cout << "what" << std::endl;
+		}
 		return static_cast<T*>(componentsPtr[T::getTypeId()]);
 	}
 

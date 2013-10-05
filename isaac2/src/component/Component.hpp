@@ -9,8 +9,9 @@ static				int uniqueId()
 
 struct              AComponent
 {
-//	AComponent() {}
-//	virtual ~AComponent() {}
+	AComponent() {}
+	virtual ~AComponent() {}
+	virtual AComponent &operator=(const AComponent &o) { return *this; }
 };
 
 template			<class T>

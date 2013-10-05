@@ -9,7 +9,8 @@ void				SystemManager::update(float time, const ALLEGRO_EVENT &ev)
   float difTime = time - lastTime;
 
   i = list_.begin();
-  
+
+  EntityManager::getInstance().iterateBegin();
   while (i != list_.end())
   {
 	  i->second->updateBegin(time, ev);
@@ -24,6 +25,7 @@ void				SystemManager::update(float time, const ALLEGRO_EVENT &ev)
 	  i->second->updateEnd(time, ev);
 	  ++i;
   }
+
   lastTime = time;
   (void)time;
   (void)(ev);
@@ -46,6 +48,7 @@ void				SystemManager::draw(float time, const ALLEGRO_EVENT &ev)
   if (em.end() % 50 == 0)
     std::cout << "Entities : " << em.end() << std::endl;
 
+  em.iterateBegin();
   for (unsigned int	it = 0, mit = em.end(); it < mit; ++it)
     {
       EntityData		&e = list[it];
@@ -60,6 +63,7 @@ void				SystemManager::draw(float time, const ALLEGRO_EVENT &ev)
 		  ++i;
 	  }
   }
+  em.iterateEnd();
 
   i = drawList_.begin();  
   while (i != drawList_.end())
@@ -69,4 +73,5 @@ void				SystemManager::draw(float time, const ALLEGRO_EVENT &ev)
   }
 
   lastTime = time;
+  EntityManager::getInstance().iterateEnd();
 }
