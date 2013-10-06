@@ -76,3 +76,7 @@ UniformLocationUnknown::UniformLocationUnknown(const std::string &name, const un
     << std::endl;
   this->message_ = f.str();
 }
+
+NoMoreEntityAvailable::NoMoreEntityAvailable(const std::string & message) :
+  Exception(message)
+{}

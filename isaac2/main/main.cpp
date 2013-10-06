@@ -89,8 +89,9 @@ int					main()
 	try
 	{
 		BoundingBoxSystem *s = SystemManager::getInstance().getSystem<BoundingBoxSystem>();
-		if (s)
-			s->addException("Good", "Good");
+
+		s->addException("Good", "Good");
+		s->addException("Decor", "Decor");
 
 
 		////////////////////

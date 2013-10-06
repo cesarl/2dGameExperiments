@@ -6,6 +6,7 @@
 #include				<allegro5/allegro_image.h>
 #include				"Singleton.hpp"
 #include				"EventManager.hpp"
+#include                "EntityManager.hpp"
 
 class					MainManager :
   public				Singleton<MainManager>
@@ -40,6 +41,8 @@ public:
 
     if (!EventManager::getInstance().init())
       return false;
+	if (!EntityManager::getInstance().init())
+		return false;
     srand(time(NULL));
     return true;
   }

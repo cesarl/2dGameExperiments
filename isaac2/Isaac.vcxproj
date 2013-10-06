@@ -86,7 +86,7 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>MaxSpeed</Optimization>
-      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Visual Leak Detector\include;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\vendors;C:\Libs\glm;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\utilities;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\system;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\media;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\manager;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\loader;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\generator;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\debug;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\component;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Visual Leak Detector\include;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\vendors;C:\Libs\glm;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\utilities;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\system;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\media;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\manager;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\loader;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\generator;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\debug;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src\component;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\main;C:\Users\cesar\Documents\GitHub\2dGameExperiments\isaac2\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
       <MultiProcessorCompilation>false</MultiProcessorCompilation>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -177,6 +177,7 @@
     <ClCompile Include="vendors\tiny_obj_loader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="main\Configurations.h" />
     <ClInclude Include="src\buggy\Memory.hpp" />
     <ClInclude Include="src\Camera.hpp" />
     <ClInclude Include="src\component\BoundingBox.hpp" />

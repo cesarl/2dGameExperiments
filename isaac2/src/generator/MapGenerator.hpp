@@ -177,6 +177,7 @@ public:
 				else
 					spriteC->animation = ResourceManager::getInstance().get<AnimationMedia>("wallPlain.anim");
 				e.setTag("Wall");
+				e.setLayer("Decor");
 				BoundingBox *bbComponent = e.addComponent<BoundingBox>();
 				bbComponent->set(glm::vec3(64.0f, 64.0f, 0.0f));
 				Physic *phy = e.addComponent<Physic>();
@@ -189,6 +190,7 @@ public:
 				else
 					spriteC->animation = ResourceManager::getInstance().get<AnimationMedia>("floor2.anim");
 				e.setTag("Ground");
+				e.setLayer("Decor");
 			}
 			posComponent->position = glm::vec3((float)(i % width_) * 64.0f, (float)(i / width_) * 64.0f, 0.0f);
 			scaleComponent->scale = glm::vec3(64.0f, 64.0f, 0.0f);

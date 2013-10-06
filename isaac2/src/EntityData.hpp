@@ -8,12 +8,7 @@
 #include			"TagIdManager.hpp"
 #include            "Component.hpp"
 #include            "Components.hpp"
-
-#define				TAG_LENGTH (32)
-#define				LAYER_LENGTH (32)
-#define				DEFAULT_TAG ("Default")
-#define				DEFAULT_LAYER ("Default")
-#define             COMPONENT_MAX_NUMBER (64)
+#include            "Configurations.h"
 
 struct				EntityData
 {
@@ -33,6 +28,7 @@ public:
 
 	EntityData			&operator=(const EntityData &o)
 	{
+		reset();
 		components = o.components;
 		componentsPtr = o.componentsPtr;
 		id = o.id;
@@ -44,7 +40,14 @@ public:
 
 	EntityData(const EntityData &o)
 	{
-		*this = o;
+		reset();
+		components = o.components;
+		componentsPtr = o.componentsPtr;
+		id = o.id;
+		active = o.active;
+		tag_ = o.tag_;
+		layer_ = o.layer_;
+		//*this = o;
 	}
 
 	unsigned int			&getTag()
@@ -82,20 +85,19 @@ public:
 		return tmp;
 	}
 
-	//template			<class T>
-	//T    				&addComponent()
-	//{
-	//	if (hasComponent<T>())
-	//		return componentsPtr[T::getTypeId()];
+	~EntityData()
+	{
+		componentsPtr.clear();
+	}
 
-	//	T *tmp = new T;
-	//	// todo assert on new T failed
-	//	//if (!tmp)
-
-	//	components[T::getTypeId()] = 1;
-	//	componentsPtr[T::getTypeId()] = tmp;
-	//	return *tmp;
-	//}
+	void reset()
+	{
+		for (std::vector<AComponent*>::iterator it = std::begin(componentsPtr); it != std::end(componentsPtr); ++it)
+		{
+			delete *it;
+		}
+		componentsPtr.clear();
+	}
 
 	template			<class T>
 	inline void			removeComponent()
@@ -111,14 +113,10 @@ public:
 	template			<class T>
 	inline T			*getComponent() const
 	{
-		// we don't have to check if component exists
-		//		if (!hasComponent())
-		//			return NULL;
+
 		if (T::getTypeId() > componentsPtr.size())
 		{
-			unsigned int lol = T::getTypeId();
- 			unsigned int prout = componentsPtr.size();
-			std::cout << "what" << std::endl;
+			std::cout << "Taht is not normal ! " << std::endl;
 		}
 		return static_cast<T*>(componentsPtr[T::getTypeId()]);
 	}
